@@ -1,35 +1,40 @@
-# Gradle files
-.gradle/
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+dist/
 build/
-.kotlin/
 
-# Local configuration file (sdk path, etc)
-local.properties
+# WASM build artifacts
+src/wasm/pkg/
+src/wasm/target/
+public/pkg/
 
-# Log/OS Files
-*.log
+# Environment
+.env
+.env.local
+.env.*.local
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.aab
-*.apk
-output-metadata.json
-
-# IntelliJ
-*.iml
+# IDE
+.vscode/
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+*.swp
+*.swo
 
-# Keystore files
-*.jks
-*.keystore
+# Logs
+*.log
+npm-debug.log*
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# OS
+.DS_Store
+Thumbs.db
 
-# Android Profiling
-*.hprof
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
