@@ -1,0 +1,30 @@
+name = "prism9-edge"
+main = "src/api/worker.js"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./dist"
+
+[vars]
+GEMINI_API_KEY = ""
+RATE_LIMIT_ENABLED = "true"
+MAX_REQUESTS_PER_MINUTE = "60"
+
+[[kv_namespaces]]
+binding = "API_CACHE"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-namespace-id"
+
+[env.production]
+route = { pattern = "prism9.yourdomain.com/*" }
+workers_dev = false
+
+[build]
+command = "npm run build:all"
+
+[dev]
+port = 8787
+local_protocol = "http"
+
+[observability]
+enabled = true

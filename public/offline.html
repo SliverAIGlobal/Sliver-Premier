@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - PRISM 9</title>
+  <style>
+    body {
+      background: #09090b;
+      color: #34d399;
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+      border: 1px solid #27272a;
+      border-radius: 1rem;
+      background-color: #18181b;
+    }
+    h1 { margin-bottom: 1rem; font-size: 1.5rem; }
+    p { color: #a1a1aa; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    button {
+      background: #10b981;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>System Offline</h1>
+    <p>PRISM 9 client cache is active. Local data is accessible.</p>
+    <button onclick="window.location.reload()">Re-connect Gateway</button>
+  </div>
+</body>
+</html>
