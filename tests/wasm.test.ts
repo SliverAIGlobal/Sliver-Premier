@@ -7,6 +7,11 @@ describe('PRISM 9 WASM Engine Integration', () => {
     const wasmJsPath = path.resolve('public/pkg/prism9_wasm.js');
     const wasmBgPath = path.resolve('public/pkg/prism9_wasm_bg.wasm');
 
+    if (!fs.existsSync(wasmJsPath)) {
+      const { execSync } = await import('node:child_process');
+      execSync('node scripts/copy-wasm.mjs');
+    }
+
     expect(fs.existsSync(wasmJsPath)).toBe(true);
     expect(fs.existsSync(wasmBgPath)).toBe(true);
   });
