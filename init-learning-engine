@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Wrapper script for Flower Learn Engine CLI
+
+python3 flower_learn.py "$@"
