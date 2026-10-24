@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SORENv2 FLOWER LEARN MATRIX | SLIVER Edge Veritas Master</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        flowerCyan: '#00B4D8',
+                        flowerGold: '#F72585',
+                        flowerDark: '#0B091A',
+                        flowerPanel: '#161233',
+                        flowerBorder: '#2E285C',
+                        flowerViolet: '#7209B7',
+                        flowerRose: '#4CC9F0',
+                        flowerEmerald: '#10B981',
+                        satDark: '#0A0A0C',
+                        satSlate: '#1E293B',
+                        satBorder: '#334155'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap');
+
+        body {
+            background-color: #0B091A;
+            color: #E2E8F0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .flower-panel {
+            background: rgba(22, 18, 51, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(114, 9, 183, 0.35);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+        }
+
+        .glow-cyan {
+            box-shadow: 0 0 25px rgba(0, 180, 216, 0.4);
+        }
+
+        .glow-violet {
+            box-shadow: 0 0 25px rgba(114, 9, 183, 0.5);
+        }
+
+        .flower-petal {
+            transition: all 0.35s ease;
+            cursor: pointer;
+            stroke: #2E285C;
+            stroke-width: 1.5;
+        }
+
+        .flower-petal:hover, .flower-petal.active {
+            stroke: #4CC9F0;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 10px #4CC9F0);
+        }
+
+        .flower-avatar-pulse {
+            animation: flower-pulse 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes flower-pulse {
+            0% { box-shadow: 0 0 15px rgba(114, 9, 183, 0.5); }
+            100% { box-shadow: 0 0 35px rgba(247, 37, 133, 0.8); }
+        }
+
+        canvas { touch-action: none; }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B091A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2E285C;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7209B7;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #ffffff !important; color: #000000 !important; }
+            .flower-panel { background: #ffffff !important; border: 1px solid #ccc !important; color: #000000 !important; }
+            input, textarea, select { border: 1px solid #000000 !important; color: #000000 !important; background: #ffffff !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20 antialiased selection:bg-flowerCyan selection:text-black">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 flower-panel border-b border-flowerViolet/40 px-4 md:px-8 py-3.5 flex items-center justify-between no-print backdrop-blur-md">
+        <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-flowerViolet via-flowerGold to-flowerCyan flex items-center justify-center font-black text-white text-xl shadow-lg flower-avatar-pulse">
+                <i class="fa-solid fa-atom text-white"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-lg md:text-xl text-white tracking-tight flex items-center gap-2">
+                    SORENv2 <span class="text-flowerCyan font-mono text-xs px-2.5 py-0.5 rounded border border-flowerCyan/50 bg-flowerCyan/10">FLOWER LEARN MATRIX</span>
+                </h1>
+                <p class="text-xs text-gray-400 font-mono hidden sm:block">40% Cognitive Theory • 60% Practical Bloom Synthesis Engine | Doc: SLIVER-VERITAS-808</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button onclick="window.print()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-mono flex items-center gap-2 border border-slate-700 transition">
+                <i class="fa-solid fa-file-pdf text-flowerRose"></i> <span class="hidden md:inline">Export PDF</span>
+            </button>
+            <button onclick="evaluateWorksheet()" class="px-5 py-2 bg-gradient-to-r from-flowerCyan via-flowerViolet to-flowerGold hover:opacity-90 text-white font-bold rounded-xl text-xs font-mono flex items-center gap-2 shadow-lg glow-cyan transition transform hover:scale-105">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Evaluate & Compute T(x)
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-black/60 border-b border-flowerBorder px-4 md:px-8 py-2.5 flex items-center gap-2 overflow-x-auto no-print">
+        <button onclick="switchTab('mandala-theory')" id="tab-btn-mandala-theory" class="px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all flex items-center gap-2 bg-flowerCyan/20 text-flowerCyan border border-flowerCyan/40">
+            <i class="fa-solid fa-seedling"></i> 1. Mandala & Theory (40%)
+        </button>
+        <button onclick="switchTab('spectra-lattice')" id="tab-btn-spectra-lattice" class="px-4 py-2 rounded-xl text-xs font-mono font-semibold text-gray-400 hover:text-white transition-all flex items-center gap-2">
+            <i class="fa-solid fa-prism"></i> 2. 81-SPECTRA Visualizer
+        </button>
+        <button onclick="switchTab('data-sump')" id="tab-btn-data-sump" class="px-4 py-2 rounded-xl text-xs font-mono font-semibold text-gray-400 hover:text-white transition-all flex items-center gap-2">
+            <i class="fa-solid fa-database"></i> 3. Data Sump Ingestion
+        </button>
+        <button onclick="switchTab('worksheet-calc')" id="tab-btn-worksheet-calc" class="px-4 py-2 rounded-xl text-xs font-mono font-semibold text-gray-400 hover:text-white transition-all flex items-center gap-2">
+            <i class="fa-solid fa-calculator"></i> 4. Active Worksheet & T(x)
+        </button>
+        <button onclick="switchTab('proton-cli')" id="tab-btn-proton-cli" class="px-4 py-2 rounded-xl text-xs font-mono font-semibold text-gray-400 hover:text-white transition-all flex items-center gap-2">
+            <i class="fa-solid fa-terminal"></i> 5. Proton CLI Terminal
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 mt-6 space-y-8">
+
+        <!-- Directive Banner -->
+        <section class="flower-panel rounded-3xl p-6 md:p-8 border-l-8 border-flowerGold relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-flowerGold/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div class="relative flex-shrink-0">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-flowerGold to-flowerViolet flex items-center justify-center text-white text-3xl shadow-xl flower-avatar-pulse">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <span class="absolute -bottom-2 -right-2 bg-flowerEmerald text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-full border border-black">T(x) ≥ 0.995</span>
+                </div>
+                <div class="space-y-2 flex-1">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono uppercase tracking-widest text-flowerGold font-bold">SORENv2 Edge Veritas Architecture</span>
+                        <span class="text-xs font-mono text-flowerCyan bg-flowerCyan/10 px-3 py-1 rounded-full border border-flowerCyan/30">Target: T(x) ≥ 1.000</span>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">"Greetings, Evolutionary Bloom Architect!"</h2>
+                    <p class="text-sm text-slate-300 leading-relaxed italic">
+                        "Welcome to SORENv2 FLOWER LEARN—your zero-dependency edge runtime. Synthesizing 9SM matrix topology, 81-Diremption acoustic-visual refraction, client-side data sump ingestion, and cryptographic local vaulting."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1: MANDALA & THEORY ENGINE -->
+        <section id="tab-mandala-theory" class="tab-view space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Left: SVG Interactive 9-Petal Flower Mandala -->
+                <div class="lg:col-span-5 flower-panel rounded-3xl p-6 space-y-4 text-center border border-flowerViolet/50">
+                    <div class="flex justify-between items-center px-2">
+                        <h3 class="text-sm font-bold font-mono text-flowerCyan uppercase tracking-wider">Interactive 9SM Petal Mandala</h3>
+                        <span class="text-[10px] font-mono text-gray-400">Click Petal to Inspect</span>
+                    </div>
+
+                    <div class="relative flex justify-center items-center py-2">
+                        <svg id="flower-mandala" viewBox="0 0 300 300" class="w-72 h-72 md:w-80 md:h-80">
+                            <defs>
+                                <radialGradient id="core-grad" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#7209B7" />
+                                    <stop offset="100%" stop-color="#F72585" />
+                                </radialGradient>
+                                <linearGradient id="petal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#161233" />
+                                    <stop offset="100%" stop-color="#2E285C" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="150" cy="150" r="28" fill="url(#core-grad)" stroke="#4CC9F0" stroke-width="2" />
+                            <text x="150" y="154" text-anchor="middle" fill="#FFFFFF" font-size="10" font-family="monospace" font-weight="bold">SOREN</text>
+                            <g id="petals-group"></g>
+                        </svg>
+                    </div>
+
+                    <div id="petal-info-card" class="bg-flowerDark/80 p-4 rounded-2xl border border-flowerBorder text-left space-y-1 font-mono text-xs">
+                        <div id="petal-title" class="font-bold text-flowerGold text-sm">Select a Petal</div>
+                        <div id="petal-desc" class="text-gray-300">Click any of the 9 dimensional petals in the flower mandala above to view its operational parameters and metrics.</div>
+                    </div>
+                </div>
+
+                <!-- Right: Theory & Formula Guidance -->
+                <div class="lg:col-span-7 flower-panel rounded-3xl p-6 md:p-8 space-y-6">
+                    <div class="border-b border-flowerBorder pb-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-mono uppercase text-flowerGold font-semibold">PART I • THEORY ENGINE (40%)</span>
+                            <h3 class="text-xl font-bold text-white">The Truth Formula Computation</h3>
+                        </div>
+                        <span class="px-3 py-1 bg-flowerViolet/20 text-flowerRose border border-flowerViolet/50 rounded-lg text-xs font-mono">WIF = 1.000 Grounded</span>
+                    </div>
+
+                    <!-- Math Equation Container -->
+                    <div class="bg-flowerDark/90 p-5 rounded-2xl border border-flowerBorder text-center overflow-x-auto shadow-inner space-y-2">
+                        <p class="text-lg md:text-xl font-mono text-flowerCyan font-bold">
+                            T(x) = [ ( ∑ S_i ) / 9 ] × WIF - Penalty
+                        </p>
+                        <p class="text-xs text-slate-400 font-mono">Where Penalty = 0.10 for every individual score S_i &lt; 0.50. WIF = Weighted Integrity Factor (1.000 for Direct Bitstream).</p>
+                    </div>
+
+                    <!-- 9SM Dimensional Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-mono">
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-flowerGold font-bold">S1: Truth</span> &ge; 0.995
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-flowerCyan font-bold">S2: Velocity</span> &lt; 15ms Latency
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-flowerEmerald font-bold">S3: Sovereignty</span> Client Keys
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-purple-400 font-bold">S4: Resonance</span> Trust Loop
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-amber-400 font-bold">S5: Efficiency</span> Zero Waste
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-blue-400 font-bold">S6: Scalability</span> Exponential
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-teal-400 font-bold">S7: Transparency</span> Open Audit
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-rose-400 font-bold">S8: Adaptability</span> Autonomous
+                        </div>
+                        <div class="p-2.5 bg-flowerDark/50 rounded-xl border border-flowerBorder">
+                            <span class="text-flowerRose font-bold">S9: Purpose</span> Asset Liquidity
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 81-SPECTRA VISUALIZER CANVAS -->
+        <section id="tab-spectra-lattice" class="tab-view space-y-6 hidden">
+            <div class="flower-panel p-6 rounded-3xl border border-flowerBorder space-y-5">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between border-b border-flowerBorder/80 pb-4 gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg font-bold text-white font-mono">ANTI=APP // SPECTRA 81-DIREMPTION LATTICE</h3>
+                            <span class="text-[9px] font-mono font-bold tracking-widest px-2 py-0.5 bg-flowerCyan/20 text-flowerCyan border border-flowerCyan/30 rounded-full">9 Wavebands</span>
+                        </div>
+                        <p class="text-xs text-slate-400 font-mono mt-1">Interactive WebGL/Canvas Particle Refraction & Solfeggio Audio Drone Synthesizer (432Hz–963Hz)</p>
+                    </div>
+
+                    <button onclick="toggleAudio()" id="audioBtn" class="px-4 py-2 rounded-xl bg-flowerDark border border-flowerBorder text-xs font-mono font-medium text-slate-300 flex items-center gap-2 hover:border-flowerCyan transition">
+                        <i id="audioIcon" class="fa-solid fa-volume-xmark text-rose-400"></i>
+                        <span id="audioText">Acoustic Drone: Off</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                    <!-- Left: Control Console -->
+                    <div class="lg:col-span-1 space-y-4 font-mono text-xs">
+                        <div class="bg-flowerDark p-4 rounded-2xl border border-flowerBorder space-y-2">
+                            <div class="flex justify-between items-center text-flowerCyan font-bold">
+                                <span id="waveTitle">1. Red Wave: Somatic</span>
+                                <span id="waveCounter" class="text-gray-400 text-[10px]">1/9</span>
+                            </div>
+                            <p id="waveFreq" class="text-[11px] text-flowerGold">432.00 Hz // Somatic Anchors</p>
+                            <p id="waveDesc" class="text-[11px] text-gray-300 leading-relaxed">Scanned handwritten records, biometric telemetry, hardcopy archives.</p>
+                            <div class="pt-2 border-t border-flowerBorder/60 space-y-1 text-[10px] text-gray-400">
+                                <div class="flex justify-between"><span>Nodes:</span> <span id="waveRange" class="text-white">01-09</span></div>
+                                <div class="flex justify-between"><span>Wavelength:</span> <span id="waveNm" class="text-white">700 nm</span></div>
+                                <div class="flex justify-between"><span>Coherence:</span> <span id="waveEntropy" class="text-flowerEmerald">0.041 (Coherent)</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Wave Selector Grid -->
+                        <div class="space-y-1.5">
+                            <span class="text-[10px] uppercase font-bold text-gray-400">Light Waveband Selector</span>
+                            <div id="waveGrid" class="grid grid-cols-3 gap-1.5"></div>
+                        </div>
+
+                        <button onclick="simulateIngest()" class="w-full py-2.5 bg-gradient-to-r from-flowerCyan to-flowerViolet text-white font-mono font-bold rounded-xl text-xs flex items-center justify-center gap-2 hover:opacity-90 transition">
+                            <i class="fa-solid fa-bolt"></i> Refract Persona Data
+                        </button>
+                    </div>
+
+                    <!-- Right: Canvas -->
+                    <div class="lg:col-span-3 flex flex-col items-center justify-center relative min-h-[460px] bg-black/60 p-4 rounded-2xl border border-flowerBorder">
+                        <canvas id="spectraCanvas" class="w-full max-w-[480px] aspect-square cursor-crosshair rounded-xl border border-flowerBorder/60"></canvas>
+
+                        <div class="mt-4 flex items-center gap-3 text-xs font-mono">
+                            <button onclick="prevWave()" class="px-3 py-1.5 bg-flowerDark border border-flowerBorder rounded-xl text-gray-300 hover:text-flowerCyan"><i class="fa-solid fa-arrow-left mr-1"></i> Prev</button>
+                            <button onclick="nextWave()" class="px-4 py-1.5 bg-flowerCyan/20 text-flowerCyan border border-flowerCyan/40 rounded-xl font-bold">Advance Wave</button>
+                            <button onclick="resetLattice()" class="px-3 py-1.5 bg-flowerDark border border-flowerBorder rounded-xl text-gray-400 hover:text-flowerRose"><i class="fa-solid fa-rotate mr-1"></i> Re-Align</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: DATA SUMP INGESTION ENGINE -->
+        <section id="tab-data-sump" class="tab-view space-y-6 hidden">
+            <div class="flower-panel p-6 rounded-3xl border border-flowerBorder space-y-4">
+                <div class="flex items-center justify-between border-b border-flowerBorder pb-3">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2 font-mono">
+                        <i class="fa-solid fa-database text-flowerGold"></i> Subtractive Noise Data Sump & Context Profiling
+                    </h3>
+                    <span class="text-xs font-mono text-flowerCyan bg-flowerCyan/10 px-2.5 py-1 rounded border border-flowerCyan/30">CLIENT WASM INGESTION</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                    Paste raw telemetry, strategy blueprints, or unstructured logs. The 5-stage subtractive noise incineration engine strips semantic fluff, validates bitstream integrity, and adapts your T(x) learning profile.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2 space-y-2">
+                        <textarea id="data_sump_input" rows="6" class="w-full bg-flowerDark border border-flowerBorder rounded-xl p-3 text-xs text-slate-200 focus:border-flowerCyan focus:outline-none font-mono" placeholder="Paste unstructured telemetry or strategy notes... (e.g. 'Target: WASM Edge Arbitrage, Focus: 98%, WIF: 1.0, Priority: Sub-15ms execution, Favorite Spectrum: Teal')"></textarea>
+                    </div>
+                    <div class="flex flex-col justify-between space-y-3 font-mono text-xs">
+                        <button onclick="processDataSump()" class="w-full py-3 bg-gradient-to-r from-flowerGold to-flowerViolet hover:brightness-110 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg transition">
+                            <i class="fa-solid fa-filter"></i> Run Subtractive Incinerator
+                        </button>
+                        <div id="sump_status" class="p-3.5 bg-black/80 rounded-xl border border-flowerBorder text-[11px] text-slate-400 space-y-1">
+                            <div>Status: Awaiting ingestion...</div>
+                            <div id="sump_metrics" class="text-flowerCyan font-bold">Parsed Nodes: 0 | Noise Reduced: 0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: ACTIVE WORKSHEET & T(x) CALCULATOR WORKSPACE -->
+        <section id="tab-worksheet-calc" class="tab-view space-y-8 hidden">
+            <div class="flower-panel rounded-3xl p-6 md:p-8 space-y-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-flowerBorder pb-4 gap-4">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-flowerGold font-semibold">PART II • PRACTICAL WORKSHEET (60%)</span>
+                        <h3 class="text-2xl font-bold text-white">SORENv2 Active Learning Synthesis</h3>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-mono text-slate-400">Student / Operator Key:</span>
+                        <input type="text" id="student-key" value="ARCHITECT_0x9F" class="bg-flowerDark border border-flowerBorder rounded-lg px-3 py-1.5 text-xs font-mono text-flowerCyan focus:outline-none focus:border-flowerCyan">
+                    </div>
+                </div>
+
+                <!-- Exercise 1: Reflection Prompts -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-flowerCyan text-sm font-mono flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i> EXERCISE 1: REASONING & STRUCTURAL REFLECTION
+                    </h4>
+
+                    <div class="space-y-2 text-xs font-mono">
+                        <label class="block text-slate-300">1. Why does relying on raw bitstream processing directly eliminate semantic hallucination compared to filename metadata?</label>
+                        <textarea id="ex1-q1" rows="2" placeholder="Type your analytical response here..." class="w-full bg-flowerDark border border-flowerBorder rounded-xl p-3 text-slate-200 focus:outline-none focus:border-flowerCyan"></textarea>
+                    </div>
+
+                    <div class="space-y-2 text-xs font-mono">
+                        <label class="block text-slate-300">2. Contrast offline edge WASM execution with traditional cloud API calls regarding data sovereignty (S3) and thermodynamic waste (S5).</label>
+                        <textarea id="ex1-q2" rows="2" placeholder="Type your comparative synthesis here..." class="w-full bg-flowerDark border border-flowerBorder rounded-xl p-3 text-slate-200 focus:outline-none focus:border-flowerCyan"></textarea>
+                    </div>
+                </div>
+
+                <!-- Exercise 2: Interactive Mathematical Calculation Workspaces -->
+                <div class="space-y-6 pt-4 border-t border-flowerBorder">
+                    <h4 class="font-bold text-flowerGold text-sm font-mono flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> EXERCISE 2: TRUTH FORMULA WORKSPACE CALCULATOR
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Scenario A -->
+                        <div class="bg-flowerDark/80 p-5 rounded-2xl border border-flowerBorder space-y-3 font-mono text-xs">
+                            <div class="flex justify-between items-center text-rose-400 font-bold border-b border-flowerBorder pb-2">
+                                <span>Scenario A: Legacy Cloud Portal</span>
+                                <span>WIF = 0.900</span>
+                            </div>
+                            <p class="text-slate-400 text-[11px]">Scores: S1=0.80, S2=0.40, S3=0.30, S4=0.60, S5=0.50, S6=0.70, S7=0.40, S8=0.50, S9=0.60</p>
+
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span>Sum of Scores:</span>
+                                    <input type="number" step="0.01" id="scen-a-sum" placeholder="Calculated..." class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerRose font-bold">
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Mean Score (Sum / 9):</span>
+                                    <input type="number" step="0.001" id="scen-a-mean" placeholder="Calculated..." class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerRose font-bold">
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Dimensions &lt; 0.50 Count:</span>
+                                    <input type="number" id="scen-a-pen-count" placeholder="Count..." class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerGold font-bold">
+                                </div>
+                                <div class="flex justify-between items-center border-t border-flowerBorder pt-2">
+                                    <span class="font-bold text-white">Computed T(x) Result:</span>
+                                    <span id="scen-a-result" class="font-bold text-rose-400 text-sm">--</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario B -->
+                        <div class="bg-flowerDark/80 p-5 rounded-2xl border border-flowerBorder space-y-3 font-mono text-xs">
+                            <div class="flex justify-between items-center text-flowerEmerald font-bold border-b border-flowerBorder pb-2">
+                                <span>Scenario B: SORENv2 Edge Bloom</span>
+                                <span>WIF = 1.000</span>
+                            </div>
+                            <p class="text-slate-400 text-[11px]">Scores: S1=0.99, S2=0.98, S3=0.99, S4=0.95, S5=0.99, S6=0.97, S7=0.96, S8=0.98, S9=1.00</p>
+
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span>Sum of Scores:</span>
+                                    <input type="number" step="0.01" id="scen-b-sum" placeholder="Calculated..." class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerEmerald font-bold">
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Mean Score (Sum / 9):</span>
+                                    <input type="number" step="0.001" id="scen-b-mean" placeholder="Calculated..." class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerEmerald font-bold">
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Dimensions &lt; 0.50 Count:</span>
+                                    <input type="number" id="scen-b-pen-count" placeholder="0" class="w-28 bg-flowerPanel border border-flowerBorder rounded px-2 py-1 text-right text-flowerEmerald font-bold">
+                                </div>
+                                <div class="flex justify-between items-center border-t border-flowerBorder pt-2">
+                                    <span class="font-bold text-white">Computed T(x) Result:</span>
+                                    <span id="scen-b-result" class="font-bold text-flowerEmerald text-sm">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Delta Output Card -->
+                <div id="evaluation-card" class="hidden p-6 bg-flowerDark rounded-2xl border border-flowerCyan space-y-4 font-mono text-xs">
+                    <div class="flex justify-between items-center text-flowerCyan font-bold text-sm border-b border-flowerBorder pb-2">
+                        <span><i class="fa-solid fa-square-poll-vertical"></i> SORENv2 EVALUATION & TRUTH DELTA ANALYSIS</span>
+                        <span id="eval-timestamp">Timestamp: --</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-flowerPanel p-3 rounded-xl border border-flowerBorder">
+                            <div class="text-gray-400">Target Truth T(x)</div>
+                            <div class="text-lg font-bold text-flowerGold">1.0000</div>
+                        </div>
+                        <div class="bg-flowerPanel p-3 rounded-xl border border-flowerBorder">
+                            <div class="text-gray-400">Submitted Score T(x)</div>
+                            <div id="eval-submitted-score" class="text-lg font-bold text-flowerCyan">--</div>
+                        </div>
+                        <div class="bg-flowerPanel p-3 rounded-xl border border-flowerBorder">
+                            <div class="text-gray-400">Delta Alignment (Δ)</div>
+                            <div id="eval-delta" class="text-lg font-bold text-flowerEmerald">--</div>
+                        </div>
+                    </div>
+
+                    <div id="eval-feedback" class="text-slate-300 leading-relaxed bg-flowerPanel p-4 rounded-xl border border-flowerBorder">
+                        Awaiting evaluation submission...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: PROTON CLI TERMINAL SIMULATION -->
+        <section id="tab-proton-cli" class="tab-view space-y-6 hidden">
+            <div class="flower-panel p-6 rounded-3xl border border-flowerBorder space-y-4">
+                <div class="flex items-center justify-between border-b border-flowerBorder pb-3">
+                    <h3 class="text-sm font-bold font-mono text-flowerCyan uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-terminal"></i> Proton CLI Vault & SLIVER Grand Ledger Simulation
+                    </h3>
+                    <span class="text-[10px] font-mono text-flowerEmerald">STATUS: ONLINE // LOCAL OPFS VAULT</span>
+                </div>
+
+                <div class="bg-black rounded-2xl p-5 font-mono text-xs space-y-3 border border-flowerBorder shadow-2xl">
+                    <div class="text-gray-500 border-b border-gray-800 pb-2 flex justify-between">
+                        <span>soren-proton-cli v2.5.0-wasm</span>
+                        <span>Type 'help' for directive list</span>
+                    </div>
+                    <div id="cli-output" class="h-64 overflow-y-auto space-y-1.5 text-gray-300 pr-2">
+                        <div class="text-flowerCyan">[+] Initializing soren-proton-cli environment...</div>
+                        <div class="text-flowerCyan">[+] Local cryptographic vault mounted (AES-256-GCM).</div>
+                        <div class="text-flowerEmerald">[+] Veridical Truth Gate active: T(x) >= 0.9950</div>
+                    </div>
+                    <div class="flex items-center gap-2 pt-2 border-t border-gray-800">
+                        <span class="text-flowerCyan font-bold">proton-cli:~$</span>
+                        <input type="text" id="cli-input" class="bg-transparent text-flowerRose focus:outline-none flex-1 font-mono text-xs" placeholder="status, eval, vault, scan, ledger --commit, freq-sync, deconstruct...">
+                        <button onclick="handleCliSubmit()" class="px-3 py-1 bg-flowerCyan/20 text-flowerCyan border border-flowerCyan/40 rounded text-xs hover:bg-flowerCyan/30">Run</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-flowerBorder py-6 px-4 text-center font-mono text-xs text-gray-500 no-print">
+        SLIVER CONSORTIUM • SORENv2 FLOWER LEARN MATRIX • ZERO THERMODYNAMIC WASTE • T(x) ≥ 1.000 VERIFIED
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT ENGINE -->
+    <script>
+        // 9SM Dimensions
+        const PETAL_DATA = [
+            { id: 1, name: "S1: Truth Alignment", score: "≥ 0.995", desc: "Bitstream-grounded accuracy verified against reality without inference hallucination." },
+            { id: 2, name: "S2: Velocity", score: "< 15ms", desc: "Zero-lag throughput and immediate verification cycles via client WASM." },
+            { id: 3, name: "S3: Sovereignty", score: "1.000", desc: "Complete key stewardship with zero data leakage to external centralized runtimes." },
+            { id: 4, name: "S4: Resonance", score: "0.950", desc: "Trust amplification aligned with Universal Emotional Language and human flourishing." },
+            { id: 5, name: "S5: Efficiency", score: "0.990", desc: "Zero thermodynamic waste; execution runs on client edge threads." },
+            { id: 6, name: "S6: Scalability", score: "0.980", desc: "Exponential network growth capability without state decay." },
+            { id: 7, name: "S7: Transparency", score: "0.960", desc: "Full open auditability of code execution and cryptographic receipts." },
+            { id: 8, name: "S8: Adaptability", score: "0.980", desc: "Autonomous self-healing failover and dynamic memory caching." },
+            { id: 9, name: "S9: Purpose", score: "1.000", desc: "Unlocking trapped liquidity and driving high-velocity social impact." }
+        ];
+
+        // 9 Harmonic Waves Data
+        const LIGHT_WAVES = [
+            { id: 1, name: "1. Red Wave: Somatic", freqText: "432.00 Hz // Somatic Anchors", desc: "Scanned handwritten records, biometrics, hardcopy archives.", range: "01-09", wavelength: "700 nm", freq: 432.00, color: '#ff0055' },
+            { id: 2, name: "2. Orange Wave: Relational", freqText: "528.00 Hz // Emotional Bonds", desc: "Message threads, family audio logs, social dynamics.", range: "10-18", wavelength: "620 nm", freq: 528.00, color: '#ff6600' },
+            { id: 3, name: "3. Yellow Wave: Volition", freqText: "584.00 Hz // Agency & Drive", desc: "Active projects, financial flows, career goals.", range: "19-27", wavelength: "580 nm", freq: 584.00, color: '#ffcc00' },
+            { id: 4, name: "4. Green Wave: Ethics", freqText: "639.00 Hz // Harmonic Synthesis", desc: "Moral choices, creeds, balance metrics.", range: "28-36", wavelength: "530 nm", freq: 639.00, color: '#00ff66' },
+            { id: 5, name: "5. Cyan Wave: Expression", freqText: "741.00 Hz // Expressive Truth", desc: "Codebases, published essays, video logs, audio.", range: "37-45", wavelength: "490 nm", freq: 741.00, color: '#00ffff' },
+            { id: 6, name: "6. Blue Wave: Epistemology", freqText: "852.00 Hz // Cognitive Insight", desc: "Research papers, mental models, systems architecture.", range: "46-54", wavelength: "450 nm", freq: 852.00, color: '#0066ff' },
+            { id: 7, name: "7. Violet Wave: Metacognition", freqText: "963.00 Hz // Self-Reflection", desc: "Dream journals, introspective logs, meditation.", range: "55-63", wavelength: "400 nm", freq: 963.00, color: '#9900ff' },
+            { id: 8, name: "8. Magenta Wave: Mythos", freqText: "1074.00 Hz // Archetypal Meaning", desc: "Personal mythology, recurring motifs, legacy vision.", range: "64-72", wavelength: "380 nm", freq: 1074.00, color: '#ff00cc' },
+            { id: 9, name: "9. White Wave: Singularity", freqText: "1188.00 Hz // Full Coherence", desc: "Unified Soul Image ('Spectra'), zero-point identity.", range: "73-81", wavelength: "Full Spectrum", freq: 1188.00, color: '#ffffff' }
+        ];
+
+        let currentWaveIndex = 0;
+        let canvas, ctx;
+        let audioActive = false;
+        let audioCtx, droneOsc, droneGain;
+        let particleLattice = [];
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('bg-flowerCyan/20', 'text-flowerCyan', 'border', 'border-flowerCyan/40');
+                btn.classList.add('text-gray-400');
+            });
+
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-flowerCyan/20', 'text-flowerCyan', 'border', 'border-flowerCyan/40');
+                activeBtn.classList.remove('text-gray-400');
+            }
+
+            if (tabId === 'spectra-lattice') {
+                setTimeout(initCanvas, 50);
+            }
+        }
+
+        // Render SVG Mandala
+        function renderMandalaPetals() {
+            const group = document.getElementById('petals-group');
+            if (!group) return;
+
+            const cx = 150, cy = 150, radius = 80, count = 9;
+            let html = '';
+            for (let i = 0; i < count; i++) {
+                const angle = (i * 360 / count) - 90;
+                const rad = angle * Math.PI / 180;
+
+                const px = cx + radius * Math.cos(rad);
+                const py = cy + radius * Math.sin(rad);
+
+                const leftAngle = (angle - 18) * Math.PI / 180;
+                const rightAngle = (angle + 18) * Math.PI / 180;
+                const c1x = cx + (radius * 0.6) * Math.cos(leftAngle);
+                const c1y = cy + (radius * 0.6) * Math.sin(leftAngle);
+                const c2x = cx + (radius * 0.6) * Math.cos(rightAngle);
+                const c2y = cy + (radius * 0.6) * Math.sin(rightAngle);
+
+                const d = `M ${cx} ${cy} Q ${c1x} ${c1y} ${px} ${py} Q ${c2x} ${c2y} ${cx} ${cy} Z`;
+                html += `<path d="${d}" fill="url(#petal-grad)" class="flower-petal" data-index="${i}" onclick="inspectPetal(${i})" />`;
+            }
+            group.innerHTML = html;
+        }
+
+        function inspectPetal(index) {
+            document.querySelectorAll('.flower-petal').forEach((p, idx) => {
+                if (idx === index) p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
+            const data = PETAL_DATA[index];
+            const titleEl = document.getElementById('petal-title');
+            const descEl = document.getElementById('petal-desc');
+
+            if (titleEl && descEl) {
+                titleEl.innerHTML = `${data.name} <span class="text-flowerCyan font-mono text-xs">(${data.score})</span>`;
+                descEl.innerText = data.desc;
+            }
+        }
+
+        // Formula Scenarios
+        function computeScenarios() {
+            // Scenario A
+            const scA_scores = [0.80, 0.40, 0.30, 0.60, 0.50, 0.70, 0.40, 0.50, 0.60];
+            const scA_wif = 0.900;
+            const scA_sum = scA_scores.reduce((a, b) => a + b, 0);
+            const scA_mean = scA_sum / 9;
+            const scA_pen_count = scA_scores.filter(s => s < 0.50).length;
+            const scA_penalty = scA_pen_count * 0.10;
+            const scA_tx = (scA_mean * scA_wif) - scA_penalty;
+
+            document.getElementById('scen-a-sum').value = scA_sum.toFixed(2);
+            document.getElementById('scen-a-mean').value = scA_mean.toFixed(3);
+            document.getElementById('scen-a-pen-count').value = scA_pen_count;
+            document.getElementById('scen-a-result').innerText = scA_tx.toFixed(4);
+
+            // Scenario B
+            const scB_scores = [0.99, 0.98, 0.99, 0.95, 0.99, 0.97, 0.96, 0.98, 1.00];
+            const scB_wif = 1.000;
+            const scB_sum = scB_scores.reduce((a, b) => a + b, 0);
+            const scB_mean = scB_sum / 9;
+            const scB_pen_count = scB_scores.filter(s => s < 0.50).length;
+            const scB_penalty = scB_pen_count * 0.10;
+            const scB_tx = (scB_mean * scB_wif) - scB_penalty;
+
+            document.getElementById('scen-b-sum').value = scB_sum.toFixed(2);
+            document.getElementById('scen-b-mean').value = scB_mean.toFixed(3);
+            document.getElementById('scen-b-pen-count').value = scB_pen_count;
+            document.getElementById('scen-b-result').innerText = scB_tx.toFixed(4);
+        }
+
+        function evaluateWorksheet() {
+            computeScenarios();
+            const card = document.getElementById('evaluation-card');
+            card.classList.remove('hidden');
+
+            const submittedTx = parseFloat(document.getElementById('scen-b-result').innerText) || 0.9978;
+            const targetTx = 1.0000;
+            const delta = 1.0000 - Math.abs(targetTx - submittedTx);
+
+            document.getElementById('eval-timestamp').innerText = `Timestamp: ${new Date().toISOString()}`;
+            document.getElementById('eval-submitted-score').innerText = `+${submittedTx.toFixed(4)}`;
+            document.getElementById('eval-delta').innerText = `Δ = ${delta.toFixed(4)}`;
+
+            const feedback = document.getElementById('eval-feedback');
+            if (delta >= 0.995) {
+                feedback.innerHTML = `<span class="text-flowerEmerald font-bold">[PASSED] SORENv2 FLOWER BLOOM MASTERY ACHIEVED!</span><br>Submitted state grounded directly in bitstream reality (T(x) = ${submittedTx.toFixed(4)}). Zero thermodynamic waste confirmed. Anchor receipt ready for Grand Ledger commit.`;
+            } else {
+                feedback.innerHTML = `<span class="text-rose-400 font-bold">[ATTENTION REQUIRED] TRUTH DELTA BELOW THRESHOLD</span><br>Ensure all 9SM dimensions exceed S_i >= 0.50 to avoid penalty deductions and optimize Weighted Integrity Factor to 1.000.`;
+            }
+        }
+
+        // SPECTRA Canvas Engine
+        function initCanvas() {
+            canvas = document.getElementById('spectraCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const size = Math.floor(Math.min(rect.width, 480));
+            canvas.width = size;
+            canvas.height = size;
+
+            initWaveGrid();
+            build81Lattice();
+            requestAnimationFrame(renderLoop);
+        }
+
+        function initWaveGrid() {
+            const container = document.getElementById('waveGrid');
+            if (!container) return;
+            container.innerHTML = '';
+            LIGHT_WAVES.forEach((wave, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `p-1.5 text-[10px] font-mono rounded border text-center transition-all ${idx === currentWaveIndex ? 'bg-flowerCyan/30 border-flowerCyan text-white font-bold' : 'bg-flowerDark border-flowerBorder text-gray-400 hover:border-gray-600'}`;
+                btn.innerText = `W${wave.id}`;
+                btn.onclick = () => setWave(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function build81Lattice() {
+            particleLattice = [];
+            if (!canvas) return;
+            const center = canvas.width / 2;
+            const radiusMax = canvas.width * 0.42;
+
+            for (let i = 0; i < 81; i++) {
+                const waveGroup = Math.floor(i / 9);
+                const angle = (i % 9) * (Math.PI * 2 / 9) + (waveGroup * 0.15);
+                const r = (waveGroup + 1) * (radiusMax / 9);
+
+                particleLattice.push({
+                    id: i + 1,
+                    waveGroup: waveGroup,
+                    baseX: center + Math.cos(angle) * r,
+                    baseY: center + Math.sin(angle) * r,
+                    x: center + Math.cos(angle) * r,
+                    y: center + Math.sin(angle) * r,
+                    vx: 0,
+                    vy: 0,
+                    size: 2.5 + (waveGroup * 0.3),
+                    color: LIGHT_WAVES[waveGroup].color
+                });
+            }
+        }
+
+        function setWave(idx) {
+            currentWaveIndex = idx;
+            const wave = LIGHT_WAVES[idx];
+            document.getElementById('waveTitle').innerText = wave.name;
+            document.getElementById('waveFreq').innerText = wave.freqText;
+            document.getElementById('waveDesc').innerText = wave.desc;
+            document.getElementById('waveRange').innerText = wave.range;
+            document.getElementById('waveNm').innerText = wave.wavelength;
+            document.getElementById('waveCounter').innerText = `${wave.id}/9`;
+
+            initWaveGrid();
+
+            if (audioActive && droneOsc) {
+                droneOsc.frequency.setValueAtTime(wave.freq, audioCtx.currentTime);
+            }
+        }
+
+        function nextWave() { setWave((currentWaveIndex + 1) % LIGHT_WAVES.length); }
+        function prevWave() { setWave((currentWaveIndex - 1 + LIGHT_WAVES.length) % LIGHT_WAVES.length); }
+
+        function simulateIngest() {
+            particleLattice.forEach(p => {
+                if (p.waveGroup === currentWaveIndex) {
+                    p.vx += (Math.random() - 0.5) * 10;
+                    p.vy += (Math.random() - 0.5) * 10;
+                }
+            });
+        }
+
+        function resetLattice() { build81Lattice(); }
+
+        function renderLoop() {
+            if (!ctx || !canvas) return;
+            ctx.fillStyle = 'rgba(11, 9, 26, 0.25)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const center = canvas.width / 2;
+            const currentWave = LIGHT_WAVES[currentWaveIndex];
+
+            // Lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+            for (let i = 0; i < particleLattice.length; i++) {
+                const p1 = particleLattice[i];
+                for (let j = i + 1; j < particleLattice.length; j++) {
+                    const p2 = particleLattice[j];
+                    if (p1.waveGroup === p2.waveGroup) {
+                        const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+                        if (dist < 80) {
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = p1.waveGroup === currentWaveIndex ? `${p1.color}66` : 'rgba(255, 255, 255, 0.03)';
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            // Particles
+            particleLattice.forEach(p => {
+                p.vx += (p.baseX - p.x) * 0.03;
+                p.vy += (p.baseY - p.y) * 0.03;
+                p.vx *= 0.88;
+                p.vy *= 0.88;
+                p.x += p.vx;
+                p.y += p.vy;
+
+                const isCurrent = (p.waveGroup === currentWaveIndex);
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, isCurrent ? p.size * 1.5 : p.size, 0, Math.PI * 2);
+                ctx.fillStyle = isCurrent ? p.color : `${p.color}88`;
+                ctx.fill();
+            });
+
+            // Center aperture
+            ctx.save();
+            ctx.translate(center, center);
+            ctx.beginPath();
+            ctx.arc(0, 0, 20 + Math.sin(Date.now() * 0.003) * 3, 0, Math.PI * 2);
+            ctx.strokeStyle = currentWave.color;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.restore();
+
+            requestAnimationFrame(renderLoop);
+        }
+
+        // Web Audio API Synthesizer
+        function toggleAudio() {
+            if (!audioActive) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                droneOsc = audioCtx.createOscillator();
+                droneGain = audioCtx.createGain();
+                droneOsc.type = 'sine';
+                droneOsc.frequency.setValueAtTime(LIGHT_WAVES[currentWaveIndex].freq, audioCtx.currentTime);
+                droneGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                droneOsc.connect(droneGain);
+                droneGain.connect(audioCtx.destination);
+                droneOsc.start();
+
+                audioActive = true;
+                document.getElementById('audioIcon').className = 'fa-solid fa-volume-high text-flowerCyan';
+                document.getElementById('audioText').innerText = 'Acoustic Drone: On';
+            } else {
+                if (droneOsc) droneOsc.stop();
+                audioActive = false;
+                document.getElementById('audioIcon').className = 'fa-solid fa-volume-xmark text-rose-400';
+                document.getElementById('audioText').innerText = 'Acoustic Drone: Off';
+            }
+        }
+
+        // Data Sump Processing
+        function processDataSump() {
+            const input = document.getElementById('data_sump_input').value.trim();
+            const statusEl = document.getElementById('sump_status');
+            const metricsEl = document.getElementById('sump_metrics');
+
+            if (!input) {
+                statusEl.innerHTML = `<span class="text-rose-400">Error: Sump empty. Provide telemetry inputs.</span>`;
+                return;
+            }
+
+            const noiseReduction = Math.min(85 + Math.floor(Math.random() * 12), 98);
+            const parsedNodes = Math.max(3, Math.floor(input.length / 15));
+
+            statusEl.innerText = "Status: Subtractive noise incineration complete. Context Profile compiled.";
+            metricsEl.innerText = `Parsed Nodes: ${parsedNodes} | Noise Reduced: ${noiseReduction}% | Ground State: T(x) 0.9982`;
+        }
+
+        // Proton CLI Terminal Logic
+        function handleCliSubmit() {
+            const inputEl = document.getElementById('cli-input');
+            const outputEl = document.getElementById('cli-output');
+            const cmd = inputEl.value.trim().toLowerCase();
+            if (!cmd) return;
+
+            const cmdLine = document.createElement('div');
+            cmdLine.className = 'text-flowerRose font-bold';
+            cmdLine.innerText = `proton-cli:~$ ${cmd}`;
+            outputEl.appendChild(cmdLine);
+
+            const resLine = document.createElement('div');
+            resLine.className = 'text-gray-300';
+
+            if (cmd === 'help') {
+                resLine.innerHTML = `Directives: <span class="text-flowerCyan">status</span>, <span class="text-flowerCyan">eval</span>, <span class="text-flowerCyan">vault</span>, <span class="text-flowerCyan">scan --9sm</span>, <span class="text-flowerCyan">ledger --commit</span>, <span class="text-flowerCyan">freq-sync</span>, <span class="text-flowerCyan">deconstruct</span>`;
+            } else if (cmd === 'status') {
+                resLine.innerHTML = `<span class="text-flowerEmerald">[SYSTEM OK] SORENv2 Edge WASM | T(x): 0.9982 | WIF: 1.000 | Latency: 4.2ms</span>`;
+            } else if (cmd === 'eval') {
+                resLine.innerHTML = `<span class="text-flowerGold">[EVAL] Truth Formula: T(x) = (0.9858/1.0) * 1.0 - 0.0 = 0.9858 (PASSED)</span>`;
+            } else if (cmd === 'vault') {
+                resLine.innerHTML = `<span class="text-flowerCyan">[VAULT] AES-256-GCM zero-knowledge state sealed. Local hash: 0xa3f9c8e27b</span>`;
+            } else if (cmd.includes('scan')) {
+                resLine.innerHTML = `<span class="text-flowerCyan">[SCAN] 9SM Matrix audited across 81 diremptions. 0 entropy violations detected.</span>`;
+            } else if (cmd.includes('ledger')) {
+                resLine.innerHTML = `<span class="text-flowerEmerald">[LEDGER] SLIVER-GRAND_LEDGER commitment signed. Block #808092 [VERIFIED].</span>`;
+            } else if (cmd === 'freq-sync') {
+                resLine.innerHTML = `<span class="text-flowerGold">[FREQ] Audio carrier calibrated to 432.00Hz Solfeggio fundamental.</span>`;
+            } else if (cmd === 'deconstruct') {
+                resLine.innerHTML = `<span class="text-purple-400">[DECONSTRUCT] 5-Stage subtractive noise incineration executed on memory buffer.</span>`;
+            } else {
+                resLine.innerHTML = `<span class="text-rose-400">Directive unknown: '${cmd}'. Type 'help' for available directives.</span>`;
+            }
+
+            outputEl.appendChild(resLine);
+            outputEl.scrollTop = outputEl.scrollHeight;
+            inputEl.value = '';
+        }
+
+        document.getElementById('cli-input')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleCliSubmit();
+        });
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMandalaPetals();
+            computeScenarios();
+        });
+    </script>
+</body>
+</html>

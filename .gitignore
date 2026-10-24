@@ -1,6 +1,10 @@
 # Gradle files
 .gradle/
 build/
+build_*/
+.pytest_cache/
+__pycache__/
+*.pyc
 .kotlin/
 
 # Local configuration file (sdk path, etc)
