@@ -1106,7 +1106,9 @@
 
                 let respText = '';
                 if (input === 'help') {
-                    respText = "Commands: launch, audio, status, zkhash, clear";
+                    respText = "Commands: launch, audio, status, zkhash, marketing, clear";
+                } else if (input === 'marketing' || input === 'posting') {
+                    respText = "CAMPAIGN ENGINE ACTIVE:\nProduct Hunt: Flower Learn Studio - Universal All-Ages Bio-Kinetic Coloring Engine\nTwitter: 🌿 Zero-screen-strain bio coloring book (#EdTech #WASM)\nReddit r/webdev: Zero-dependency 100% offline Canvas & WASM studio";
                 } else if (input === 'launch') {
                     respText = "[PROTOCOL: ALPHA-SYNC LAUNCH EXECUTION] 120 FPS WASM Physics & 528Hz Solfeggio Resonant Active.";
                 } else if (input === 'audio') {

@@ -27,4 +27,5 @@ The repository root contains `index.html`, a self-contained runtime integrating 
 
 ## Test & Automation
 * `tests/test_truth_gate.py`: Pytest suite validating mathematical formulas, threshold enforcement, and trigger logic.
+* `posting_engine.py`: Multi-platform marketing strategy and social media campaign generator (Product Hunt, Twitter/X, LinkedIn, Reddit, Dev.to).
 * `package.sh`: Automated shell execution script for running tests, computing SHA-256 and MD5 checksums, and building `sliver_edge_veritas_master.zip`.
