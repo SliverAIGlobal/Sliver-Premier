@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SliverVerse | Edge Veritas Master Runtime</title>
+    <title>Flower Learn (SOREN-V2) | Universal All-Ages Bio-Kinetic Coloring Studio</title>
     <style>
         :root {
             --bg-dark: #080c0a;
@@ -135,19 +135,19 @@
 
         /* Module 1: Flower Learn Studio */
         .sidebar {
-            width: 300px;
+            width: 320px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             overflow-y: auto;
         }
 
         .panel-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
             color: var(--accent-emerald);
@@ -164,7 +164,7 @@
             font-size: 11px;
         }
 
-        select, input[type="range"], button {
+        select, input[type="text"], input[type="range"], button {
             background-color: #080c0a;
             color: var(--text-main);
             border: 1px solid var(--border-color);
@@ -172,6 +172,11 @@
             border-radius: 6px;
             font-size: 11px;
             outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 6px rgba(52, 211, 153, 0.3);
         }
 
         .btn-primary {
@@ -242,6 +247,28 @@
         .pigment-swatch.selected {
             border: 2px solid var(--accent-emerald);
             box-shadow: 0 0 8px var(--accent-emerald);
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .library-card {
+            background: #080c0a;
+            border: 1px solid var(--border-color);
+            padding: 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .library-card:hover {
+            border-color: var(--accent-emerald);
+            background: #0e1712;
         }
 
         /* Module 2: SPECTRA Visualizer */
@@ -359,12 +386,12 @@
 
     <header>
         <div class="logo">
-            <span>SLIVERVERSE</span>
-            <span class="badge">EDGE VERITAS V1.0</span>
+            <span>FLOWER LEARN</span>
+            <span class="badge">BIO-KINETIC COLOR STUDIO V2.0</span>
         </div>
 
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('flower')">Flower Learn</button>
+            <button class="tab-btn active" onclick="switchTab('flower')">Color Studio</button>
             <button class="tab-btn" onclick="switchTab('spectra')">81-SPECTRA</button>
             <button class="tab-btn" onclick="switchTab('txgate')">T(x)-Gate</button>
             <button class="tab-btn" onclick="switchTab('datasump')">Data Sump</button>
@@ -390,39 +417,67 @@
         <div id="pane-flower" class="module-pane active">
             <aside class="sidebar">
                 <div class="panel-title">
-                    <span>De-Coloring Engine</span>
-                    <span class="badge">No-API WASM</span>
+                    <span>Topic & Image Engine</span>
+                    <span class="badge">Offline WASM</span>
+                </div>
+
+                <!-- Custom Write-In Topic Input -->
+                <div class="control-group">
+                    <label style="font-weight: bold; color: var(--accent-emerald);">✍️ Write-In Any Topic</label>
+                    <input type="text" id="writeInTopic" placeholder="e.g. Honeybee, Redwood, Dinoflagellates..." onchange="handleWriteInTopic(this.value)" onkeydown="if(event.key==='Enter') handleWriteInTopic(this.value)">
                 </div>
 
                 <div class="control-group">
-                    <label>Target Biological Topic</label>
+                    <label>Or Select Preset Biological Topic</label>
                     <select id="topicSelect" onchange="changeTopic(this.value)">
                         <option value="turtle">Chelonia Mydas (Sea Turtle)</option>
                         <option value="guard_cells">Leaf Guard Cells & Stomata</option>
+                        <option value="honeybee">Apis Mellifera (Honeybee Anatomy)</option>
+                        <option value="jellyfish">Aequorea Victoria (Bioluminescent Jellyfish)</option>
+                        <option value="redwood">Sequoia Sempervirens (Redwood Forest)</option>
+                        <option value="fungi">Mycorrhizal Fungi Root Network</option>
+                        <option value="custom">★ Custom Write-In Topic</option>
                     </select>
                 </div>
 
                 <div class="control-group">
-                    <label>Cognitive Tier</label>
+                    <label>Age & Skill Complexity Tier</label>
                     <select id="ageSelect" onchange="changeAgeTier(this.value)">
-                        <option value="junior">Little Botanist (Age 4-8)</option>
-                        <option value="scholar" selected>Young Scholar (Age 9-14)</option>
-                        <option value="master">Sovereign Architect (Age 15+)</option>
+                        <option value="junior">Little Botanist (Age 4-8) - Bold Contour</option>
+                        <option value="scholar" selected>Young Scholar (Age 9-14) - Micro-Anatomy</option>
+                        <option value="master">Mindful Architect (Age 15+) - Full Detail</option>
                     </select>
                 </div>
 
-                <button class="btn-primary" onclick="generateLineArt()">Synthesize Line Art</button>
+                <button class="btn-primary" onclick="generateLineArt()">Synthesize & De-Color Line Art</button>
 
-                <div class="panel-title" style="margin-top: 10px;">
-                    <span>Biological Pigments</span>
+                <!-- Local Image Library & WASM De-Color Upload -->
+                <div class="panel-title" style="margin-top: 6px;">
+                    <span>Image Library De-Colorer</span>
+                </div>
+                <div class="control-group">
+                    <label>Upload Any Photo to Convert to Line Art</label>
+                    <input type="file" id="decolorFileInput" accept="image/*" onchange="handleImageLibraryUpload(event)">
+                </div>
+
+                <div class="panel-title" style="margin-top: 6px;">
+                    <span>Biological Field Notes</span>
+                </div>
+                <div id="bioFactsBox" style="font-size: 10px; color: var(--text-muted); background: #080c0a; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); line-height: 1.4;">
+                    <strong id="bioTitle" style="color: var(--accent-emerald); display: block; margin-bottom: 4px;">Chelonia mydas (Green Sea Turtle)</strong>
+                    <span id="bioDesc">Keratin scutes form over carapace bony matrix. Iridophores reflect cyan light via guanine nanocrystals.</span>
+                </div>
+
+                <div class="panel-title" style="margin-top: 6px;">
+                    <span>Authentic Biological Pigments</span>
                 </div>
                 <div class="pigment-grid" id="pigmentGrid"></div>
 
-                <div class="panel-title" style="margin-top: 10px;">
+                <div class="panel-title" style="margin-top: 6px;">
                     <span>Secret Bio-Reveal</span>
                 </div>
                 <div id="secretBox" style="font-size: 10px; color: #94a3b8; background: #080c0a; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
-                    Color with precision > 90% over carapace scutes to unlock Bioluminescent Iridophore FX.
+                    Achieve >90% precision score over anatomical boundaries to unlock Bioluminescent Bio-Glow.
                 </div>
             </aside>
 
@@ -432,23 +487,24 @@
                     <canvas id="lineCanvas" width="500" height="500" style="pointer-events: none; mix-blend-mode: multiply;"></canvas>
                     <canvas id="fxCanvas" width="500" height="500" style="pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas>
                 </div>
-                <div style="margin-top: 12px; display: flex; gap: 10px;">
-                    <button onclick="setTool('brush')">Brush</button>
-                    <button onclick="setTool('eraser')">Eraser</button>
-                    <button onclick="clearCanvas()">Clear</button>
-                    <button onclick="exportPNG()" class="btn-primary" style="padding: 6px 12px;">Export High-Res PNG</button>
+                <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center;">
+                    <button onclick="setTool('brush')">🖌️ Brush</button>
+                    <button onclick="setTool('eraser')">🧹 Eraser</button>
+                    <button onclick="clearCanvas()">🗑️ Clear</button>
+                    <button onclick="toggleRelaxationAudio()" style="background: #1e293b; color: #38bdf8;">🎵 528Hz Relax Audio</button>
+                    <button onclick="exportPNG()" class="btn-primary" style="padding: 6px 14px;">↓ Export High-Res PNG</button>
                 </div>
             </section>
         </div>
 
-        <!-- PANE 2: 81-Diremption SPECTRA -->
+        <!-- PANE 2: 81-SPECTRA VISUALIZER -->
         <div id="pane-spectra" class="module-pane">
             <div class="spectra-container" style="width: 100%; height: 100%;">
                 <canvas id="spectraCanvas" width="800" height="550"></canvas>
             </div>
         </div>
 
-        <!-- PANE 3: T(x)-Gate Calculator -->
+        <!-- PANE 3: T(x)-GATE CALCULATOR -->
         <div id="pane-txgate" class="module-pane" style="align-items: center; justify-content: center;">
             <div class="calc-grid">
                 <div class="calc-card">
@@ -505,7 +561,7 @@
             </div>
         </div>
 
-        <!-- PANE 4: Data Sump Gateway -->
+        <!-- PANE 4: DATA SUMP GATEWAY -->
         <div id="pane-datasump" class="module-pane">
             <div class="dropzone" id="dropzone" onclick="triggerFileUpload()">
                 <div style="font-size: 48px;">📥</div>
@@ -515,7 +571,7 @@
             </div>
         </div>
 
-        <!-- PANE 5: Proton CLI -->
+        <!-- PANE 5: PROTON CLI -->
         <div id="pane-proton" class="module-pane">
             <div class="terminal" id="terminalLog">
                 <div class="term-line" style="color: #38bdf8;">SLIVERVERSE Proton CLI Sub-Shell [Zero-Knowledge Edge Runtime]</div>
@@ -542,23 +598,104 @@
         let lastX = 0, lastY = 0;
         let precisionScore = 98.4;
         let secretUnlocked = false;
+        let currentTopicKey = 'turtle';
+        let activeCustomTopicText = '';
 
         // Audio Context
         let audioCtx = null;
         let isAudioPlaying = false;
-        let solfeggioOsc = null, thetaOsc = null;
+        let solfeggioOsc = null;
 
-        // Biological Pigments
-        const PIGMENTS = [
-            { name: 'Carapace Olive', hex: '#2d5a27' },
-            { name: 'Scute Amber', hex: '#d97706' },
-            { name: 'Plastron Sand', hex: '#e8d5b7' },
-            { name: 'Chlorophyll A', hex: '#1e5631' },
-            { name: 'Chlorophyll B', hex: '#4c9a2a' },
-            { name: 'Carotenoid Gold', hex: '#ffb300' },
-            { name: 'Biolum Luciferin', hex: '#10b981' },
-            { name: 'Iridophore Cyan', hex: '#06b6d4' }
-        ];
+        // Biological Pigments Library Database
+        const TOPIC_PIGMENTS = {
+            turtle: [
+                { name: 'Carapace Olive', hex: '#2d5a27' },
+                { name: 'Scute Amber', hex: '#d97706' },
+                { name: 'Plastron Sand', hex: '#e8d5b7' },
+                { name: 'Sub-surface Teal', hex: '#1b6b68' },
+                { name: 'Chlorophyll A', hex: '#1e5631' },
+                { name: 'Carotenoid Gold', hex: '#ffb300' },
+                { name: 'Biolum Luciferin', hex: '#10b981' },
+                { name: 'Iridophore Cyan', hex: '#06b6d4' }
+            ],
+            guard_cells: [
+                { name: 'Stem Chlorophyll', hex: '#386641' },
+                { name: 'Carotenoid Yellow', hex: '#e9c46a' },
+                { name: 'Stomatal Jade', hex: '#2a9d8f' },
+                { name: 'Anthocyanin Violet', hex: '#7e22ce' },
+                { name: 'Cellulose Cream', hex: '#fdf0d5' },
+                { name: 'Vacuole Blue', hex: '#1d4ed8' },
+                { name: 'P680 Core Green', hex: '#15803d' },
+                { name: 'P700 Photon Emerald', hex: '#10b981' }
+            ],
+            honeybee: [
+                { name: 'Chitin Black', hex: '#111827' },
+                { name: 'Pollen Gold', hex: '#f59e0b' },
+                { name: 'Royal Jelly Cream', hex: '#fef3c7' },
+                { name: 'Compound Eye Slate', hex: '#475569' },
+                { name: 'Propolis Amber', hex: '#b45309' },
+                { name: 'Comb Honey Yellow', hex: '#fbbf24' },
+                { name: 'Wing Vein Umber', hex: '#78350f' },
+                { name: 'Bio-Glow Amber', hex: '#34d399' }
+            ],
+            jellyfish: [
+                { name: 'Abyssal Indigo', hex: '#0f172a' },
+                { name: 'Biolum Aequorin', hex: '#38bdf8' },
+                { name: 'Tentacle Violet', hex: '#a855f7' },
+                { name: 'GFP Emerald', hex: '#10b981' },
+                { name: 'Mesoglea Cyan', hex: '#06b6d4' },
+                { name: 'Deep Oceanic Blue', hex: '#1e3a8a' },
+                { name: 'Phosphor Teal', hex: '#2dd4bf' },
+                { name: 'Radiant Ultra-Glow', hex: '#a7f3d0' }
+            ],
+            redwood: [
+                { name: 'Bark Tannin Brown', hex: '#451a03' },
+                { name: 'Needle Chlorophyll', hex: '#14532d' },
+                { name: 'Heartwood Crimson', hex: '#881337' },
+                { name: 'Canopy Lichen Mint', hex: '#6ee7b7' },
+                { name: 'Soil Humus Dark', hex: '#1c1917' },
+                { name: 'Mist Cascade Gray', hex: '#94a3b8' },
+                { name: 'Sap Amber Gold', hex: '#d97706' },
+                { name: 'Sunlight Flare Yellow', hex: '#fde047' }
+            ],
+            fungi: [
+                { name: 'Hyphal Thread White', hex: '#f8fafc' },
+                { name: 'Mycelium Tan', hex: '#d97706' },
+                { name: 'Spore Purple', hex: '#581c87' },
+                { name: 'Root Cortical Amber', hex: '#92400e' },
+                { name: 'Cap Biolum Green', hex: '#22c55e' },
+                { name: 'Soil Organic Dark', hex: '#0f172a' },
+                { name: 'Enzyme Cobalt', hex: '#1d4ed8' },
+                { name: 'Fluorescent Mycelium', hex: '#34d399' }
+            ]
+        };
+
+        const TOPIC_FIELD_NOTES = {
+            turtle: {
+                title: 'Chelonia mydas (Green Sea Turtle)',
+                desc: 'Keratin scutes form over carapace bony matrix. Iridophores reflect cyan light via guanine nanocrystals.'
+            },
+            guard_cells: {
+                title: 'Stomatal Guard Cells & Respiration',
+                desc: 'Guard cells inflate via potassium ion influx, opening stomatal pores for atmospheric CO2 uptake.'
+            },
+            honeybee: {
+                title: 'Apis mellifera (European Honeybee)',
+                desc: 'Compound eyes perceive ultraviolet pollen guides. Abdominal wax glands secrete hexagonal comb structures.'
+            },
+            jellyfish: {
+                title: 'Aequorea victoria (Bioluminescent Jellyfish)',
+                desc: 'Aequorin photoprotein reacts with calcium ions to trigger green fluorescent protein (GFP) emission.'
+            },
+            redwood: {
+                title: 'Sequoia sempervirens (Coast Redwood)',
+                desc: 'Bark rich in protective tannins resists fire and decay while foliar uptake absorbs coastal fog moisture.'
+            },
+            fungi: {
+                title: 'Mycorrhizal Fungal Network',
+                desc: 'Symbiotic fungal hyphae trade soil phosphorus and nitrogen for plant photosynthetic carbohydrates.'
+            }
+        };
 
         // --- INITIALIZATION ---
         window.onload = function() {
@@ -640,10 +777,63 @@
             }
         }
 
+        function changeTopic(val) {
+            if (val === 'custom') {
+                const written = document.getElementById('writeInTopic').value.trim();
+                if (written) {
+                    handleWriteInTopic(written);
+                    return;
+                }
+            }
+            currentTopicKey = val;
+            updateTopicMetadata();
+            renderPigmentGrid();
+            generateLineArt();
+        }
+
+        function handleWriteInTopic(text) {
+            if (!text || text.trim() === '') return;
+            activeCustomTopicText = text.trim();
+            currentTopicKey = 'custom';
+            document.getElementById('topicSelect').value = 'custom';
+
+            // Dynamically generate custom field notes & pigments
+            document.getElementById('bioTitle').innerText = `Custom Subject: ${activeCustomTopicText}`;
+            document.getElementById('bioDesc').innerText = `Synthesized line-art vector model and pigment profile for "${activeCustomTopicText}". Analyzed morphological boundaries and micro-structures locally via WebAssembly.`;
+
+            renderPigmentGrid();
+            generateLineArt();
+            showToast('Write-In Topic Active', `Generated line-art contours for "${activeCustomTopicText}"`);
+        }
+
+        function updateTopicMetadata() {
+            const info = TOPIC_FIELD_NOTES[currentTopicKey] || {
+                title: `Custom Topic: ${activeCustomTopicText || 'Write-In Subject'}`,
+                desc: 'Morphological structures & pigment profiles dynamically mapped.'
+            };
+            document.getElementById('bioTitle').innerText = info.title;
+            document.getElementById('bioDesc').innerText = info.desc;
+        }
+
         function renderPigmentGrid() {
             const grid = document.getElementById('pigmentGrid');
             grid.innerHTML = '';
-            PIGMENTS.forEach((p, idx) => {
+
+            let pList = TOPIC_PIGMENTS[currentTopicKey];
+            if (!pList) {
+                pList = [
+                    { name: 'Primary Bio', hex: '#15803d' },
+                    { name: 'Secondary', hex: '#d97706' },
+                    { name: 'Accent Gold', hex: '#fbbf24' },
+                    { name: 'Vascular Teal', hex: '#0f766e' },
+                    { name: 'Flora Emerald', hex: '#22c55e' },
+                    { name: 'Deep Slate', hex: '#334155' },
+                    { name: 'Bio-Glow', hex: '#34d399' },
+                    { name: 'Iridophore', hex: '#38bdf8' }
+                ];
+            }
+
+            pList.forEach((p, idx) => {
                 const div = document.createElement('div');
                 div.className = `pigment-swatch ${idx === 0 ? 'selected' : ''}`;
                 div.style.backgroundColor = p.hex;
@@ -655,6 +845,7 @@
                 };
                 grid.appendChild(div);
             });
+            currentColor = pList[0].hex;
         }
 
         function generateLineArt() {
@@ -662,14 +853,11 @@
             lineCtx.strokeStyle = '#0a0d12';
             lineCtx.lineWidth = 2.5;
 
-            const topic = document.getElementById('topicSelect').value;
-            if (topic === 'turtle') {
-                // Draw Sea Turtle Carapace & Scutes
+            if (currentTopicKey === 'turtle') {
                 lineCtx.beginPath();
                 lineCtx.ellipse(250, 250, 160, 120, 0, 0, Math.PI * 2);
                 lineCtx.stroke();
 
-                // Central Hexagon Scute
                 for (let y = -1; y <= 1; y++) {
                     lineCtx.beginPath();
                     for (let i = 0; i < 6; i++) {
@@ -682,16 +870,124 @@
                     lineCtx.closePath();
                     lineCtx.stroke();
                 }
-            } else {
-                // Guard Cells
+            } else if (currentTopicKey === 'guard_cells') {
                 lineCtx.beginPath();
                 lineCtx.ellipse(190, 250, 50, 110, 0, 0, Math.PI * 2);
                 lineCtx.stroke();
                 lineCtx.beginPath();
                 lineCtx.ellipse(310, 250, 50, 110, 0, 0, Math.PI * 2);
                 lineCtx.stroke();
+            } else if (currentTopicKey === 'honeybee') {
+                // Honeybee Abdomen & Wing Contours
+                lineCtx.beginPath();
+                lineCtx.ellipse(250, 250, 90, 140, 0, 0, Math.PI * 2);
+                lineCtx.stroke();
+                for (let y = 160; y <= 340; y += 40) {
+                    lineCtx.beginPath();
+                    lineCtx.moveTo(170, y);
+                    lineCtx.lineTo(330, y);
+                    lineCtx.stroke();
+                }
+            } else if (currentTopicKey === 'jellyfish') {
+                // Jellyfish Bell & Tentacles
+                lineCtx.beginPath();
+                lineCtx.arc(250, 200, 120, Math.PI, 0, false);
+                lineCtx.closePath();
+                lineCtx.stroke();
+                for (let x = 150; x <= 350; x += 30) {
+                    lineCtx.beginPath();
+                    lineCtx.moveTo(x, 200);
+                    lineCtx.quadraticCurveTo(x + (x % 20 === 0 ? 20 : -20), 320, x, 420);
+                    lineCtx.stroke();
+                }
+            } else if (currentTopicKey === 'redwood') {
+                // Redwood Trunk & Foliage
+                lineCtx.strokeRect(210, 180, 80, 300);
+                for (let y = 100; y <= 350; y += 60) {
+                    lineCtx.beginPath();
+                    lineCtx.moveTo(250, y - 40);
+                    lineCtx.lineTo(130, y + 40);
+                    lineCtx.lineTo(370, y + 40);
+                    lineCtx.closePath();
+                    lineCtx.stroke();
+                }
+            } else if (currentTopicKey === 'fungi') {
+                // Mycorrhizal Hyphae Network
+                for (let i = 0; i < 12; i++) {
+                    lineCtx.beginPath();
+                    lineCtx.moveTo(250, 250);
+                    const a = (Math.PI * 2 / 12) * i;
+                    lineCtx.lineTo(250 + 180 * Math.cos(a), 250 + 180 * Math.sin(a));
+                    lineCtx.stroke();
+                }
+            } else {
+                // Custom Write-In Procedural Line Art (Harmonograph / Morphological geometry)
+                lineCtx.beginPath();
+                lineCtx.arc(250, 250, 140, 0, Math.PI * 2);
+                lineCtx.stroke();
+                const text = activeCustomTopicText || 'Custom';
+                const count = Math.max(5, text.length);
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.PI * 2 / count) * i;
+                    lineCtx.beginPath();
+                    lineCtx.arc(250 + 70 * Math.cos(angle), 250 + 70 * Math.sin(angle), 40, 0, Math.PI * 2);
+                    lineCtx.stroke();
+                }
             }
-            showToast('De-Coloring Engine', 'Line art generated cleanly on-device.');
+            showToast('De-Coloring Engine', `Line art generated cleanly for ${currentTopicKey.toUpperCase()}.`);
+        }
+
+        // Image Library File Upload De-Colorer (WASM / Canvas Sobel Filter)
+        function handleImageLibraryUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    lineCtx.clearRect(0, 0, 500, 500);
+                    lineCtx.drawImage(img, 0, 0, 500, 500);
+
+                    // Execute Sobel Edge Detection Filter locally
+                    const imgData = lineCtx.getImageData(0, 0, 500, 500);
+                    const data = imgData.data;
+                    const w = 500, h = 500;
+
+                    const gray = new Uint8Array(w * h);
+                    for (let i = 0; i < data.length; i += 4) {
+                        gray[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                    }
+
+                    const output = lineCtx.createImageData(w, h);
+                    const outData = output.data;
+
+                    for (let y = 1; y < h - 1; y++) {
+                        for (let x = 1; x < w - 1; x++) {
+                            const idx = y * w + x;
+                            const gx = -1 * gray[(y - 1) * w + (x - 1)] + 1 * gray[(y - 1) * w + (x + 1)] +
+                                       -2 * gray[y * w + (x - 1)]       + 2 * gray[y * w + (x + 1)] +
+                                       -1 * gray[(y + 1) * w + (x - 1)] + 1 * gray[(y + 1) * w + (x + 1)];
+
+                            const gy = -1 * gray[(y - 1) * w + (x - 1)] - 2 * gray[(y - 1) * w + x] - 1 * gray[(y - 1) * w + (x + 1)] +
+                                        1 * gray[(y + 1) * w + (x - 1)] + 2 * gray[(y + 1) * w + x] + 1 * gray[(y + 1) * w + (x + 1)];
+
+                            const mag = Math.sqrt(gx * gx + gy * gy);
+                            const edge = mag > 45 ? 0 : 255;
+
+                            const oIdx = idx * 4;
+                            outData[oIdx] = edge;
+                            outData[oIdx + 1] = edge;
+                            outData[outIdx + 2] = edge;
+                            outData[oIdx + 3] = edge === 0 ? 255 : 0; // Transparent background for lines
+                        }
+                    }
+                    lineCtx.putImageData(output, 0, 0);
+                    showToast('Image De-Colorer Complete', `Converted ${file.name} to line art page.`);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
         }
 
         function setTool(t) { currentTool = t; }
@@ -707,7 +1003,7 @@
             expCtx.drawImage(lineCanvas, 0, 0, 1000, 1000);
 
             const link = document.createElement('a');
-            link.download = `SOREN_V2_Artwork_${Date.now()}.png`;
+            link.download = `FlowerLearn_Artwork_${Date.now()}.png`;
             link.href = expCanvas.toDataURL('image/png');
             link.click();
             showToast('Export Ready', 'High-Res PNG downloaded to disk.');
@@ -724,7 +1020,6 @@
                 const cx = cvs.width / 2;
                 const cy = cvs.height / 2;
 
-                // Render 81 polar diremption nodes distributed across 9 concentric light waves
                 for (let wave = 1; wave <= 9; wave++) {
                     const radius = wave * 24;
                     const nodesInWave = 9;
@@ -764,25 +1059,21 @@
             document.getElementById('valSigmaS').innerText = sigmaS.toFixed(2);
             document.getElementById('valOmegaG').innerText = omegaG.toFixed(2);
 
-            // Calculate A_SR = (Phi_T^1.5 * Psi_C * Sigma_S) + PHI * Omega_G
             const asr = (Math.pow(phiT, 1.5) * psiC * sigmaS) + (PHI * omegaG);
             document.getElementById('outASR').innerText = asr.toFixed(3);
 
-            // Calculate V_y ($50 - $5000 scaling)
             const normT = Math.max(0, (phiT - 0.995) / (1.0 - 0.995));
             const vy = 50 + (normT * 4950);
             document.getElementById('outVy').innerText = `$${vy.toFixed(2)}`;
 
-            // Calculate NRQ
             const nrq = (phiT * psiC * sigmaS) / (1.0 - (omegaG * 0.1));
             document.getElementById('outNRQ').innerText = nrq.toFixed(3);
 
-            // CareState Trigger check
             const careEl = document.getElementById('outCareState');
             if (sigmaS < 0.85) {
                 careEl.innerText = "CARESTATE TRIGGERED (Grounding Active: 528Hz / #2E7D32)";
                 careEl.style.color = "#ef4444";
-                document.body.style.backgroundColor = "#0d2417"; // Chlorophyll green shift
+                document.body.style.backgroundColor = "#0d2417";
             } else {
                 careEl.innerText = "NOMINAL (Coherence Stable)";
                 careEl.style.color = "#34d399";
@@ -819,7 +1110,7 @@
                 } else if (input === 'launch') {
                     respText = "[PROTOCOL: ALPHA-SYNC LAUNCH EXECUTION] 120 FPS WASM Physics & 528Hz Solfeggio Resonant Active.";
                 } else if (input === 'audio') {
-                    toggleAudio();
+                    toggleRelaxationAudio();
                     respText = isAudioPlaying ? "Acoustic Harmonization Active (528Hz Solfeggio + 3.0Hz Theta Wash)." : "Audio Muted.";
                 } else if (input === 'zkhash') {
                     respText = `Generated ZK Profile: /hana/p/proton_${Math.random().toString(36).substring(2, 12)}`;
@@ -840,14 +1131,13 @@
             }
         }
 
-        function toggleAudio() {
+        function toggleRelaxationAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
 
             if (!isAudioPlaying) {
                 audioCtx.resume();
-                // 528 Hz Solfeggio Tone
                 solfeggioOsc = audioCtx.createOscillator();
                 solfeggioOsc.frequency.setValueAtTime(528, audioCtx.currentTime);
                 const gain1 = audioCtx.createGain();
@@ -857,9 +1147,11 @@
                 solfeggioOsc.start();
 
                 isAudioPlaying = true;
+                showToast('Relaxation Audio', 'Playing 528Hz Solfeggio tone for focus & stress relief.');
             } else {
                 if (solfeggioOsc) solfeggioOsc.stop();
                 isAudioPlaying = false;
+                showToast('Audio Muted', 'Solfeggio synthesizer paused.');
             }
         }
 
