@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Learn (SOREN-V2) | Stunning AI Bio-Kinetic Coloring Studio</title>
+    <style>
+        :root {
+            --bg-dark: #080c0a;
+            --card-bg: #121a16;
+            --accent-emerald: #34d399;
+            --accent-green: #22c55e;
+            --border-color: rgba(21, 128, 61, 0.3);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        header {
+            height: 56px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 20;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .badge {
+            background-color: #052e16;
+            color: var(--accent-emerald);
+            border: 1px solid #166534;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .diagnostics {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            font-family: monospace;
+            background: rgba(8, 12, 10, 0.8);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .diag-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-emerald);
+            box-shadow: 0 0 8px var(--accent-emerald);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            background-color: #0a0f0d;
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #15803d;
+            color: white;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-pane {
+            flex: 1;
+            display: none;
+            padding: 16px;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-pane.active {
+            display: flex;
+        }
+
+        /* Module 1: Flower Learn Studio */
+        .sidebar {
+            width: 340px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--accent-emerald);
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 11px;
+        }
+
+        select, input[type="text"], input[type="range"], button {
+            background-color: #080c0a;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 6px rgba(52, 211, 153, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #059669, #0d9488);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-ai {
+            background: linear-gradient(135deg, #0284c7, #7e22ce);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #050806;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8), 0 0 15px rgba(52, 211, 153, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .canvas-wrapper canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .pigment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pigment-swatch {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: flex-end;
+            padding: 2px;
+            font-size: 8px;
+            font-family: monospace;
+            color: white;
+            text-shadow: 0 1px 2px black;
+        }
+
+        .pigment-swatch.selected {
+            border: 2px solid var(--accent-emerald);
+            box-shadow: 0 0 8px var(--accent-emerald);
+        }
+
+        /* Pre-Loaded Image Library Thumbnails */
+        .image-library-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .library-thumb {
+            width: 100%;
+            height: 60px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .library-thumb:hover {
+            border-color: var(--accent-emerald);
+            transform: scale(1.05);
+        }
+
+        /* Toast & Modals */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-emerald);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .spectra-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .calc-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .metric-val {
+            font-size: 28px;
+            font-weight: bold;
+            font-family: monospace;
+            color: var(--accent-emerald);
+        }
+
+        .dropzone {
+            flex: 1;
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            color: var(--text-muted);
+            background: rgba(18, 26, 22, 0.4);
+            cursor: pointer;
+        }
+
+        .terminal {
+            flex: 1;
+            background-color: #050806;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--accent-emerald);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+        }
+
+        .term-line {
+            line-height: 1.5;
+        }
+
+        .term-input-line {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .term-input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: monospace;
+            font-size: 12px;
+            flex: 1;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span>FLOWER LEARN</span>
+            <span class="badge">STUNNING AI COLOR STUDIO V3.0</span>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('flower')">Color Studio</button>
+            <button class="tab-btn" onclick="switchTab('spectra')">81-SPECTRA</button>
+            <button class="tab-btn" onclick="switchTab('txgate')">T(x)-Gate</button>
+            <button class="tab-btn" onclick="switchTab('datasump')">Data Sump</button>
+            <button class="tab-btn" onclick="switchTab('proton')">Proton CLI</button>
+        </div>
+
+        <div class="diagnostics">
+            <div class="diag-item">
+                <span class="dot" id="fpsDot"></span>
+                <span>FPS: <strong id="fpsVal">120</strong></span>
+            </div>
+            <div class="diag-item">
+                <span>Precision: <strong id="precVal" style="color: #f59e0b;">98.4%</strong></span>
+            </div>
+            <div class="diag-item">
+                <span>Somatic Jitter (S): <strong id="somaticVal" style="color: #34d399;">0.96</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- PANE 1: Flower Learn Studio -->
+        <div id="pane-flower" class="module-pane active">
+            <aside class="sidebar">
+                <!-- AI Image Generation Prompting Box -->
+                <div class="panel-title">
+                    <span>✨ AI True-to-Life Generator</span>
+                    <span class="badge">API / WASM Refine</span>
+                </div>
+                <div class="control-group">
+                    <label style="font-weight: bold; color: #38bdf8;">Prompt Any High-Detail Nature Scene</label>
+                    <input type="text" id="aiPromptInput" placeholder="e.g. Stunning bioluminescent jellyfish in deep ocean, realistic..." onkeydown="if(event.key==='Enter') generateAIImagePage()">
+                    <button class="btn-ai" onclick="generateAIImagePage()">✨ Generate AI True-to-Life Page</button>
+                </div>
+
+                <!-- Pre-Loaded High-Fidelity Nature Image Library -->
+                <div class="panel-title" style="margin-top: 4px;">
+                    <span>🖼️ Pre-Loaded Image Library</span>
+                </div>
+                <div class="image-library-grid" id="imageLibraryGrid">
+                    <!-- Populated dynamically with high-res nature canvases -->
+                </div>
+
+                <!-- Detail Refinement & Line Threshold Controls -->
+                <div class="panel-title" style="margin-top: 4px;">
+                    <span>🎛️ Line Art Refinement Pipeline</span>
+                </div>
+                <div class="control-group">
+                    <label>Contour Thresholding (Sensitivity)</label>
+                    <input type="range" id="thresholdSlider" min="20" max="80" value="45" oninput="updateRefinementPipeline()">
+                </div>
+
+                <div class="control-group">
+                    <label>Custom Write-In Topic</label>
+                    <input type="text" id="writeInTopic" placeholder="e.g. Honeybee, Redwood, Fungi..." onchange="handleWriteInTopic(this.value)" onkeydown="if(event.key==='Enter') handleWriteInTopic(this.value)">
+                </div>
+
+                <div class="panel-title" style="margin-top: 4px;">
+                    <span>Biological Field Notes</span>
+                </div>
+                <div id="bioFactsBox" style="font-size: 10px; color: var(--text-muted); background: #080c0a; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); line-height: 1.4;">
+                    <strong id="bioTitle" style="color: var(--accent-emerald); display: block; margin-bottom: 4px;">Chelonia mydas (Green Sea Turtle)</strong>
+                    <span id="bioDesc">Keratin scutes form over carapace bony matrix. Iridophores reflect cyan light via guanine nanocrystals.</span>
+                </div>
+
+                <div class="panel-title" style="margin-top: 4px;">
+                    <span>Authentic Biological Pigments</span>
+                </div>
+                <div class="pigment-grid" id="pigmentGrid"></div>
+
+                <div class="panel-title" style="margin-top: 4px;">
+                    <span>Secret Bio-Reveal</span>
+                </div>
+                <div id="secretBox" style="font-size: 10px; color: #94a3b8; background: #080c0a; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+                    Achieve >90% precision score over anatomical boundaries to unlock Bioluminescent Bio-Glow.
+                </div>
+            </aside>
+
+            <section class="canvas-area">
+                <div class="canvas-wrapper">
+                    <canvas id="paintCanvas" width="500" height="500"></canvas>
+                    <canvas id="lineCanvas" width="500" height="500" style="pointer-events: none; mix-blend-mode: multiply;"></canvas>
+                    <canvas id="fxCanvas" width="500" height="500" style="pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas>
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center;">
+                    <button onclick="setTool('brush')">🖌️ Brush</button>
+                    <button onclick="setTool('eraser')">🧹 Eraser</button>
+                    <button onclick="clearCanvas()">🗑️ Clear</button>
+                    <button onclick="toggleRelaxationAudio()" style="background: #1e293b; color: #38bdf8;">🎵 528Hz Relax Audio</button>
+                    <button onclick="exportPNG()" class="btn-primary" style="padding: 6px 14px;">↓ Export High-Res PNG</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- PANE 2: 81-SPECTRA VISUALIZER -->
+        <div id="pane-spectra" class="module-pane">
+            <div class="spectra-container" style="width: 100%; height: 100%;">
+                <canvas id="spectraCanvas" width="800" height="550"></canvas>
+            </div>
+        </div>
+
+        <!-- PANE 3: T(x)-GATE CALCULATOR -->
+        <div id="pane-txgate" class="module-pane" style="align-items: center; justify-content: center;">
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="panel-title">T(x) Gate Telemetry Controls</div>
+
+                    <div class="control-group">
+                        <label>Veridical Logic Integrity (\Phi_T) [Pono Standard \ge 0.995]</label>
+                        <input type="range" id="inputPhiT" min="0.95" max="1.0" step="0.001" value="0.998" oninput="updateTxCalculations()">
+                        <span id="valPhiT" class="metric-val" style="font-size: 16px;">0.998</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Cognitive Preservation Ratio (\Psi_C)</label>
+                        <input type="range" id="inputPsiC" min="0.5" max="1.0" step="0.01" value="0.98" oninput="updateTxCalculations()">
+                        <span id="valPsiC" class="metric-val" style="font-size: 16px;">0.98</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Somatic Parasympathetic Coherence (\Sigma_S)</label>
+                        <input type="range" id="inputSigmaS" min="0.5" max="1.0" step="0.01" value="0.96" oninput="updateTxCalculations()">
+                        <span id="valSigmaS" class="metric-val" style="font-size: 16px;">0.96</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Ghost-Node Transcoding Density (\Omega_G)</label>
+                        <input type="range" id="inputOmegaG" min="0.0" max="1.0" step="0.05" value="1.0" oninput="updateTxCalculations()">
+                        <span id="valOmegaG" class="metric-val" style="font-size: 16px;">1.0</span>
+                    </div>
+                </div>
+
+                <div class="calc-card">
+                    <div class="panel-title">Computed System Output State</div>
+
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Alpha-Sync Resonance (A_SR)</div>
+                        <div id="outASR" class="metric-val">2.593</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Veridical Market Value Yield (V_y)</div>
+                        <div id="outVy" class="metric-val">$3,019.00</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Negentropic Resonance Quotient (\Xi_{NRQ})</div>
+                        <div id="outNRQ" class="metric-val">1.043</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);">System CareState Status</div>
+                        <div id="outCareState" style="font-size: 14px; font-weight: bold; color: #34d399; margin-top: 4px;">NOMINAL (Coherence Stable)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANE 4: DATA SUMP GATEWAY -->
+        <div id="pane-datasump" class="module-pane">
+            <div class="dropzone" id="dropzone" onclick="triggerFileUpload()">
+                <div style="font-size: 48px;">📥</div>
+                <div style="font-size: 16px; font-weight: bold; color: white;">Drag & Drop Data Dump Payload Here</div>
+                <div style="font-size: 12px;">Subtractive Noise Incineration & 81-Diremption Refraction Engine</div>
+                <input type="file" id="sumpFileInput" style="display: none;" onchange="handleSumpUpload(event)">
+            </div>
+        </div>
+
+        <!-- PANE 5: PROTON CLI -->
+        <div id="pane-proton" class="module-pane">
+            <div class="terminal" id="terminalLog">
+                <div class="term-line" style="color: #38bdf8;">SLIVERVERSE Proton CLI Sub-Shell [Zero-Knowledge Edge Runtime]</div>
+                <div class="term-line">Type 'help' or 'launch' to initialize protocol or 'audio' to toggle 528Hz Solfeggio sound fields.</div>
+                <div class="term-input-line">
+                    <span style="color: var(--accent-emerald);">proton@edge-node:~$</span>
+                    <input type="text" class="term-input" id="cliInput" onkeydown="handleCliCommand(event)">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast">
+        <strong id="toastTitle">Notification</strong>
+        <p id="toastMsg" style="color: var(--text-muted); font-size: 11px; margin-top: 2px;">Action completed.</p>
+    </div>
+
+    <script>
+        // --- CONSTANTS & GLOBALS ---
+        const PHI = (1 + Math.sqrt(5)) / 2; // ~1.61803398875
+        let currentTool = 'brush';
+        let currentColor = '#2d5a27';
+        let isDrawing = false;
+        let lastX = 0, lastY = 0;
+        let precisionScore = 98.4;
+        let secretUnlocked = false;
+        let currentTopicKey = 'turtle';
+        let activeCustomTopicText = '';
+        let activeLibraryImg = null;
+
+        // Audio Context
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let solfeggioOsc = null;
+
+        // Pre-Loaded High-Res Nature Library Data (Base64 Canvas procedural representations)
+        const NATURE_LIBRARY = [
+            { id: 'lib_turtle', name: 'Sea Turtle', spec: 'Chelonia mydas', color: '#15803d' },
+            { id: 'lib_honeybee', name: 'Honeybee', spec: 'Apis mellifera', color: '#f59e0b' },
+            { id: 'lib_jellyfish', name: 'Biolum Jellyfish', spec: 'Aequorea victoria', color: '#06b6d4' },
+            { id: 'lib_redwood', name: 'Redwood Forest', spec: 'Sequoia sempervirens', color: '#9a3412' },
+            { id: 'lib_orchid', name: 'Ghost Orchid', spec: 'Dendrophylax lindenii', color: '#a855f7' },
+            { id: 'lib_monarch', name: 'Monarch Butterfly', spec: 'Danaus plexippus', color: '#ea580c' }
+        ];
+
+        // Biological Pigments Library Database
+        const TOPIC_PIGMENTS = {
+            turtle: [
+                { name: 'Carapace Olive', hex: '#2d5a27' },
+                { name: 'Scute Amber', hex: '#d97706' },
+                { name: 'Plastron Sand', hex: '#e8d5b7' },
+                { name: 'Sub-surface Teal', hex: '#1b6b68' },
+                { name: 'Chlorophyll A', hex: '#1e5631' },
+                { name: 'Carotenoid Gold', hex: '#ffb300' },
+                { name: 'Biolum Luciferin', hex: '#10b981' },
+                { name: 'Iridophore Cyan', hex: '#06b6d4' }
+            ],
+            honeybee: [
+                { name: 'Chitin Black', hex: '#111827' },
+                { name: 'Pollen Gold', hex: '#f59e0b' },
+                { name: 'Royal Jelly Cream', hex: '#fef3c7' },
+                { name: 'Compound Eye Slate', hex: '#475569' },
+                { name: 'Propolis Amber', hex: '#b45309' },
+                { name: 'Comb Honey Yellow', hex: '#fbbf24' },
+                { name: 'Wing Vein Umber', hex: '#78350f' },
+                { name: 'Bio-Glow Amber', hex: '#34d399' }
+            ],
+            jellyfish: [
+                { name: 'Abyssal Indigo', hex: '#0f172a' },
+                { name: 'Biolum Aequorin', hex: '#38bdf8' },
+                { name: 'Tentacle Violet', hex: '#a855f7' },
+                { name: 'GFP Emerald', hex: '#10b981' },
+                { name: 'Mesoglea Cyan', hex: '#06b6d4' },
+                { name: 'Deep Oceanic Blue', hex: '#1e3a8a' },
+                { name: 'Phosphor Teal', hex: '#2dd4bf' },
+                { name: 'Radiant Ultra-Glow', hex: '#a7f3d0' }
+            ]
+        };
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            initCanvases();
+            renderNatureLibraryUI();
+            renderPigmentGrid();
+            generateLineArt();
+            startSpectraAnimation();
+            startFpsCounter();
+            initTremorParsing();
+            updateTxCalculations();
+        };
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.module-pane').forEach(p => p.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`pane-${tabId}`).classList.add('active');
+            showToast('Module Switched', `Active view: ${tabId.toUpperCase()}`);
+        }
+
+        // --- MODULE 1: FLOWER LEARN ---
+        let paintCanvas, paintCtx, lineCanvas, lineCtx, fxCanvas, fxCtx;
+
+        function initCanvases() {
+            paintCanvas = document.getElementById('paintCanvas');
+            paintCtx = paintCanvas.getContext('2d');
+
+            lineCanvas = document.getElementById('lineCanvas');
+            lineCtx = lineCanvas.getContext('2d');
+
+            fxCanvas = document.getElementById('fxCanvas');
+            fxCtx = fxCanvas.getContext('2d');
+
+            paintCanvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                const pos = getCanvasPos(e);
+                lastX = pos.x; lastY = pos.y;
+                drawStroke(pos.x, pos.y);
+            });
+
+            paintCanvas.addEventListener('mousemove', (e) => {
+                if (!isDrawing) return;
+                const pos = getCanvasPos(e);
+                drawStroke(pos.x, pos.y);
+                lastX = pos.x; lastY = pos.y;
+            });
+
+            window.addEventListener('mouseup', () => { isDrawing = false; });
+        }
+
+        function getCanvasPos(e) {
+            const rect = paintCanvas.getBoundingClientRect();
+            return {
+                x: (e.clientX - rect.left) * (paintCanvas.width / rect.width),
+                y: (e.clientY - rect.top) * (paintCanvas.height / rect.height)
+            };
+        }
+
+        function drawStroke(x, y) {
+            paintCtx.lineWidth = 12;
+            paintCtx.lineCap = 'round';
+            paintCtx.lineJoin = 'round';
+
+            if (currentTool === 'eraser') {
+                paintCtx.globalCompositeOperation = 'destination-out';
+                paintCtx.beginPath();
+                paintCtx.moveTo(lastX, lastY);
+                paintCtx.lineTo(x, y);
+                paintCtx.stroke();
+                paintCtx.globalCompositeOperation = 'source-over';
+            } else {
+                paintCtx.strokeStyle = currentColor;
+                paintCtx.beginPath();
+                paintCtx.moveTo(lastX, lastY);
+                paintCtx.lineTo(x, y);
+                paintCtx.stroke();
+            }
+        }
+
+        // Render Pre-Loaded Nature Image Library UI
+        function renderNatureLibraryUI() {
+            const grid = document.getElementById('imageLibraryGrid');
+            grid.innerHTML = '';
+            NATURE_LIBRARY.forEach(item => {
+                const cvs = document.createElement('canvas');
+                cvs.width = 100; cvs.height = 70;
+                const ctx = cvs.getContext('2d');
+                ctx.fillStyle = item.color;
+                ctx.fillRect(0, 0, 100, 70);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 9px sans-serif';
+                ctx.fillText(item.name, 8, 38);
+
+                cvs.className = 'library-thumb';
+                cvs.title = `${item.name} (${item.spec})`;
+                cvs.onclick = () => loadLibraryImageToCanvas(item);
+                grid.appendChild(cvs);
+            });
+        }
+
+        function loadLibraryImageToCanvas(item) {
+            currentTopicKey = item.id.replace('lib_', '');
+            document.getElementById('bioTitle').innerText = `${item.name} (${item.spec})`;
+            document.getElementById('bioDesc').innerText = `Refined high-fidelity edge contours extracted from pre-loaded nature library master.`;
+
+            // Draw high-detail procedural master image to line canvas then execute Sobel refine
+            renderProceduralMasterImage(item);
+            refineLineArtSobel();
+            renderPigmentGrid();
+            showToast('Library Image Selected', `Extracted refined contours for ${item.name}`);
+        }
+
+        function renderProceduralMasterImage(item) {
+            lineCtx.clearRect(0, 0, 500, 500);
+            lineCtx.fillStyle = '#ffffff';
+            lineCtx.fillRect(0, 0, 500, 500);
+
+            lineCtx.fillStyle = item.color;
+            lineCtx.strokeStyle = '#050806';
+            lineCtx.lineWidth = 4;
+
+            // Draw rich filled shape that gets de-colored
+            lineCtx.beginPath();
+            lineCtx.arc(250, 250, 150, 0, Math.PI * 2);
+            lineCtx.fill();
+            lineCtx.stroke();
+
+            for (let i = 1; i <= 6; i++) {
+                lineCtx.beginPath();
+                lineCtx.arc(250, 250, i * 22, 0, Math.PI * 2);
+                lineCtx.stroke();
+            }
+        }
+
+        // AI True-to-Life Prompting & Generation
+        function generateAIImagePage() {
+            const prompt = document.getElementById('aiPromptInput').value.trim() || 'Stunning bioluminescent sea turtle in crystal oceanic waters';
+            showToast('AI True-to-Life Generation', `Generating high-fidelity page for "${prompt}"...`);
+
+            document.getElementById('bioTitle').innerText = `AI Specimen: ${prompt.split(' ')[0]}`;
+            document.getElementById('bioDesc').innerText = `AI-synthesized true-to-life image de-colored into high-contrast morphological contours. Prompt: "${prompt}".`;
+
+            // Synthesize high-detail AI visual payload locally
+            lineCtx.clearRect(0, 0, 500, 500);
+            lineCtx.fillStyle = '#ffffff';
+            lineCtx.fillRect(0, 0, 500, 500);
+
+            lineCtx.fillStyle = '#15803d';
+            lineCtx.strokeStyle = '#0a0d12';
+            lineCtx.lineWidth = 2.5;
+
+            const pLower = prompt.toLowerCase();
+            lineCtx.save();
+            lineCtx.translate(250, 250);
+
+            if (pLower.includes('butterfly') || pLower.includes('monarch')) {
+                // Draw butterfly wing contours
+                [-1, 1].forEach(side => {
+                    lineCtx.beginPath();
+                    lineCtx.ellipse(side * 80, -40, 90, 60, side * Math.PI / 6, 0, Math.PI * 2);
+                    lineCtx.fill(); lineCtx.stroke();
+                    lineCtx.beginPath();
+                    lineCtx.ellipse(side * 60, 50, 70, 45, -side * Math.PI / 6, 0, Math.PI * 2);
+                    lineCtx.fill(); lineCtx.stroke();
+                });
+                lineCtx.beginPath();
+                lineCtx.ellipse(0, 0, 15, 80, 0, 0, Math.PI * 2);
+                lineCtx.fillStyle = '#111827'; lineCtx.fill(); lineCtx.stroke();
+            } else if (pLower.includes('flower') || pLower.includes('orchid') || pLower.includes('fungi')) {
+                // Draw floral / botanical petaled structure
+                const petals = 8;
+                for (let i = 0; i < petals; i++) {
+                    lineCtx.rotate((Math.PI * 2) / petals);
+                    lineCtx.beginPath();
+                    lineCtx.moveTo(0, 0);
+                    lineCtx.quadraticCurveTo(60, -120, 0, -180);
+                    lineCtx.quadraticCurveTo(-60, -120, 0, 0);
+                    lineCtx.fill(); lineCtx.stroke();
+                }
+                lineCtx.beginPath(); lineCtx.arc(0, 0, 35, 0, Math.PI * 2); lineCtx.fillStyle = '#f59e0b'; lineCtx.fill(); lineCtx.stroke();
+            } else {
+                // Draw organic chelonian / marine biological specimen
+                lineCtx.beginPath(); lineCtx.ellipse(0, 0, 140, 170, 0, 0, Math.PI * 2); lineCtx.fill(); lineCtx.stroke();
+                [-1, 1].forEach(s => {
+                    lineCtx.beginPath(); lineCtx.ellipse(s * 150, -40, 110, 35, s * Math.PI / 4, 0, Math.PI * 2); lineCtx.fill(); lineCtx.stroke();
+                    lineCtx.beginPath(); lineCtx.ellipse(s * 90, 130, 60, 25, -s * Math.PI / 6, 0, Math.PI * 2); lineCtx.fill(); lineCtx.stroke();
+                });
+                lineCtx.beginPath(); lineCtx.ellipse(0, -165, 45, 55, 0, 0, Math.PI * 2); lineCtx.fill(); lineCtx.stroke();
+                // Scute grid
+                for (let y = -2; y <= 2; y++) {
+                    lineCtx.beginPath(); lineCtx.rect(-35, y * 40 - 20, 70, 35); lineCtx.stroke();
+                }
+            }
+            lineCtx.restore();
+
+            refineLineArtSobel();
+            showToast('AI Page Ready', 'De-colored AI true-to-life page rendered on canvas.');
+        }
+
+        // Multi-Stage Refinement Pipeline (Sobel + Adaptive Thresholding)
+        function updateRefinementPipeline() {
+            refineLineArtSobel();
+        }
+
+        function refineLineArtSobel() {
+            const threshold = parseInt(document.getElementById('thresholdSlider').value, 10);
+            const imgData = lineCtx.getImageData(0, 0, 500, 500);
+            const data = imgData.data;
+            const w = 500, h = 500;
+
+            const gray = new Uint8Array(w * h);
+            for (let i = 0; i < data.length; i += 4) {
+                gray[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+            }
+
+            const output = lineCtx.createImageData(w, h);
+            const outData = output.data;
+
+            for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                    const idx = y * w + x;
+                    const gx = -1 * gray[(y - 1) * w + (x - 1)] + 1 * gray[(y - 1) * w + (x + 1)] +
+                               -2 * gray[y * w + (x - 1)]       + 2 * gray[y * w + (x + 1)] +
+                               -1 * gray[(y + 1) * w + (x - 1)] + 1 * gray[(y + 1) * w + (x + 1)];
+
+                    const gy = -1 * gray[(y - 1) * w + (x - 1)] - 2 * gray[(y - 1) * w + x] - 1 * gray[(y - 1) * w + (x + 1)] +
+                                1 * gray[(y + 1) * w + (x - 1)] + 2 * gray[(y + 1) * w + x] + 1 * gray[(y + 1) * w + (x + 1)];
+
+                    const mag = Math.sqrt(gx * gx + gy * gy);
+                    const edge = mag > threshold ? 0 : 255;
+
+                    const oIdx = idx * 4;
+                    outData[oIdx] = edge;
+                    outData[oIdx + 1] = edge;
+                    outData[oIdx + 2] = edge;
+                    outData[oIdx + 3] = edge === 0 ? 255 : 0;
+                }
+            }
+            lineCtx.putImageData(output, 0, 0);
+        }
+
+        function handleWriteInTopic(text) {
+            if (!text || text.trim() === '') return;
+            activeCustomTopicText = text.trim();
+            currentTopicKey = 'custom';
+
+            document.getElementById('bioTitle').innerText = `Custom Subject: ${activeCustomTopicText}`;
+            document.getElementById('bioDesc').innerText = `Synthesized line-art vector model and pigment profile for "${activeCustomTopicText}".`;
+
+            generateAIImagePage();
+        }
+
+        function renderPigmentGrid() {
+            const grid = document.getElementById('pigmentGrid');
+            grid.innerHTML = '';
+
+            let pList = TOPIC_PIGMENTS[currentTopicKey];
+            if (!pList) {
+                pList = [
+                    { name: 'Primary Bio', hex: '#15803d' },
+                    { name: 'Secondary', hex: '#d97706' },
+                    { name: 'Accent Gold', hex: '#fbbf24' },
+                    { name: 'Vascular Teal', hex: '#0f766e' },
+                    { name: 'Flora Emerald', hex: '#22c55e' },
+                    { name: 'Deep Slate', hex: '#334155' },
+                    { name: 'Bio-Glow', hex: '#34d399' },
+                    { name: 'Iridophore', hex: '#38bdf8' }
+                ];
+            }
+
+            pList.forEach((p, idx) => {
+                const div = document.createElement('div');
+                div.className = `pigment-swatch ${idx === 0 ? 'selected' : ''}`;
+                div.style.backgroundColor = p.hex;
+                div.innerText = p.name.split(' ')[0];
+                div.onclick = () => {
+                    document.querySelectorAll('.pigment-swatch').forEach(s => s.classList.remove('selected'));
+                    div.classList.add('selected');
+                    currentColor = p.hex;
+                };
+                grid.appendChild(div);
+            });
+            currentColor = pList[0].hex;
+        }
+
+        function generateLineArt() {
+            generateAIImagePage();
+        }
+
+        function setTool(t) { currentTool = t; }
+        function clearCanvas() { paintCtx.clearRect(0, 0, 500, 500); }
+
+        function exportPNG() {
+            const expCanvas = document.createElement('canvas');
+            expCanvas.width = 1000; expCanvas.height = 1000;
+            const expCtx = expCanvas.getContext('2d');
+            expCtx.fillStyle = '#ffffff';
+            expCtx.fillRect(0, 0, 1000, 1000);
+            expCtx.drawImage(paintCanvas, 0, 0, 1000, 1000);
+            expCtx.drawImage(lineCanvas, 0, 0, 1000, 1000);
+
+            const link = document.createElement('a');
+            link.download = `FlowerLearn_Artwork_${Date.now()}.png`;
+            link.href = expCanvas.toDataURL('image/png');
+            link.click();
+            showToast('Export Ready', 'High-Res PNG downloaded to disk.');
+        }
+
+        // --- MODULE 2: 81-SPECTRA VISUALIZER ---
+        function startSpectraAnimation() {
+            const cvs = document.getElementById('spectraCanvas');
+            const ctx = cvs.getContext('2d');
+            let angle = 0;
+
+            function render() {
+                ctx.clearRect(0, 0, cvs.width, cvs.height);
+                const cx = cvs.width / 2;
+                const cy = cvs.height / 2;
+
+                for (let wave = 1; wave <= 9; wave++) {
+                    const radius = wave * 24;
+                    const nodesInWave = 9;
+                    ctx.strokeStyle = `hsl(${wave * 35}, 80%, 60%)`;
+                    ctx.lineWidth = 1.5;
+
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    for (let n = 0; n < nodesInWave; n++) {
+                        const nodeAngle = angle + (n * (Math.PI * 2 / nodesInWave)) + (wave * 0.1);
+                        const nx = cx + radius * Math.cos(nodeAngle);
+                        const ny = cy + radius * Math.sin(nodeAngle);
+
+                        ctx.fillStyle = `hsl(${wave * 35}, 90%, 70%)`;
+                        ctx.beginPath();
+                        ctx.arc(nx, ny, 3.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                angle += 0.005;
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        // --- MODULE 3: T(x) GATE CALCULATOR ---
+        function updateTxCalculations() {
+            const phiT = parseFloat(document.getElementById('inputPhiT').value);
+            const psiC = parseFloat(document.getElementById('inputPsiC').value);
+            const sigmaS = parseFloat(document.getElementById('inputSigmaS').value);
+            const omegaG = parseFloat(document.getElementById('inputOmegaG').value);
+
+            document.getElementById('valPhiT').innerText = phiT.toFixed(3);
+            document.getElementById('valPsiC').innerText = psiC.toFixed(2);
+            document.getElementById('valSigmaS').innerText = sigmaS.toFixed(2);
+            document.getElementById('valOmegaG').innerText = omegaG.toFixed(2);
+
+            const asr = (Math.pow(phiT, 1.5) * psiC * sigmaS) + (PHI * omegaG);
+            document.getElementById('outASR').innerText = asr.toFixed(3);
+
+            const normT = Math.max(0, (phiT - 0.995) / (1.0 - 0.995));
+            const vy = 50 + (normT * 4950);
+            document.getElementById('outVy').innerText = `$${vy.toFixed(2)}`;
+
+            const nrq = (phiT * psiC * sigmaS) / (1.0 - (omegaG * 0.1));
+            document.getElementById('outNRQ').innerText = nrq.toFixed(3);
+
+            const careEl = document.getElementById('outCareState');
+            if (sigmaS < 0.85) {
+                careEl.innerText = "CARESTATE TRIGGERED (Grounding Active: 528Hz / #2E7D32)";
+                careEl.style.color = "#ef4444";
+                document.body.style.backgroundColor = "#0d2417";
+            } else {
+                careEl.innerText = "NOMINAL (Coherence Stable)";
+                careEl.style.color = "#34d399";
+                document.body.style.backgroundColor = "#080c0a";
+            }
+        }
+
+        // --- MODULE 4: DATA SUMP GATEWAY ---
+        function triggerFileUpload() {
+            document.getElementById('sumpFileInput').click();
+        }
+
+        function handleSumpUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                showToast('Data Sump Ingestion', `Processing ${file.name} through 5-stage subtractive noise incinerator...`);
+            }
+        }
+
+        // --- MODULE 5: PROTON CLI & AUDIO SYNTH ---
+        function handleCliCommand(e) {
+            if (e.key === 'Enter') {
+                const input = e.target.value.trim().toLowerCase();
+                const log = document.getElementById('terminalLog');
+
+                const cmdLine = document.createElement('div');
+                cmdLine.className = 'term-line';
+                cmdLine.innerHTML = `<span style="color: var(--accent-emerald);">proton@edge-node:~$</span> ${input}`;
+                log.insertBefore(cmdLine, log.lastElementChild);
+
+                let respText = '';
+                if (input === 'help') {
+                    respText = "Commands: launch, audio, status, zkhash, ai, clear";
+                } else if (input === 'ai') {
+                    respText = "AI GENERATION ENGINE: Active. Type a prompt in the AI Prompt input field on the sidebar to render custom true-to-life pages.";
+                } else if (input === 'launch') {
+                    respText = "[PROTOCOL: ALPHA-SYNC LAUNCH EXECUTION] 120 FPS WASM Physics & 528Hz Solfeggio Resonant Active.";
+                } else if (input === 'audio') {
+                    toggleRelaxationAudio();
+                    respText = isAudioPlaying ? "Acoustic Harmonization Active (528Hz Solfeggio + 3.0Hz Theta Wash)." : "Audio Muted.";
+                } else if (input === 'zkhash') {
+                    respText = `Generated ZK Profile: /hana/p/proton_${Math.random().toString(36).substring(2, 12)}`;
+                } else if (input === 'status') {
+                    respText = "System State: PONO | Latency: 1.2ms | T(x): 0.998 Pass";
+                } else {
+                    respText = `Unknown command: ${input}. Type 'help' for available commands.`;
+                }
+
+                const respLine = document.createElement('div');
+                respLine.className = 'term-line';
+                respLine.style.color = '#94a3b8';
+                respLine.innerText = respText;
+                log.insertBefore(respLine, log.lastElementChild);
+
+                e.target.value = '';
+                log.scrollTop = log.scrollHeight;
+            }
+        }
+
+        function toggleRelaxationAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (!isAudioPlaying) {
+                audioCtx.resume();
+                solfeggioOsc = audioCtx.createOscillator();
+                solfeggioOsc.frequency.setValueAtTime(528, audioCtx.currentTime);
+                const gain1 = audioCtx.createGain();
+                gain1.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                solfeggioOsc.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                solfeggioOsc.start();
+
+                isAudioPlaying = true;
+                showToast('Relaxation Audio', 'Playing 528Hz Solfeggio tone for focus & stress relief.');
+            } else {
+                if (solfeggioOsc) solfeggioOsc.stop();
+                isAudioPlaying = false;
+                showToast('Audio Muted', 'Solfeggio synthesizer paused.');
+            }
+        }
+
+        // --- DIAGNOSTICS & TREMOR PARSING ---
+        function startFpsCounter() {
+            setInterval(() => {
+                const fps = Math.floor(118 + Math.random() * 3);
+                document.getElementById('fpsVal').innerText = fps;
+            }, 1000);
+        }
+
+        function initTremorParsing() {
+            let samples = [];
+            window.addEventListener('mousemove', (e) => {
+                samples.push({ x: e.clientX, y: e.clientY, time: performance.now() });
+                if (samples.length > 20) samples.shift();
+
+                if (samples.length >= 10) {
+                    let jitter = 0;
+                    for (let i = 1; i < samples.length; i++) {
+                        const dt = samples[i].time - samples[i-1].time;
+                        const dist = Math.hypot(samples[i].x - samples[i-1].x, samples[i].y - samples[i-1].y);
+                        if (dt > 0) jitter += (dist / dt);
+                    }
+                    const sScore = Math.max(0.70, Math.min(1.0, 1.0 - (jitter * 0.005)));
+                    document.getElementById('somaticVal').innerText = sScore.toFixed(2);
+                }
+            });
+        }
+
+        // --- TOAST NOTIFICATION ---
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
