@@ -1,0 +1,9 @@
+60e2f9397c16f822e101594fdfb5ba7b  index.html
+a433b1e7c3419624f8a640c254a81c57  docs/9sm_audit_results.md
+50c68d8130c7824dba8a251afd9722d5  docs/SPECIFICATION.md
+21ba31e9d03cd559415deda0fbe36857  docs/sliver_veritas_mastery_guide.md
+88e8eb64f4cfa0d9d142703e786d55a6  tests/test_decoloring_pipeline.py
+7375db5cf77887daefbeced2f429d742  tests/test_pipeline.py
+fc5afad72f519d8ab349871378aef5a0  tests/test_truth_gate.py
+0cc1843d59455ce9d82c7483dd641e57  flower_learn.py
+1ffe68981a912f0d144e29a53f098ce5  adaptive_ingestion_engine.py

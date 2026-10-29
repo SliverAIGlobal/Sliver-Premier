@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# init-learning-engine executable wrapper
+
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+python3 "${SCRIPT_DIR}/flower_learn.py" "$@"

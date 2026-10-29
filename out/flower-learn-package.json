@@ -1,0 +1,44 @@
+{
+  "engine": "Flower Learn",
+  "role": "Supreme Senior Instructional Architect",
+  "ratio": "40/60",
+  "truth_gate": 0.995,
+  "framework": "ELIP",
+  "topic": "Test Execution",
+  "ledger": "SLIVER-GRAND_LEDGER via Proton CLI",
+  "veridical_hash": "0x889796EFD623C8ECF606_FLOWER_LEARN_MASTER_PACKAGE",
+  "status": "PONO VERIFIED",
+  "modules": [
+    "Guidebook",
+    "Worksheet",
+    "Mandala",
+    "Rubric"
+  ],
+  "ckns": [
+    {
+      "id": "CKN-01",
+      "title": "Capillary Micro-Fluidic Dynamics",
+      "formula": "Q = (r^4 * deltaP) / (8 * mu * L)"
+    },
+    {
+      "id": "CKN-02",
+      "title": "Sector Lock Quantum Attestation",
+      "wavelength": "510nm Green"
+    },
+    {
+      "id": "CKN-03",
+      "title": "432Hz Solfeggio Harmonic Stabilization",
+      "delta_tx": "+0.0010"
+    },
+    {
+      "id": "CKN-04",
+      "title": "Subtractive Logic Entropy Elimination",
+      "incineration_rate": "98.2%"
+    },
+    {
+      "id": "CKN-05",
+      "title": "Proton CLI Grand Ledger Binding",
+      "encryption": "AES-256-GCM / Ed25519"
+    }
+  ]
+}
