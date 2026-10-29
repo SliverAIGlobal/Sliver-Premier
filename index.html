@@ -1,1161 +1,1222 @@
 <!DOCTYPE html>
-<html lang="en" class="dark h-full">
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flower Learn Studio – Bio-Kinetic All-Ages Coloring Book & De-Colorer (SOREN-V2)</title>
+    <title>Flower Learn Studio: Bio-Kinetic Coloring Book</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-            background-color: #020617;
-            color: #f8fafc;
-        }
-
-        .font-mono {
-            font-family: 'Fira Code', monospace;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
+        .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #020617;
         }
-        ::-webkit-scrollbar-thumb {
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #334155;
-            border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
-
-        /* Canvas Crosshair cursor for precise coloring */
-        canvas.drawing-mode {
-            cursor: crosshair;
-        }
-
-        /* Smooth CareState Theme Transition */
-        body, main, sidebar, header {
-            transition: background-color 0.8s ease, border-color 0.8s ease;
-        }
-
-        .carestate-active {
-            background-color: #062312 !important;
-        }
-
-        /* Pulse glow for bio-luminescent mode */
-        @keyframes bioGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); border-color: #00f2fe !important; }
-            50% { box-shadow: 0 0 35px rgba(0, 242, 254, 0.8); border-color: #38bdf8 !important; }
-        }
-        .bio-glow-active {
-            animation: bioGlow 2.5s infinite ease-in-out;
+        .glow-active {
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.35);
         }
     </style>
 </head>
-<body class="h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden" id="appBody">
+<body class="h-full flex flex-col font-sans antialiased overflow-hidden select-none bg-slate-950 text-slate-100">
 
-    <!-- TOP HEADER -->
-    <header class="bg-slate-900 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-lg z-20">
+    <!-- HEADER / TOP NAVIGATION BAR -->
+    <header class="h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 z-20 shrink-0">
         <div class="flex items-center space-x-3">
-            <div class="bg-gradient-to-tr from-emerald-600 to-teal-500 p-2.5 rounded-xl shadow-md text-white flex items-center justify-center">
-                <i class="fa-solid fa-leaf text-xl"></i>
+            <div class="w-8 h-8 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold text-lg">
+                🌸
             </div>
             <div>
-                <div class="flex items-center space-x-2">
-                    <h1 class="font-bold text-lg bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">Flower Learn Studio</h1>
-                    <span class="text-[10px] uppercase font-semibold px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-500/30 font-mono">SOREN-V2</span>
-                    <span class="text-[10px] font-semibold px-2.5 py-0.5 bg-emerald-950 text-emerald-300 rounded-full border border-emerald-800/80 font-mono">✈️ SANDBOX AIRPLANE MODE (100% OFFLINE &amp; PRIVATE)</span>
-                </div>
-                <p class="text-xs text-slate-400">Bio-Kinetic Interactive Coloring Book &amp; Micro-Anatomy Studio • 100% Client-Side Edge Computing</p>
+                <h1 class="text-sm font-bold text-slate-100 tracking-wide flex items-center space-x-2">
+                    <span>Flower Learn Studio</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-teal-950 text-teal-400 border border-teal-800/50 font-mono">v2.2-allages</span>
+                </h1>
+                <p class="text-[10px] text-slate-400">All-Ages Bio-Kinetic Coloring Studio & Precision Engine</p>
             </div>
         </div>
 
-        <!-- Telemetry, Audio & Unlock Controls Header -->
+        <!-- Audio Synthesizer & Action Controls -->
         <div class="flex items-center space-x-3">
-            <!-- Precision Secret Upgrade Status -->
-            <div id="precision-badge" class="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-mono">
-                <span class="text-slate-400">✨ Precision:</span>
-                <span id="precision-val-label" class="text-amber-400 font-bold">0%</span>
-                <span id="secret-unlock-label" class="text-[10px] text-slate-500 ml-1">(Reach 90% for Bio-Glow)</span>
-            </div>
-
-            <!-- Solfeggio Audio Toggle -->
-            <button id="audio-toggle-btn" onclick="window.app && window.app.toggleAudio()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium rounded-xl border border-slate-700 transition flex items-center space-x-2 text-slate-300" title="Toggle 528 Hz Solfeggio & 3 Hz Theta Ambient Soundscape">
-                <i class="fa-solid fa-volume-xmark text-amber-400" id="audio-icon"></i>
-                <span id="audio-status-label">528Hz Audio: Off</span>
+            <button id="audio-toggle-btn" onclick="toggleAudio()" class="px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-all flex items-center space-x-2">
+                <span id="audio-icon" class="text-teal-400">🎵</span>
+                <span id="audio-status">528Hz Off</span>
             </button>
-
-            <!-- Tremor & CareState Monitor Badge -->
-            <div class="hidden sm:flex items-center space-x-2 bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-mono">
-                <span class="text-slate-500">Somatic Tremor:</span>
-                <span id="tremor-val-label" class="text-emerald-400 font-bold">0.0 Hz</span>
-                <span id="carestate-badge" class="hidden px-1.5 py-0.5 bg-emerald-600 text-white text-[9px] rounded font-sans uppercase">CareState On</span>
-            </div>
-
-            <!-- Export Print / PNG -->
-            <button onclick="window.app && window.app.exportHighResPNG()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold rounded-xl shadow-lg transition flex items-center space-x-1.5 text-white">
-                <i class="fa-solid fa-file-arrow-down"></i>
+            <button onclick="exportCanvasPNG()" class="px-3.5 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold transition-all shadow-lg shadow-teal-500/10 flex items-center space-x-1.5">
+                <span>⬇️</span>
                 <span>Export 2x PNG</span>
             </button>
         </div>
     </header>
 
-    <!-- MAIN STUDIO LAYOUT -->
-    <main class="flex-1 flex overflow-hidden">
+    <!-- MAIN APP LAYOUT CONTAINER -->
+    <div class="flex-1 flex overflow-hidden relative">
 
-        <!-- SIDEBAR CONTROLS & LIBRARY -->
-        <aside class="w-80 bg-slate-900/90 border-r border-slate-800 flex flex-col shrink-0 select-none overflow-y-auto">
+        <!-- LEFT SIDEBAR: MODEL SELECTOR, UPLOADER & PRECISION TRACKER -->
+        <aside class="w-80 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 custom-scrollbar overflow-y-auto z-10">
+            <div class="p-4 space-y-5">
 
-            <!-- SECTION 0: AGE MODE TOGGLE -->
-            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Experience Mode:</span>
-                <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-                    <button id="mode-simple-btn" onclick="window.app && window.app.setAgeMode('simple')" class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-semibold transition">Junior</button>
-                    <button id="mode-detail-btn" onclick="window.app && window.app.setAgeMode('detail')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition">Adult / Detail</button>
-                </div>
-            </div>
-
-            <!-- SECTION 1: TOPIC GENERATOR & AI PROMPTER -->
-            <div class="p-4 border-b border-slate-800 space-y-3">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>"Color Anything" Write-In Topic</span>
-                    </h2>
-                </div>
+                <!-- High-Detail Photo-to-Coloring Page Converter -->
                 <div class="space-y-2">
-                    <div class="relative">
-                        <input type="text" id="ai-topic-input" placeholder="e.g. Monarch Butterfly, Coral Reef, Dinoflagellates..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-3 pr-10 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-emerald-500 font-medium">
-                        <button onclick="window.app && window.app.generateAIPromptPage()" class="absolute right-1.5 top-1.5 p-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs transition" title="Generate Line Art">
-                            <i class="fa-solid fa-bolt"></i>
-                        </button>
-                    </div>
-                    <div class="flex justify-between items-center text-[10px] text-slate-500 italic">
-                        <span>Generates precision vector art &amp; field notes</span>
-                        <span class="text-emerald-400 font-mono">T(x) 0.998</span>
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                        <span>📷 Photo & Art Converter</span>
+                        <span class="text-[10px] text-teal-400 font-mono">WASM Sobel</span>
+                    </label>
+                    <p class="text-[11px] text-slate-500 leading-normal">
+                        Turn any photo into detailed line art instantly. High-fidelity contour extraction for advanced colorists.
+                    </p>
+                    <label class="flex items-center justify-center space-x-2 bg-slate-800 hover:bg-slate-700 border border-dashed border-slate-700 hover:border-teal-500/50 rounded-xl p-3 cursor-pointer transition-all">
+                        <span class="text-base">📤</span>
+                        <span class="text-xs font-semibold text-slate-300">Upload Any Photo</span>
+                        <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    </label>
+
+                    <!-- Advanced Detail Level Slider -->
+                    <div class="p-2.5 bg-slate-950 border border-slate-800 rounded-xl space-y-1.5">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="text-slate-400 font-semibold">Contour Detail Level</span>
+                            <span id="detail-val-label" class="text-teal-400 font-mono">High</span>
+                        </div>
+                        <input type="range" id="detail-sensitivity" min="60" max="180" value="110" oninput="updateDetailThreshold(this.value)" class="w-full accent-teal-400 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
                     </div>
                 </div>
+
+                <!-- 100+ PRESET NATURE & BIOLOGICAL IMAGE LIBRARY WITH HORIZONTAL SCROLL BAR -->
+                <div class="space-y-2.5 pt-3 border-t border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>🖼️ 100+ Image Library</span>
+                        </label>
+                        <span id="library-count-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-teal-950 text-teal-400 border border-teal-800/50 font-mono">102 Specimen</span>
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 custom-scrollbar text-[10px] font-semibold">
+                        <button onclick="filterLibraryCategory('all')" id="cat-btn-all" class="cat-filter-btn active shrink-0 px-2.5 py-1 rounded-lg bg-teal-500 text-slate-950 font-bold transition-all">All (102)</button>
+                        <button onclick="filterLibraryCategory('marine')" id="cat-btn-marine" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🌊 Marine (20)</button>
+                        <button onclick="filterLibraryCategory('botany')" id="cat-btn-botany" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🌿 Botany (20)</button>
+                        <button onclick="filterLibraryCategory('insects')" id="cat-btn-insects" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🐝 Insects (20)</button>
+                        <button onclick="filterLibraryCategory('animals')" id="cat-btn-animals" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🐾 Animals (22)</button>
+                        <button onclick="filterLibraryCategory('micro')" id="cat-btn-micro" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🔬 Micro (20)</button>
+                    </div>
+
+                    <!-- Horizontal Scrollable Image Thumbnail Carousel -->
+                    <div class="relative group">
+                        <div id="library-horizontal-scroll" class="flex space-x-2.5 overflow-x-auto py-2 px-1 custom-scrollbar scroll-smooth snap-x">
+                            <!-- Thumbnails injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preset Biological Specimen Models -->
+                <div class="space-y-2 pt-2 border-t border-slate-800">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        🌿 Procedural Vector Specimen
+                    </label>
+                    <div class="space-y-1.5" id="preset-model-list">
+                        <!-- Presets dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- Precision Tracking & Secret Bio-Glow Upgrade -->
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-3" id="precision-card">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Precision Skill Score</span>
+                        <span id="precision-percentage" class="text-sm font-mono font-bold text-teal-400">0.0%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div id="precision-bar" class="bg-gradient-to-r from-teal-500 to-cyan-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+
+                    <!-- Bio Glow Reveal Indicator -->
+                    <div id="bio-glow-banner" class="hidden p-2.5 bg-cyan-950/60 border border-cyan-500/40 rounded-xl text-center space-y-1">
+                        <span class="text-xs font-black text-cyan-300 tracking-wide uppercase flex items-center justify-center space-x-1">
+                            <span>✨ Secret Bio-Glow Unlocked!</span>
+                        </span>
+                        <p class="text-[10px] text-cyan-200/80">Touch accuracy &gt;90% activated bioluminescent iridophores across line contours.</p>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- SECTION 2: PRE-LOADED NATURE & MICRO-ANATOMY LIBRARY -->
-            <div class="p-4 border-b border-slate-800 space-y-3">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
-                        <i class="fa-solid fa-images"></i>
-                        <span>High-Precision Specimen Library</span>
-                    </h2>
-                    <span class="text-[10px] text-slate-500 font-mono">6 Curated Assets</span>
-                </div>
-                <div class="grid grid-cols-2 gap-2" id="preset-library-grid">
-                    <!-- Dynamic rendering via JS -->
-                </div>
-            </div>
+            <!-- Active Model Info Footer with Dual Field Notes & Read Aloud -->
+            <div class="p-4 bg-slate-950/80 border-t border-slate-800 space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Field Notes Reader</span>
 
-            <!-- SECTION 3: PHOTO-TO-COLORING PAGE CONVERTER & EDGE PIPELINE -->
-            <div class="p-4 border-b border-slate-800 space-y-3">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
-                    <i class="fa-solid fa-camera"></i>
-                    <span>Photo-To-Coloring Page</span>
-                </h2>
-                <label class="flex flex-col items-center justify-center p-3 border-2 border-dashed border-slate-700 hover:border-emerald-500 rounded-xl cursor-pointer bg-slate-950/50 hover:bg-slate-800/40 transition group">
-                    <i class="fa-solid fa-cloud-arrow-up text-emerald-400 text-xl group-hover:scale-110 transition-transform mb-1"></i>
-                    <span class="text-xs font-medium text-slate-300">Upload Any Photo</span>
-                    <span class="text-[10px] text-slate-500">De-colors locally in &lt;50ms (WASM)</span>
-                    <input type="file" id="photo-upload-input" accept="image/*" class="hidden" onchange="window.app && window.app.handlePhotoUpload(event)">
-                </label>
-
-                <!-- Edge Pipeline Fine-Tuning Controls -->
-                <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 space-y-2">
-                    <div class="flex justify-between items-center text-[11px] text-slate-400">
-                        <span>Line Sensitivity (Sobel):</span>
-                        <span id="sobel-val-label" class="font-mono text-emerald-400">40</span>
+                    <!-- Mode Switcher: Junior vs Adult -->
+                    <div class="flex items-center space-x-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[10px] font-bold">
+                        <button id="note-mode-junior-btn" onclick="setFieldNoteMode('junior')" class="px-2 py-0.5 rounded bg-teal-500 text-slate-950 transition-all">🌱 Junior</button>
+                        <button id="note-mode-adult-btn" onclick="setFieldNoteMode('adult')" class="px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all">🔬 Adult</button>
                     </div>
-                    <input type="range" id="sobel-sensitivity" min="10" max="100" value="40" oninput="window.app && window.app.updateSobelSensitivity(this.value)" class="w-full accent-emerald-500 h-1 bg-slate-800 rounded-lg cursor-pointer">
-                </div>
-            </div>
-
-            <!-- SECTION 4: SCIENTIFIC PIGMENT PALETTE -->
-            <div class="p-4 space-y-3 flex-1">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
-                        <i class="fa-solid fa-palette"></i>
-                        <span>Scientific Pigment Swatches</span>
-                    </h2>
-                    <span id="active-pigment-name" class="text-[10px] font-mono text-emerald-300 bg-emerald-950/80 border border-emerald-800/50 px-2 py-0.5 rounded-full">Chlorophyll A</span>
                 </div>
 
-                <div class="grid grid-cols-5 gap-2" id="pigment-swatches-grid">
-                    <!-- Swatches dynamically loaded -->
+                <div>
+                    <h4 id="active-model-title" class="text-xs font-bold text-slate-100 truncate">Chelonia mydas</h4>
+                    <p id="active-model-desc" class="text-[11px] text-slate-300 leading-snug mt-1 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 max-h-24 overflow-y-auto custom-scrollbar">
+                        Select a specimen to load biological field notes.
+                    </p>
                 </div>
 
-                <!-- Surface Micro-Texture Selector -->
-                <div class="pt-2">
-                    <label class="block text-[11px] font-medium text-slate-400 mb-1">Micro-Surface Tactile Texture:</label>
-                    <select id="texture-selector" onchange="window.app && window.app.setSurfaceTexture(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-emerald-500">
-                        <option value="smooth">Matte Smooth (Standard)</option>
-                        <option value="scute">Scute Ridge (Carapace Grain)</option>
-                        <option value="iridescent">Iridescent Guanine Shift</option>
-                        <option value="coastal">Coastal Sand / Cell Wall Grain</option>
-                    </select>
-                </div>
+                <!-- Read Aloud Speech Synthesizer Control -->
+                <button id="tts-read-btn" onclick="toggleReadAloud()" class="w-full py-1.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold flex items-center justify-center space-x-2 transition-all">
+                    <span id="tts-icon" class="text-teal-400">🔊</span>
+                    <span id="tts-label">Read Notes Aloud</span>
+                </button>
             </div>
         </aside>
 
-        <!-- CANVAS WORKSPACE & FIELD NOTES -->
-        <section class="flex-1 flex flex-col bg-slate-950 overflow-hidden relative">
+        <!-- CENTER CANVAS WORKSPACE -->
+        <main class="flex-1 relative flex flex-col items-center justify-center bg-slate-950 p-2 sm:p-4 overflow-hidden">
 
-            <!-- TOOLBAR TOP BAR -->
-            <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center justify-between shrink-0 text-xs">
-                <div class="flex items-center space-x-3">
-                    <!-- Tool Mode Selector -->
-                    <div class="bg-slate-950 p-1 rounded-xl border border-slate-800 flex space-x-1">
-                        <button id="tool-paint-btn" onclick="window.app && window.app.setTool('paint')" class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-medium transition flex items-center space-x-1">
-                            <i class="fa-solid fa-fill-drip"></i>
-                            <span>Bio-Fill Bucket</span>
+            <!-- Canvas Multi-Layer Container -->
+            <div id="canvas-container" class="relative w-full h-full max-w-5xl max-h-[800px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex items-center justify-center">
+                <!-- Paint Surface Canvas -->
+                <canvas id="paint-canvas" class="absolute inset-0 w-full h-full cursor-crosshair z-0"></canvas>
+                <!-- Line Art Overlay Canvas -->
+                <canvas id="overlay-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+                <!-- Loading / Processing Spinner -->
+                <div id="canvas-loader" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-30 flex flex-col items-center justify-center space-y-3">
+                    <div class="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span id="loader-text" class="text-xs font-bold text-teal-300">Extracting Detailed Line Art...</span>
+                </div>
+            </div>
+
+            <!-- BOTTOM FLOATING TOOLBAR CONTROLS -->
+            <div class="absolute bottom-6 z-20 flex items-center space-x-2 bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-800 shadow-2xl max-w-full overflow-x-auto">
+                <!-- Tool Selector: Brush vs Bucket vs Eraser -->
+                <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                    <button id="tool-brush-btn" onclick="setTool('brush')" class="p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🖌️</span>
+                        <span class="hidden sm:inline">Brush</span>
+                    </button>
+                    <button id="tool-bucket-btn" onclick="setTool('bucket')" class="p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🪣</span>
+                        <span class="hidden sm:inline">Fill Bucket</span>
+                    </button>
+                    <button id="tool-eraser-btn" onclick="setTool('eraser')" class="p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🧹</span>
+                        <span class="hidden sm:inline">Eraser</span>
+                    </button>
+                </div>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Stroke Size Slider -->
+                <div class="flex items-center space-x-2 px-2">
+                    <span class="text-xs text-slate-400 font-semibold">Size</span>
+                    <input type="range" id="brush-size" min="4" max="48" value="16" class="w-20 sm:w-28 accent-teal-400 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Somatic Tremor Smoothing Toggle -->
+                <button id="tremor-toggle-btn" onclick="toggleTremorSmooth()" class="px-2.5 py-1.5 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all flex items-center space-x-1">
+                    <span>⚡</span>
+                    <span class="hidden md:inline">Smooth Brush:</span>
+                    <span id="tremor-status" class="text-teal-400 font-bold">ON</span>
+                </button>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Clear Paint Layer -->
+                <button onclick="clearPaintLayer()" class="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded-xl transition-all text-xs font-semibold flex items-center space-x-1">
+                    <span>🗑️</span>
+                    <span class="hidden sm:inline">Clear All</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR: BIOLOGICAL PIGMENTS & TEXTURES -->
+        <aside class="w-72 bg-slate-900 border-l border-slate-800 flex flex-col shrink-0 hidden xl:flex z-10 custom-scrollbar overflow-y-auto">
+            <div class="p-4 space-y-6">
+
+                <!-- Biological Pigments Section -->
+                <div class="space-y-3">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                        <span>🧪 Scientific Pigments</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2" id="pigment-swatch-list">
+                        <!-- Swatches dynamically injected based on active specimen -->
+                    </div>
+                </div>
+
+                <!-- Tactile Surface Micro-Textures -->
+                <div class="space-y-3 pt-4 border-t border-slate-800">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        🖐️ Surface Micro-Textures
+                    </label>
+                    <div class="grid grid-cols-1 gap-2" id="texture-selector-list">
+                        <button onclick="setTexture('scute')" id="tex-btn-scute" class="tex-btn active text-left p-2.5 rounded-xl border border-teal-500 bg-teal-950/30 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Scute Ridge</span>
+                            <span class="text-[10px] text-slate-400">Keratin layer stippling</span>
                         </button>
-                        <button id="tool-brush-btn" onclick="window.app && window.app.setTool('brush')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition flex items-center space-x-1">
-                            <i class="fa-solid fa-paintbrush"></i>
-                            <span>Smooth Brush</span>
+                        <button onclick="setTexture('iridescent')" id="tex-btn-iridescent" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Iridescent Shift</span>
+                            <span class="text-[10px] text-slate-400">Guanine crystal noise</span>
                         </button>
-                        <button id="tool-eraser-btn" onclick="window.app && window.app.setTool('eraser')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition flex items-center space-x-1">
-                            <i class="fa-solid fa-eraser"></i>
-                            <span>Eraser</span>
+                        <button onclick="setTexture('coastal')" id="tex-btn-coastal" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Coastal Grain</span>
+                            <span class="text-[10px] text-slate-400">Fine siliceous sand grit</span>
+                        </button>
+                        <button onclick="setTexture('matte')" id="tex-btn-matte" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Matte Smooth</span>
+                            <span class="text-[10px] text-slate-400">Flat organic pigment</span>
                         </button>
                     </div>
+                </div>
 
-                    <!-- Brush Size Slider -->
-                    <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1 rounded-xl border border-slate-800">
-                        <span class="text-slate-400">Brush Size:</span>
-                        <input type="range" id="brush-size" min="2" max="40" value="12" oninput="window.app && window.app.setBrushSize(this.value)" class="w-20 accent-emerald-500 h-1 bg-slate-800 rounded-lg cursor-pointer">
-                        <span id="brush-size-val" class="font-mono text-emerald-400 w-4">12</span>
+                <!-- Bio-Glow Visual Controls -->
+                <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-400">Bioluminescent Overlay</span>
+                        <input type="checkbox" id="toggle-glow-manual" onchange="renderOverlay()" class="accent-teal-400 cursor-pointer">
                     </div>
-
-                    <!-- Somatic Tremor Toggle -->
-                    <button id="tremor-toggle-btn" onclick="window.app && window.app.toggleTremorFilter()" class="hidden md:flex items-center space-x-1 px-3 py-1 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-emerald-400 transition" title="Filter 6-12 Hz Motor Tremor (alpha = 0.25)">
-                        <i class="fa-solid fa-wave-square text-emerald-400"></i>
-                        <span>Tremor Smooth: On</span>
-                    </button>
+                    <p class="text-[10px] text-slate-500">Enable manually or achieve &gt;90% touch accuracy to trigger auto glow.</p>
                 </div>
 
-                <!-- Canvas Control Actions -->
-                <div class="flex items-center space-x-2">
-                    <button onclick="window.app && window.app.undoLastAction()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition flex items-center space-x-1" title="Undo">
-                        <i class="fa-solid fa-rotate-left"></i>
-                        <span class="hidden sm:inline">Undo</span>
-                    </button>
-                    <button onclick="window.app && window.app.clearCanvas()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition flex items-center space-x-1" title="Clear Canvas">
-                        <i class="fa-solid fa-trash-can"></i>
-                        <span class="hidden sm:inline">Reset</span>
-                    </button>
-                    <button onclick="window.app && window.app.toggleFieldNotes()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition flex items-center space-x-1">
-                        <i class="fa-solid fa-microscope text-teal-400"></i>
-                        <span>Field Notes</span>
-                    </button>
-                </div>
             </div>
-
-            <!-- INTERACTIVE CANVAS CONTAINER -->
-            <div class="flex-1 relative flex items-center justify-center p-4 bg-slate-950/90 overflow-hidden" id="canvas-container">
-                <canvas id="main-canvas" class="drawing-mode rounded-2xl shadow-2xl bg-white border border-slate-800 max-w-full max-h-full object-contain"></canvas>
-
-                <!-- BIOLOGICAL FIELD NOTES OVERLAY CARD -->
-                <div id="field-notes-panel" class="absolute bottom-6 right-6 w-96 bg-slate-900/95 border border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md transition-all duration-300 space-y-2 text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-dna text-emerald-400 text-sm"></i>
-                            <h3 id="notes-title" class="font-bold text-slate-100 text-sm">Specimen: Leaf Epidermis &amp; Stomata</h3>
-                        </div>
-                        <button onclick="window.app && window.app.toggleFieldNotes()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                    <p id="notes-content" class="text-slate-300 leading-relaxed">
-                        Guard cells regulate gas exchange and transpiration by expanding and contracting. Chloroplasts within guard cells convert light into biochemical energy through Chlorophyll A/B pigments.
-                    </p>
-                    <div class="pt-2 flex justify-between items-center text-[10px] text-slate-500 font-mono border-t border-slate-800">
-                        <span>Pono Truth Gate: T(x) 0.998 Pass</span>
-                        <span>Zero-Loss Offline</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BOTTOM STATUS FOOTER -->
-            <footer class="bg-slate-900 border-t border-slate-800 px-4 py-1.5 flex justify-between items-center text-[11px] text-slate-400 shrink-0 font-mono">
-                <div class="flex items-center space-x-4">
-                    <span class="flex items-center space-x-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="text-slate-300">Bio-Engine Active</span>
-                    </span>
-                    <span id="canvas-resolution-label">Resolution: 1200 x 900</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span>Acoustic Field: 528Hz Solfeggio</span>
-                    <span class="text-emerald-400 font-semibold">T(x) Gate: 0.995 Standard</span>
-                </div>
-            </footer>
-        </section>
-    </main>
-
-    <!-- CUSTOM ALERT MODAL -->
-    <div id="custom-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm shadow-2xl p-6 text-center space-y-4">
-            <div class="w-12 h-12 rounded-full bg-emerald-600/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">
-                <i class="fa-solid fa-circle-info" id="modal-icon"></i>
-            </div>
-            <div>
-                <h3 id="modal-title" class="font-bold text-sm text-slate-200 mb-1">Notice</h3>
-                <p id="modal-message" class="text-xs text-slate-400 leading-relaxed"></p>
-            </div>
-            <button onclick="window.app && window.app.closeModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold rounded-xl text-white shadow transition">Acknowledge</button>
-        </div>
+        </aside>
     </div>
 
-    <!-- APPLICATION LOGIC ENGINE -->
+    <!-- JAVASCRIPT LOGIC ENGINE -->
     <script>
-        class FlowerLearnStudioEngine {
-            constructor() {
-                // Canvas State
-                this.canvas = null;
-                this.ctx = null;
-                this.width = 1200;
-                this.height = 900;
-                this.isDrawing = false;
-                this.lastX = 0;
-                this.lastY = 0;
-                this.tool = 'paint'; // 'paint' (bucket fill), 'brush', 'eraser'
-                this.brushSize = 12;
-                this.surfaceTexture = 'smooth';
-                this.sobelThreshold = 40;
-                this.undoStack = [];
-                this.maxUndo = 15;
-                this.ageMode = 'simple'; // 'simple' (Junior) vs 'detail' (Adult)
+        // ============================================================================
+        // GLOBAL STATE & DATA STRUCTURES
+        // ============================================================================
+        let paintCanvas, paintCtx, overlayCanvas, overlayCtx;
+        let isDrawing = false;
+        let strokePoints = [];
+        let activePigment = '#16a34a';
+        let activeTexture = 'scute';
+        let activeTool = 'brush'; // 'brush', 'bucket', 'eraser'
+        let brushSize = 16;
+        let tremorSmoothEnabled = true;
+        let bioGlowUnlocked = false;
+        let detailThreshold = 110;
+        let customImageElement = null;
+        let activeModel = null;
 
-                // Tremor and CareState
-                this.filteredPointer = { x: 0, y: 0 };
-                this.tremorFilterAlpha = 0.25;
-                this.tremorMagnitude = 0;
-                this.careStateActive = false;
-                this.tremorFilterEnabled = true;
+        // Audio state
+        let audioCtx = null, gainNode = null, osc528 = null, oscThetaL = null, oscThetaR = null;
+        let isAudioPlaying = false;
 
-                // Precision Skill Tracker
-                this.filledPixelsCount = 0;
-                this.precisionScore = 0;
-                this.secretUnlocked = false;
-
-                // Audio
-                this.audioCtx = null;
-                this.isAudioPlaying = false;
-
-                // Curated Nature & Micro-Anatomy Library Presets with High-Res Image References
-                this.presets = [
-                    {
-                        id: 'sea-turtle',
-                        title: 'Green Sea Turtle',
-                        category: 'Marine Morphology',
-                        icon: 'fa-otter',
-                        notes: 'Chelonia mydas carapace features keratin scutes with underlying bone sutures and iridophore nanocrystals.',
-                        imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateSeaTurtleSVG
-                    },
-                    {
-                        id: 'leaf-guard',
-                        title: 'Leaf Guard Cells',
-                        category: 'Botanical Anatomy',
-                        icon: 'fa-leaf',
-                        notes: 'Guard cells control stomatal pore opening for CO2 absorption during photosynthesis. Chloroplasts synthesize glucose.',
-                        imageUrl: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateLeafGuardCellsSVG
-                    },
-                    {
-                        id: 'honeybee',
-                        title: 'Honeybee Anatomy',
-                        category: 'Entomology',
-                        icon: 'fa-bugs',
-                        notes: 'Apis mellifera compound eye facets, chitinous exoskeleton, pollen baskets (corbicula), and hexagonal comb.',
-                        imageUrl: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateHoneybeeSVG
-                    },
-                    {
-                        id: 'jellyfish',
-                        title: 'Bioluminescent Jelly',
-                        category: 'Deep Sea Biology',
-                        icon: 'fa-water',
-                        notes: 'Aequorea victoria bell margins synthesize aequorin photoproteins and GFP (Green Fluorescent Protein) for bioluminescence.',
-                        imageUrl: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateJellyfishSVG
-                    },
-                    {
-                        id: 'redwood',
-                        title: 'Redwood Forest',
-                        category: 'Dendrology',
-                        icon: 'fa-tree',
-                        notes: 'Sequoia sempervirens xylem tracheid capillaries and thick tannic bark channels designed for fire resistance and water transport.',
-                        imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateRedwoodSVG
-                    },
-                    {
-                        id: 'fungi',
-                        title: 'Mycorrhizal Fungi',
-                        category: 'Mycology',
-                        icon: 'fa-disease',
-                        notes: 'Hyphal filament networks exchanging subterranean nitrogen and phosphorus with tree cortical root cells.',
-                        imageUrl: 'https://images.unsplash.com/photo-1511497584788-876761c11969?auto=format&fit=crop&w=1200&q=80',
-                        svgGenerator: this.generateFungiSVG
-                    }
-                ];
-
-                // Biological Scientific Pigments
-                this.pigments = [
-                    { name: 'Chlorophyll A', hex: '#15803d', category: 'Plant Life' },
-                    { name: 'Chlorophyll B', hex: '#22c55e', category: 'Plant Life' },
-                    { name: 'Sprout Lime', hex: '#84cc16', category: 'Growth' },
-                    { name: 'Carotenoid Gold', hex: '#eab308', category: 'Pigment' },
-                    { name: 'Marigold Orange', hex: '#f97316', category: 'Petal' },
-                    { name: 'Scute Amber', hex: '#b45309', category: 'Keratin' },
-                    { name: 'Luciferin Glow', hex: '#06b6d4', category: 'Bioluminescent' },
-                    { name: 'Oceanic Blue', hex: '#0284c7', category: 'Marine' },
-                    { name: 'Guanine Cyan', hex: '#0ea5e9', category: 'Iridophore' },
-                    { name: 'Anthocyanin Violet', hex: '#7e22ce', category: 'Flavonoid' }
-                ];
-                this.activePigment = this.pigments[0];
+        // Procedural Vector Presets
+        const PRESET_MODELS = [
+            {
+                id: 'turtle',
+                name: 'Chelonia mydas',
+                subtitle: 'Green Sea Turtle Carapace',
+                juniorDesc: 'Green sea turtles swim thousands of miles across oceans! Their tough shell is made of scutes that protect them like armor.',
+                adultDesc: 'Chelonia mydas carapace exhibits keratinized epidermal scute patterns over underlying bony osteoderms, with guanine crystal iridophores reflecting ambient light.',
+                pigments: [
+                    { name: 'Scute Amber', color: '#d97706', code: 'AMB' },
+                    { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                    { name: 'Reef Algae Green', color: '#16a34a', code: 'ALG' },
+                    { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' }
+                ]
+            },
+            {
+                id: 'stomata',
+                name: 'Stomatal Guard Cells',
+                subtitle: 'Leaf Epidermis Micro-Anatomy',
+                juniorDesc: 'Plant leaves have microscopic mouths called stomata that open and close to let plants breathe in air and drink light!',
+                adultDesc: 'Stomatal pore aperture is dynamically regulated by guard cell turgor pressure, chloroplast thylakoid ion flux, and environmental CO2 concentrations.',
+                pigments: [
+                    { name: 'Chlorophyll A', color: '#16a34a', code: 'CHL-A' },
+                    { name: 'Chlorophyll B', color: '#4d7c0f', code: 'CHL-B' },
+                    { name: 'Carotenoid Gold', color: '#eab308', code: 'CAR' },
+                    { name: 'Cellulose White', color: '#f8fafc', code: 'CEL' }
+                ]
+            },
+            {
+                id: 'honeybee',
+                name: 'Apis mellifera',
+                subtitle: 'Compound Eye & Wax Comb',
+                juniorDesc: 'Honeybees use hexagonal wax combs because six-sided shapes store the most delicious honey using the least amount of wax!',
+                adultDesc: 'Apis mellifera compound eyes feature thousands of hexagonal ommatidia facets optimized for polarized ultraviolet floral nectar navigation.',
+                pigments: [
+                    { name: 'Pollen Gold', color: '#f59e0b', code: 'POL' },
+                    { name: 'Chitin Obsidian', color: '#1e293b', code: 'CHT' },
+                    { name: 'Honey Amber', color: '#b45309', code: 'HNY' },
+                    { name: 'Royal Jelly Cream', color: '#fef3c7', code: 'ROY' }
+                ]
+            },
+            {
+                id: 'jellyfish',
+                name: 'Aequorea victoria',
+                subtitle: 'Bioluminescent Radial Canals',
+                juniorDesc: 'Bioluminescent jellyfish make their own magical glowing light in dark ocean waters to signal friends and scare off predators!',
+                adultDesc: 'Aequorea victoria hydrozoan mesoglea contains calcium-activated photoprotein aequorin and green fluorescent protein (GFP) radial structures.',
+                pigments: [
+                    { name: 'Luciferin Glow', color: '#38bdf8', code: 'LCF' },
+                    { name: 'GFP Emerald', color: '#10b981', code: 'GFP' },
+                    { name: 'Deep Ocean Blue', color: '#1e1b4b', code: 'OCN' },
+                    { name: 'Mesoglea Cyan', color: '#22d3ee', code: 'MSG' }
+                ]
+            },
+            {
+                id: 'redwood',
+                name: 'Sequoia sempervirens',
+                subtitle: 'Concentric Tree Ring Capillaries',
+                juniorDesc: 'Redwood trees are the tallest living things on Earth! Counting their trunk rings reveals how old the tree is and how wet each spring was.',
+                adultDesc: 'Sequoia sempervirens secondary xylem tracheids deposit thick lignified cell walls forming annual growth rings and radial sapwood transport channels.',
+                pigments: [
+                    { name: 'Tannin Bark Rust', color: '#9a3412', code: 'TAN' },
+                    { name: 'Sapwood Amber', color: '#d97706', code: 'SAP' },
+                    { name: 'Heartwood Crimson', color: '#881337', code: 'HRT' },
+                    { name: 'Needle Chlorophyll', color: '#15803d', code: 'NDL' }
+                ]
+            },
+            {
+                id: 'mycorrhizae',
+                name: 'Mycorrhizal Fungal Network',
+                subtitle: 'Hyphal Filament Web',
+                juniorDesc: 'Fungi build an underground "Wood Wide Web" that helps forest trees share nutrients and communicate with each other secretly!',
+                adultDesc: 'Symbiotic mycorrhizal hyphal networks penetrate plant root cortical cells, facilitating bilateral nutrient exchange of soil phosphorus and photosynthetic carbon.',
+                pigments: [
+                    { name: 'Spore Gold', color: '#ca8a04', code: 'SPR' },
+                    { name: 'Hyphal White', color: '#f1f5f9', code: 'HYP' },
+                    { name: 'Humus Brown', color: '#78350f', code: 'HUM' },
+                    { name: 'Mycelium Violet', color: '#6b21a8', code: 'MYC' }
+                ]
             }
+        ];
 
-            init() {
-                const setup = () => {
-                    this.canvas = document.getElementById('main-canvas');
-                    if (!this.canvas) return;
-                    this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+        // FULL 102 CURATED BIOLOGICAL & NATURE IMAGE LIBRARY SPECIMENS
+        const IMAGE_LIBRARY = [];
 
-                    this.canvas.width = this.width;
-                    this.canvas.height = this.height;
+        // Helper generator for 102 library entries
+        (function generateFullLibrary() {
+            const categories = [
+                { name: 'marine', count: 20, prefix: 'm', titles: ['Green Sea Turtle', 'Moon Jellyfish', 'Coral Reef Colony', 'Manta Ray Wing', 'Clownfish Anemone', 'Nautilus Shell', 'Basking Shark', 'Giant Kelp Forest', 'Crown-of-Thorns Starfish', 'Seahorse Tail', 'Blue Ringed Octopus', 'Whale Shark Spots', 'Sea Urchin Spines', 'Loxodonta Seal', 'Deep Sea Chimera', 'Stingray Pectoral', 'Parrotfish Beak', 'Harbor Porpoise', 'Dungeness Crab', 'Spotted Eagle Ray'] },
+                { name: 'botany', count: 20, prefix: 'b', titles: ['Fern Frond Leaf', 'Redwood Bark', 'Sunflower Fibonnaci', 'Monstera Fenestrations', 'Orchid Petals', 'Venus Flytrap Hair', 'Pinecone Scales', 'Water Lily Pad', 'Moss Capsule Seta', 'Bamboo Internode', 'Dandelion Seed Head', 'Cactus Areole Spines', 'Pitcher Plant Rim', 'Maple Leaf Veins', 'Ginkgo Biloba Leaf', 'Lotus Stem Channels', 'Baobab Bark', 'Eucalyptus Leaves', 'Oak Tree Canopy', 'Succulent Rosette'] },
+                { name: 'insects', count: 20, prefix: 'i', titles: ['Honeybee Compound Eye', 'Monarch Scale Wing', 'Dragonfly Wing Venation', 'Ladybug Elytra', 'Praying Mantis Foreleg', 'Luna Moth Antennae', 'Stag Beetle Mandibles', 'Cicada Transparent Wing', 'Katydid Leaf Mimic', 'Grasshopper Leg Muscle', 'Firefly Abdomen Segment', 'Hercules Beetle Horn', 'Leafcutter Ant Jaw', 'Jewel Beetle Carapace', 'Silk Moth Cocoon', 'Bumblebee Corbicula', 'Swallowtail Caterpillar', 'Wasp Waist Petiole', 'Water Strider Tarsus', 'Termite Mound Arch'] },
+                { name: 'animals', count: 22, prefix: 'a', titles: ['Chameleon Nanocrystals', 'Peacock Structural Barbules', 'Leopard Rosette Pattern', 'Zebra Stripe Alignment', 'Snowy Owl Feather Down', 'Gecko Toe Lamellae', 'Cheetah Claws', 'Toucan Serrated Beak', 'Panther Iris Anatomy', 'Pangolin Keratin Scales', 'Arctic Fox Coat', 'Flamingo Plumage', 'Koala Foot Paw', 'Kangaroo Tendon', 'Armadillo Shell Bands', 'Chimpanzee Fingerprint', 'Wolf Fur Texture', 'Elephant Trunk Rings', 'Giraffe Skin Tiles', 'Tree Frog Foot Pads', 'Walrus Tusk Ivory', 'Iguana Crest Spines'] },
+                { name: 'micro', count: 20, prefix: 'u', titles: ['Leaf Guard Cell Stomata', 'Diptera Ommatidia Facets', 'Chloroplast Thylakoids', 'Radiolarian Silica Skeleton', 'Foraminifera Shell Chamber', 'Paramecium Cilia Web', 'Euglena Flagellum Stem', 'Diatom Glass Frustule', 'Xylem Water Capillaries', 'Phloem Sieve Tubes', 'Onion Skin Epidermis', 'Pollen Grain Micro-Spikes', 'Amoeba Pseudopodium', 'Bone Tissue Haversian', 'Nerve Neuron Axon', 'Red Blood Cell Biconcave', 'Skeletal Muscle Striations', 'Capillary Vessel Wall', 'Root Tip Meristem', 'Mycorrhizal Arbuscule'] }
+            ];
 
-                    this.setupEventListeners();
-                    this.renderPresetLibrary();
-                    this.renderPigmentPalette();
+            const sampleImages = [
+                'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80'
+            ];
 
-                    // Load default preset
-                    this.loadPreset('sea-turtle');
+            categories.forEach(cat => {
+                for (let i = 1; i <= cat.count; i++) {
+                    const id = `${cat.prefix}${i}`;
+                    const title = cat.titles[i - 1] || `${cat.name} Specimen #${i}`;
+                    const imgUrl = sampleImages[(IMAGE_LIBRARY.length) % sampleImages.length];
+
+                    IMAGE_LIBRARY.push({
+                        id: id,
+                        cat: cat.name,
+                        title: title,
+                        juniorDesc: `Discover the amazing ${title}! Nature shapes every line to help this organism survive and thrive.`,
+                        adultDesc: `${title} exhibits adaptive morphological structures optimized for biomechanical efficiency and biological resonance.`,
+                        url: imgUrl
+                    });
+                }
+            });
+        })();
+
+        let activeLibraryCategory = 'all';
+        let currentFieldNoteMode = 'junior'; // 'junior' or 'adult'
+        let isSpeakingNotes = false;
+
+        // ============================================================================
+        // INITIALIZATION & CANVAS RESIZING
+        // ============================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            paintCanvas = document.getElementById('paint-canvas');
+            paintCtx = paintCanvas.getContext('2d');
+            overlayCanvas = document.getElementById('overlay-canvas');
+            overlayCtx = overlayCanvas.getContext('2d');
+
+            window.addEventListener('resize', resizeCanvases);
+
+            renderPresetModelList();
+            renderLibraryCarousel();
+            setActiveModel(PRESET_MODELS[0]);
+
+            setupPaintListeners();
+
+            document.getElementById('brush-size').addEventListener('input', (e) => {
+                brushSize = parseInt(e.target.value, 10);
+            });
+        });
+
+        function resizeCanvases() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+
+            paintCanvas.width = w;
+            paintCanvas.height = h;
+            overlayCanvas.width = w;
+            overlayCanvas.height = h;
+
+            renderOverlay();
+            updatePrecisionScore();
+        }
+
+        function renderPresetModelList() {
+            const listEl = document.getElementById('preset-model-list');
+            if (!listEl) return;
+            listEl.innerHTML = PRESET_MODELS.map(model => `
+                <button onclick="selectPresetModel('${model.id}')" id="model-btn-${model.id}" class="model-btn w-full text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-950/60 transition-all flex items-center justify-between">
+                    <div class="truncate">
+                        <span class="block text-xs font-bold text-slate-200 truncate">${model.name}</span>
+                        <span class="block text-[10px] text-slate-500 truncate">${model.subtitle}</span>
+                    </div>
+                    <span class="text-xs text-teal-400">✨</span>
+                </button>
+            `).join('');
+        }
+
+        function selectPresetModel(id) {
+            customImageElement = null;
+            const m = PRESET_MODELS.find(item => item.id === id);
+            if (m) {
+                setActiveModel(m);
+            }
+        }
+
+        // ============================================================================
+        // 100+ IMAGE LIBRARY CAROUSEL & CATEGORY FILTERING ENGINE
+        // ============================================================================
+        function filterLibraryCategory(cat) {
+            activeLibraryCategory = cat;
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                btn.className = "cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all font-semibold";
+            });
+            const activeBtn = document.getElementById(`cat-btn-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = "cat-filter-btn active shrink-0 px-2.5 py-1 rounded-lg bg-teal-500 text-slate-950 font-bold transition-all";
+            }
+            renderLibraryCarousel();
+        }
+
+        function renderLibraryCarousel() {
+            const container = document.getElementById('library-horizontal-scroll');
+            if (!container) return;
+            const items = activeLibraryCategory === 'all'
+                ? IMAGE_LIBRARY
+                : IMAGE_LIBRARY.filter(img => img.cat === activeLibraryCategory);
+
+            container.innerHTML = items.map(img => `
+                <div onclick="selectLibraryImage('${img.id}')" class="shrink-0 w-24 h-24 rounded-xl bg-slate-950 border border-slate-800 hover:border-teal-400 cursor-pointer overflow-hidden relative group/thumb transition-all shadow-md snap-start flex flex-col justify-between">
+                    <img src="${img.url}" alt="${img.title}" class="absolute inset-0 w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-300 opacity-70 group-hover/thumb:opacity-100" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                    <div class="relative z-10 p-1.5 mt-auto">
+                        <span class="block text-[10px] font-bold text-slate-100 truncate drop-shadow-md">${img.title}</span>
+                        <span class="block text-[8px] text-teal-300 font-mono truncate opacity-90">${img.cat.toUpperCase()}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            const badge = document.getElementById('library-count-badge');
+            if (badge) badge.innerText = `${items.length} Specimen`;
+        }
+
+        function selectLibraryImage(id) {
+            const item = IMAGE_LIBRARY.find(img => img.id === id);
+            if (!item) return;
+
+            const loader = document.getElementById('canvas-loader');
+            document.getElementById('loader-text').innerText = `Extracting ${item.title} Line Art...`;
+            loader.classList.remove('hidden');
+
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                customImageElement = img;
+                activeModel = {
+                    id: 'lib-' + item.id,
+                    name: item.title,
+                    subtitle: `${item.cat.toUpperCase()} Specimen`,
+                    juniorDesc: item.juniorDesc || item.desc || "A fascinating living creature in nature!",
+                    adultDesc: item.adultDesc || item.desc || "Biological morphological structure specimen.",
+                    pigments: [
+                        { name: 'Chlorophyll Green', color: '#16a34a', code: 'CHL' },
+                        { name: 'Carotenoid Amber', color: '#d97706', code: 'AMB' },
+                        { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                        { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' }
+                    ]
                 };
 
-                if (document.readyState === 'loading') {
-                    window.addEventListener('DOMContentLoaded', setup);
-                } else {
-                    setup();
-                }
+                setActiveModel(activeModel);
+                loader.classList.add('hidden');
+            };
+            img.onerror = function() {
+                loader.classList.add('hidden');
+            };
+            img.src = item.url;
+        }
+
+        // ============================================================================
+        // FIELD NOTE MODE SWITCHER & READ ALOUD (TTS) ENGINE
+        // ============================================================================
+        function setFieldNoteMode(mode) {
+            currentFieldNoteMode = mode;
+
+            const jrBtn = document.getElementById('note-mode-junior-btn');
+            const adBtn = document.getElementById('note-mode-adult-btn');
+
+            if (mode === 'junior') {
+                jrBtn.className = "px-2 py-0.5 rounded bg-teal-500 text-slate-950 font-bold transition-all";
+                adBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all";
+            } else {
+                adBtn.className = "px-2 py-0.5 rounded bg-teal-500 text-slate-950 font-bold transition-all";
+                jrBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all";
             }
 
-            // --- CANVAS & TOOL SETUP ---
-            setupEventListeners() {
-                // Mouse Events
-                this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
-                this.canvas.addEventListener('mousemove', (e) => this.draw(e));
-                this.canvas.addEventListener('mouseup', () => this.stopDrawing());
-                this.canvas.addEventListener('mouseleave', () => this.stopDrawing());
+            updateFieldNoteDisplay();
+        }
 
-                // Touch Events with Tremor Suppression
-                this.canvas.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    if (e.touches.length === 1) this.startDrawing(e.touches[0]);
-                }, { passive: false });
+        function updateFieldNoteDisplay() {
+            if (!activeModel) return;
 
-                this.canvas.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                    if (e.touches.length === 1) this.draw(e.touches[0]);
-                }, { passive: false });
+            const descEl = document.getElementById('active-model-desc');
+            const noteText = currentFieldNoteMode === 'junior'
+                ? (activeModel.juniorDesc || activeModel.desc)
+                : (activeModel.adultDesc || activeModel.desc);
 
-                this.canvas.addEventListener('touchend', () => this.stopDrawing());
+            if (descEl) descEl.innerText = noteText || "Biological details loading...";
+
+            if (isSpeakingNotes) {
+                stopReadAloud();
+            }
+        }
+
+        function toggleReadAloud() {
+            if (isSpeakingNotes) {
+                stopReadAloud();
+            } else {
+                startReadAloud();
+            }
+        }
+
+        function startReadAloud() {
+            if (!('speechSynthesis' in window)) {
+                alert("Text-to-Speech is not supported in this browser.");
+                return;
             }
 
-            getCanvasCoordinates(event) {
-                const rect = this.canvas.getBoundingClientRect();
-                const scaleX = this.canvas.width / rect.width;
-                const scaleY = this.canvas.height / rect.height;
+            const noteText = document.getElementById('active-model-desc').innerText;
+            if (!noteText) return;
 
-                const rawX = (event.clientX - rect.left) * scaleX;
-                const rawY = (event.clientY - rect.top) * scaleY;
+            window.speechSynthesis.cancel();
 
-                if (!this.tremorFilterEnabled) {
-                    return { x: rawX, y: rawY };
-                }
+            const utterance = new SpeechSynthesisUtterance(noteText);
+            utterance.rate = currentFieldNoteMode === 'junior' ? 0.9 : 1.0;
+            utterance.pitch = currentFieldNoteMode === 'junior' ? 1.1 : 1.0;
 
-                // Tremor Detection & Exponential Low-Pass Filter: X_filtered = alpha * raw + (1-alpha) * prev
-                const deltaX = rawX - this.filteredPointer.x;
-                const deltaY = rawY - this.filteredPointer.y;
-                const instantJitter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            utterance.onend = function() { stopReadAloud(); };
+            utterance.onerror = function() { stopReadAloud(); };
 
-                // Update Somatic Tremor metric
-                this.tremorMagnitude = 0.8 * this.tremorMagnitude + 0.2 * instantJitter;
-                const tremorElem = document.getElementById('tremor-val-label');
-                if (tremorElem) tremorElem.innerText = `${(this.tremorMagnitude * 0.5).toFixed(1)} Hz`;
+            window.speechSynthesis.speak(utterance);
+            isSpeakingNotes = true;
 
-                // Automated CareState Trigger if Tremor exceeds threshold (>12px jitter)
-                if (this.tremorMagnitude > 12 && !this.careStateActive) {
-                    this.activateCareState();
-                } else if (this.tremorMagnitude < 4 && this.careStateActive) {
-                    this.deactivateCareState();
-                }
+            document.getElementById('tts-label').innerText = "Stop Reading";
+            document.getElementById('tts-icon').innerText = "⏹️";
+            document.getElementById('tts-read-btn').classList.add('border-teal-500', 'bg-teal-950/40');
+        }
 
-                // Apply Low-pass filtering when drawing
-                const alpha = this.careStateActive ? 0.15 : this.tremorFilterAlpha;
-                this.filteredPointer.x = alpha * rawX + (1 - alpha) * this.filteredPointer.x;
-                this.filteredPointer.y = alpha * rawY + (1 - alpha) * this.filteredPointer.y;
+        function stopReadAloud() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isSpeakingNotes = false;
 
-                return { x: this.filteredPointer.x, y: this.filteredPointer.y };
+            document.getElementById('tts-label').innerText = "Read Notes Aloud";
+            document.getElementById('tts-icon').innerText = "🔊";
+            document.getElementById('tts-read-btn').classList.remove('border-teal-500', 'bg-teal-950/40');
+        }
+
+        function setActiveModel(model) {
+            activeModel = model;
+
+            document.querySelectorAll('.model-btn').forEach(btn => {
+                btn.classList.remove('border-teal-500', 'bg-teal-950/30');
+                btn.classList.add('border-slate-800');
+            });
+            const activeBtn = document.getElementById(`model-btn-${model.id}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800');
+                activeBtn.classList.add('border-teal-500', 'bg-teal-950/30');
             }
 
-            startDrawing(event) {
-                this.saveUndoState();
-                this.isDrawing = true;
-                const coords = this.getCanvasCoordinates(event);
-                this.lastX = coords.x;
-                this.lastY = coords.y;
+            document.getElementById('active-model-title').innerText = model.name;
+            updateFieldNoteDisplay();
+            renderPigmentSwatches();
 
-                if (this.tool === 'paint') {
-                    this.floodFill(Math.round(coords.x), Math.round(coords.y), this.hexToRgb(this.activePigment.hex));
-                    this.isDrawing = false;
-                    this.updatePrecisionTracker();
-                }
+            clearPaintLayer();
+            resizeCanvases();
+        }
+
+        function renderPigmentSwatches() {
+            const container = document.getElementById('pigment-swatch-list');
+            if (!container || !activeModel || !activeModel.pigments) return;
+            container.innerHTML = activeModel.pigments.map((p, idx) => `
+                <button onclick="setPigment('${p.color}')" id="pigment-btn-${idx}" class="pigment-btn p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-950 flex items-center space-x-2 transition-all">
+                    <span class="w-4 h-4 rounded-full border border-white/20 shrink-0" style="background-color: ${p.color};"></span>
+                    <div class="overflow-hidden text-left">
+                        <span class="block text-[10px] font-bold text-slate-200 truncate">${p.name}</span>
+                        <span class="block text-[8px] font-mono text-slate-500">${p.code}</span>
+                    </div>
+                </button>
+            `).join('');
+
+            if (activeModel.pigments.length > 0) {
+                setPigment(activeModel.pigments[0].color);
             }
-
-            draw(event) {
-                if (!this.isDrawing) return;
-                const coords = this.getCanvasCoordinates(event);
-
-                this.ctx.beginPath();
-                this.ctx.moveTo(this.lastX, this.lastY);
-                this.ctx.lineTo(coords.x, coords.y);
-                this.ctx.lineCap = 'round';
-                this.ctx.lineJoin = 'round';
-
-                if (this.tool === 'eraser') {
-                    this.ctx.strokeStyle = '#ffffff';
-                    this.ctx.lineWidth = this.brushSize * 2;
-                } else {
-                    this.ctx.strokeStyle = this.activePigment.hex;
-                    this.ctx.lineWidth = this.brushSize;
-                }
-
-                this.ctx.stroke();
-
-                // Apply Surface Micro-Texture pattern overlay if selected
-                if (this.surfaceTexture !== 'smooth' && this.tool === 'brush') {
-                    this.applyMicroTextureOverlay(coords.x, coords.y);
-                }
-
-                this.lastX = coords.x;
-                this.lastY = coords.y;
-            }
-
-            stopDrawing() {
-                if (this.isDrawing) {
-                    this.updatePrecisionTracker();
-                }
-                this.isDrawing = false;
-            }
-
-            // --- FLOOD FILL ALGORITHM (BIO-FILL BUCKET) ---
-            floodFill(startX, startY, fillRgb) {
-                const imageData = this.ctx.getImageData(0, 0, this.width, this.height);
-                const data = imageData.data;
-
-                const startPos = (startY * this.width + startX) * 4;
-                const startR = data[startPos];
-                const startG = data[startPos + 1];
-                const startB = data[startPos + 2];
-
-                // Don't fill if target color matches fill color or is dark line art boundary
-                if (this.colorMatch(startR, startG, startB, fillRgb[0], fillRgb[1], fillRgb[2]) || (startR < 50 && startG < 50 && startB < 50)) {
-                    return;
-                }
-
-                const pixelStack = [[startX, startY]];
-
-                while (pixelStack.length) {
-                    const newPos = pixelStack.pop();
-                    const x = newPos[0];
-                    let y = newPos[1];
-
-                    let pixelPos = (y * this.width + x) * 4;
-                    while (y-- >= 0 && this.colorMatch(data[pixelPos], data[pixelPos + 1], data[pixelPos + 2], startR, startG, startB)) {
-                        pixelPos -= this.width * 4;
-                    }
-                    pixelPos += this.width * 4;
-                    ++y;
-
-                    let reachLeft = false;
-                    let reachRight = false;
-
-                    while (y++ < this.height - 1 && this.colorMatch(data[pixelPos], data[pixelPos + 1], data[pixelPos + 2], startR, startG, startB)) {
-                        // Fill pixel
-                        data[pixelPos] = fillRgb[0];
-                        data[pixelPos + 1] = fillRgb[1];
-                        data[pixelPos + 2] = fillRgb[2];
-                        data[pixelPos + 3] = 255;
-
-                        if (x > 0) {
-                            if (this.colorMatch(data[pixelPos - 4], data[pixelPos - 3], data[pixelPos - 2], startR, startG, startB)) {
-                                if (!reachLeft) {
-                                    pixelStack.push([x - 1, y]);
-                                    reachLeft = true;
-                                }
-                            } else if (reachLeft) {
-                                reachLeft = false;
-                            }
-                        }
-
-                        if (x < this.width - 1) {
-                            if (this.colorMatch(data[pixelPos + 4], data[pixelPos + 5], data[pixelPos + 6], startR, startG, startB)) {
-                                if (!reachRight) {
-                                    pixelStack.push([x + 1, y]);
-                                    reachRight = true;
-                                }
-                            } else if (reachRight) {
-                                reachRight = false;
-                            }
-                        }
-
-                        pixelPos += this.width * 4;
-                    }
-                }
-
-                this.ctx.putImageData(imageData, 0, 0);
-            }
-
-            colorMatch(r1, g1, b1, r2, g2, b2, threshold = 40) {
-                return Math.abs(r1 - r2) < threshold && Math.abs(g1 - g2) < threshold && Math.abs(b1 - b2) < threshold;
-            }
-
-            applyMicroTextureOverlay(x, y) {
-                this.ctx.save();
-                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                const radius = this.brushSize * 1.2;
-
-                if (this.surfaceTexture === 'scute') {
-                    for (let i = 0; i < 4; i++) {
-                        const rx = x + (Math.random() - 0.5) * radius * 2;
-                        const ry = y + (Math.random() - 0.5) * radius * 2;
-                        this.ctx.fillRect(rx, ry, 2, 2);
-                    }
-                } else if (this.surfaceTexture === 'iridescent') {
-                    this.ctx.fillStyle = 'rgba(0, 242, 254, 0.3)';
-                    this.ctx.beginPath();
-                    this.ctx.arc(x, y, radius * 0.8, 0, Math.PI * 2);
-                    this.ctx.fill();
-                } else if (this.surfaceTexture === 'coastal') {
-                    for (let i = 0; i < 6; i++) {
-                        const rx = x + (Math.random() - 0.5) * radius * 2;
-                        const ry = y + (Math.random() - 0.5) * radius * 2;
-                        this.ctx.fillRect(rx, ry, 1, 1);
-                    }
-                }
-                this.ctx.restore();
-            }
-
-            // --- SOBEL MULTI-STAGE EDGE REFINEMENT PIPELINE ---
-            processImageToLineArt(imgElement) {
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = this.width;
-                tempCanvas.height = this.height;
-                const tempCtx = tempCanvas.getContext('2d');
-
-                // Draw resized image
-                tempCtx.drawImage(imgElement, 0, 0, this.width, this.height);
-                const srcData = tempCtx.getImageData(0, 0, this.width, this.height);
-                const pixels = srcData.data;
-
-                // 1. Convert to Perceptual Luminance (Y = 0.299R + 0.587G + 0.114B)
-                const gray = new Uint8Array(this.width * this.height);
-                for (let i = 0; i < pixels.length; i += 4) {
-                    gray[i / 4] = 0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2];
-                }
-
-                // 2. Spatial Derivative Sweep (Sobel 3x3 Convolution Matrices)
-                const outputData = this.ctx.createImageData(this.width, this.height);
-                const outPixels = outputData.data;
-                const thresh = this.sobelThreshold;
-
-                for (let y = 1; y < this.height - 1; y++) {
-                    for (let x = 1; x < this.width - 1; x++) {
-                        // Gx Kernel
-                        const gx =
-                            -1 * gray[(y - 1) * this.width + (x - 1)] + 1 * gray[(y - 1) * this.width + (x + 1)] +
-                            -2 * gray[y * this.width + (x - 1)]       + 2 * gray[y * this.width + (x + 1)] +
-                            -1 * gray[(y + 1) * this.width + (x - 1)] + 1 * gray[(y + 1) * this.width + (x + 1)];
-
-                        // Gy Kernel
-                        const gy =
-                            -1 * gray[(y - 1) * this.width + (x - 1)] - 2 * gray[(y - 1) * this.width + x] - 1 * gray[(y - 1) * this.width + (x + 1)] +
-                             1 * gray[(y + 1) * this.width + (x - 1)] + 2 * gray[(y + 1) * this.width + x] + 1 * gray[(y + 1) * this.width + (x + 1)];
-
-                        // Combined Gradient Magnitude G = sqrt(Gx^2 + Gy^2)
-                        const magnitude = Math.sqrt(gx * gx + gy * gy);
-                        const idx = (y * this.width + x) * 4;
-
-                        // Inverse line thresholding (white background, crisp dark contour lines)
-                        if (magnitude > thresh) {
-                            outPixels[idx] = 15;     // R
-                            outPixels[idx + 1] = 23; // G
-                            outPixels[idx + 2] = 42; // B
-                            outPixels[idx + 3] = 255;
-                        } else {
-                            outPixels[idx] = 255;
-                            outPixels[idx + 1] = 255;
-                            outPixels[idx + 2] = 255;
-                            outPixels[idx + 3] = 255;
-                        }
-                    }
-                }
-
-                this.ctx.putImageData(outputData, 0, 0);
-                this.updatePrecisionTracker();
-            }
-
-            // --- PRECISION SKILL UNLOCK TRACKER ---
-            updatePrecisionTracker() {
-                const imgData = this.ctx.getImageData(0, 0, this.width, this.height);
-                const pixels = imgData.data;
-                let nonWhiteCount = 0;
-                let totalPixels = this.width * this.height;
-
-                // Sample every 16th pixel for real-time speed
-                for (let i = 0; i < pixels.length; i += 64) {
-                    const r = pixels[i];
-                    const g = pixels[i + 1];
-                    const b = pixels[i + 2];
-                    // Count colored pixels (not pure white and not line art black)
-                    if (!(r > 240 && g > 240 && b > 240) && !(r < 30 && g < 30 && b < 30)) {
-                        nonWhiteCount++;
-                    }
-                }
-
-                const ratio = Math.min(1.0, (nonWhiteCount * 16) / (totalPixels * 0.45));
-                this.precisionScore = Math.floor(ratio * 100);
-
-                const precLabel = document.getElementById('precision-val-label');
-                if (precLabel) precLabel.innerText = `${this.precisionScore}%`;
-
-                if (this.precisionScore >= 90 && !this.secretUnlocked) {
-                    this.secretUnlocked = true;
-                    const canvasElem = document.getElementById('main-canvas');
-                    if (canvasElem) canvasElem.classList.add('bio-glow-active');
-                    const textElem = document.getElementById('secret-unlock-label');
-                    if (textElem) {
-                        textElem.innerText = '✨ Bio-Glow Unlocked!';
-                        textElem.className = 'text-[10px] text-cyan-400 font-bold ml-1 animate-pulse';
-                    }
-                    this.showModal('✨ Bio-Glow Secret Unlocked!', 'Congratulations! You reached 90% drawing precision. Bioluminescent Guanine Crystal overlays are now active!');
-                }
-            }
-
-            // --- UI CONTROLS & SIDEBAR ---
-            setAgeMode(mode) {
-                this.ageMode = mode;
-                const simpleBtn = document.getElementById('mode-simple-btn');
-                const detailBtn = document.getElementById('mode-detail-btn');
-
-                if (mode === 'simple') {
-                    if (simpleBtn) simpleBtn.className = 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-semibold transition';
-                    if (detailBtn) detailBtn.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition';
-                    this.brushSize = 16;
-                    document.getElementById('brush-size').value = 16;
-                    document.getElementById('brush-size-val').innerText = 16;
-                } else {
-                    if (simpleBtn) simpleBtn.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition';
-                    if (detailBtn) detailBtn.className = 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-semibold transition';
-                    this.brushSize = 8;
-                    document.getElementById('brush-size').value = 8;
-                    document.getElementById('brush-size-val').innerText = 8;
-                }
-            }
-
-            renderPresetLibrary() {
-                const container = document.getElementById('preset-library-grid');
-                if (!container) return;
-                let html = '';
-                this.presets.forEach(preset => {
-                    html += `
-                        <button onclick="window.app && window.app.loadPreset('${preset.id}')" class="flex flex-col items-center justify-center p-2 bg-slate-950 border border-slate-800 hover:border-emerald-500/80 rounded-xl transition group text-center relative overflow-hidden">
-                            <div class="w-full h-11 rounded-lg bg-slate-900 mb-1 overflow-hidden flex items-center justify-center relative">
-                                <img src="${preset.imageUrl}" class="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-90 transition-all duration-300" onerror="this.style.display='none'">
-                                <i class="fa-solid ${preset.icon} text-emerald-400 text-sm absolute group-hover:scale-110 transition-transform"></i>
-                            </div>
-                            <span class="text-xs font-semibold text-slate-200 truncate w-full">${preset.title}</span>
-                            <span class="text-[9px] text-slate-500 truncate w-full">${preset.category}</span>
-                        </button>
-                    `;
-                });
-                container.innerHTML = html;
-            }
-
-            renderPigmentPalette() {
-                const container = document.getElementById('pigment-swatches-grid');
-                if (!container) return;
-                let html = '';
-                this.pigments.forEach((p, idx) => {
-                    const isSelected = p.name === this.activePigment.name;
-                    const selectedClass = isSelected ? 'ring-2 ring-emerald-400 scale-105' : 'hover:scale-105';
-                    html += `
-                        <button onclick="window.app && window.app.selectPigment(${idx})" class="h-7 rounded-lg flex items-center justify-center shadow transition transform ${selectedClass}" style="background-color: ${p.hex}" title="${p.name}">
-                            ${isSelected ? '<i class="fa-solid fa-check text-white text-[10px]"></i>' : ''}
-                        </button>
-                    `;
-                });
-                container.innerHTML = html;
-            }
-
-            selectPigment(index) {
-                if (this.pigments[index]) {
-                    this.activePigment = this.pigments[index];
-                    const label = document.getElementById('active-pigment-name');
-                    if (label) label.innerText = this.activePigment.name;
-                    this.renderPigmentPalette();
-                }
-            }
-
-            loadPreset(id) {
-                const preset = this.presets.find(p => p.id === id);
-                if (!preset) return;
-
-                // Load high-precision image and process via Sobel edge-detection if available, or fall back to SVG vector line art
-                if (preset.imageUrl) {
-                    const img = new Image();
-                    img.crossOrigin = "Anonymous";
-                    img.onload = () => {
-                        this.processImageToLineArt(img);
-                        document.getElementById('notes-title').innerText = `Specimen: ${preset.title}`;
-                        document.getElementById('notes-content').innerText = preset.notes;
-                    };
-                    img.onerror = () => {
-                        this.ctx.fillStyle = '#ffffff';
-                        this.ctx.fillRect(0, 0, this.width, this.height);
-                        if (preset.svgGenerator) preset.svgGenerator.call(this, this.ctx, this.width, this.height);
-                        document.getElementById('notes-title').innerText = `Specimen: ${preset.title}`;
-                        document.getElementById('notes-content').innerText = preset.notes;
-                        this.updatePrecisionTracker();
-                    };
-                    img.src = preset.imageUrl;
-                } else {
-                    this.ctx.fillStyle = '#ffffff';
-                    this.ctx.fillRect(0, 0, this.width, this.height);
-                    if (preset.svgGenerator) preset.svgGenerator.call(this, this.ctx, this.width, this.height);
-                    document.getElementById('notes-title').innerText = `Specimen: ${preset.title}`;
-                    document.getElementById('notes-content').innerText = preset.notes;
-                    this.updatePrecisionTracker();
-                }
-            }
-
-            handlePhotoUpload(event) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        this.processImageToLineArt(img);
-                        document.getElementById('notes-title').innerText = `Uploaded Photo: ${file.name}`;
-                        document.getElementById('notes-content').innerText = 'Extracted high-precision biological contour lines locally via Sobel WASM edge detection.';
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-
-            generateAIPromptPage() {
-                const input = document.getElementById('ai-topic-input');
-                const topic = input ? input.value.trim() : '';
-                if (!topic) {
-                    this.showModal('Input Required', 'Please enter a biological topic (e.g. Monarch Butterfly, Coral Reef, Dinoflagellates).');
-                    return;
-                }
-
-                // Precision Vector Line Art Synthesis for Write-In Prompts
-                this.ctx.fillStyle = '#ffffff';
-                this.ctx.fillRect(0, 0, this.width, this.height);
-
-                this.ctx.strokeStyle = '#0f172a';
-                this.ctx.lineWidth = 3;
-
-                // Render high-precision anatomical & cellular vector structures
-                const cx = this.width / 2;
-                const cy = this.height / 2;
-
-                // 1. Primary Morphological Boundary (Cell Wall / Outer Shell)
-                this.ctx.beginPath();
-                this.ctx.ellipse(cx, cy, 280, 200, Math.PI / 8, 0, Math.PI * 2);
-                this.ctx.stroke();
-
-                // 2. Micro-Anatomical Organelles & Vascular Channels
-                for (let i = 0; i < 8; i++) {
-                    const angle = (i * Math.PI) / 4;
-                    const rx = cx + Math.cos(angle) * 160;
-                    const ry = cy + Math.sin(angle) * 110;
-
-                    this.ctx.beginPath();
-                    this.ctx.arc(rx, ry, 30, 0, Math.PI * 2);
-                    this.ctx.stroke();
-
-                    // Connecting xylem/phloem capillaries
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(cx, cy);
-                    this.ctx.quadraticCurveTo((cx + rx) / 2 + 20, (cy + ry) / 2 - 20, rx, ry);
-                    this.ctx.stroke();
-                }
-
-                // 3. Central Nucleus / Organelle Hub
-                this.ctx.beginPath();
-                this.ctx.arc(cx, cy, 50, 0, Math.PI * 2);
-                this.ctx.stroke();
-
-                document.getElementById('notes-title').innerText = `Specimen: ${topic}`;
-                document.getElementById('notes-content').innerText = `High-precision biological vector model generated for "${topic}". Explore cell wall boundaries, vascular capillary channels, and organelle structures.`;
-                this.updatePrecisionTracker();
-                this.showModal('Page Generated', `Created custom biological line-art page for: "${topic}"`);
-            }
-
-            updateSobelSensitivity(val) {
-                this.sobelThreshold = parseInt(val);
-                document.getElementById('sobel-val-label').innerText = val;
-            }
-
-            setTool(toolName) {
-                this.tool = toolName;
-                document.getElementById('tool-paint-btn').className = toolName === 'paint' ? 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-medium transition flex items-center space-x-1' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition flex items-center space-x-1';
-                document.getElementById('tool-brush-btn').className = toolName === 'brush' ? 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-medium transition flex items-center space-x-1' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition flex items-center space-x-1';
-                document.getElementById('tool-eraser-btn').className = toolName === 'eraser' ? 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-medium transition flex items-center space-x-1' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition flex items-center space-x-1';
-            }
-
-            setBrushSize(val) {
-                this.brushSize = parseInt(val);
-                document.getElementById('brush-size-val').innerText = val;
-            }
-
-            setSurfaceTexture(tex) {
-                this.surfaceTexture = tex;
-            }
-
-            toggleTremorFilter() {
-                this.tremorFilterEnabled = !this.tremorFilterEnabled;
-                const btn = document.getElementById('tremor-toggle-btn');
-                if (btn) {
-                    btn.innerHTML = `<i class="fa-solid fa-wave-square text-emerald-400"></i><span>Tremor Smooth: ${this.tremorFilterEnabled ? 'On' : 'Off'}</span>`;
-                }
-            }
-
-            saveUndoState() {
-                if (this.undoStack.length >= this.maxUndo) this.undoStack.shift();
-                this.undoStack.push(this.ctx.getImageData(0, 0, this.width, this.height));
-            }
-
-            undoLastAction() {
-                if (this.undoStack.length > 0) {
-                    const lastState = this.undoStack.pop();
-                    this.ctx.putImageData(lastState, 0, 0);
-                    this.updatePrecisionTracker();
-                } else {
-                    this.showModal('Undo Limit', 'No further undo steps available.');
-                }
-            }
-
-            clearCanvas() {
-                this.saveUndoState();
-                this.ctx.fillStyle = '#ffffff';
-                this.ctx.fillRect(0, 0, this.width, this.height);
-                this.updatePrecisionTracker();
-            }
-
-            // --- AUDIO BIO-HARMONIZATION (528 Hz SOLFEGGIO + 3 Hz THETA) ---
-            toggleAudio() {
-                if (this.isAudioPlaying) {
-                    if (this.audioCtx) this.audioCtx.suspend();
-                    this.isAudioPlaying = false;
-                    document.getElementById('audio-icon').className = 'fa-solid fa-volume-xmark text-amber-400';
-                    document.getElementById('audio-status-label').innerText = '528Hz Audio: Off';
-                } else {
-                    if (!this.audioCtx) {
-                        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-                        // 528 Hz Solfeggio Carrier Oscillator (-12 dB)
-                        this.solfeggioOsc = this.audioCtx.createOscillator();
-                        const gainSolf = this.audioCtx.createGain();
-                        this.solfeggioOsc.type = 'sine';
-                        this.solfeggioOsc.frequency.setValueAtTime(528, this.audioCtx.currentTime);
-                        gainSolf.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
-                        this.solfeggioOsc.connect(gainSolf);
-                        gainSolf.connect(this.audioCtx.destination);
-                        this.solfeggioOsc.start();
-
-                        // 3 Hz Sub-Bass Theta Drone Oscillator (-18 dB)
-                        this.thetaOsc = this.audioCtx.createOscillator();
-                        const gainTheta = this.audioCtx.createGain();
-                        this.thetaOsc.type = 'sine';
-                        this.thetaOsc.frequency.setValueAtTime(108, this.audioCtx.currentTime); // 108Hz base + 3Hz binaural offset
-                        gainTheta.gain.setValueAtTime(0.03, this.audioCtx.currentTime);
-                        this.thetaOsc.connect(gainTheta);
-                        gainTheta.connect(this.audioCtx.destination);
-                        this.thetaOsc.start();
-                    } else {
-                        this.audioCtx.resume();
-                    }
-                    this.isAudioPlaying = true;
-                    document.getElementById('audio-icon').className = 'fa-solid fa-volume-high text-emerald-400';
-                    document.getElementById('audio-status-label').innerText = '528Hz Audio: Active';
-                }
-            }
-
-            activateCareState() {
-                this.careStateActive = true;
-                const badge = document.getElementById('carestate-badge');
-                if (badge) badge.classList.remove('hidden');
-                document.body.classList.add('carestate-active');
-                this.showModal('CareState Activated', 'Smooth Brush & Tremor Compensator auto-engaged to reduce fine-motor strain.');
-            }
-
-            deactivateCareState() {
-                this.careStateActive = false;
-                const badge = document.getElementById('carestate-badge');
-                if (badge) badge.classList.add('hidden');
-                document.body.classList.remove('carestate-active');
-            }
-
-            toggleFieldNotes() {
-                const panel = document.getElementById('field-notes-panel');
-                if (panel) panel.classList.toggle('hidden');
-            }
-
-            exportHighResPNG() {
-                const link = document.createElement('a');
-                link.download = `flower-learn-specimen-${Date.now()}.png`;
-                link.href = this.canvas.toDataURL('image/png');
-                link.click();
-            }
-
-            showModal(title, message) {
-                document.getElementById('modal-title').innerText = title;
-                document.getElementById('modal-message').innerText = message;
-                document.getElementById('custom-modal').classList.remove('hidden');
-            }
-
-            closeModal() {
-                document.getElementById('custom-modal').classList.add('hidden');
-            }
-
-            hexToRgb(hex) {
-                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return result ? [
-                    parseInt(result[1], 16),
-                    parseInt(result[2], 16),
-                    parseInt(result[3], 16)
-                ] : [0, 0, 0];
-            }
-
-            // --- VECTOR PRESET SVG GENERATORS ---
-            generateLeafGuardCellsSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 4;
-
-                // Guard Cell 1 (Left Kidney)
-                ctx.beginPath();
-                ctx.ellipse(w / 2 - 80, h / 2, 70, 150, Math.PI / 12, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Guard Cell 2 (Right Kidney)
-                ctx.beginPath();
-                ctx.ellipse(w / 2 + 80, h / 2, 70, 150, -Math.PI / 12, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Chloroplast Organelles Inside Guard Cells
-                for (let i = -3; i <= 3; i++) {
-                    ctx.beginPath();
-                    ctx.arc(w / 2 - 90, h / 2 + i * 35, 12, 0, Math.PI * 2);
-                    ctx.arc(w / 2 + 90, h / 2 + i * 35, 12, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-            }
-
-            generateSeaTurtleSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 4;
-
-                // Carapace Outer Shell Oval
-                ctx.beginPath();
-                ctx.ellipse(w / 2, h / 2, 220, 280, 0, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Central Scute Patterns
-                for (let i = -2; i <= 2; i++) {
-                    ctx.beginPath();
-                    ctx.rect(w / 2 - 50, h / 2 + i * 80 - 35, 100, 70);
-                    ctx.stroke();
-                }
-            }
-
-            generateHoneybeeSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 4;
-
-                // Abdomen Stripes
-                for (let i = 0; i < 5; i++) {
-                    ctx.beginPath();
-                    ctx.ellipse(w / 2, h / 2 + i * 50 - 100, 140 - i * 15, 20, 0, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-            }
-
-            generateJellyfishSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 4;
-
-                // Bell Dome
-                ctx.beginPath();
-                ctx.arc(w / 2, h / 2 - 50, 180, Math.PI, 0);
-                ctx.stroke();
-
-                // Tentacles
-                for (let i = -4; i <= 4; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(w / 2 + i * 35, h / 2 - 50);
-                    ctx.bezierCurveTo(w / 2 + i * 35 + 20, h / 2 + 100, w / 2 + i * 35 - 20, h / 2 + 200, w / 2 + i * 35, h / 2 + 300);
-                    ctx.stroke();
-                }
-            }
-
-            generateRedwoodSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.rect(w / 2 - 80, 50, 160, h - 100);
-                ctx.stroke();
-                for (let i = 0; i < 10; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(w / 2 - 80, 80 + i * 70);
-                    ctx.lineTo(w / 2 + 80, 110 + i * 70);
-                    ctx.stroke();
-                }
-            }
-
-            generateFungiSVG(ctx, w, h) {
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 3;
-                for (let i = 0; i < 12; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(100 + i * 80, h - 50);
-                    ctx.lineTo(150 + i * 60, 100);
-                    ctx.stroke();
+        }
+
+        function setPigment(color) {
+            activePigment = color;
+            setTool('brush');
+
+            document.querySelectorAll('.pigment-btn').forEach(btn => {
+                btn.classList.remove('border-teal-400', 'ring-1', 'ring-teal-400');
+            });
+            if (activeModel && activeModel.pigments) {
+                const found = activeModel.pigments.findIndex(p => p.color === color);
+                if (found !== -1) {
+                    const activeBtn = document.getElementById(`pigment-btn-${found}`);
+                    if (activeBtn) activeBtn.classList.add('border-teal-400', 'ring-1', 'ring-teal-400');
                 }
             }
         }
 
-        // Global Engine Instance
-        window.app = new FlowerLearnStudioEngine();
-        window.app.init();
+        function setTexture(tex) {
+            activeTexture = tex;
+            document.querySelectorAll('.tex-btn').forEach(btn => {
+                btn.classList.remove('border-teal-500', 'bg-teal-950/30');
+                btn.classList.add('border-slate-800');
+            });
+            const activeBtn = document.getElementById(`tex-btn-${tex}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800');
+                activeBtn.classList.add('border-teal-500', 'bg-teal-950/30');
+            }
+        }
+
+        function setTool(tool) {
+            activeTool = tool;
+            const bBtn = document.getElementById('tool-brush-btn');
+            const kBtn = document.getElementById('tool-bucket-btn');
+            const eBtn = document.getElementById('tool-eraser-btn');
+
+            [bBtn, kBtn, eBtn].forEach(btn => {
+                if (btn) btn.className = "p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            });
+
+            if (tool === 'brush') {
+                if (bBtn) bBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            } else if (tool === 'bucket') {
+                if (kBtn) kBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            } else {
+                if (eBtn) eBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            }
+        }
+
+        function toggleTremorSmooth() {
+            tremorSmoothEnabled = !tremorSmoothEnabled;
+            document.getElementById('tremor-status').innerText = tremorSmoothEnabled ? "ON" : "OFF";
+            document.getElementById('tremor-status').className = tremorSmoothEnabled ? "text-teal-400 font-bold" : "text-slate-500 font-bold";
+        }
+
+        function clearPaintLayer() {
+            if (paintCtx && paintCanvas) {
+                paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+            }
+            updatePrecisionScore();
+        }
+
+        // ============================================================================
+        // WASM-STYLE OFFLINE IMAGE SOBEL EDGE FILTER DE-COLORER & UPLOADER
+        // ============================================================================
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const loader = document.getElementById('canvas-loader');
+            loader.classList.remove('hidden');
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    customImageElement = img;
+                    activeModel = {
+                        id: 'upload-' + Date.now(),
+                        name: file.name.split('.')[0] || 'Uploaded Photo',
+                        subtitle: 'Local WASM Sobel Filter',
+                        juniorDesc: 'Your uploaded photo converted into custom line art!',
+                        adultDesc: 'Custom high-contrast spatial derivative line art extraction.',
+                        pigments: [
+                            { name: 'Chlorophyll Green', color: '#16a34a', code: 'CHL' },
+                            { name: 'Carotenoid Amber', color: '#d97706', code: 'AMB' },
+                            { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                            { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' }
+                        ]
+                    };
+
+                    setActiveModel(activeModel);
+                    loader.classList.add('hidden');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateDetailThreshold(val) {
+            detailThreshold = parseInt(val, 10);
+            const label = document.getElementById('detail-val-label');
+            if (detailThreshold < 80) label.innerText = "Ultra Fine";
+            else if (detailThreshold < 130) label.innerText = "High";
+            else label.innerText = "Medium";
+
+            if (customImageElement) {
+                renderOverlay();
+            }
+        }
+
+        function renderUploadedImageSobel(w, h, isGlowing) {
+            if (!customImageElement) return;
+
+            const tempC = document.createElement('canvas');
+            tempC.width = w;
+            tempC.height = h;
+            const tempCtx = tempC.getContext('2d');
+
+            const scale = Math.min(w / customImageElement.width, h / customImageElement.height) * 0.88;
+            const nw = customImageElement.width * scale;
+            const nh = customImageElement.height * scale;
+            const nx = (w - nw) / 2;
+            const ny = (h - nh) / 2;
+
+            tempCtx.drawImage(customImageElement, nx, ny, nw, nh);
+            const imgData = tempCtx.getImageData(0, 0, w, h);
+            const pixels = imgData.data;
+
+            const grayscale = new Uint8Array(w * h);
+            for (let i = 0; i < pixels.length; i += 4) {
+                grayscale[i / 4] = 0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2];
+            }
+
+            overlayCtx.fillStyle = isGlowing ? '#38bdf8' : '#f1f5f9';
+
+            for (let y = 1; y < h - 1; y += 1) {
+                for (let x = 1; x < w - 1; x += 1) {
+                    const idx = y * w + x;
+
+                    const gx = -grayscale[idx - w - 1] + grayscale[idx - w + 1]
+                               - 2 * grayscale[idx - 1] + 2 * grayscale[idx + 1]
+                               - grayscale[idx + w - 1] + grayscale[idx + w + 1];
+
+                    const gy = -grayscale[idx - w - 1] - 2 * grayscale[idx - w] - grayscale[idx - w + 1]
+                               + grayscale[idx + w - 1] + 2 * grayscale[idx + w] + grayscale[idx + w + 1];
+
+                    const mag = Math.sqrt(gx * gx + gy * gy);
+                    if (mag > detailThreshold) {
+                        overlayCtx.fillRect(x, y, 1.2, 1.2);
+                    }
+                }
+            }
+        }
+
+        // ============================================================================
+        // PROCEDURAL VECTOR CONTOUR OVERLAY GENERATOR
+        // ============================================================================
+        function renderOverlay() {
+            if (!overlayCtx || !overlayCanvas || !activeModel) return;
+            const w = overlayCanvas.width;
+            const h = overlayCanvas.height;
+            const manualGlow = document.getElementById('toggle-glow-manual')?.checked;
+            const isGlowing = bioGlowUnlocked || manualGlow;
+
+            overlayCtx.clearRect(0, 0, w, h);
+
+            overlayCtx.strokeStyle = isGlowing ? '#38bdf8' : '#e2e8f0';
+            overlayCtx.lineWidth = 2;
+            overlayCtx.shadowColor = isGlowing ? '#06b6d4' : 'transparent';
+            overlayCtx.shadowBlur = isGlowing ? 12 : 0;
+
+            if (customImageElement) {
+                renderUploadedImageSobel(w, h, isGlowing);
+                return;
+            }
+
+            const cx = w / 2;
+            const cy = h / 2;
+
+            overlayCtx.beginPath();
+
+            switch (activeModel.id) {
+                case 'turtle':
+                    const shellR = Math.min(w, h) * 0.35;
+                    overlayCtx.ellipse(cx, cy, shellR * 0.85, shellR, 0, 0, Math.PI * 2);
+                    for (let i = -2; i <= 2; i++) {
+                        overlayCtx.moveTo(cx - shellR * 0.7, cy + i * (shellR * 0.3));
+                        overlayCtx.lineTo(cx + shellR * 0.7, cy + i * (shellR * 0.3));
+                    }
+                    break;
+
+                case 'stomata':
+                    const r = Math.min(w, h) * 0.25;
+                    overlayCtx.ellipse(cx - r * 0.7, cy, r * 0.6, r * 1.3, 0, 0, Math.PI * 2);
+                    overlayCtx.ellipse(cx + r * 0.7, cy, r * 0.6, r * 1.3, 0, 0, Math.PI * 2);
+                    break;
+
+                case 'honeybee':
+                    const hexR = Math.min(w, h) * 0.08;
+                    for (let x = -2; x <= 2; x++) {
+                        for (let y = -2; y <= 2; y++) {
+                            const px = cx + x * hexR * 1.75;
+                            const py = cy + y * hexR * 2;
+                            overlayCtx.arc(px, py, hexR, 0, Math.PI * 2);
+                        }
+                    }
+                    break;
+
+                default:
+                    overlayCtx.arc(cx, cy, Math.min(w, h) * 0.3, 0, Math.PI * 2);
+            }
+
+            overlayCtx.stroke();
+        }
+
+        // ============================================================================
+        // SOMATIC TREMOR SMOOTHING & PAINT INTERACTION ENGINE
+        // ============================================================================
+        function setupPaintListeners() {
+            const c = paintCanvas;
+
+            const getPos = (e) => {
+                const rect = c.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: Math.floor(clientX - rect.left),
+                    y: Math.floor(clientY - rect.top)
+                };
+            };
+
+            const startDraw = (e) => {
+                const pos = getPos(e);
+                if (activeTool === 'bucket') {
+                    floodFill(pos.x, pos.y, activePigment);
+                    updatePrecisionScore();
+                    return;
+                }
+                isDrawing = true;
+                strokePoints = [pos];
+            };
+
+            const moveDraw = (e) => {
+                if (!isDrawing || activeTool === 'bucket') return;
+                e.preventDefault();
+                const pos = getPos(e);
+
+                if (tremorSmoothEnabled && strokePoints.length > 0) {
+                    const prev = strokePoints[strokePoints.length - 1];
+                    const alpha = 0.25;
+                    const smoothedPos = {
+                        x: prev.x + alpha * (pos.x - prev.x),
+                        y: prev.y + alpha * (pos.y - prev.y)
+                    };
+                    strokePoints.push(smoothedPos);
+                    renderStrokePoint(prev, smoothedPos);
+                } else {
+                    const prev = strokePoints[strokePoints.length - 1] || pos;
+                    strokePoints.push(pos);
+                    renderStrokePoint(prev, pos);
+                }
+            };
+
+            const stopDraw = () => {
+                if (!isDrawing) return;
+                isDrawing = false;
+                strokePoints = [];
+                updatePrecisionScore();
+            };
+
+            c.addEventListener('mousedown', startDraw);
+            c.addEventListener('mousemove', moveDraw);
+            window.addEventListener('mouseup', stopDraw);
+
+            c.addEventListener('touchstart', startDraw, { passive: false });
+            c.addEventListener('touchmove', moveDraw, { passive: false });
+            window.addEventListener('touchend', stopDraw);
+        }
+
+        function floodFill(startX, startY, fillColorHex) {
+            const w = paintCanvas.width;
+            const h = paintCanvas.height;
+            if (startX < 0 || startX >= w || startY < 0 || startY >= h) return;
+
+            const paintImgData = paintCtx.getImageData(0, 0, w, h);
+            const overlayImgData = overlayCtx.getImageData(0, 0, w, h);
+            const data = paintImgData.data;
+            const overlayData = overlayImgData.data;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.style.color = fillColorHex;
+            document.body.appendChild(tempDiv);
+            const rgbStr = window.getComputedStyle(tempDiv).color;
+            document.body.removeChild(tempDiv);
+            const rgbValues = rgbStr.match(/\d+/g).map(Number);
+            const fillR = rgbValues[0], fillG = rgbValues[1], fillB = rgbValues[2], fillA = 255;
+
+            const startIdx = (startY * w + startX) * 4;
+            const targetR = data[startIdx];
+            const targetG = data[startIdx + 1];
+            const targetB = data[startIdx + 2];
+            const targetA = data[startIdx + 3];
+
+            if (targetR === fillR && targetG === fillG && targetB === fillB && targetA === fillA) return;
+
+            const stack = [[startX, startY]];
+
+            while (stack.length > 0) {
+                const [x, y] = stack.pop();
+                const idx = (y * w + x) * 4;
+
+                if (overlayData[idx + 3] > 100) continue;
+
+                if (
+                    x >= 0 && x < w && y >= 0 && y < h &&
+                    data[idx] === targetR &&
+                    data[idx + 1] === targetG &&
+                    data[idx + 2] === targetB &&
+                    data[idx + 3] === targetA
+                ) {
+                    data[idx] = fillR;
+                    data[idx + 1] = fillG;
+                    data[idx + 2] = fillB;
+                    data[idx + 3] = fillA;
+
+                    stack.push([x + 1, y]);
+                    stack.push([x - 1, y]);
+                    stack.push([x, y + 1]);
+                    stack.push([x, y - 1]);
+                }
+            }
+
+            paintCtx.putImageData(paintImgData, 0, 0);
+        }
+
+        function renderStrokePoint(p1, p2) {
+            paintCtx.save();
+
+            if (activeTool === 'eraser') {
+                paintCtx.globalCompositeOperation = 'destination-out';
+                paintCtx.lineWidth = brushSize * 1.5;
+                paintCtx.lineCap = 'round';
+                paintCtx.lineJoin = 'round';
+                paintCtx.beginPath();
+                paintCtx.moveTo(p1.x, p1.y);
+                paintCtx.lineTo(p2.x, p2.y);
+                paintCtx.stroke();
+            } else {
+                paintCtx.globalCompositeOperation = 'source-over';
+                paintCtx.strokeStyle = activePigment;
+                paintCtx.fillStyle = activePigment;
+                paintCtx.lineWidth = brushSize;
+                paintCtx.lineCap = 'round';
+                paintCtx.lineJoin = 'round';
+
+                paintCtx.beginPath();
+                paintCtx.moveTo(p1.x, p1.y);
+                paintCtx.lineTo(p2.x, p2.y);
+                paintCtx.stroke();
+
+                applyTextureStippling(p2.x, p2.y);
+            }
+
+            paintCtx.restore();
+        }
+
+        function applyTextureStippling(cx, cy) {
+            if (activeTexture === 'matte') return;
+
+            const density = activeTexture === 'coastal' ? 18 : 10;
+            const radius = brushSize * 0.8;
+
+            for (let i = 0; i < density; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * radius;
+                const px = cx + Math.cos(angle) * r;
+                const py = cy + Math.sin(angle) * r;
+
+                if (activeTexture === 'scute') {
+                    paintCtx.fillStyle = 'rgba(0,0,0,0.15)';
+                    paintCtx.fillRect(px, py, 1.5, 1.5);
+                } else if (activeTexture === 'iridescent') {
+                    paintCtx.fillStyle = 'rgba(255,255,255,0.35)';
+                    paintCtx.fillRect(px, py, 2, 2);
+                } else if (activeTexture === 'coastal') {
+                    paintCtx.fillStyle = 'rgba(255,255,255,0.2)';
+                    paintCtx.fillRect(px, py, 1, 1);
+                }
+            }
+        }
+
+        // ============================================================================
+        // SOMATIC PRECISION SKILL TRACKER & BIO-GLOW REVEAL ENGINE
+        // ============================================================================
+        function updatePrecisionScore() {
+            if (!overlayCtx || !paintCtx) return;
+
+            const w = overlayCanvas.width;
+            const h = overlayCanvas.height;
+            if (w === 0 || h === 0) return;
+
+            const sampleW = 80;
+            const sampleH = 80;
+
+            const overlayData = overlayCtx.getImageData(0, 0, w, h).data;
+            const paintData = paintCtx.getImageData(0, 0, w, h).data;
+
+            let targetPixels = 0;
+            let hitCount = 0;
+
+            const stepX = Math.floor(w / sampleW) || 1;
+            const stepY = Math.floor(h / sampleH) || 1;
+
+            for (let y = 0; y < h; y += stepY) {
+                for (let x = 0; x < w; x += stepX) {
+                    const idx = (y * w + x) * 4;
+
+                    const isContour = overlayData[idx + 3] > 50;
+                    const isPainted = paintData[idx + 3] > 50;
+
+                    if (isContour) {
+                        targetPixels++;
+                        if (isPainted) {
+                            hitCount++;
+                        }
+                    }
+                }
+            }
+
+            const score = targetPixels > 0 ? Math.min(100, ((hitCount / targetPixels) * 100 * 1.8)).toFixed(1) : "0.0";
+
+            const percEl = document.getElementById('precision-percentage');
+            const barEl = document.getElementById('precision-bar');
+            if (percEl) percEl.innerText = `${score}%`;
+            if (barEl) barEl.style.width = `${score}%`;
+
+            if (parseFloat(score) >= 90.0 && !bioGlowUnlocked) {
+                bioGlowUnlocked = true;
+                const banner = document.getElementById('bio-glow-banner');
+                const container = document.getElementById('canvas-container');
+                if (banner) banner.classList.remove('hidden');
+                if (container) container.classList.add('glow-active');
+                renderOverlay();
+            }
+        }
+
+        // ============================================================================
+        // WEB AUDIO SYNTHESIZER (528Hz Solfeggio & 3.0Hz Binaural Theta Wave Drone)
+        // ============================================================================
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                stopAudio();
+            } else {
+                startAudio();
+            }
+        }
+
+        function startAudio() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioCtx();
+
+                gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.connect(audioCtx.destination);
+
+                osc528 = audioCtx.createOscillator();
+                osc528.type = 'sine';
+                osc528.frequency.setValueAtTime(528, audioCtx.currentTime);
+
+                oscThetaL = audioCtx.createOscillator();
+                oscThetaR = audioCtx.createOscillator();
+                oscThetaL.type = 'sine';
+                oscThetaR.type = 'sine';
+                oscThetaL.frequency.setValueAtTime(100, audioCtx.currentTime);
+                oscThetaR.frequency.setValueAtTime(103, audioCtx.currentTime);
+
+                osc528.connect(gainNode);
+                oscThetaL.connect(gainNode);
+                oscThetaR.connect(gainNode);
+
+                osc528.start();
+                oscThetaL.start();
+                oscThetaR.start();
+
+                isAudioPlaying = true;
+                document.getElementById('audio-status').innerText = '528Hz Active';
+                document.getElementById('audio-icon').innerText = '🔊';
+            } catch (e) {
+                console.error("Web Audio API Initialisation failed:", e);
+            }
+        }
+
+        function stopAudio() {
+            if (osc528) osc528.stop();
+            if (oscThetaL) oscThetaL.stop();
+            if (oscThetaR) oscThetaR.stop();
+            if (audioCtx) audioCtx.close();
+
+            isAudioPlaying = false;
+            document.getElementById('audio-status').innerText = '528Hz Off';
+            document.getElementById('audio-icon').innerText = '🎵';
+        }
+
+        // ============================================================================
+        // HIGH-RESOLUTION EXPORT ENGINE (2x Canvas Super-Sampling)
+        // ============================================================================
+        function exportCanvasPNG() {
+            const w = paintCanvas.width;
+            const h = paintCanvas.height;
+
+            const exportCanvas = document.createElement('canvas');
+            exportCanvas.width = w * 2;
+            exportCanvas.height = h * 2;
+            const exportCtx = exportCanvas.getContext('2d');
+
+            exportCtx.scale(2, 2);
+
+            exportCtx.fillStyle = '#020617';
+            exportCtx.fillRect(0, 0, w, h);
+
+            exportCtx.drawImage(paintCanvas, 0, 0);
+            exportCtx.drawImage(overlayCanvas, 0, 0);
+
+            const dataUrl = exportCanvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `FlowerLearnStudio_${activeModel ? activeModel.id : 'export'}_${Date.now()}.png`;
+            link.href = dataUrl;
+            link.click();
+        }
     </script>
 </body>
 </html>
