@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SORENv2 SLIVER VERITAS — All-Ages Bio-Canvas & Coloring Studio</title>
+  <title>Flower Learn Studio (SOREN-V2) — All-Ages Bio-Canvas & Coloring Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -68,138 +68,78 @@
   <!-- TOP NAVIGATION / SYSTEM HEADER -->
   <header class="border-b border-borderSubtle bg-panelBg/80 backdrop-blur px-4 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
     <div class="flex items-center space-x-3">
-      <div class="w-8 h-8 rounded-full border-2 border-chlorophyll flex items-center justify-center bg-chlorophyll/20">
-        <span class="text-chlorophyll font-bold text-xs">SV2</span>
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-0.5 shadow-lg flex items-center justify-center">
+        <span class="text-xl">🌸</span>
       </div>
       <div>
-        <h1 class="text-sm font-bold tracking-wider uppercase text-slate-100 flex items-center gap-2">
-          SOREN<span class="text-chlorophyll">v2</span> FLOWER LEARN COLORING STUDIO
-          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">ALL-AGES USER FRIENDLY</span>
+        <h1 class="text-base font-black tracking-wide text-slate-100 flex items-center gap-2">
+          Flower Learn Studio <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono">SOREN-V2</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">✈️ SANDBOX AIRPLANE MODE (100% OFFLINE & PRIVATE)</span>
         </h1>
-        <p class="text-[11px] text-slate-400">Tactile Micro-Textures • Natural Pigments • Precision Secret Bio-Glow Upgrade</p>
+        <p class="text-[11px] text-slate-400">All-Ages Biological Coloring & De-Coloring Studio • 100% Client-Side Edge Computing</p>
       </div>
     </div>
 
     <!-- AUDIO & SECRET UNLOCK STATUS -->
     <div class="flex items-center space-x-3 text-xs">
       <!-- Precision Secret Upgrade Status -->
-      <div id="precisionBadge" class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-borderSubtle bg-black/40 text-slate-300 transition-all font-mono">
+      <div id="precisionBadge" class="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl border border-borderSubtle bg-black/40 text-slate-300 transition-all font-mono">
         <span>✨ PRECISION:</span>
         <span id="precisionPercent" class="text-veritasGold font-bold">0%</span>
         <span id="secretUnlockText" class="text-[10px] text-slate-500 ml-1">(Reach 90% for Bio-Glow)</span>
       </div>
 
       <!-- Solfeggio Audio Synth Trigger -->
-      <button id="audioToggleBtn" onclick="toggleAudioEngine()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-borderSubtle bg-black/50 hover:bg-borderSubtle transition text-slate-300 font-mono">
-        <svg id="audioIcon" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-        <span id="audioStatusText">SYNTH: OFF</span>
+      <button id="audioToggleBtn" onclick="toggleAudioEngine()" class="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-borderSubtle bg-black/50 hover:bg-borderSubtle transition text-slate-300 font-mono font-bold">
+        <span id="audioStatusText">🎵 528 Hz Focus Sound: OFF</span>
       </button>
 
-      <select id="freqSelect" onchange="updateFrequency()" class="bg-black/60 border border-borderSubtle rounded-lg px-2 py-1.5 text-xs font-mono text-emerald-400 focus:outline-none">
+      <select id="freqSelect" onchange="updateFrequency()" class="bg-black/60 border border-borderSubtle rounded-2xl px-3 py-1.5 text-xs font-mono text-emerald-400 focus:outline-none">
         <option value="528">528 Hz (Solfeggio Transformation)</option>
         <option value="432">432 Hz (Natural Harmony)</option>
       </select>
     </div>
   </header>
 
-  <!-- MAIN MULTI-VIEW WORKSPACE -->
-  <div class="flex-1 flex overflow-hidden">
+  <!-- MAIN COLORING STUDIO WORKSPACE -->
+  <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-darkVoid relative">
+    <div class="max-w-7xl mx-auto space-y-6">
 
-    <!-- NAVIGATION SIDEBAR -->
-    <aside class="w-64 border-r border-borderSubtle bg-panelBg p-4 flex flex-col justify-between shrink-0 hidden md:flex">
-      <div class="space-y-2">
-        <div class="text-[10px] font-mono uppercase tracking-widest text-slate-500 px-2 py-1">Core Modules</div>
-        <button onclick="switchTab('canvas')" id="nav-canvas" class="w-full text-left px-3 py-2 rounded-lg bg-chlorophyll/20 border border-chlorophyll text-emerald-300 font-medium text-xs flex items-center gap-2">
-          <span>🎨</span> Coloring Studio
-        </button>
-        <button onclick="switchTab('mandala')" id="nav-mandala" class="w-full text-left px-3 py-2 rounded-lg hover:bg-borderSubtle text-slate-400 font-medium text-xs flex items-center gap-2 transition">
-          <span>🏵️</span> 9-Petal SPECTRA
-        </button>
-        <button onclick="switchTab('truth')" id="nav-truth" class="w-full text-left px-3 py-2 rounded-lg hover:bg-borderSubtle text-slate-400 font-medium text-xs flex items-center gap-2 transition">
-          <span>⚖️</span> Truth Gate T(x) Calculator
-        </button>
-        <button onclick="switchTab('ledger')" id="nav-ledger" class="w-full text-left px-3 py-2 rounded-lg hover:bg-borderSubtle text-slate-400 font-medium text-xs flex items-center gap-2 transition">
-          <span>📟</span> Proton CLI Ledger
-        </button>
-      </div>
-
-      <!-- SYSTEM METRICS PANEL -->
-      <div class="p-3 border border-borderSubtle rounded-lg bg-black/40 text-[11px] font-mono space-y-2">
-        <div class="text-slate-400 uppercase text-[9px]">Somatic Metrics</div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Tremor Filter:</span>
-          <span class="text-emerald-400">α = 0.25 (LPF)</span>
+      <!-- STUDIO CONTROLS HEADER -->
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-borderSubtle pb-4">
+        <div>
+          <h2 class="text-lg font-black text-slate-100 flex items-center gap-2">
+            🎨 All-Ages Biological Coloring & De-Coloring Studio
+          </h2>
+          <p class="text-xs text-slate-400">Select natural biological pigments, apply micro-textures, bucket fill, or upload any photo to convert to line art</p>
         </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Latency Budget:</span>
-          <span class="text-emerald-400">&lt; 8.0 ms</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Sobel CV Kernel:</span>
-          <span class="text-emerald-400">3x3 WASM/2D</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Truth Threshold:</span>
-          <span class="text-veritasGold font-bold">≥ 0.9950</span>
-        </div>
-      </div>
-    </aside>
 
-    <!-- MAIN VIEW AREA -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-darkVoid relative">
-
-      <!-- TAB 1: ALL-AGES USER FRIENDLY COLORING STUDIO -->
-      <section id="tab-canvas" class="space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-borderSubtle pb-4">
-          <div>
-            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
-              All-Ages Biological Coloring Studio & De-Colorer
-            </h2>
-            <p class="text-xs text-slate-400">Select natural pigments, apply surface textures, or bucket-fill contours</p>
-          </div>
-
-        <!-- CANVAS CONTROLS & AGE-MODE TOGGLES -->
+        <!-- AGE MODE & ACTION BUTTONS -->
         <div class="flex flex-wrap items-center gap-2">
-          <!-- Age Mode Toggle -->
-          <div class="flex items-center rounded-lg border border-borderSubtle bg-black/50 p-1 font-mono text-xs">
-            <button onclick="setAgeMode('simple')" id="mode-simple-btn" class="px-2.5 py-1 rounded bg-chlorophyll text-white font-bold transition">🎨 Junior Mode</button>
-            <button onclick="setAgeMode('advanced')" id="mode-advanced-btn" class="px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition">🔬 Adult / Detail Mode</button>
+          <div class="flex items-center rounded-2xl border border-borderSubtle bg-black/50 p-1 font-mono text-xs">
+            <button onclick="setAgeMode('simple')" id="mode-simple-btn" class="px-3 py-1 rounded-xl bg-chlorophyll text-white font-bold transition">🎨 Junior Mode</button>
+            <button onclick="setAgeMode('advanced')" id="mode-advanced-btn" class="px-3 py-1 rounded-xl text-slate-400 hover:text-slate-200 transition">🔬 Adult / Detail Mode</button>
           </div>
 
-          <!-- Studio Focus Mode Toggle -->
-          <button onclick="toggleFocusMode()" id="focusModeBtn" class="px-3 py-1.5 rounded-lg border border-borderSubtle bg-black/40 hover:bg-borderSubtle text-slate-300 text-xs font-mono transition flex items-center gap-1.5">
-            <span>🔍 Focus Mode (Studio Only)</span>
+          <label class="cursor-pointer px-3.5 py-2 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-slate-950 font-black text-xs font-mono transition shadow-lg flex items-center gap-1.5">
+            <span>📷 Upload Photo to De-Color</span>
+            <input type="file" id="imageUpload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+          </label>
+
+          <button onclick="processSobelEdge()" class="px-3.5 py-2 rounded-2xl bg-chlorophyll hover:bg-emerald-700 text-white text-xs font-mono font-bold transition">
+            ⚡ De-Colorize Photo (&lt;50ms)
           </button>
-
-            <select id="presetSelect" onchange="loadPresetImage()" class="bg-panelBg border border-borderSubtle rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none">
-              <option value="">-- Preset Biological Library --</option>
-              <option value="sea_turtle" selected>Chelonia Mydas Sea Turtle</option>
-              <option value="guard_cells">Stomatal Guard Cells</option>
-              <option value="honeybee">Apis Mellifera Honeybee</option>
-              <option value="jellyfish">Aurelia Aurita Jellyfish</option>
-              <option value="redwood">Sequoia Redwood Canopy</option>
-              <option value="fungi">Mycelium Fungal Network</option>
-            </select>
-
-            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-borderSubtle hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
-              <span>📁 Upload Any Photo</span>
-              <input type="file" id="imageUpload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
-            </label>
-
-            <button onclick="processSobelEdge()" class="px-3 py-1.5 rounded-lg bg-chlorophyll hover:bg-emerald-700 text-white text-xs font-mono font-bold transition">
-              ⚡ De-Colorize Photo (&lt;50ms)
-            </button>
-            <button onclick="exportCanvas2x()" class="px-3 py-1.5 rounded-lg bg-emerald-900/60 border border-emerald-600 text-emerald-300 hover:bg-chlorophyll hover:text-white text-xs font-mono font-bold transition">
-              ↓ Export High-Res 2x
-            </button>
-            <button onclick="clearCanvas()" class="px-3 py-1.5 rounded-lg border border-red-900/50 text-red-400 hover:bg-red-950/30 text-xs font-mono transition">
-              Clear
-            </button>
-          </div>
+          <button onclick="exportCanvas2x()" class="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-cyan-600 hover:opacity-90 text-white text-xs font-mono font-black transition shadow-lg">
+            🖼️ Save & Print High-Res PNG
+          </button>
+          <button onclick="clearCanvas()" class="px-3 py-2 rounded-2xl border border-red-900/50 text-red-400 hover:bg-red-950/30 text-xs font-mono transition">
+            🔄 Clear
+          </button>
         </div>
+      </div>
 
-      <!-- ADVANCED DETAIL CONTROLS FOR ADULTS / OLDER KIDS (HIDDEN IN JUNIOR MODE) -->
-      <div id="advancedControlsPanel" class="p-4 border border-borderSubtle rounded-xl bg-panelBg/80 space-y-3 font-mono text-xs hidden">
+      <!-- ADVANCED DETAIL CONTROLS FOR ADULTS / OLDER ARTISTS (HIDDEN IN JUNIOR MODE) -->
+      <div id="advancedControlsPanel" class="p-4 border border-borderSubtle rounded-2xl bg-panelBg/80 space-y-3 font-mono text-xs hidden">
         <div class="flex items-center justify-between text-veritasGold font-bold border-b border-borderSubtle pb-2">
           <span>🔬 ADVANCED DETAIL & CONTOUR REFINEMENT (FOR ADULTS & DETAILED ART)</span>
           <span class="text-[10px] text-slate-400 font-normal">WASM 3x3 Convolution Parameters</span>
@@ -207,236 +147,234 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-300">
           <div>
             <label class="block text-[11px] text-slate-400 mb-1">Sobel Edge Cutoff Sensitivity:</label>
-            <input type="range" id="sobelThreshold" min="10" max="100" value="40" onchange="processSobelEdge()" class="w-full accent-chlorophyll">
-            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>Fine Detail (10)</span><span id="thresholdVal" class="text-emerald-400">40</span><span>Bold Outlines (100)</span></div>
+            <input type="range" id="sobelThreshold" min="10" max="100" value="40" onchange="processSobelEdge()" class="w-full accent-chlorophyll cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>Fine Detail (10)</span><span id="thresholdVal" class="text-emerald-400 font-bold">40</span><span>Bold Outlines (100)</span></div>
           </div>
           <div>
             <label class="block text-[11px] text-slate-400 mb-1">Contour Line Thickness / Sharpness:</label>
-            <input type="range" id="lineThickness" min="1" max="6" value="2" onchange="processSobelEdge()" class="w-full accent-chlorophyll">
-            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>1pt Crisp</span><span id="thicknessVal" class="text-emerald-400">2pt</span><span>6pt Bold</span></div>
+            <input type="range" id="lineThickness" min="1" max="6" value="2" onchange="processSobelEdge()" class="w-full accent-chlorophyll cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>1pt Crisp</span><span id="thicknessVal" class="text-emerald-400 font-bold">2pt</span><span>6pt Bold</span></div>
           </div>
           <div>
             <label class="block text-[11px] text-slate-400 mb-1">Micro-Detail Multiplier:</label>
-            <input type="range" id="detailMultiplier" min="0.5" max="3.0" step="0.1" value="1.0" onchange="processSobelEdge()" class="w-full accent-chlorophyll">
-            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>0.5x Smooth</span><span id="detailVal" class="text-emerald-400">1.0x</span><span>3.0x Ultra-Detail</span></div>
+            <input type="range" id="detailMultiplier" min="0.5" max="3.0" step="0.1" value="1.0" onchange="processSobelEdge()" class="w-full accent-chlorophyll cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5"><span>0.5x Smooth</span><span id="detailVal" class="text-emerald-400 font-bold">1.0x</span><span>3.0x Ultra-Detail</span></div>
           </div>
         </div>
       </div>
 
-        <!-- COLORING TOOLBAR: TOOLS, NATURAL PIGMENTS & TEXTURES -->
-        <div class="p-4 border border-borderSubtle rounded-xl bg-panelBg space-y-4">
-          <!-- TOOL SELECTION & STROKE SIZE -->
-          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-borderSubtle pb-3">
-            <div class="flex items-center space-x-2">
-              <span class="text-xs font-mono text-slate-400 mr-1">Drawing Tool:</span>
-              <button onclick="setTool('brush')" id="tool-brush" class="px-3 py-1 rounded-lg bg-chlorophyll text-white font-mono text-xs">🖌️ Brush</button>
-              <button onclick="setTool('bucket')" id="tool-bucket" class="px-3 py-1 rounded-lg border border-borderSubtle text-slate-300 font-mono text-xs hover:bg-borderSubtle">🪣 Bucket Fill</button>
-              <button onclick="setTool('eraser')" id="tool-eraser" class="px-3 py-1 rounded-lg border border-borderSubtle text-slate-300 font-mono text-xs hover:bg-borderSubtle">🧹 Eraser</button>
-            </div>
+      <!-- MAIN WORKSPACE GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-            <div class="flex items-center space-x-4 text-xs font-mono">
-              <span class="text-slate-400">Brush Size:</span>
-              <input type="range" id="brushSize" min="1" max="30" value="4" class="accent-chlorophyll w-24">
+        <!-- LEFT PANEL: NATURE MODELS & TEXTURES (3 COLS) -->
+        <div class="lg:col-span-3 space-y-4">
 
-              <span class="text-slate-400">Tremor Filter (α = 0.25):</span>
-              <input type="checkbox" id="smoothingToggle" checked class="accent-chlorophyll w-4 h-4 rounded">
+          <!-- PRESET NATURE LIBRARY -->
+          <div class="bg-panelBg p-4 rounded-3xl border border-borderSubtle shadow-xl space-y-3">
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 font-mono">🌿 Preset Nature Library</h3>
+            <div class="grid grid-cols-1 gap-2 max-h-64 overflow-y-auto pr-1">
+              <button onclick="selectSpecimen('sea_turtle')" id="spec-sea_turtle" class="w-full text-left p-3 rounded-2xl border border-chlorophyll bg-chlorophyll/20 text-white font-bold text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🐢</span>
+                <div>
+                  <div class="leading-tight font-bold">Green Sea Turtle</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Chelonia mydas</div>
+                </div>
+              </button>
+              <button onclick="selectSpecimen('guard_cells')" id="spec-guard_cells" class="w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🍃</span>
+                <div>
+                  <div class="leading-tight font-bold">Leaf Guard Cells</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Stomatal Complex</div>
+                </div>
+              </button>
+              <button onclick="selectSpecimen('honeybee')" id="spec-honeybee" class="w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🐝</span>
+                <div>
+                  <div class="leading-tight font-bold">Worker Honeybee</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Apis mellifera</div>
+                </div>
+              </button>
+              <button onclick="selectSpecimen('jellyfish')" id="spec-jellyfish" class="w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🪼</span>
+                <div>
+                  <div class="leading-tight font-bold">Bioluminescent Jelly</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Aequorea victoria</div>
+                </div>
+              </button>
+              <button onclick="selectSpecimen('redwood')" id="spec-redwood" class="w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🌲</span>
+                <div>
+                  <div class="leading-tight font-bold">Giant Redwood Tree</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Sequoia sempervirens</div>
+                </div>
+              </button>
+              <button onclick="selectSpecimen('fungi')" id="spec-fungi" class="w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition">
+                <span class="text-2xl">🍄</span>
+                <div>
+                  <div class="leading-tight font-bold">Forest Mushrooms</div>
+                  <div class="text-[10px] text-slate-400 italic font-normal">Mycorrhizal Fungi</div>
+                </div>
+              </button>
             </div>
           </div>
+
+          <!-- TACTILE MICRO-SURFACE TEXTURES -->
+          <div class="bg-panelBg p-4 rounded-3xl border border-borderSubtle shadow-xl space-y-3">
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 font-mono">✨ Micro-Surface Textures</h3>
+            <div class="grid grid-cols-1 gap-2">
+              <button onclick="setTexture('smooth')" id="tex-smooth" class="p-2.5 rounded-2xl border border-chlorophyll bg-chlorophyll/20 text-white font-bold text-xs text-left flex items-center space-x-2 transition">
+                <span>✨</span><span>Matte Smooth</span>
+              </button>
+              <button onclick="setTexture('scute')" id="tex-scute" class="p-2.5 rounded-2xl border border-slate-800 bg-black/40 text-slate-400 hover:text-white font-bold text-xs text-left flex items-center space-x-2 transition">
+                <span>🐢</span><span>Scute Ridge Stippling</span>
+              </button>
+              <button onclick="setTexture('iridescent')" id="tex-iridescent" class="p-2.5 rounded-2xl border border-slate-800 bg-black/40 text-slate-400 hover:text-white font-bold text-xs text-left flex items-center space-x-2 transition">
+                <span>🪼</span><span>Iridescent Bio-Glow</span>
+              </button>
+              <button onclick="setTexture('coastal')" id="tex-coastal" class="p-2.5 rounded-2xl border border-slate-800 bg-black/40 text-slate-400 hover:text-white font-bold text-xs text-left flex items-center space-x-2 transition">
+                <span>🏖️</span><span>Coastal Grain Texture</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MIDDLE PANEL: CANVAS & TOOLBAR (6 COLS) -->
+        <div class="lg:col-span-6 bg-panelBg rounded-3xl border border-borderSubtle shadow-2xl p-4 sm:p-5 flex flex-col items-center justify-between relative">
+
+          <!-- FUN FACT BANNER -->
+          <div id="funFactBanner" class="w-full bg-black/80 p-3 rounded-2xl border border-borderSubtle/60 mb-3 text-xs text-slate-300 leading-relaxed italic text-center">
+            "Sea turtles have been swimming in the ocean since the time of the dinosaurs! Their shells are made of keratin."
+          </div>
+
+          <!-- CANVAS WORKSPACE -->
+          <div class="relative w-full aspect-square max-w-[500px] bg-black rounded-2xl shadow-2xl overflow-hidden touch-none border-4 border-borderSubtle" id="canvasContainer">
+            <canvas id="mainCanvas" class="w-full h-full cursor-crosshair"></canvas>
+            <div id="processingOverlay" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center space-y-3 hidden">
+              <div class="w-10 h-10 border-4 border-chlorophyll border-t-transparent rounded-full animate-spin"></div>
+              <div class="text-xs font-mono text-emerald-400">EXECUTING 3x3 SOBEL CV CONVOLUTION...</div>
+            </div>
+          </div>
+
+          <!-- FLOATING TOOLBAR -->
+          <div class="w-full mt-4 flex flex-wrap items-center justify-between gap-3 bg-black/80 p-3 rounded-2xl border border-borderSubtle font-mono text-xs">
+            <div class="flex items-center space-x-2">
+              <button onclick="setTool('brush')" id="tool-brush" class="px-3 py-1.5 rounded-xl bg-chlorophyll text-white font-bold">🖌️ Brush</button>
+              <button onclick="setTool('bucket')" id="tool-bucket" class="px-3 py-1.5 rounded-xl border border-borderSubtle text-slate-300 hover:bg-borderSubtle">🪣 Bucket Fill</button>
+              <button onclick="setTool('eraser')" id="tool-eraser" class="px-3 py-1.5 rounded-xl border border-borderSubtle text-slate-300 hover:bg-borderSubtle">🧹 Eraser</button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <label class="flex items-center space-x-1.5 text-slate-400">
+                <span>Brush Size:</span>
+                <input type="range" id="brushSize" min="1" max="36" value="6" class="w-20 accent-chlorophyll cursor-pointer">
+              </label>
+
+              <label class="flex items-center space-x-1 text-slate-400">
+                <span>Tremor Filter (α = 0.25):</span>
+                <input type="checkbox" id="smoothingToggle" checked class="accent-chlorophyll w-4 h-4 rounded">
+              </label>
+            </div>
+          </div>
+
+          <div class="w-full mt-2 flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
+            <div>Active Pigment: <strong id="activeColorText" class="text-emerald-400">Chlorophyll A (#2E7D32)</strong></div>
+            <div id="canvasStatus" class="text-slate-500">Ready | 120 FPS</div>
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL: NATURAL PIGMENTS & WRITE-IN TOPIC (3 COLS) -->
+        <div class="lg:col-span-3 space-y-4">
 
           <!-- SELECTED NATURAL PIGMENTS -->
-          <div class="flex flex-wrap items-center justify-between gap-4">
-            <div class="space-y-1">
-              <div class="text-[11px] font-mono text-slate-400">Selected Natural Biological Pigments:</div>
-              <div class="flex items-center space-x-2">
-                <button onclick="setPigment('#2E7D32')" title="Chlorophyll A (Photosynthetic Green)" class="w-8 h-8 rounded-full border-2 border-slate-600 focus:border-white transition" style="background-color: #2E7D32;"></button>
-                <button onclick="setPigment('#81C784')" title="Chlorophyll B (Light Green)" class="w-8 h-8 rounded-full border-2 border-slate-600 focus:border-white transition" style="background-color: #81C784;"></button>
-                <button onclick="setPigment('#FFB300')" title="Carotenoid Gold (Antioxidant)" class="w-8 h-8 rounded-full border-2 border-slate-600 focus:border-white transition" style="background-color: #FFB300;"></button>
-                <button onclick="setPigment('#C67D0A')" title="Scute Keratin Amber" class="w-8 h-8 rounded-full border-2 border-slate-600 focus:border-white transition" style="background-color: #C67D0A;"></button>
-                <button onclick="setPigment('#76FF03')" title="Bioluminescent Luciferin" class="w-8 h-8 rounded-full border-2 border-slate-600 focus:border-white transition" style="background-color: #76FF03;"></button>
-                <button onclick="setPigment('#00F2FE')" id="secretPigmentBtn" title="Guanine Iridophore Cyan (SECRET REVEAL)" class="w-8 h-8 rounded-full border-2 border-amber-400/50 transition relative overflow-hidden" style="background-color: #00F2FE;">
-                  <span class="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-black opacity-60">🔒</span>
-                </button>
-                <input type="color" id="strokeColor" value="#2E7D32" onchange="activeColor = this.value" class="w-8 h-8 rounded border border-borderSubtle bg-transparent cursor-pointer ml-2">
-              </div>
+          <div class="bg-panelBg p-4 rounded-3xl border border-borderSubtle shadow-xl space-y-3">
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 font-mono">🎨 Selected Natural Pigments</h3>
+            <div class="grid grid-cols-5 gap-2">
+              <button onclick="setPigment('#2E7D32')" title="Chlorophyll A (Photosynthetic Green)" class="w-full aspect-square rounded-xl border-2 border-white transition transform active:scale-90" style="background-color: #2E7D32;"></button>
+              <button onclick="setPigment('#7CB342')" title="Sprout Lime (Fresh Shoots)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #7CB342;"></button>
+              <button onclick="setPigment('#FFB300')" title="Carotenoid Gold (Antioxidant Petals)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #FFB300;"></button>
+              <button onclick="setPigment('#FB8C00')" title="Marigold Orange (Autumn Glow)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #FB8C00;"></button>
+              <button onclick="setPigment('#00E5FF')" title="Luciferin Cyan (Sea Glow)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #00E5FF;"></button>
+              <button onclick="setPigment('#0288D1')" title="Oceanic Blue (Deep Water)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #0288D1;"></button>
+              <button onclick="setPigment('#8E24AA')" title="Berry Violet (Forest Berries)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #8E24AA;"></button>
+              <button onclick="setPigment('#8D6E63')" title="Scute Keratin Amber (Shell Brown)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #8D6E63;"></button>
+              <button onclick="setPigment('#E91E63')" title="Coral Rose (Reef Pink)" class="w-full aspect-square rounded-xl border-2 border-transparent hover:border-white transition transform active:scale-90" style="background-color: #E91E63;"></button>
+              <button onclick="setPigment('#00F2FE')" id="secretPigmentBtn" title="Guanine Iridophore Cyan (SECRET UNLOCK)" class="w-full aspect-square rounded-xl border-2 border-amber-400/50 transition relative overflow-hidden" style="background-color: #00F2FE;">
+                <span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-black opacity-70">🔒</span>
+              </button>
             </div>
-
-            <!-- TACTILE SURFACE TEXTURES -->
-            <div class="space-y-1">
-              <div class="text-[11px] font-mono text-slate-400">Tactile Micro-Surface Textures:</div>
-              <select id="textureSelect" onchange="activeTexture = this.value" class="bg-black/60 border border-borderSubtle rounded-lg px-3 py-1.5 text-xs text-emerald-400 font-mono focus:outline-none">
-                <option value="smooth">Matte Smooth</option>
-                <option value="scute_ridge">Scute Ridge Stippling</option>
-                <option value="iridescent">Iridescent Shift</option>
-                <option value="coastal_grain">Coastal Grain Texture</option>
-              </select>
+            <div class="flex items-center space-x-2 pt-2 border-t border-borderSubtle font-mono text-xs">
+              <span class="text-slate-400">Custom Color:</span>
+              <input type="color" id="strokeColor" value="#2E7D32" onchange="setPigment(this.value)" class="w-8 h-8 rounded border border-borderSubtle bg-transparent cursor-pointer">
             </div>
           </div>
+
+          <!-- WRITE-IN TOPIC GENERATOR & FIELD NOTES -->
+          <div class="bg-panelBg p-4 rounded-3xl border border-borderSubtle shadow-xl space-y-3 font-mono text-xs">
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-200">✍️ Write-In Any Topic</h3>
+            <p class="text-[11px] text-slate-400 font-sans">Type any nature topic to compile custom vector line art & scientific notes.</p>
+
+            <div class="flex gap-2">
+              <input type="text" id="topicInput" placeholder="e.g. Redwood, Honeybee, Jellyfish" class="flex-1 bg-black/50 border border-borderSubtle rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-chlorophyll">
+              <button onclick="generateProceduralTopic()" class="px-3 py-1.5 bg-emerald-900/40 border border-chlorophyll text-emerald-300 rounded-xl text-xs font-mono hover:bg-chlorophyll hover:text-white transition font-bold">
+                Generate
+              </button>
+            </div>
+
+            <div class="p-3 border border-borderSubtle rounded-2xl bg-black/40 space-y-1 text-[11px] leading-relaxed" id="fieldNotesContent">
+              <div class="text-emerald-400 font-bold">SELECT OR WRITE-IN A TOPIC</div>
+              <div class="text-slate-400 font-sans">Explore pre-loaded models or type a topic to generate custom vector outlines! Reach 90% precision to unlock secret Bioluminescent Bio-Glow!</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- CANVAS WORKSPACE GRID -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 flex flex-col space-y-3">
-            <div class="relative w-full aspect-video border-2 border-borderSubtle rounded-xl overflow-hidden bg-black/60 shadow-2xl flex items-center justify-center" id="canvasContainer">
-              <canvas id="mainCanvas" class="w-full h-full cursor-crosshair"></canvas>
-              <div id="processingOverlay" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center space-y-3 hidden">
-                <div class="w-10 h-10 border-4 border-chlorophyll border-t-transparent rounded-full animate-spin"></div>
-                <div class="text-xs font-mono text-emerald-400">EXECUTING 3x3 SOBEL CONVOLUTION...</div>
-              </div>
-            </div>
+      </div>
 
-            <div class="flex items-center justify-between p-3 border border-borderSubtle rounded-lg bg-panelBg text-xs font-mono">
-              <div class="flex items-center space-x-3 text-slate-400">
-                <span>Active Pigment: <strong id="activeColorText" class="text-emerald-400">Chlorophyll A (#2E7D32)</strong></span>
-                <span>|</span>
-                <span>Active Tool: <strong id="activeToolText" class="text-slate-200">Brush</strong></span>
-              </div>
-              <div id="canvasStatus" class="text-[11px] text-slate-500">Ready | 120 FPS</div>
-            </div>
-          </div>
+    </div>
+  </main>
 
-          <!-- PROCEDURAL TOPIC GENERATOR & FIELD NOTES -->
-          <div class="flex flex-col space-y-4">
-            <div class="p-4 border border-borderSubtle rounded-xl bg-panelBg space-y-3">
-              <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider font-mono">✍️ Write-In Any Topic</h3>
-              <p class="text-xs text-slate-400">Type any biological or nature topic to dynamically compile custom vector line art & field notes.</p>
-
-              <div class="flex gap-2">
-                <input type="text" id="topicInput" placeholder="e.g. Redwood, Honeybee, Jellyfish" class="flex-1 bg-black/50 border border-borderSubtle rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-chlorophyll">
-                <button onclick="generateProceduralTopic()" class="px-3 py-1.5 bg-emerald-900/40 border border-chlorophyll text-emerald-300 rounded-lg text-xs font-mono hover:bg-chlorophyll hover:text-white transition">
-                  Generate
-                </button>
-              </div>
-            </div>
-
-            <div class="flex-1 p-4 border border-borderSubtle rounded-xl bg-panelBg space-y-2 font-mono text-xs overflow-y-auto max-h-80" id="fieldNotesBox">
-              <div class="text-slate-500 text-[11px] uppercase border-b border-borderSubtle pb-1">Biological Field Notes & Secret Hints</div>
-              <div id="fieldNotesContent" class="text-slate-300 leading-relaxed pt-1">
-                Select or generate a topic to inspect local bio-canvas field notes. Complete 90% precision to unlock secret Bioluminescent Bio-Glow!
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 2: 9-PETAL MANDALA & 81-DIREMPTION SPECTRA -->
-      <section id="tab-mandala" class="space-y-6 hidden">
-        <div class="border-b border-borderSubtle pb-4">
-          <h2 class="text-lg font-bold text-slate-100">9-Petal Mandala & 81-Diremption SPECTRA Refraction Visualizer</h2>
-          <p class="text-xs text-slate-400">Somatic geometric resonance representing the 9 structural domains and 81 refractive diremption paths</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="flex justify-center p-6 border border-borderSubtle rounded-xl bg-panelBg">
-            <svg id="mandalaSvg" class="w-80 h-80" viewBox="0 0 300 300">
-            </svg>
-          </div>
-
-          <div class="p-4 border border-borderSubtle rounded-xl bg-panelBg space-y-3 font-mono text-xs">
-            <div class="text-veritasGold font-bold uppercase text-[11px] border-b border-borderSubtle pb-2">SPECTRA Matrix Diremption Telemetry</div>
-            <div class="space-y-1.5 text-slate-300">
-              <div class="flex justify-between"><span class="text-slate-500">Active Petals:</span><span>9 Symmetry Nodes</span></div>
-              <div class="flex justify-between"><span class="text-slate-500">Diremption Sub-Paths:</span><span>81 Refraction Planes</span></div>
-              <div class="flex justify-between"><span class="text-slate-500">Resonant Carrier:</span><span id="spectraFreqText">528.00 Hz</span></div>
-              <div class="flex justify-between"><span class="text-slate-500">Harmonic Coherence:</span><span class="text-emerald-400 font-bold">99.82%</span></div>
-            </div>
-            <div class="pt-3 border-t border-borderSubtle text-[11px] text-slate-400 leading-relaxed">
-              The 9-Petal Mandala visually anchors the 81-Diremption SPECTRA framework, mapping subtractive noise incineration to pure veridical signal synthesis.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 3: TRUTH FORMULA CALCULATOR WORKSPACE -->
-      <section id="tab-truth" class="space-y-6 hidden">
-        <div class="border-b border-borderSubtle pb-4">
-          <h2 class="text-lg font-bold text-slate-100">Veridical Truth Gate Workspace: T(x) ≥ 0.9950</h2>
-          <p class="text-xs text-slate-400">Evaluate claim verification metrics against the formal mathematical truth gate</p>
-        </div>
-
-        <div class="p-6 border border-borderSubtle rounded-xl bg-panelBg space-y-6 max-w-2xl">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1">Signal Coherence Index (C_s ∈ [0, 1]):</label>
-              <input type="range" id="paramCs" min="0.8" max="1.0" step="0.001" value="0.998" oninput="calculateTruth()" class="w-full accent-chlorophyll">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mt-1"><span>0.800</span><span id="valCs" class="text-emerald-400">0.998</span><span>1.000</span></div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1">Noise Incineration Coefficient (N_i ∈ [0, 1]):</label>
-              <input type="range" id="paramNi" min="0.8" max="1.0" step="0.001" value="0.995" oninput="calculateTruth()" class="w-full accent-chlorophyll">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mt-1"><span>0.800</span><span id="valNi" class="text-emerald-400">0.995</span><span>1.000</span></div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1">Empirical Verification Weight (E_v ∈ [0, 1]):</label>
-              <input type="range" id="paramEv" min="0.8" max="1.0" step="0.001" value="0.997" oninput="calculateTruth()" class="w-full accent-chlorophyll">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mt-1"><span>0.800</span><span id="valEv" class="text-emerald-400">0.997</span><span>1.000</span></div>
-            </div>
-          </div>
-
-          <div class="p-4 rounded-lg border border-borderSubtle bg-black/60 flex items-center justify-between font-mono">
-            <div>
-              <div class="text-[10px] text-slate-500 uppercase">Calculated Truth Score T(x)</div>
-              <div id="truthScoreDisplay" class="text-2xl font-bold text-veritasGold">0.9967</div>
-            </div>
-            <div id="truthGateBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-700">
-              VERIFIED: T(x) ≥ 0.9950
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 4: PROTON CLI LEDGER TERMINAL SIMULATION -->
-      <section id="tab-ledger" class="space-y-6 hidden">
-        <div class="border-b border-borderSubtle pb-4">
-          <h2 class="text-lg font-bold text-slate-100">Retro Proton CLI Ledger Terminal</h2>
-          <p class="text-xs text-slate-400">Simulated immutable SHA-256 veridical ledger state and anchor audit stream</p>
-        </div>
-
-        <div class="p-4 border border-borderSubtle rounded-xl bg-black font-mono text-xs text-emerald-400 space-y-3 shadow-inner h-96 flex flex-col">
-          <div class="text-slate-600 text-[10px] border-b border-slate-900 pb-1 flex justify-between">
-            <span>PROTON-CLI v2.0.4-SOREN</span>
-            <span>ENCRYPTION: SHA-256 / AIR-GAPPED</span>
-          </div>
-          <div id="terminalLog" class="flex-1 overflow-y-auto space-y-1.5 leading-relaxed text-[11px]">
-            <div>[00:00:00] PROTON_INIT: Initializing air-gapped ledger anchor...</div>
-            <div>[00:00:01] VERITAS_GATE: T(x) baseline verified at 0.9967 &gt;= 0.9950</div>
-            <div>[00:00:01] SOMATIC_AUDIO: Web Audio API 528Hz Carrier initialized.</div>
-            <div>[00:00:02] LEDGER_ANCHOR: SHA-256 [e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855]</div>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-900">
-            <span class="text-slate-500">&gt;</span>
-            <input type="text" id="cliInput" placeholder="type 'audit', 'status', or 'clear'..." onkeydown="handleCliCommand(event)" class="flex-1 bg-transparent text-emerald-300 focus:outline-none">
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
+  <!-- FOOTER -->
+  <footer class="border-t border-borderSubtle bg-panelBg/80 px-4 py-3 text-center text-xs text-slate-500 font-mono">
+    Flower Learn Studio (SOREN-V2) • Sandbox Airplane Mode (100% Offline & Private) • Zero Server Overhead ($0/User)
+  </footer>
 
   <script>
     /* ==========================================================================
-       1. TAB NAVIGATION CONTROLLER
+       1. SPECIMENS & FUN FACTS
        ========================================================================== */
-    function switchTab(tabId) {
-      ['canvas', 'mandala', 'truth', 'ledger'].forEach(id => {
-        const section = document.getElementById(`tab-${id}`);
-        const nav = document.getElementById(`nav-${id}`);
-        if (id === tabId) {
-          section.classList.remove('hidden');
-          if (nav) {
-            nav.classList.add('bg-chlorophyll/20', 'border-chlorophyll', 'text-emerald-300');
-            nav.classList.remove('hover:bg-borderSubtle', 'text-slate-400');
-          }
-        } else {
-          section.classList.add('hidden');
-          if (nav) {
-            nav.classList.remove('bg-chlorophyll/20', 'border-chlorophyll', 'text-emerald-300');
-            nav.classList.add('hover:bg-borderSubtle', 'text-slate-400');
-          }
-        }
-      });
-    }
+    const SPECIMENS = {
+      sea_turtle: {
+        name: 'Green Sea Turtle (Chelonia mydas)',
+        fact: '"Sea turtles have been swimming in the ocean since the time of the dinosaurs! Their shells are made of keratin—the same material as human fingernails."',
+        pigment: '#2E7D32'
+      },
+      guard_cells: {
+        name: 'Leaf Guard Cells (Stomatal Complex)',
+        fact: '"Leaves have microscopic mouths called stomata that open and close to breathe in carbon dioxide and release fresh oxygen!"',
+        pigment: '#7CB342'
+      },
+      honeybee: {
+        name: 'Worker Honeybee (Apis mellifera)',
+        fact: '"Honeybees dance to tell their friends where the best flowers are! They carry pollen in little baskets on their hind legs."',
+        pigment: '#FFB300'
+      },
+      jellyfish: {
+        name: 'Bioluminescent Jelly (Aequorea victoria)',
+        fact: '"This magical jelly produces its own glowing blue-green light underwater using special glowing proteins called GFP!"',
+        pigment: '#00E5FF'
+      },
+      redwood: {
+        name: 'Giant Redwood Tree (Sequoia sempervirens)',
+        fact: '"Redwood trees are among the tallest living beings on Earth! Their thick bark protects them from forest fires and insects."',
+        pigment: '#8D6E63'
+      },
+      fungi: {
+        name: 'Forest Mushrooms (Mycorrhizal Fungi)',
+        fact: '"Underneath the soil, mushrooms form a huge underground network that helps trees share food and talk to each other!"',
+        pigment: '#E91E63'
+      }
+    };
 
     /* ==========================================================================
        2. NATIVE WEB AUDIO API SYNTHESIZER
@@ -455,7 +393,7 @@
         if (carrierOsc) carrierOsc.stop();
         if (thetaOsc) thetaOsc.stop();
         isAudioPlaying = false;
-        document.getElementById('audioStatusText').innerText = "SYNTH: OFF";
+        document.getElementById('audioStatusText').innerText = "🎵 528 Hz Focus Sound: OFF";
         document.getElementById('audioToggleBtn').classList.remove('border-chlorophyll', 'bg-emerald-950/40');
       } else {
         const freq = parseFloat(document.getElementById('freqSelect').value);
@@ -486,9 +424,8 @@
         thetaOsc.start();
         isAudioPlaying = true;
 
-        document.getElementById('audioStatusText').innerText = `SYNTH: ${freq}Hz ON`;
+        document.getElementById('audioStatusText').innerText = `🎵 ${freq} Hz Focus Sound: ON`;
         document.getElementById('audioToggleBtn').classList.add('border-chlorophyll', 'bg-emerald-950/40');
-        logCli(`AUDIO_SYNTH: Dual-oscillator engaged at ${freq}Hz + 3.0Hz Theta drone.`);
       }
     }
 
@@ -497,11 +434,10 @@
         toggleAudioEngine();
         toggleAudioEngine();
       }
-      document.getElementById('spectraFreqText').innerText = `${document.getElementById('freqSelect').value}.00 Hz`;
     }
 
     /* ==========================================================================
-       3. COLORING STUDIO, TOOLING, BUCKET FILL & PRECISION UNLOCK
+       3. COLORING CANVAS & DRAWING ENGINE
        ========================================================================== */
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
@@ -510,8 +446,10 @@
     let activeTool = 'brush'; // 'brush', 'bucket', 'eraser'
     let activeColor = '#2E7D32';
     let activeTexture = 'smooth';
+    let activeSpecimenKey = 'sea_turtle';
     let drawnPixelsCount = 0;
     let isSecretUnlocked = false;
+    let currentAgeMode = 'simple';
 
     function initCanvasSize() {
       const rect = canvas.getBoundingClientRect();
@@ -522,39 +460,74 @@
 
     window.addEventListener('load', () => {
       initCanvasSize();
-      loadPresetImage();
-      renderMandalaSvg();
+      loadPresetImage('sea_turtle');
     });
+
+    function setAgeMode(mode) {
+      currentAgeMode = mode;
+      const simpleBtn = document.getElementById('mode-simple-btn');
+      const advancedBtn = document.getElementById('mode-advanced-btn');
+      const advPanel = document.getElementById('advancedControlsPanel');
+
+      if (mode === 'advanced') {
+        advPanel.classList.remove('hidden');
+        advancedBtn.className = "px-3 py-1 rounded-xl bg-chlorophyll text-white font-bold transition";
+        simpleBtn.className = "px-3 py-1 rounded-xl text-slate-400 hover:text-slate-200 transition";
+      } else {
+        advPanel.classList.add('hidden');
+        simpleBtn.className = "px-3 py-1 rounded-xl bg-chlorophyll text-white font-bold transition";
+        advancedBtn.className = "px-3 py-1 rounded-xl text-slate-400 hover:text-slate-200 transition";
+      }
+      loadPresetImage(activeSpecimenKey);
+    }
+
+    function selectSpecimen(key) {
+      activeSpecimenKey = key;
+      ['sea_turtle', 'guard_cells', 'honeybee', 'jellyfish', 'redwood', 'fungi'].forEach(k => {
+        const btn = document.getElementById(`spec-${k}`);
+        if (btn) {
+          if (k === key) {
+            btn.className = "w-full text-left p-3 rounded-2xl border border-chlorophyll bg-chlorophyll/20 text-white font-bold text-xs flex items-center space-x-3 transition";
+          } else {
+            btn.className = "w-full text-left p-3 rounded-2xl border border-slate-800 bg-black/40 text-slate-300 hover:bg-slate-800 text-xs flex items-center space-x-3 transition";
+          }
+        }
+      });
+      loadPresetImage(key);
+    }
+
+    function setTexture(tex) {
+      activeTexture = tex;
+      ['smooth', 'scute', 'iridescent', 'coastal'].forEach(t => {
+        const btn = document.getElementById(`tex-${t}`);
+        if (btn) {
+          if (t === tex) {
+            btn.className = "p-2.5 rounded-2xl border border-chlorophyll bg-chlorophyll/20 text-white font-bold text-xs text-left flex items-center space-x-2 transition";
+          } else {
+            btn.className = "p-2.5 rounded-2xl border border-slate-800 bg-black/40 text-slate-400 hover:text-white font-bold text-xs text-left flex items-center space-x-2 transition";
+          }
+        }
+      });
+    }
 
     function setTool(tool) {
       activeTool = tool;
       ['brush', 'bucket', 'eraser'].forEach(t => {
         const btn = document.getElementById(`tool-${t}`);
-        if (t === tool) {
-          btn.className = "px-3 py-1 rounded-lg bg-chlorophyll text-white font-mono text-xs font-bold";
-        } else {
-          btn.className = "px-3 py-1 rounded-lg border border-borderSubtle text-slate-300 font-mono text-xs hover:bg-borderSubtle";
+        if (btn) {
+          if (t === tool) {
+            btn.className = "px-3 py-1.5 rounded-xl bg-chlorophyll text-white font-bold";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-xl border border-borderSubtle text-slate-300 hover:bg-borderSubtle";
+          }
         }
       });
-      document.getElementById('activeToolText').innerText = tool.toUpperCase();
     }
 
     function setPigment(colorHex) {
       activeColor = colorHex;
       document.getElementById('strokeColor').value = colorHex;
-      document.getElementById('activeColorText').innerText = `${getPigmentName(colorHex)} (${colorHex})`;
-    }
-
-    function getPigmentName(hex) {
-      const map = {
-        '#2E7D32': 'Chlorophyll A',
-        '#81C784': 'Chlorophyll B',
-        '#FFB300': 'Carotenoid Gold',
-        '#C67D0A': 'Scute Amber',
-        '#76FF03': 'Luciferin Glow',
-        '#00F2FE': 'Guanine Iridophore Cyan'
-      };
-      return map[hex.toUpperCase()] || 'Custom Pigment';
+      document.getElementById('activeColorText').innerText = `${colorHex}`;
     }
 
     function smoothInput(current, previous, alpha = 0.25) {
@@ -565,7 +538,6 @@
       };
     }
 
-    // Precision skill calculation & secret reveal trigger
     function updatePrecisionScore(addedPixels = 10) {
       drawnPixelsCount += addedPixels;
       const totalEstimated = (canvas.width * canvas.height) * 0.05;
@@ -580,11 +552,9 @@
         document.getElementById('secretUnlockText').className = "text-[10px] text-iridophore font-bold ml-1 animate-pulse";
         document.getElementById('secretPigmentBtn').innerHTML = ""; // Remove lock
         setPigment('#00F2FE');
-        logCli("SECRET_UNLOCK: Pono Standard precision > 90%! Bioluminescent Guanine Cyan unlocked.");
       }
     }
 
-    // Pointer Drawing & Bucket Fill Listeners
     canvas.addEventListener('pointerdown', (e) => {
       const rect = canvas.getBoundingClientRect();
       const point = { x: Math.floor(e.clientX - rect.left), y: Math.floor(e.clientY - rect.top) };
@@ -627,7 +597,6 @@
 
     window.addEventListener('pointerup', () => { isDrawing = false; prevPoint = null; });
 
-    // Flood Fill Bucket Algorithm
     function floodFill(startX, startY, fillHex) {
       const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imgData.data;
@@ -651,14 +620,13 @@
         visited[idx] = 1;
 
         const currentColor = getPixelColor(data, x, y, width);
-        if (colorsMatch(currentColor, targetColor, 30)) {
+        if (colorsMatch(currentColor, targetColor, 35)) {
           setPixelColor(data, x, y, width, fillColor);
           queue.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
         }
       }
 
       ctx.putImageData(imgData, 0, 0);
-      logCli(`BUCKET_FILL: Filled sector at (${startX}, ${startY}) with ${fillHex}.`);
     }
 
     function getPixelColor(data, x, y, width) {
@@ -674,7 +642,7 @@
       data[i + 3] = 255;
     }
 
-    function colorsMatch(a, b, tolerance = 20) {
+    function colorsMatch(a, b, tolerance = 25) {
       return Math.abs(a[0] - b[0]) <= tolerance &&
              Math.abs(a[1] - b[1]) <= tolerance &&
              Math.abs(a[2] - b[2]) <= tolerance;
@@ -703,43 +671,9 @@
       eCtx.drawImage(canvas, 0, 0);
 
       const link = document.createElement('a');
-      link.download = `soren_v2_artwork_2x_${Date.now()}.png`;
+      link.download = `soren_v2_flower_learn_artwork_${Date.now()}.png`;
       link.href = exportCanvas.toDataURL('image/png');
       link.click();
-      logCli("EXPORT_2X: Exported super-sampled 2x high-resolution PNG master artwork.");
-    }
-
-    let currentAgeMode = 'simple'; // 'simple' (Junior) or 'advanced' (Adult Detail)
-
-    function setAgeMode(mode) {
-      currentAgeMode = mode;
-      const simpleBtn = document.getElementById('mode-simple-btn');
-      const advancedBtn = document.getElementById('mode-advanced-btn');
-      const advPanel = document.getElementById('advancedControlsPanel');
-
-      if (mode === 'advanced') {
-        advPanel.classList.remove('hidden');
-        advancedBtn.className = "px-2.5 py-1 rounded bg-chlorophyll text-white font-bold transition";
-        simpleBtn.className = "px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition";
-        logCli("AGE_MODE: Switched to Adult / Advanced Detail Mode with WASM sliders.");
-      } else {
-        advPanel.classList.add('hidden');
-        simpleBtn.className = "px-2.5 py-1 rounded bg-chlorophyll text-white font-bold transition";
-        advancedBtn.className = "px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition";
-        logCli("AGE_MODE: Switched to Junior / Simple Coloring Mode.");
-      }
-    }
-
-    function toggleFocusMode() {
-      const sidebar = document.querySelector('aside');
-      const btn = document.getElementById('focusModeBtn');
-      if (sidebar.classList.contains('hidden')) {
-        sidebar.classList.remove('hidden');
-        btn.innerHTML = "<span>🔍 Focus Mode (Studio Only)</span>";
-      } else {
-        sidebar.classList.add('hidden');
-        btn.innerHTML = "<span>📖 Show Sidebar Nav</span>";
-      }
     }
 
     function processSobelEdge() {
@@ -798,45 +732,75 @@
 
         document.getElementById('processingOverlay').classList.add('hidden');
         document.getElementById('canvasStatus').innerText = `Sobel CV Complete: ${duration} ms | 120 FPS | Cutoff: ${thresholdVal}`;
-        logCli(`SOBEL_CV: Executed 3x3 matrix edge extraction in ${duration} ms (Cutoff: ${thresholdVal}, Detail: ${detailMultVal}x).`);
       }, 30);
     }
 
-    function loadPresetImage() {
-      const type = document.getElementById('presetSelect').value || 'sea_turtle';
-
+    function loadPresetImage(key) {
       clearCanvas();
+      const spec = SPECIMENS[key] || SPECIMENS['sea_turtle'];
+      document.getElementById('funFactBanner').innerText = spec.fact;
+
       ctx.fillStyle = '#121619';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.strokeStyle = '#2E7D32';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = spec.pigment || '#2E7D32';
+      ctx.lineWidth = 3;
 
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
 
-      if (type === 'sea_turtle') {
-        // Chelonia mydas carapace scutes
+      if (key === 'sea_turtle') {
         ctx.beginPath();
-        ctx.ellipse(cx, cy, 100, 75, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy, 110, 80, 0, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Inner Scute Lines
         for (let i = 0; i < 5; i++) {
           ctx.beginPath();
-          ctx.arc(cx - 60 + i * 30, cy, 20, 0, Math.PI * 2);
+          ctx.arc(cx - 60 + i * 30, cy, 22, 0, Math.PI * 2);
           ctx.stroke();
         }
-      } else if (type === 'guard_cells') {
-        // Stomatal Guard Cells
+      } else if (key === 'guard_cells') {
         ctx.beginPath();
-        ctx.ellipse(cx - 30, cy, 25, 60, Math.PI / 12, 0, Math.PI * 2);
-        ctx.ellipse(cx + 30, cy, 25, 60, -Math.PI / 12, 0, Math.PI * 2);
+        ctx.ellipse(cx - 35, cy, 28, 70, Math.PI / 12, 0, Math.PI * 2);
+        ctx.ellipse(cx + 35, cy, 28, 70, -Math.PI / 12, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (key === 'honeybee') {
+        ctx.beginPath();
+        ctx.arc(cx, cy - 60, 35, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy, 50, 40, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy + 80, 60, 75, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (key === 'jellyfish') {
+        ctx.beginPath();
+        ctx.arc(cx, cy - 30, 90, Math.PI, 0, false);
+        ctx.lineTo(cx + 90, cy - 30);
+        ctx.stroke();
+        for (let i = -3; i <= 3; i++) {
+          ctx.beginPath();
+          ctx.moveTo(cx + i * 25, cy - 30);
+          ctx.lineTo(cx + i * 25, cy + 120);
+          ctx.stroke();
+        }
+      } else if (key === 'redwood') {
+        ctx.beginPath();
+        ctx.moveTo(cx - 30, cy + 150);
+        ctx.lineTo(cx - 15, cy - 130);
+        ctx.lineTo(cx + 15, cy - 130);
+        ctx.lineTo(cx + 30, cy + 150);
+        ctx.closePath();
         ctx.stroke();
       } else {
         ctx.beginPath();
-        ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+        ctx.arc(cx, cy - 20, 90, Math.PI, 0, false);
+        ctx.lineTo(cx + 90, cy - 20);
         ctx.stroke();
+        ctx.fillRect(cx - 20, cy - 20, 40, 140);
+      }
+
+      if (currentAgeMode === 'advanced') {
+        ctx.strokeStyle = '#00F2FE';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cx - 120, cy - 120, 240, 240);
       }
     }
 
@@ -849,7 +813,7 @@
         img.onload = () => {
           clearCanvas();
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          logCli(`IMAGE_LOAD: Loaded local asset [${file.name}] (${file.size} bytes).`);
+          processSobelEdge();
         };
         img.src = event.target.result;
       };
@@ -858,89 +822,19 @@
 
     function generateProceduralTopic() {
       const topic = document.getElementById('topicInput').value.trim() || 'Redwood';
-      const notesBox = document.getElementById('fieldNotesContent');
+      const notesContent = document.getElementById('fieldNotesContent');
 
-      notesBox.innerHTML = `
-        <div class="font-bold text-emerald-400 mb-1">PROCEDURAL ENTRY: ${topic.toUpperCase()}</div>
-        <p class="text-slate-300">Synthesizing local vector outline for <strong>${topic}</strong>...</p>
-        <div class="mt-2 text-[10px] text-slate-500">
-          • Structural Domain: Biological Form Matrix<br>
-          • Recommended Pigment: Chlorophyll A (#2E7D32)<br>
-          • Secret Unlock Hint: Reach 90% precision to unlock Guanine Cyan Bio-Glow!
+      notesContent.innerHTML = `
+        <div class="text-emerald-400 font-bold mb-1">PROCEDURAL ENTRY: ${topic.toUpperCase()}</div>
+        <p class="text-slate-300">Synthesized vector outlines and scientific field notes for <strong>${topic}</strong>.</p>
+        <div class="mt-2 text-[10px] text-slate-500 font-mono">
+          • Domain: Biological Form Matrix<br>
+          • Pigment: Chlorophyll A (#2E7D32)<br>
+          • Secret Hint: Reach 90% precision to unlock Guanine Cyan Bio-Glow!
         </div>
       `;
 
-      loadPresetImage();
-      logCli(`PROC_GEN: Generated field notes and geometry for topic '${topic}'.`);
-    }
-
-    function renderMandalaSvg() {
-      const svg = document.getElementById('mandalaSvg');
-      let html = '<g transform="translate(150,150)">';
-
-      for (let i = 0; i < 9; i++) {
-        html += `
-          <g transform="rotate(${i * 40})">
-            <path d="M 0 0 C -30 -60, -10 -110, 0 -130 C 10 -110, 30 -60, 0 0"
-                  fill="rgba(46, 125, 50, 0.15)" stroke="#2E7D32" stroke-width="1.5" />
-            <circle cx="0" cy="-130" r="3" fill="#D4AF37" />
-          </g>
-        `;
-      }
-      html += '<circle cx="0" cy="0" r="15" fill="#2E7D32" />';
-      html += '</g>';
-      svg.innerHTML = html;
-    }
-
-    function calculateTruth() {
-      const cs = parseFloat(document.getElementById('paramCs').value);
-      const ni = parseFloat(document.getElementById('paramNi').value);
-      const ev = parseFloat(document.getElementById('paramEv').value);
-
-      document.getElementById('valCs').innerText = cs.toFixed(3);
-      document.getElementById('valNi').innerText = ni.toFixed(3);
-      document.getElementById('valEv').innerText = ev.toFixed(3);
-
-      const tx = (0.4 * cs) + (0.35 * ni) + (0.25 * ev);
-      const scoreDisplay = document.getElementById('truthScoreDisplay');
-      const badge = document.getElementById('truthGateBadge');
-
-      scoreDisplay.innerText = tx.toFixed(4);
-
-      if (tx >= 0.9950) {
-        scoreDisplay.className = "text-2xl font-bold text-emerald-400";
-        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-700";
-        badge.innerText = "VERIFIED: T(x) ≥ 0.9950";
-      } else {
-        scoreDisplay.className = "text-2xl font-bold text-red-400";
-        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-red-950 text-red-400 border border-red-800";
-        badge.innerText = "REJECTED: T(x) < 0.9950";
-      }
-    }
-
-    function logCli(msg) {
-      const log = document.getElementById('terminalLog');
-      const time = new Date().toISOString().substring(11, 19);
-      log.innerHTML += `<div>[${time}] ${msg}</div>`;
-      log.scrollTop = log.scrollHeight;
-    }
-
-    function handleCliCommand(e) {
-      if (e.key === 'Enter') {
-        const input = document.getElementById('cliInput');
-        const cmd = input.value.trim().toLowerCase();
-        input.value = '';
-
-        if (cmd === 'clear') {
-          document.getElementById('terminalLog').innerHTML = '';
-        } else if (cmd === 'status') {
-          logCli("STATUS: Air-gapped isolation nominal | Truth Gate T(x) >= 0.9950 | Audio 528Hz Active");
-        } else if (cmd === 'audit') {
-          logCli("AUDIT: SHA-256 Proton Anchor: [8f4e2c...veritas_verified]");
-        } else {
-          logCli(`UNKNOWN COMMAND: '${cmd}'. Available: status, audit, clear`);
-        }
-      }
+      loadPresetImage('redwood');
     }
   </script>
 </body>
