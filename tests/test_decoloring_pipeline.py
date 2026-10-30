@@ -11,7 +11,13 @@ BIOLOGICAL_PIGMENTS = {
     "carotenoid_gold": "#FFB300",
     "scute_amber": "#C67D0A",
     "luciferin_glow": "#76FF03",
-    "iridophore_cyan": "#00F2FE"
+    "iridophore_cyan": "#00F2FE",
+    "anthocyanin_violet": "#7E22CE",
+    "tannin_bark_rust": "#9A3412",
+    "cellulose_white": "#F8FAFC",
+    "pollen_ochre": "#F59E0B",
+    "basalt_obsidian": "#0F172A",
+    "xanthophyll_yellow": "#FDE047"
 }
 
 def perceptual_luminance(r: int, g: int, b: int) -> int:
@@ -56,8 +62,10 @@ def test_somatic_tremor_filter():
     assert smoothed == 25.0
 
 def test_biological_pigments_database():
+    assert len(BIOLOGICAL_PIGMENTS) >= 12
     assert "chlorophyll_a" in BIOLOGICAL_PIGMENTS
     assert BIOLOGICAL_PIGMENTS["iridophore_cyan"] == "#00F2FE"
+    assert "xanthophyll_yellow" in BIOLOGICAL_PIGMENTS
 
 def test_precision_secret_unlock_trigger():
     assert evaluate_precision_secret_unlock(95, 100) is True
