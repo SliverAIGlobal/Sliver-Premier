@@ -70,3 +70,16 @@ def test_biological_pigments_database():
 def test_precision_secret_unlock_trigger():
     assert evaluate_precision_secret_unlock(95, 100) is True
     assert evaluate_precision_secret_unlock(50, 100) is False
+
+
+def test_specimens_data_pure_biological_uniqueness():
+    import json
+    with open("specimens_data.json") as f:
+        data = json.load(f)
+    assert len(data) == 100
+    titles = [x["title"] for x in data]
+    assert len(titles) == len(set(titles)), "Specimens must have unique titles"
+    # Verify no astronomy entries
+    for x in data:
+        assert x.get("category") != "Astronomy & Earth Systems", f"Non-biological category found: {x.get('category')}"
+        assert not x.get("imageUrl", "").startswith("https://images.unsplash.com"), "No repeating external urls allowed"

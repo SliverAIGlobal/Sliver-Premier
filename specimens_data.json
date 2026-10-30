@@ -16,7 +16,7 @@
       "Iridophore nanocrystals reflect light in shallow coastal seagrass foraging habitats."
     ],
     "notes": "Chelonia mydas carapace features epidermal keratin scutes with underlying bone sutures.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sea-turtle%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sea-turtle%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EGREEN%20SEA%20TURTLE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "jellyfish",
@@ -35,7 +35,7 @@
       "Calcium-triggered bioluminescence serves as a predator startle and optic camouflage mechanism."
     ],
     "notes": "Aequorea victoria bell margins synthesize aequorin photoproteins and Green Fluorescent Protein (GFP).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_jellyfish%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_jellyfish%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EBIOLUMINESCENT%20JELLYFI%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "coral-reef",
@@ -54,7 +54,7 @@
       "Susceptible to ocean acidification and thermal bleaching when water temperatures breach thermal limits."
     ],
     "notes": "Acropora cervicornis secretes calcium carbonate (aragonite) exoskeletons forming reef matrices.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_coral-reef%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_coral-reef%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3ESTONY%20CORAL%20COLONY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "blue-whale",
@@ -73,7 +73,7 @@
       "Aortic arches exceed 23 centimeters in diameter with specialized bradycardia during deep dives."
     ],
     "notes": "Balaenoptera musculus uses baleen keratin plates to filter-feed over 4 tons of Antarctic krill daily.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_blue-whale%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_blue-whale%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EBLUE%20WHALE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "manta-ray",
@@ -92,7 +92,7 @@
       "Demonstrates self-recognition in mirror tests and complex social navigation behavior."
     ],
     "notes": "Mobula birostris utilizes cephalic fins to funnel plankton-rich seawater through branchial gill rakers.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_manta-ray%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_manta-ray%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EGIANT%20OCEANIC%20MANTA%20RA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "octopus",
@@ -111,7 +111,7 @@
       "Complex nervous system features 500 million neurons with distributed arm motor autonomy."
     ],
     "notes": "Enteroctopus dofleini possesses chromatophore, iridophore, and leucophore skin reflection layers.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_octopus%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_octopus%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EGIANT%20PACIFIC%20OCTOPUS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "seahorse",
@@ -130,7 +130,7 @@
       "Prehensile tail lacks caudal fins, utilizing armored bony plates for vegetation anchoring."
     ],
     "notes": "Hippocampus erectus male brood pouch (marsupium) provides osmoregulated nutrition to embryos.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_seahorse%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_seahorse%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3ELINED%20SEAHORSE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "clownfish",
@@ -149,7 +149,7 @@
       "Mutualistic symbiosis provides nitrogen nutrients to anemones while gaining anti-predator shelter."
     ],
     "notes": "Amphiprion ocellaris develops a lipid-rich glycoprotein mucus layer immune to nematocyst discharge.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_clownfish%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_clownfish%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EOCELLARIS%20CLOWNFISH%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "sea-otter",
@@ -168,7 +168,7 @@
       "Metabolic rate is 2.8 times higher than terrestrial mammals of equal size to maintain core heat."
     ],
     "notes": "Enhydra lutris lacks blubber, relying on dense underfur trap air pockets for thermal insulation.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sea-otter%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sea-otter%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3ESOUTHERN%20SEA%20OTTER%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "hammerhead",
@@ -187,7 +187,7 @@
       "Executes nocturnal benthic foraging targeting stingrays buried beneath marine sediment."
     ],
     "notes": "Sphyrna mokarran cephalofoil head structure enhances electroreceptive Ampullae of Lorenzini density.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_hammerhead%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_hammerhead%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EGREAT%20HAMMERHEAD%20SHARK%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "leaf-guard",
@@ -206,7 +206,7 @@
       "Chloroplast organelles synthesize glucose via Calvin cycle carbon fixation."
     ],
     "notes": "Stomatal guard cells regulate gas exchange and transpiration via turgor pressure regulation.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_leaf-guard%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_leaf-guard%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ELEAF%20GUARD%20CELLS%20%26%20STO%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "sunflower",
@@ -225,7 +225,7 @@
       "Ray florets attract pollinators while disc florets produce lipid-rich achene seeds."
     ],
     "notes": "Helianthus annuus capitulum flower head exhibits Fibonacci spiral seed packing geometry.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sunflower%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sunflower%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ESUNFLOWER%20CAPITULUM%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "venus-flytrap",
@@ -244,7 +244,7 @@
       "Secretes protease and phosphatase enzymes to digest chitin and absorb ionic nitrogen."
     ],
     "notes": "Dionaea muscipula traps execute rapid thigmonastic snap movements in under 100 milliseconds.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_venus-flytrap%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_venus-flytrap%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3EVENUS%20FLYTRAP%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "orchid",
@@ -263,7 +263,7 @@
       "Pollinated exclusively by Cocytius antaeus giant sphinx moths with extended proboscis."
     ],
     "notes": "Dendrophylax lindenii is a leafless epiphyte performing photosynthesis entirely in photosynthetic roots.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_orchid%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_orchid%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3EGHOST%20ORCHID%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "pitcher-plant",
@@ -282,7 +282,7 @@
       "Forms mutualistic nitrogen-exchange relationships with mountain tree shrews."
     ],
     "notes": "Nepenthes rajah synthesizes slippery waxy peristome surfaces inducing insect fluid slippage.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_pitcher-plant%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_pitcher-plant%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ETROPICAL%20PITCHER%20PLANT%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "fern",
@@ -301,7 +301,7 @@
       "Exhibits circinate vernation during early fiddlehead frond development."
     ],
     "notes": "Cyathea dealbata produces reproductive sori clusters containing sporangia on abaxial fronds.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_fern%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_fern%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ESILVER%20TREE%20FERN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "bamboo",
@@ -320,7 +320,7 @@
       "Vascular bundles distributed randomly in parenchyma ground tissue without secondary cambium."
     ],
     "notes": "Phyllostachys aurea forms subterranean monopodial rhizome networks driving rapid culm shoots.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_bamboo%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_bamboo%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3EGOLDEN%20BAMBOO%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "moss",
@@ -339,7 +339,7 @@
       "Dominant carbon-sink bryophyte accumulating thick peat deposits over millenia."
     ],
     "notes": "Sphagnum magellanicum hyaline cells feature porous dead cell walls designed for capillary water storage.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_moss%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_moss%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ESPHAGNUM%20PEAT%20MOSS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "lotus",
@@ -358,7 +358,7 @@
       "Thermoregulatory flowers maintain elevated core temperatures during blooming to attract pollinators."
     ],
     "notes": "Nelumbo nucifera exhibits the Lotus Effect via hydrophobic epicuticular wax nanostructures.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_lotus%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_lotus%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ESACRED%20LOTUS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "baobab",
@@ -377,7 +377,7 @@
       "Bark performs photosynthesis during leaf-free dry seasons while regenerating after damage."
     ],
     "notes": "Adansonia grandidieri parenchyma trunk tissue stores up to 32,000 gallons of water for drought endurance.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_baobab%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_baobab%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3EGRANDIDIER%20BAOBAB%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "honeybee",
@@ -396,7 +396,7 @@
       "Waggle dance encodes distance and directional vectors relative to solar azimuth angle."
     ],
     "notes": "Apis mellifera compound eyes feature 6,900 ommatidia units sensitive to ultraviolet light patterns.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_honeybee%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_honeybee%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EWORKER%20HONEYBEE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "monarch",
@@ -415,7 +415,7 @@
       "Wing scales feature chitin photonic crystals generating bright warning aposomatic coloration."
     ],
     "notes": "Danaus plexippus caterpillars sequester cardenolide cardiac glycosides from Asclepias milkweed.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_monarch%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_monarch%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EMONARCH%20BUTTERFLY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "dragonfly",
@@ -434,7 +434,7 @@
       "Predatory success rate exceeds 95% due to predictive interception trajectory calculations."
     ],
     "notes": "Anax imperator compound eyes contain 30,000 ommatidia providing nearly 360-degree visual fields.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_dragonfly%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_dragonfly%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EEMPEROR%20DRAGONFLY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "stag-beetle",
@@ -453,7 +453,7 @@
       "Larvae feed on saproxylic decaying oak heartwood containing essential symbiotic gut fungi."
     ],
     "notes": "Lucanus cervus males exhibit exaggerated mandibles utilized in territorial leverage combat.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_stag-beetle%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_stag-beetle%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EGIANT%20STAG%20BEETLE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "firefly",
@@ -472,7 +472,7 @@
       "Flash signal patterns regulate species-specific courtship and sexual selection behavior."
     ],
     "notes": "Photinus pyralis abdominal photocytes execute bioluminescent reactions via luciferase enzyme catalysis.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_firefly%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_firefly%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EEASTERN%20FIREFLY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "mantis",
@@ -491,7 +491,7 @@
       "Stereo 3D depth perception calculated via motion parallax during predatory targeting."
     ],
     "notes": "Mantis religiosa raptorial forelegs feature acute interlocking spines for prey capture.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_mantis%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_mantis%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EPRAYING%20MANTIS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "leafcutter-ant",
@@ -510,7 +510,7 @@
       "Colony caste polymorphism distributes tasks between minor gardeners, foragers, and major soldiers."
     ],
     "notes": "Atta cephalotes Workers harvest foliar tissue to cultivate symbiotic Leucoagaricus gongylophorus fungus.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_leafcutter-ant%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_leafcutter-ant%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3ELEAFCUTTER%20ANT%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "ladybug",
@@ -529,7 +529,7 @@
       "Voracious aphid predator utilized extensively in biological pest control systems."
     ],
     "notes": "Coccinella septempunctata bleeds alkaloid toxins (coccinelline) from leg joints during reflex bleeding.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_ladybug%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_ladybug%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3ESEVEN-SPOT%20LADYBIRD%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "cicada",
@@ -548,7 +548,7 @@
       "Mass emergence strategy saturates predator capacity to guarantee high reproductive survival."
     ],
     "notes": "Magicicada septendecim nymph developmental cycles span prime-number 17-year subterranean intervals.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_cicada%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_cicada%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EPERIODICAL%20CICADA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "luna-moth",
@@ -567,7 +567,7 @@
       "Antennae of males feature dense pectinate sensory sensilla sensitive to female pheromone plumes."
     ],
     "notes": "Actias luna adults lack functional mouthparts (reduced proboscis), living entirely on caterpillar fat reserves.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_luna-moth%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_luna-moth%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3ELUNA%20MOTH%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "fungi",
@@ -586,7 +586,7 @@
       "Facilitates inter-plant biochemical signaling and carbon allocation networks."
     ],
     "notes": "Glomeromycota mycorrhizal hyphae form subterranean nutrient-exchange arbuscules inside root cells.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_fungi%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_fungi%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EMYCORRHIZAL%20FUNGI%20NETW%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "fly-agaric",
@@ -605,7 +605,7 @@
       "Ectomycorrhizal fungal associate forming symbiotic relationships with birch and pine trees."
     ],
     "notes": "Amanita muscaria basidiocarp cap features persistent universal veil remnants (white warts).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_fly-agaric%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_fly-agaric%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EFLY%20AGARIC%20MUSHROOM%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "truffle",
@@ -624,7 +624,7 @@
       "Spore dissemination depends on mycophagous mammal and insect consumption."
     ],
     "notes": "Tuber melanosporum produces subterranean ascocarps releasing volatile dimethyl sulfide aromas.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_truffle%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_truffle%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EBLACK%20PERIGORD%20TRUFFLE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "lichen",
@@ -643,7 +643,7 @@
       "Primary winter forage for Rangifer tarandus caribou herds across Arctic tundra ecosystems."
     ],
     "notes": "Cladonia rangiferina is a composite lichen organism pairing fungal mycobiont with algal photobiont.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_lichen%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_lichen%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EREINDEER%20LICHEN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "tardigrade",
@@ -662,7 +662,7 @@
       "Survives temperatures from -272\u00b0C to +150\u00b0C and ionizing radiation 1,000x human lethal thresholds."
     ],
     "notes": "Hypsibius dujardini enters cryptobiosis (anhydrobiosis) by synthesizing Dsup (Damage suppressor) proteins.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_tardigrade%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_tardigrade%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EWATER%20BEAR%20%28TARDIGRADE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "diatom",
@@ -681,7 +681,7 @@
       "Frustule nanopores exhibit specialized photonic crystal properties for light harvesting."
     ],
     "notes": "Bacillariophyceae unicellular algae synthesize ornate frustule cell walls composed of hydrated silicon dioxide.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_diatom%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_diatom%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EMARINE%20SILICA%20DIATOM%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "paramecium",
@@ -700,7 +700,7 @@
       "Possesses dual macronucleus (somatic expression) and micronucleus (germline conjugation)."
     ],
     "notes": "Paramecium caudatum single-celled ciliate utilizes coordinated metachronal cilia waves for propulsion.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_paramecium%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_paramecium%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3ESLIPPER%20CILIATE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "euglena",
@@ -719,7 +719,7 @@
       "Lacks cellulose cell walls, utilizing a flexible protein pellicle layer for metaboly distortion."
     ],
     "notes": "Euglena gracilis exhibits mixotrophic nutrition via chloroplast photosynthesis and heterotrophic absorption.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_euglena%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_euglena%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EPHOTOSYNTHETIC%20FLAGELL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "neuron",
@@ -738,7 +738,7 @@
       "Neurotransmitters (glutamate, GABA) cross 20-nanometer synaptic clefts to bind post-synaptic receptors."
     ],
     "notes": "Pyramidal neurons process synaptic inputs via dendritic spines and axon hillock action potentials.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_neuron%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_neuron%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EPYRAMIDAL%20NEURON%20CELL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "chloroplast",
@@ -757,7 +757,7 @@
       "Calvin cycle enzymes in stroma utilize ATP to fix atmospheric CO2 into G3P sugar precursors."
     ],
     "notes": "Chloroplast organelles feature double-membrane envelopes enclosing stroma and thylakoid stacks (grana).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_chloroplast%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_chloroplast%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EPLANT%20CHLOROPLAST%20ORGA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "redwood",
@@ -776,7 +776,7 @@
       "Foliar fog absorption provides up to 40% of annual hydrological intake during dry summer months."
     ],
     "notes": "Sequoia sempervirens xylem tracheid capillaries transport water up 115-meter vertical trunks.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_redwood%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_redwood%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3ECOAST%20REDWOOD%20TREE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "bristlecone",
@@ -795,7 +795,7 @@
       "Sustains partial cambium mortality where a single living strip of bark feeds canopy branches."
     ],
     "notes": "Pinus longaeva thrives in high-altitude dolomite soils, growing extremely dense resinous wood.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_bristlecone%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_bristlecone%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3EBRISTLECONE%20PINE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "cherry-blossom",
@@ -814,7 +814,7 @@
       "Cultivated widely for ornamental phenology and cultural spring celebration traditions."
     ],
     "notes": "Prunus serrulata blooms exhibit mass anthesis synchronized by winter chilling degree-day accumulation.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_cherry-blossom%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_cherry-blossom%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3EJAPANESE%20CHERRY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "quaking-aspen",
@@ -833,7 +833,7 @@
       "Pando clonal colony in Utah represents one of the heaviest and oldest living organisms on Earth."
     ],
     "notes": "Populus tremuloides forms massive clonal colonies connected via subterranean adventitious root systems.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_quaking-aspen%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_quaking-aspen%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3EQUAKING%20ASPEN%20COLONY%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "banyan",
@@ -852,7 +852,7 @@
       "Syconium fig inflorescence forms specialized obligate mutualisms with pollinating fig wasps."
     ],
     "notes": "Ficus benghalensis executes hemiepiphytic growth, dropping prop roots from canopy branches to ground.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_banyan%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_banyan%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3ESACRED%20FIG%20BANYAN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "mangrove",
@@ -871,7 +871,7 @@
       "Viviparaous propagule seeds germinate while still attached to parent tree before floating away."
     ],
     "notes": "Rhizophora mangle prop roots feature specialized lenticel pores for atmospheric root respiration in anoxic mud.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_mangrove%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_mangrove%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3ERED%20MANGROVE%20TREE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "oak",
@@ -890,7 +890,7 @@
       "Deep taproot system stabilizes trees against severe windstorms while accessing deep aquifers."
     ],
     "notes": "Quercus robur produces ring-porous hardwood containing high tyloses and tannin concentrations.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_oak%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_oak%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3EENGLISH%20LIVE%20OAK%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "sequoia",
@@ -909,7 +909,7 @@
       "Thick serogenous bark isolates cambium layer against thermal damage during wildfire events."
     ],
     "notes": "Sequoiadendron giganteum trunk volume reaches over 1,480 cubic meters (General Sherman Tree).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sequoia%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sequoia%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3EGIANT%20SEQUOIA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "maple",
@@ -928,7 +928,7 @@
       "Samara fruit wing geometry induces autorotation during seed dispersal to maximize flight distance."
     ],
     "notes": "Acer saccharum sap flow driven by freeze-thaw stem pressure cycles accumulating high sucrose content.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_maple%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_maple%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3ESUGAR%20MAPLE%20TREE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "eucalyptus",
@@ -947,7 +947,7 @@
       "Fast-growing tropical pioneer tree species reaching heights over 60 meters in rainforest ecosystems."
     ],
     "notes": "Eucalyptus deglupta sheds outer bark strips annually to expose bright green chlorophyll-active inner bark.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_eucalyptus%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2344403c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231c1917%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_eucalyptus%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%2378350f%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23d97706%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23d97706%22%20text-anchor%3D%22middle%22%3ERAINBOW%20EUCALYPTUS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "peregrine",
@@ -966,7 +966,7 @@
       "Nictitating membranes protect eyes while specialized pecten oculi structures enhance visual acuity."
     ],
     "notes": "Falco peregrinus achieves terminal dive stoop velocities exceeding 389 km/h (240 mph).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_peregrine%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_peregrine%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EPEREGRINE%20FALCON%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "hummingbird",
@@ -985,7 +985,7 @@
       "Enters nocturnal torpor to lower core body temperature and conserve energy reserves."
     ],
     "notes": "Archilochus colubris wing articulation permits figure-8 wing rotation generating lift on both up and down strokes.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_hummingbird%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_hummingbird%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3ERUBY-THROATED%20HUMMINGB%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "peacock",
@@ -1004,7 +1004,7 @@
       "Courtship displays combine visual train fanning with infrasonic feather vibration signals."
     ],
     "notes": "Pavo cristatus train feathers display iridescent ocelli generated by photonic crystal structural coloration.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_peacock%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_peacock%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EINDIAN%20PEAFOWL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "snowy-owl",
@@ -1023,7 +1023,7 @@
       "Asymmetrical ear placement enables precise acoustic triangulation of prey under snow cover."
     ],
     "notes": "Bubo scandiacus exhibits dense plumulaceous down insulation extending down tarsus and toes to survive Arctic cold.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_snowy-owl%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_snowy-owl%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3ESNOWY%20OWL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "flamingo",
@@ -1042,7 +1042,7 @@
       "Unipedal standing stance reduces muscular fatigue and minimizes thermal energy loss in cold water."
     ],
     "notes": "Phoenicopterus roseus pink feather plumage derived from dietary carotenoid pigments (canthaxanthin).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_flamingo%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_flamingo%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EGREATER%20FLAMINGO%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "toucan",
@@ -1061,7 +1061,7 @@
       "Lightweight bill construction enables dexterous fruit plucking without altering flight balance."
     ],
     "notes": "Ramphastos sulfuratus bill structure composed of keratin shell over cellular foam bone mesh.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_toucan%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_toucan%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EKEEL-BILLED%20TOUCAN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "bald-eagle",
@@ -1080,7 +1080,7 @@
       "Large stick nests (eyries) accumulated over decades represent some of the largest bird tree structures."
     ],
     "notes": "Haliaeetus leucocephalus eyes feature dual fovea regions providing 4-8x human visual acuity.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_bald-eagle%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_bald-eagle%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EBALD%20EAGLE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "kingfisher",
@@ -1099,7 +1099,7 @@
       "Nose cone design copied in Japanese Shinkansen bullet trains to eliminate tunnel sonic booms."
     ],
     "notes": "Alcedo atthis wedge-shaped beak geometry eliminates hydrodynamic shockwaves during high-speed water entry.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_kingfisher%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_kingfisher%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3ECOMMON%20KINGFISHER%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "emperor-penguin",
@@ -1118,7 +1118,7 @@
       "Males incubate eggs during Antarctic winter, huddling in tight dynamic thermal huddles to survive -60\u00b0C."
     ],
     "notes": "Aptenodytes forsteri solid heavy bones reduce buoyancy for deep dives exceeding 500 meters.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_emperor-penguin%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_emperor-penguin%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EEMPEROR%20PENGUIN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "raven",
@@ -1137,7 +1137,7 @@
       "Complex vocal repertoire includes over 30 distinct calls and mimicry of environmental sounds."
     ],
     "notes": "Corvus corax possesses advanced avian encephalization ratio enabling casual reasoning and tool modification.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_raven%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_raven%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3ECOMMON%20RAVEN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "snow-leopard",
@@ -1156,7 +1156,7 @@
       "Nasal cavity features large turbinate bones to warm cold mountain air prior to lung intake."
     ],
     "notes": "Panthera uncia long muscular tail provides balance during cliff leaps and acts as a facial thermal wrap.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_snow-leopard%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_snow-leopard%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3ESNOW%20LEOPARD%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "cheetah",
@@ -1175,7 +1175,7 @@
       "Enlarged heart, lungs, and nasal passages facilitate massive oxygen intake during high-speed chases."
     ],
     "notes": "Acinonyx jubatus flexible spine and semi-non-retractable claws maximize stride length and traction at 112 km/h.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_cheetah%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_cheetah%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EAFRICAN%20CHEETAH%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "wolf",
@@ -1194,7 +1194,7 @@
       "Strict social pack hierarchy coordinates cooperative hunting strategies against large ungulates."
     ],
     "notes": "Canis lupus auditory system processes howls up to 16 km away for pack territory communication.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_wolf%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_wolf%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EGRAY%20WOLF%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "red-panda",
@@ -1213,7 +1213,7 @@
       "Eats predominantly bamboo leaves, using specialized molar teeth to crush fibrous plant tissue."
     ],
     "notes": "Ailurus fulgens possesses a modified radial sesamoid bone acting as a false thumb for bamboo manipulation.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_red-panda%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_red-panda%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3ERED%20PANDA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "koala",
@@ -1232,7 +1232,7 @@
       "Low metabolic rate compensates for low nutritional density and high toxin content of foliage diet."
     ],
     "notes": "Phascolarctos cinereus possesses specialized caecum organ containing bacteria to digest toxic eucalyptus oils.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_koala%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_koala%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EQUEENSLAND%20KOALA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "pangolin",
@@ -1251,7 +1251,7 @@
       "Muscular stomach features keratinized walls and ingested sand grit to grind insect prey without teeth."
     ],
     "notes": "Manis javanica scales composed of keratinized epidermal plates overlapping in imbricate armor patterns.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_pangolin%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_pangolin%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3ESUNDA%20PANGOLIN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "platypus",
@@ -1270,7 +1270,7 @@
       "Male calcaneus spurs connect to crural venom glands producing complex pain-inducing proteins."
     ],
     "notes": "Ornithorhynchus anatinus monotreme mammal possesses electroreceptors in rubbery bill to detect prey signals.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_platypus%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_platypus%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EDUCK-BILLED%20PLATYPUS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "sloth",
@@ -1289,7 +1289,7 @@
       "Lowest metabolic rate among terrestrial mammals, maintaining core body temperature via behavioral basking."
     ],
     "notes": "Bradypus tridactylus fur features longitudinal grooves hosting symbiotic green algae (Trichophilus) camouflage.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sloth%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sloth%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3ETHREE-TOED%20SLOTH%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "grizzly",
@@ -1308,7 +1308,7 @@
       "Olfactory bulb structure provides extraordinary scent detection capable of locating carcasses 30 km away."
     ],
     "notes": "Ursus arctos horribilis shoulder muscle hump powers heavy digging for roots, ground squirrels, and winter dens.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_grizzly%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_grizzly%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EGRIZZLY%20BEAR%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "humpback",
@@ -1327,7 +1327,7 @@
       "Male whale songs display complex hierarchical rhyming structures evolving across oceanic populations."
     ],
     "notes": "Megaptera novaeangliae flipper leading edges feature hydrodynamic tubercles reducing drag and stall angle.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_humpback%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_humpback%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EHUMPBACK%20WHALE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "chameleon",
@@ -1346,7 +1346,7 @@
       "Elastic recoil hyoid bone mechanism projects sticky tongue at accelerations exceeding 41 g."
     ],
     "notes": "Furcifer pardalis color changes mediated by nanocrystal lattice shifting within dermal iridophore cells.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_chameleon%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_chameleon%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EPANTHER%20CHAMELEON%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "komodo",
@@ -1365,7 +1365,7 @@
       "Osteoderm bony plates embedded within adult skin form flexible chainmail armor beneath scales."
     ],
     "notes": "Varanus komodoensis utilizes forked tongue and Jacobson's vomeronasal organ to track carrion scents.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_komodo%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_komodo%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EKOMODO%20DRAGON%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "axolotl",
@@ -1384,7 +1384,7 @@
       "Feathery gill rami feature high capillary surface area for oxygen uptake in low-oxygen water."
     ],
     "notes": "Ambystoma mexicanum exhibits neoteny, retaining larval feathery external gills and aquatic habitat into adulthood.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_axolotl%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_axolotl%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EMEXICAN%20AXOLOTL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "poison-dart-frog",
@@ -1403,7 +1403,7 @@
       "Parental care includes transporting tadpoles to phytotelm water pools in canopy bromeliad plants."
     ],
     "notes": "Dendrobates tinctorius sequesters lipophilic alkaloid toxins (batrachotoxin/histrionicotoxin) from ant diet.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_poison-dart-frog%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_poison-dart-frog%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EPOISON%20DART%20FROG%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "gecko",
@@ -1422,7 +1422,7 @@
       "Vocal barking calls serve territorial defense and mate attraction in tropical forest habitats."
     ],
     "notes": "Gekko gecko toe pads feature microscopic setae branching into spatulae utilizing van der Waals intermolecular force.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_gecko%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_gecko%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3ETOKAY%20GECKO%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "sea-snake",
@@ -1441,7 +1441,7 @@
       "Pelagic sea snake feeding on surface fish while drifting along oceanic thermal convergence zones."
     ],
     "notes": "Hydrophis platurus features paddle-shaped compressed tail and valvular nostrils sealed during underwater dives.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_sea-snake%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_sea-snake%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EYELLOW-BELLIED%20SEA%20SNA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "alligator",
@@ -1460,7 +1460,7 @@
       "Temperature-dependent sex determination regulates embryo gender based on nest incubation temperatures."
     ],
     "notes": "Alligator mississippiensis integumentary sensory organs (ISOs) detect micro-vibrations in water surface.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_alligator%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_alligator%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EAMERICAN%20ALLIGATOR%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "iguana",
@@ -1479,7 +1479,7 @@
       "Herbivorous gut features specialized symbiotic bacterial chambers to ferment fibrous plant matter."
     ],
     "notes": "Iguana iguana possesses a parietal third eye (parietal eye) with retina and lens to track solar rhythms.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_iguana%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_iguana%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EGREEN%20IGUANA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "galapagos-tortoise",
@@ -1498,7 +1498,7 @@
       "Long lifespan exceeding 175 years supported by duplicated DNA repair and tumor-suppressor genes."
     ],
     "notes": "Chelonoidis niger displays saddleback or dome shell morphology adapted to island-specific vegetation height.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_galapagos-tortoise%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_galapagos-tortoise%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EGALAPAGOS%20GIANT%20TORTOI%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "tree-frog",
@@ -1517,7 +1517,7 @@
       "Lays eggs on leaves overhanging rainforest ponds; tadpoles hatch and drop directly into water below."
     ],
     "notes": "Agalychnis callidryas utilizes flash discoloration, exposing red eyes and blue flanks to startle predators.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_tree-frog%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_tree-frog%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3ERED-EYED%20TREE%20FROG%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "dna-helix",
@@ -1536,7 +1536,7 @@
       "Histone octamer proteins package DNA strands into nucleosome chromatin fibers inside cell nucleus."
     ],
     "notes": "Deoxyribonucleic acid forms a double-stranded antiparallel double helix stabilized by hydrogen bonds.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_dna-helix%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_dna-helix%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EDNA%20DOUBLE%20HELIX%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "stem-cell",
@@ -1555,7 +1555,7 @@
       "Sustains high telomerase enzyme activity to prevent chromosome telomere shortening during division."
     ],
     "notes": "Pluripotent stem cells maintain self-renewal capacity while retaining differentiation potential into all germ layers.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_stem-cell%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_stem-cell%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EEMBRYONIC%20STEM%20CELL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "red-blood-cell",
@@ -1574,7 +1574,7 @@
       "Deformable spectrin membrane skeleton enables cells to squeeze through 3-micrometer capillary tubes."
     ],
     "notes": "Erythrocyte biconcave disc morphology maximizes surface-area-to-volume ratio for rapid gas diffusion.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_red-blood-cell%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_red-blood-cell%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EERYTHROCYTE%20BLOOD%20CELL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "mitochrondria",
@@ -1593,7 +1593,7 @@
       "Endosymbiotic origin supported by circular mitochondrial DNA (mtDNA) and bacterial-like 70S ribosomes."
     ],
     "notes": "Mitochondria inner membrane cristae folds house electron transport chain complexes for oxidative phosphorylation.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_mitochrondria%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_mitochrondria%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EMITOCHONDRIA%20ORGANELLE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "synapse",
@@ -1612,7 +1612,7 @@
       "Postsynaptic ionotropic and metabotropic receptors bind transmitters to alter membrane potential."
     ],
     "notes": "Synaptic cleft represents a 20-nanometer junction where presynaptic vesicles release neurotransmitters.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_synapse%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_synapse%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3ENEURAL%20SYNAPTIC%20JUNCTI%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "retina-cone",
@@ -1631,7 +1631,7 @@
       "Concentrated within fovea centralis macula region providing high-acuity color vision."
     ],
     "notes": "Photopic retinal cone photoreceptors house photopsin opsin proteins tuned to red, green, or blue light.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_retina-cone%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_retina-cone%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3ERETINAL%20CONE%20PHOTORECE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "bone-osteon",
@@ -1650,7 +1650,7 @@
       "Extracellular matrix composed of hydroxyapatite calcium phosphate crystals deposited over collagen fibers."
     ],
     "notes": "Haversian systems (osteons) form concentric lamellae rings surrounding central vascular Haversian canals.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_bone-osteon%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_bone-osteon%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EBONE%20OSTEON%20MICRO-CANA%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "collagen-fiber",
@@ -1669,7 +1669,7 @@
       "Proline and lysine amino acid hydroxylation requires Vitamin C cofactors to maintain triple-helix stability."
     ],
     "notes": "Triple-helix collagen tropocollagen molecules self-assemble into staggered micro-fibrils with 67-nm periodicity.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_collagen-fiber%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_collagen-fiber%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3ECOLLAGEN%20MICRO-FIBRIL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "hair-follicle",
@@ -1688,7 +1688,7 @@
       "Sebaceous glands secrete lipid-rich sebum oil to moisturize skin stratum corneum barrier."
     ],
     "notes": "Pilosebaceous hair follicle organ features epithelial stem cell bulge regions driving continuous hair cycles.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_hair-follicle%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_hair-follicle%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3EEPIDERMAL%20HAIR%20FOLLICL%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
     "id": "cardiac-myocyte",
@@ -1707,196 +1707,116 @@
       "Packed with abundant mitochondria (40% cell volume) to sustain continuous ATP production without fatigue."
     ],
     "notes": "Cardiac myocytes form striated branching networks connected via intercalated disc gap junctions.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_cardiac-myocyte%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_cardiac-myocyte%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3ECARDIAC%20MUSCLE%20FIBER%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "saturn-rings",
-    "title": "Saturn Ring System",
-    "latin": "Planetary Magnetosphere",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-ring",
-    "juniorNotes": [
-      "Saturn's giant rings are made of billions of sparkling ice chunks and space dust!",
-      "Although the rings are 175,000 miles wide, they are only about 30 feet thick!",
-      "Saturn has over 140 moons orbiting around its beautiful ring system!"
-    ],
-    "adultNotes": [
-      "Saturn ring system composed of 99% pure water ice particles ranging from micrometers to meters.",
-      "Ring dynamics shaped by shepherd moons (Prometheus, Pandora) maintaining sharp ringlet edges.",
-      "Extends up to 282,000 km from planet surface while maintaining an average thickness of just 10 meters."
-    ],
-    "notes": "Saturn ring system composed of 99% pure water ice particles ranging from micrometers to meters.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "blue-whale",
+    "title": "Blue Whale Aortic Arch",
+    "latin": "Balaenoptera musculus",
+    "category": "Mammalogy",
+    "icon": "\ud83d\udc0b",
+    "juniorNotes": "A blue whale is as big as three school buses! Its heart is the size of a bumper car and beats only 2 times a minute when diving deep.",
+    "adultNotes": "Balaenoptera musculus aortic elastic recoil dampens massive stroke volume pulsatility, sustaining peripheral perfusion during extreme bradycardia diving cycles.",
+    "notes": "Blue Whale Aortic Arch - Mammalian cardiovascular scaling",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_blue-whale%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_blue-whale%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EBLUE%20WHALE%20AORTIC%20ARCH%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "andromeda",
-    "title": "Andromeda Spiral Galaxy",
-    "latin": "Messier 31",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-arrows-spin",
-    "juniorNotes": [
-      "Andromeda is a giant spiral galaxy containing over one trillion shining stars!",
-      "It is the closest major galaxy to our Milky Way\u20142.5 million light-years away!",
-      "On dark nights, you can see Andromeda with your naked eye in the night sky!"
-    ],
-    "adultNotes": [
-      "Messier 31 (Andromeda) bar-spiral galaxy containing an estimated 1 trillion star populations.",
-      "Supermassive black hole at galactic core exceeds 100 million solar masses.",
-      "Approaching Milky Way galaxy at 110 km/s, predicted to merge into Eliptical galaxy in 4.5 billion years."
-    ],
-    "notes": "Messier 31 (Andromeda) bar-spiral galaxy containing an estimated 1 trillion star populations.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "monarch-chrysalis",
+    "title": "Monarch Chrysalis Jade Rim",
+    "latin": "Danaus plexippus",
+    "category": "Entomology",
+    "icon": "\ud83d\udc1b",
+    "juniorNotes": "Before becoming a butterfly, the caterpillar forms a beautiful jade-green chrysalis decorated with real golden metallic dots that breathe air!",
+    "adultNotes": "Danaus plexippus pupal cuticle displays structural gold coronal rings produced by multilayer thin-film interference within carotenoid-depleted exocuticle.",
+    "notes": "Monarch Chrysalis Jade Rim - Insect metamorphic cuticle",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_monarch-chrysalis%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23541344%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2328112b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_monarch-chrysalis%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%23b45309%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fde047%22%20text-anchor%3D%22middle%22%3EMONARCH%20CHRYSALIS%20JADE%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "solar-flare",
-    "title": "Sun Solar Coronal Mass",
-    "latin": "Heliosphere",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-sun",
-    "juniorNotes": [
-      "Solar flares are giant magnetic explosions on the Sun that release super-hot plasma!",
-      "A single solar flare releases as much energy as millions of hydrogen bombs!",
-      "Solar flares send streams of energetic particles that create northern lights on Earth!"
-    ],
-    "adultNotes": [
-      "Coronal mass ejections (CMEs) release up to 10^15 grams of magnetized solar plasma into space.",
-      "Magnetic reconnection events in solar atmosphere accelerate ions to relativistic velocities.",
-      "Interacts with Earth's magnetosphere to trigger geomagnetic storms and auroral ovals."
-    ],
-    "notes": "Coronal mass ejections (CMEs) release up to 10^15 grams of magnetized solar plasma into space.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "giant-pacific-octopus",
+    "title": "Giant Pacific Octopus Sucker",
+    "latin": "Enteroctopus dofleini",
+    "category": "Marine Biology",
+    "icon": "\ud83d\udc19",
+    "juniorNotes": "An octopus has suction cups that can taste and smell whatever they touch! Each arm has its own mini-brain to explore coral reefs.",
+    "adultNotes": "Enteroctopus dofleini acetabulo-infundibular muscular architecture coordinates chemosensory rim receptors with hydrostatic pressure differentials.",
+    "notes": "Giant Pacific Octopus Sucker - Cephalopod neuromuscular biomechanics",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_giant-pacific-octopus%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23065a82%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23032b43%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_giant-pacific-octopus%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%231c7293%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2338bdf8%22%20text-anchor%3D%22middle%22%3EGIANT%20PACIFIC%20OCTOPUS%20%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "crab-nebula",
-    "title": "Crab Supernova Nebula",
-    "latin": "Messier 1",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-meteor",
-    "juniorNotes": [
-      "The Crab Nebula is the glowing remains of a giant star explosion seen in 1054 AD!",
-      "In the center of the nebula sits a pulsar spinning 30 times every second!",
-      "The expanding cloud of star dust contains gold, silver, and heavy elements!"
-    ],
-    "adultNotes": [
-      "Messier 1 supernova remnant expanding at 1,500 km/s, originated from core-collapse supernova in 1054 AD.",
-      "Center houses Crab Pulsar (neutron star) rotating 30 times/sec with magnetic field of 10^12 Gauss.",
-      "Synchrotron radiation emitted across radio, optical, X-ray, and gamma-ray electromagnetic spectrum."
-    ],
-    "notes": "Messier 1 supernova remnant expanding at 1,500 km/s, originated from core-collapse supernova in 1054 AD.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "barn-owl-facial-disc",
+    "title": "Barn Owl Parabolic Facial Disc",
+    "latin": "Tyto alba",
+    "category": "Ornithology",
+    "icon": "\ud83e\udd89",
+    "juniorNotes": "The heart-shaped face of a barn owl acts like satellite dish ears, channeling the tiniest rustle of a mouse through leaves in pitch darkness!",
+    "adultNotes": "Tyto alba reflector ruff feathers form asymmetrical acoustic parabolic reflectors directing microsecond interaural time and intensity differentials.",
+    "notes": "Barn Owl Parabolic Facial Disc - Avian acoustic morphology",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_barn-owl-facial-disc%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e40af%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23172554%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_barn-owl-facial-disc%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2360a5fa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2360a5fa%22%20text-anchor%3D%22middle%22%3EBARN%20OWL%20PARABOLIC%20FAC%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "aurora-borealis",
-    "title": "Northern Aurora Borealis",
-    "latin": "Ionospheric Discharge",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-bolt-lightning",
-    "juniorNotes": [
-      "Northern lights happen when solar wind particles hit gas molecules in Earth's atmosphere!",
-      "Oxygen gas makes green and red aurora light, while nitrogen gas makes purple and blue!",
-      "Auroras occur near Earth's North and South poles where magnetic lines funnel solar wind!"
-    ],
-    "adultNotes": [
-      "Aurora borealis geomagnetic discharges occur in ionosphere at altitudes between 100 and 300 km.",
-      "Solar wind electrons collide with thermospheric oxygen (557.7 nm green emission) and nitrogen molecules.",
-      "Guided along geomagnetic field lines toward high-latitude auroral oval zones."
-    ],
-    "notes": "Aurora borealis geomagnetic discharges occur in ionosphere at altitudes between 100 and 300 km.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "tree-fern-trunk",
+    "title": "Tree Fern Adventitious Roots",
+    "latin": "Cyathea medullaris",
+    "category": "Botanical Anatomy",
+    "icon": "\ud83c\udf3f",
+    "juniorNotes": "Tree ferns look like palm trees, but their trunks are actually made of thousands of intertwining roots that drink mist right out of the rainforest air!",
+    "adultNotes": "Cyathea medullaris arborescent habit is supported by a mantle of interwoven adventitious fibrous roots encasing dictyostelic vascular bundles.",
+    "notes": "Tree Fern Adventitious Roots - Pteridophyte vascular architecture",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_tree-fern-trunk%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2331572c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23132a13%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_tree-fern-trunk%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2258%22%20fill%3D%22none%22%20stroke%3D%22%234f772d%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2386efac%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2386efac%22%20text-anchor%3D%22middle%22%3ETREE%20FERN%20ADVENTITIOUS%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "volcano-plume",
-    "title": "Basaltic Volcanic Caldera",
-    "latin": "Geothermal Magma",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-volcano",
-    "juniorNotes": [
-      "Volcanoes release melted rock called magma from deep inside Earth's mantle!",
-      "Volcanic ash enriches soil with minerals, creating fertile ground for rainforests!",
-      "Undersea volcanoes build brand new islands in the middle of the ocean!"
-    ],
-    "adultNotes": [
-      "Basaltic magma eruptions exhibit low viscosity due to low silica content (45-52% SiO2).",
-      "Magma chamber decompression triggers explosive degassing of H2O, CO2, and SO2 volatiles.",
-      "Volcanic ash deposits enrich surrounding soils with essential iron, magnesium, and potassium ions."
-    ],
-    "notes": "Basaltic magma eruptions exhibit low viscosity due to low silica content (45-52% SiO2).",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "green-tree-python",
+    "title": "Green Tree Python Thermoreceptive Pit",
+    "latin": "Morelia viridis",
+    "category": "Herpetology",
+    "icon": "\ud83d\udc0d",
+    "juniorNotes": "Green tree pythons have special thermal night-vision holes near their mouth that can see the heat glowing off warm-blooded animals in the dark!",
+    "adultNotes": "Morelia viridis labial pit organs feature thin, highly vascularized membranes lined with trigeminal TRPA1 heat-activated infrared ion channels.",
+    "notes": "Green Tree Python Pit - Reptilian infrared sensory organ",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_green-tree-python%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_green-tree-python%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2265%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EGREEN%20TREE%20PYTHON%20THER%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "ocean-trench",
-    "title": "Mariana Deep Ocean Trench",
-    "latin": "Abyssal Hydrothermal Vent",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-water",
-    "juniorNotes": [
-      "The Mariana Trench is the deepest place on Earth\u2014nearly 7 miles below the ocean surface!",
-      "At the bottom, water pressure is 1,000 times greater than at sea level!",
-      "Hydrothermal vents belch super-heated mineral water where deep-sea tube worms thrive!"
-    ],
-    "adultNotes": [
-      "Challenger Deep in Mariana Trench reaches 10,994 meters depth beneath ocean surface.",
-      "Hydrothermal black smoker vents emit mineral-rich fluids up to 400\u00b0C sustained by benthic magma.",
-      "Chemosynthetic methanotrophic and sulfur-oxidizing bacteria form base of abyssal food web."
-    ],
-    "notes": "Challenger Deep in Mariana Trench reaches 10,994 meters depth beneath ocean surface.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "bioluminescent-mycena",
+    "title": "Ghost Fungus Luciferin Gills",
+    "latin": "Mycena chlorophos",
+    "category": "Mycology & Micro-Anatomy",
+    "icon": "\ud83c\udf44",
+    "juniorNotes": "This magical forest mushroom glows bright neon green in the night forest! Its light invites nocturnal beetles to carry its spores to new logs.",
+    "adultNotes": "Mycena chlorophos basidiocarps express fungal luciferase and hispidin-derived luciferin, converting metabolic oxygen into continuous 530nm bioluminescence.",
+    "notes": "Ghost Fungus Luciferin Gills - Fungal metabolic photon emission",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_bioluminescent-mycena%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23581c87%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_bioluminescent-mycena%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2230%22%20fill%3D%22none%22%20stroke%3D%22%239333ea%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%224%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23c084fc%22%20text-anchor%3D%22middle%22%3EGHOST%20FUNGUS%20LUCIFERIN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "glacier-ice",
-    "title": "Glacial Ice Crystal",
-    "latin": "Cryosphere Sheet",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-snowflake",
-    "juniorNotes": [
-      "Glaciers are giant rivers of compressed ice that move slowly down mountains!",
-      "Glacial ice looks bright blue because dense ice absorbs red light wavelengths!",
-      "Glaciers store 69% of all fresh water on Earth in their frozen ice sheets!"
-    ],
-    "adultNotes": [
-      "Glacial ice crystals undergo compaction from firn snow into high-density crystalline ice.",
-      "Absorbs long red optical light wavelengths, causing deeply compressed ice to reflect brilliant blue hues.",
-      "Cryosphere glaciers hold 69% of Earth's global freshwater reserves."
-    ],
-    "notes": "Glacial ice crystals undergo compaction from firn snow into high-density crystalline ice.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "platypus-bill",
+    "title": "Platypus Electroreceptive Bill",
+    "latin": "Ornithorhynchus anatinus",
+    "category": "Mammalogy",
+    "icon": "\ud83e\udd86",
+    "juniorNotes": "When hunting underwater, the platypus closes its eyes and ears, finding shrimp purely by detecting the tiny electrical clicks of their swimming muscles!",
+    "adultNotes": "Ornithorhynchus anatinus leathery bill skin integrates tens of thousands of push-rod mechanoreceptors and mucous gland electroreceptive pores.",
+    "notes": "Platypus Bill - Monotreme sensory electroreception",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_platypus-bill%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2359291e%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232b1810%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_platypus-bill%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2237%22%20fill%3D%22none%22%20stroke%3D%22%238c4830%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%225%2C4%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fdba74%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23fdba74%22%20text-anchor%3D%22middle%22%3EPLATYPUS%20ELECTRORECEPT%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "thunderstorm",
-    "title": "Supercell Thunderstorm",
-    "latin": "Convective Atmospheric Cell",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-cloud-showers-heavy",
-    "juniorNotes": [
-      "Supercell thunderstorms contain giant rotating updrafts called mesocyclones!",
-      "Lightning bolts inside thunderstorms heat the surrounding air to 50,000 degrees Fahrenheit!",
-      "Thunder is the sound of air expanding super fast when struck by lightning!"
-    ],
-    "adultNotes": [
-      "Supercell thunderstorms feature persistent rotating updraft (mesocyclone) driven by convective CAPE energy.",
-      "Lightning channel plasma reaches 30,000 Kelvin, generating shockwaves perceived as acoustic thunder.",
-      "Produces severe hail, straight-line microburst winds, and mesocyclonic tornadoes."
-    ],
-    "notes": "Supercell thunderstorms feature persistent rotating updraft (mesocyclone) driven by convective CAPE energy.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "axolotl-gills",
+    "title": "Mexican Axolotl External Gills",
+    "latin": "Ambystoma mexicanum",
+    "category": "Herpetology",
+    "icon": "\ud83e\udd8e",
+    "juniorNotes": "The smiling axolotl wears pink feathery external gills like a headdress, and can regrow entire limbs, heart tissue, and even parts of its brain!",
+    "adultNotes": "Ambystoma mexicanum rami and fimbriae maintain neotenic respiratory gas exchange through thin-walled branchial arches and high vascular plasticity.",
+    "notes": "Mexican Axolotl External Gills - Amphibian neotenic respiratory branchiae",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_axolotl-gills%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23047857%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_axolotl-gills%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22%23059669%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%226%2C5%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%2334d399%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%2334d399%22%20text-anchor%3D%22middle%22%3EMEXICAN%20AXOLOTL%20EXTERN%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   },
   {
-    "id": "geysers",
-    "title": "Yellowstone Hydrothermal Geyser",
-    "latin": "Geothermal Aquifer",
-    "category": "Astronomy & Earth Systems",
-    "icon": "fa-fire-flame-curved",
-    "juniorNotes": [
-      "Geysers are natural boiling water fountains that burst out of the ground on a schedule!",
-      "Underground volcanic heat boils water trapped in deep narrow rock plumbing tubes!",
-      "Yellowstone's Old Faithful geyser shoots 8,000 gallons of boiling water 180 feet in the air!"
-    ],
-    "adultNotes": [
-      "Hydrothermal geysers require subsurface volcanic heat source, abundant water aquifer, and narrow rock plumbing.",
-      "Superheated water at depth exceeds boiling point under pressure; pressure drop triggers sudden steam flash eruption.",
-      "Old Faithful erupts up to 32,000 liters of 95\u00b0C water driven by expanding steam bubbles."
-    ],
-    "notes": "Hydrothermal geysers require subsurface volcanic heat source, abundant water aquifer, and narrow rock plumbing.",
-    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80"
+    "id": "diatom-frustule-silica",
+    "title": "Centric Diatom Silica Frustule",
+    "latin": "Coscinodiscus radiatus",
+    "category": "Micro-Anatomy & Histology",
+    "icon": "\ud83d\udd2c",
+    "juniorNotes": "Diatoms live in glass houses made of pure opal silica! Their intricate perforated patterns look like miniature stained glass windows in ocean drops.",
+    "adultNotes": "Coscinodiscus radiatus synthesizes bivalve amorphous hydrated silica frustules with hierarchical nanoscale areola pores and cribrum membranes.",
+    "notes": "Centric Diatom Frustule - Microscopic biomineralized architecture",
+    "imageUrl": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20width%3D%22200%22%20height%3D%22200%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3CradialGradient%20id%3D%22g_diatom-frustule-silica%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232d244c%22%20/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23141124%22%20/%3E%0A%20%20%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23g_diatom-frustule-silica%29%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2251%22%20fill%3D%22none%22%20stroke%3D%22%234a3b78%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%227%2C3%22%20/%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%222%22%20/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22100%22%20y%3D%22182%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22bold%22%20fill%3D%22%23a78bfa%22%20text-anchor%3D%22middle%22%3ECENTRIC%20DIATOM%20SILICA%20%3C/text%3E%0A%20%20%20%20%3C/svg%3E"
   }
 ]
