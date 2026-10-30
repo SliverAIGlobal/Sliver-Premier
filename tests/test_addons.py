@@ -2,6 +2,14 @@
 Unit Test Suite: Outreach Engine & Automated Payment/License Minting Addons
 """
 
+import sys
+from pathlib import Path
+
+# Add repo root to sys.path
+root_dir = str(Path(__file__).parent.parent)
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
 import pytest
 from outreach_engine import AutomatedOutreachEngine, OutreachContact
 from payment_engine import LicenseMinter, PaymentAndLedgerEngine
@@ -27,7 +35,7 @@ def test_license_key_minting_and_checksum_verification():
     for _ in range(20):
         key = LicenseMinter.mint_key()
         assert key.startswith("SP-")
-        assert len(key) == 16  # SP-XXXX-YYYY-ZZZZ with hyphens
+        assert len(key) == 17  # SP-XXXX-YYYY-ZZZZ has 2 + 1 + 4 + 1 + 4 + 1 + 4 = 17 chars
         assert LicenseMinter.verify_key(key) is True
 
     # Test forged/tampered key

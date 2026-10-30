@@ -51,17 +51,17 @@ class LicenseMinter:
 
     @classmethod
     def mint_key(cls, seed: Optional[str] = None) -> str:
-        """Mints a 14-character tri-block license key: SP-XXXX-YYYY-ZZZZ"""
+        """Mints a tri-block license key: SP-XXXX-YYYY-ZZZZ where body is parts[1] + parts[2]."""
         if seed:
             rng = random.Random(seed)
         else:
             rng = random.SystemRandom()
 
-        b1 = "".join(rng.choice(ALPHABET) for _ in range(2))  # SP + 2 chars
+        b1 = "".join(rng.choice(ALPHABET) for _ in range(4))
         b2 = "".join(rng.choice(ALPHABET) for _ in range(4))
-        body = ("SP" + b1 + b2)[:8]
+        body = b1 + b2
         checksum = cls.calculate_checksum(body)
-        return f"SP-{b1}{body[2:4]}-{b2}-{checksum}"
+        return f"SP-{b1}-{b2}-{checksum}"
 
     @classmethod
     def verify_key(cls, key: str) -> bool:
@@ -69,15 +69,10 @@ class LicenseMinter:
         parts = key.strip().split("-")
         if len(parts) != 4 or parts[0] != "SP":
             return False
-
-        # Reconstruct 8-char body
-        # parts: ['SP', 'XXYY', 'ZZZZ', 'CSUM'] -> body = 'SP' + 'XXYY'[:2] + ...
-        # Let's verify standard 14-char layout: SP-XXXX-YYYY-ZZZZ
-        raw = "".join(parts)
-        if len(raw) != 14:
+        if len(parts[1]) != 4 or len(parts[2]) != 4 or len(parts[3]) != 4:
             return False
 
-        body = raw[:8]
+        body = parts[1] + parts[2]
         expected_checksum = cls.calculate_checksum(body)
         actual_checksum = parts[3]
         return expected_checksum == actual_checksum
