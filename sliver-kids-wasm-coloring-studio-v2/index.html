@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sliver Kids WASM Coloring Studio v2 ULTRA</title>
+  <meta name="description" content="120 Vector Coloring Pages, 60 Magic Stickers, WASM Flood Fill, Procedural Web Audio FX & Calm Travel Synth BGM.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#EC5800">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#0F172A] text-slate-100 flex flex-col h-screen overflow-hidden">
+
+  <!-- Studio Header -->
+  <header class="studio-header">
+    <div class="logo-badge">
+      <span class="text-2xl">🎨</span>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1>Sliver Kids Studio</h1>
+          <span class="v2-tag">v2 ULTRA</span>
+        </div>
+        <div class="text-[10px] text-gray-400 font-medium">120 Pages • 60 Stickers • WASM Core</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="btn-bgm" class="btn-pill" title="Toggle Calm Travel Synth Ambient Chords">
+        🎵 Travel Synth: OFF
+      </button>
+
+      <button id="btn-undo" class="btn-pill" title="Undo Last Stroke">
+        ↩️ Undo
+      </button>
+      <button id="btn-redo" class="btn-pill" title="Redo Stroke">
+        ↪️ Redo
+      </button>
+
+      <button id="btn-save" class="btn-pill bg-[#EC5800] text-white hover:bg-[#EC5800]/80 border-none font-bold shadow-lg" title="Save Art & Confetti Celebration">
+        💾 Save Art
+      </button>
+
+      <button id="btn-gallery" class="btn-pill" title="Open My Saved Art Gallery">
+        🖼️ My Art
+      </button>
+
+      <button id="btn-print" class="btn-pill" title="Printable Outline Generator">
+        🖨️ Print
+      </button>
+
+      <button id="btn-parent-gate" class="btn-pill border-indigo-400/30 text-indigo-200 hover:border-indigo-400" title="Parent Travel Security Gate">
+        👨‍👩‍👧 Travel Gate
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace -->
+  <main class="studio-container">
+
+    <!-- Left Toolbar: Magic Brushes & Tools -->
+    <aside class="tool-sidebar custom-scrollbar">
+      <div class="tool-group-title">Magic Brushes</div>
+
+      <button class="tool-button active" data-tool="bucket" id="tool-bucket">
+        <span>🪣</span> Smart WASM Bucket
+      </button>
+
+      <button class="tool-button" data-tool="brush" id="tool-brush">
+        <span>🖌️</span> Standard Brush
+      </button>
+
+      <button class="tool-button" data-tool="rainbow" id="tool-rainbow">
+        <span>🌈</span> Magic Rainbow Brush
+      </button>
+
+      <button class="tool-button" data-tool="glow" id="tool-glow">
+        <span>✨</span> Neon Glow Brush
+      </button>
+
+      <button class="tool-button" data-tool="eraser" id="tool-eraser">
+        <span>🧼</span> Eraser
+      </button>
+
+      <div class="tool-group-title mt-4">Brush Stroke Size</div>
+      <div class="slider-container">
+        <input type="range" id="brush-size" min="4" max="60" value="16">
+        <span id="brush-size-val" class="text-xs font-mono font-bold text-gray-300">16px</span>
+      </div>
+
+      <div class="tool-group-title mt-4">Color Palette</div>
+      <select id="palette-select" class="w-full bg-black/50 border border-white/20 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#EC5800] mb-2">
+        <option value="rainbow">🌈 Rainbow Brights (10)</option>
+        <option value="pastels">🌸 Soft Pastels (10)</option>
+        <option value="neon">⚡ Cyber Neon (10)</option>
+        <option value="island">🌺 808 Island Tones (10)</option>
+        <option value="metallic">✨ Gold & Silver (10)</option>
+      </select>
+
+      <div class="swatch-grid" id="swatch-palette">
+        <!-- Injected via app.js -->
+      </div>
+
+      <button id="btn-clear" class="mt-auto w-full py-2 bg-red-900/30 hover:bg-red-900/50 border border-red-500/30 text-red-200 rounded-xl text-xs font-bold transition">
+        🗑️ Clear Canvas
+      </button>
+    </aside>
+
+    <!-- Center Canvas Viewport -->
+    <section class="canvas-viewport">
+      <div class="flex flex-col items-center max-h-full">
+        <div id="current-page-title" class="text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">
+          🦖 Dinosaurs & Prehistory • T-Rex King
+        </div>
+
+        <div class="canvas-wrapper">
+          <canvas id="main-canvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Tray: 120 Pages & 60 Magic Stickers -->
+    <aside class="tray-sidebar custom-scrollbar">
+      <div class="tool-group-title">60 Magic Sticker Stamps</div>
+      <div id="stickers-container" class="max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+        <!-- Injected via app.js -->
+      </div>
+
+      <div class="tool-group-title mt-2">120 Vector Coloring Pages</div>
+      <div id="packs-container" class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+        <!-- Injected via app.js -->
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- My Saved Art Gallery Modal -->
+  <div id="gallery-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="text-base font-bold text-white flex items-center gap-2">
+          <span>🖼️</span> My Saved Art Gallery
+        </h2>
+        <button class="text-gray-400 hover:text-white text-lg font-bold" data-close-modal>✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <!-- Injected via app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parent Security & Travel Gate Modal -->
+  <div id="parent-modal" class="modal-overlay">
+    <div class="modal-card max-w-md">
+      <div class="modal-header">
+        <h2 class="text-base font-bold text-white flex items-center gap-2">
+          <span>👨‍👩‍👧</span> Parent Security & Travel Gate
+        </h2>
+        <button class="text-gray-400 hover:text-white text-lg font-bold" data-close-modal>✕</button>
+      </div>
+      <div class="modal-body space-y-4">
+
+        <!-- Math Lock Challenge -->
+        <div id="math-challenge-box" class="p-4 bg-black/40 border border-white/10 rounded-2xl text-center space-y-3">
+          <p id="math-challenge-text" class="text-sm font-bold text-indigo-200">Security Lock: What is 7 × 8?</p>
+          <div class="flex gap-2 justify-center">
+            <input type="number" id="math-challenge-input" placeholder="Answer..." class="w-28 bg-black/60 border border-white/20 rounded-xl px-3 py-1.5 text-center text-sm text-white focus:outline-none focus:border-[#EC5800]" />
+            <button id="btn-verify-parent" class="px-4 py-1.5 bg-[#EC5800] text-white rounded-xl text-xs font-bold hover:bg-[#EC5800]/80 transition">
+              Verify
+            </button>
+          </div>
+        </div>
+
+        <!-- Unlocked Parent Travel Controls -->
+        <div id="parent-controls-unlocked" class="hidden space-y-4">
+          <div class="p-4 bg-emerald-950/40 border border-emerald-500/30 rounded-2xl">
+            <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-2">✈️ Flight Screen-Time Limiter</h3>
+            <p class="text-[11px] text-gray-300 mb-3">Set gentle flight rest countdown with calm ambient screen:</p>
+            <div class="grid grid-cols-4 gap-2">
+              <button data-timer-min="15" class="py-2 bg-white/10 hover:bg-[#EC5800] rounded-xl text-xs font-bold transition">15 Min</button>
+              <button data-timer-min="30" class="py-2 bg-white/10 hover:bg-[#EC5800] rounded-xl text-xs font-bold transition">30 Min</button>
+              <button data-timer-min="45" class="py-2 bg-white/10 hover:bg-[#EC5800] rounded-xl text-xs font-bold transition">45 Min</button>
+              <button data-timer-min="60" class="py-2 bg-white/10 hover:bg-[#EC5800] rounded-xl text-xs font-bold transition">60 Min</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Service Worker & PWA Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+  <!-- Core Scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
