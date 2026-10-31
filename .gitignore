@@ -33,3 +33,7 @@ google-services.json
 
 # Android Profiling
 *.hprof
+wasm_decolorizer/target/
+target/
+*.pyc
+__pycache__/

@@ -1,0 +1,22 @@
+{
+  "name": "Sliver Kids WASM Coloring Studio v2 ULTRA",
+  "short_name": "ColoringStudio",
+  "description": "Zero-dependency, offline-first WASM coloring book and photo decolorizer for kids and adults.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f111a",
+  "theme_color": "#0f111a",
+  "icons": [
+    {
+      "src": "static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
