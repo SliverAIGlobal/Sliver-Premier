@@ -3,6 +3,10 @@
 build/
 .kotlin/
 
+# Rust / Cargo build artifacts
+target/
+**/target/
+
 # Local configuration file (sdk path, etc)
 local.properties
 

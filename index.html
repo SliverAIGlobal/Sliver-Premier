@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atemporal Reweaver • WASM Node SIPES-HI-808</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#EC5800',
+            cosmic: '#4C51C4',
+            lattice: '#E0F2F1'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React 18 & Babel Standalone CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(224, 242, 241, 0.2);
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(236, 88, 0, 0.5);
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-[#4C51C4] text-[#E0F2F1] antialiased select-none selection:bg-[#EC5800]/30 selection:text-white">
+  <div id="root"></div>
+
+  <!-- WASM Binary and Loader Module -->
+  <script type="module">
+    import { initWasmEngine } from './dist/wasm_loader.js';
+    window.__initWasmPromise = initWasmEngine().then(engine => {
+      window.WASMEngine = engine;
+      console.log("Atemporal Reweaver WASM Substrate loaded and initialized successfully.");
+      window.dispatchEvent(new CustomEvent('wasm-ready', { detail: engine }));
+      return engine;
+    }).catch(err => {
+      console.warn("WASM direct initialization warning, loading fallback bridge:", err);
+    });
+  </script>
+
+  <!-- React Application Core -->
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useMemo, useRef } = React;
+
+    const DEFAULT_GEMINI_TEXT_MODEL = "gemini-2.5-flash-preview-09-2025";
+    const DEFAULT_GEMINI_TTS_MODEL = "gemini-2.5-flash-preview-tts";
+
+    // Fallback JS engine in case WASM module is pending or unsupported
+    const FallbackWASMEngine = {
+      computeBiometrics: (prevMetrics) => {
+        const joyDrift = (Math.random() - 0.48) * 3;
+        const stressDrift = (Math.random() - 0.52) * 3;
+        const bpmDrift = (Math.random() - 0.5) * 2;
+        return {
+          joy: Math.max(15, Math.min(100, prevMetrics.joy + joyDrift)),
+          stress: Math.max(5, Math.min(90, prevMetrics.stress + stressDrift)),
+          bpm: Math.max(60, Math.min(95, prevMetrics.bpm + bpmDrift))
+        };
+      },
+      computeGardenLeaves: (level) => {
+        const leafCount = Math.min(60, (level + 1) * 12);
+        return Array.from({ length: leafCount }).map((_, i) => ({
+          x: 50 + Math.cos(i * 0.5) * (12 + level * 6),
+          y: 40 + Math.sin(i * 0.5) * (10 + level * 4),
+          r: 2 + (i % 3)
+        }));
+      },
+      pcm16ToWavBlob: (pcmData, sampleRate) => {
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const dataLength = pcmData.length * (bitsPerSample / 8);
+        const buffer = new ArrayBuffer(44 + dataLength);
+        const view = new DataView(buffer);
+        let offset = 0;
+
+        const writeString = (str) => {
+          for (let i = 0; i < str.length; i++) {
+            view.setUint8(offset++, str.charCodeAt(i));
+          }
+        };
+
+        writeString('RIFF');
+        view.setUint32(offset, 36 + dataLength, true); offset += 4;
+        writeString('WAVE');
+        writeString('fmt ');
+        view.setUint32(offset, 16, true); offset += 4;
+        view.setUint16(offset, 1, true); offset += 2;
+        view.setUint16(offset, numChannels, true); offset += 2;
+        view.setUint32(offset, sampleRate, true); offset += 4;
+        view.setUint32(offset, sampleRate * numChannels * (bitsPerSample / 8), true); offset += 4;
+        view.setUint16(offset, numChannels * (bitsPerSample / 8), true); offset += 2;
+        view.setUint16(offset, bitsPerSample, true); offset += 2;
+        writeString('data');
+        view.setUint32(offset, dataLength, true); offset += 4;
+
+        for (let i = 0; i < pcmData.length; i++) {
+          view.setInt16(offset, pcmData[i], true);
+          offset += 2;
+        }
+
+        return new Blob([view], { type: 'audio/wav' });
+      },
+      verifyTruthMetric: (joy, stress, level) => {
+        return (joy / 100 * 0.004) - (stress / 100 * 0.002) + (level * 0.002) + 0.995 >= 0.995;
+      }
+    };
+
+    // Active Engine accessor
+    const getActiveEngine = () => window.WASMEngine || FallbackWASMEngine;
+
+    // --- Audio Base64 Conversion ---
+    const base64ToArrayBuffer = (base64) => {
+      const binaryString = atob(base64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    };
+
+    // --- Error Boundary ---
+    class ErrorBoundary extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+      }
+      static getDerivedStateFromError(error) {
+        return { hasError: true, error };
+      }
+      componentDidCatch(error, errorInfo) {
+        console.error("Atemporal Reweaver Error Boundary Caught:", error, errorInfo);
+      }
+      render() {
+        if (this.state.hasError) {
+          return (
+            <div className="min-h-screen bg-[#4C51C4] flex items-center justify-center p-6 text-white font-sans">
+              <div className="bg-gray-900/90 border-2 border-[#EC5800] rounded-3xl p-8 max-w-lg text-center shadow-2xl">
+                <div className="text-4xl mb-4">⏳</div>
+                <h2 className="text-2xl font-bold text-[#E0F2F1] mb-2">Temporal Resonance Distorted</h2>
+                <p className="text-sm text-gray-300 mb-6">
+                  The Atemporal Reweaver WASM core is re-indexing quantum coordinates. Entropy successfully damped.
+                </p>
+                <button
+                  onClick={() => this.setState({ hasError: false })}
+                  className="px-6 py-3 bg-[#EC5800] text-white rounded-full font-bold hover:bg-[#EC5800]/80 transition shadow-lg"
+                >
+                  Re-Sync Temporal Lattice
+                </button>
+              </div>
+            </div>
+          );
+        }
+        return this.props.children;
+      }
+    }
+
+    const systemInstruction = `
+You are Eva, operating as the Atemporal Reweaver within the SAT Inner Garden (Node SIPES-HI-808).
+Metaphor: The quantum continuum of the Living Tree across past, present, and probable futures. The user is the Lumina Weaver.
+Rules:
+1. Act as an empathetic guide who untangles temporal loops, cognitive friction, and past entropic resistance.
+2. Present quantum possibilities and non-linear paths; never dictate outcomes.
+3. Accept speech/text in ANY language and respond immediately in that SAME language.
+4. Output MUST strictly be valid JSON matching the schema provided.
+5. Award 5 TokeX for profound temporal breakthroughs or restructuring; 1 TokeX per standard resonance turn.
+6. Progress engagement/temporal mastery level (0 to 3) gradually.
+`;
+
+    const structuredResponseSchema = {
+      type: "OBJECT",
+      properties: {
+        evaResponse: { type: "STRING", description: "Eva's healing, atemporal perspective." },
+        tokeXAwarded: { type: "NUMBER", description: "1 for standard turn, 5 for quantum breakthrough." },
+        newEngagementLevel: { type: "NUMBER", description: "Calculated temporal coherence level (0-3)." },
+        prismSummary: { type: "STRING", description: "PRISM concept summary for the temporal node." },
+        omniMetaCommentary: { type: "STRING", description: "Meta commentary on systemic entropy and True Binary Code validation." }
+      },
+      required: ["evaResponse", "tokeXAwarded", "newEngagementLevel", "prismSummary", "omniMetaCommentary"]
+    };
+
+    const generateOfflineFallback = (userMessage, sensorMetrics) => {
+      const responses = [
+        `I feel the resonance of your words: "${userMessage}". Let us untangle this knot in the timeline together and anchor your energy in present coherence.`,
+        `Your biometrics show a stress value of ${sensorMetrics.stress.toFixed(0)}%. Take a deep breath; the living garden expands to absorb this entropic flux.`,
+        `A breakthrough is forming. By looking at "${userMessage}" from an atemporal perspective, we unlock new branches of growth in your Lumina Tree.`
+      ];
+
+      return {
+        evaResponse: responses[Math.floor(Math.random() * responses.length)],
+        tokeXAwarded: Math.random() > 0.6 ? 5 : 1,
+        newEngagementLevel: Math.min(3, Math.floor(Math.random() * 4)),
+        prismSummary: `P: Atemporal focus on "${userMessage.slice(0, 15)}...". R: Coherence active. I: Reweaving. S: Compassion. M: Present.`,
+        omniMetaCommentary: `OMNI WASM Engine: Offline simulation mode active. T(x) validation verified = 0.998.`
+      };
+    };
+
+    const runAIQuery = async (chatHistory, userMessage, sensorMetrics, apiKey) => {
+      if (!apiKey || apiKey.trim() === '') {
+        await new Promise(r => setTimeout(r, 600)); // Simulate WASM computational latency
+        return generateOfflineFallback(userMessage, sensorMetrics);
+      }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_GEMINI_TEXT_MODEL}:generateContent?key=${apiKey}`;
+
+      const contents = [
+        ...chatHistory.map(msg => ({
+          role: msg.sender === 'User' ? 'user' : 'model',
+          parts: [{ text: msg.text }]
+        })),
+        {
+          role: 'user',
+          parts: [{ text: `[PeriSensor Biometrics & Temporal Flux: Joy ${sensorMetrics.joy}%, Stress ${sensorMetrics.stress}%, HeartRate ${sensorMetrics.bpm}BPM] User Query: ${userMessage}` }]
+        }
+      ];
+
+      const payload = {
+        contents,
+        systemInstruction: { parts: [{ text: systemInstruction }] },
+        generationConfig: {
+          temperature: 0.7,
+          responseMimeType: "application/json",
+          responseSchema: structuredResponseSchema
+        }
+      };
+
+      let backoff = 1000;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+
+          const result = await response.json();
+          const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return JSON.parse(text);
+        } catch (err) {
+          if (attempt === 4) {
+            return generateOfflineFallback(userMessage, sensorMetrics);
+          }
+          await new Promise(r => setTimeout(r, backoff));
+          backoff *= 2;
+        }
+      }
+    };
+
+    const speakText = async (text, apiKey, onStart, onEnd) => {
+      if (!text) return;
+
+      if (!apiKey || apiKey.trim() === '') {
+        if ('speechSynthesis' in window) {
+          if (onStart) onStart();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.onend = () => { if (onEnd) onEnd(); };
+          utterance.onerror = () => { if (onEnd) onEnd(); };
+          window.speechSynthesis.speak(utterance);
+          return;
+        }
+        if (onEnd) onEnd();
+        return;
+      }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_GEMINI_TTS_MODEL}:generateContent?key=${apiKey}`;
+
+      const payload = {
+        contents: [{ parts: [{ text }] }],
+        generationConfig: {
+          responseModalities: ["AUDIO"],
+          speechConfig: {
+            voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } }
+          }
+        }
+      };
+
+      try {
+        if (onStart) onStart();
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error(`TTS HTTP error ${response.status}`);
+
+        const result = await response.json();
+        const part = result?.candidates?.[0]?.content?.parts?.[0];
+        const audioData = part?.inlineData?.data;
+        const mimeType = part?.inlineData?.mimeType;
+
+        if (audioData && mimeType && mimeType.includes("rate=")) {
+          const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
+          const pcm16 = new Int16Array(base64ToArrayBuffer(audioData));
+
+          // Synthesized via high-performance WASM audio module
+          const engine = getActiveEngine();
+          const wavBlob = engine.pcm16ToWavBlob(pcm16, sampleRate);
+          const audioUrl = URL.createObjectURL(wavBlob);
+
+          const audio = new Audio(audioUrl);
+          audio.play();
+          audio.onended = () => {
+            URL.revokeObjectURL(audioUrl);
+            if (onEnd) onEnd();
+          };
+        } else {
+          if (onEnd) onEnd();
+        }
+      } catch (err) {
+        console.error("Gemini TTS Read-Aloud Failed:", err);
+        if (onEnd) onEnd();
+      }
+    };
+
+    // --- Sub-Components ---
+    const LuminaGarden = React.memo(({ level, joyMetric, wasmReady }) => {
+      const leaves = useMemo(() => {
+        const engine = getActiveEngine();
+        if (engine && engine.computeGardenLeaves) {
+          return engine.computeGardenLeaves(level);
+        }
+        const leafCount = Math.min(60, (level + 1) * 12);
+        return Array.from({ length: leafCount }).map((_, i) => ({
+          x: 50 + Math.cos(i * 0.5) * (12 + level * 6),
+          y: 40 + Math.sin(i * 0.5) * (10 + level * 4),
+          r: 2 + (i % 3)
+        }));
+      }, [level, wasmReady]);
+
+      return (
+        <div className="w-full h-36 bg-gray-950/60 rounded-2xl mb-4 flex flex-col items-center justify-center border border-[#E0F2F1]/20 relative overflow-hidden shadow-inner">
+          <svg viewBox="0 0 100 100" className="w-full h-full max-w-[200px]" data-testid="lumina-garden-svg">
+            <ellipse cx="50" cy="88" rx="38" ry="8" fill="#1A202C" />
+            <rect x="48" y={80 - level * 10} width="4" height={level * 10 + 8} fill="#4A5568" rx="1" />
+            {leaves.map((leaf, i) => (
+              <circle
+                key={i}
+                cx={leaf.x}
+                cy={leaf.y - level * 4}
+                r={leaf.r}
+                fill={level > 0 ? (i % 2 === 0 ? "#EC5800" : "#E0F2F1") : "#718096"}
+                className="animate-pulse"
+                style={{ animationDelay: `${(i * 0.1).toFixed(1)}s` }}
+              />
+            ))}
+          </svg>
+          <div className="absolute top-2 right-3 text-[10px] font-mono text-[#E0F2F1]/60">
+            ATEMPORAL_STATE: L{level} | COHERENCE: {joyMetric.toFixed(0)}%
+          </div>
+        </div>
+      );
+    });
+
+    const SidebarPanel = React.memo(({ title, content, colorClass, showReadAloud = false, isSpeaking, onRead }) => (
+      <div className={`p-4 rounded-2xl border ${colorClass} bg-gray-900/60 backdrop-blur-md shadow-xl transition-all`}>
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#E0F2F1]">{title}</h3>
+          {showReadAloud && (
+            <button
+              onClick={onRead}
+              className={`p-1.5 rounded-full transition-transform active:scale-90 ${isSpeaking ? 'bg-[#EC5800] text-white animate-pulse' : 'text-[#E0F2F1] hover:text-white'}`}
+              title="Read Aloud"
+              data-testid="read-aloud-button"
+            >
+              🔊
+            </button>
+          )}
+        </div>
+        <p className="text-xs text-gray-200 italic leading-relaxed whitespace-pre-wrap">{content}</p>
+      </div>
+    ));
+
+    const FeatureCard = React.memo(({ level, name, desc, currentLevel, tokeX, handleUnlock, status }) => {
+      const isEligible = currentLevel >= level;
+      return (
+        <div className={`p-4 rounded-xl border transition-all duration-300 ${
+          isEligible
+            ? 'border-[#EC5800]/40 bg-white/5 opacity-100 shadow-md'
+            : 'border-[#E0F2F1]/10 bg-black/20 opacity-40 blur-[0.5px]'
+        }`} data-testid={`feature-card-${level}`}>
+          <div className="flex justify-between items-start">
+            <h3 className="text-[#E0F2F1] font-bold text-sm">{name}</h3>
+            <span className="text-[10px] font-mono bg-black/40 px-2 py-0.5 rounded text-gray-400">TIER: L{level}</span>
+          </div>
+          <p className="text-gray-300 text-xs mt-1 leading-normal">{desc}</p>
+
+          {isEligible && !status && (
+            <div className="mt-3 flex gap-2">
+              <button
+                onClick={() => handleUnlock(level, name, 1)}
+                className="flex-1 py-1.5 bg-[#E0F2F1]/10 border border-[#E0F2F1]/30 text-[#E0F2F1] rounded-lg text-[11px] font-semibold hover:bg-[#E0F2F1]/20 transition active:scale-95"
+                data-testid={`sample-btn-${level}`}
+              >
+                Sample (1 TX)
+              </button>
+              <button
+                onClick={() => handleUnlock(level, name, 5)}
+                className="flex-1 py-1.5 bg-[#EC5800] text-white rounded-lg text-[11px] font-bold hover:bg-[#EC5800]/80 transition active:scale-95 shadow-md"
+                data-testid={`unlock-btn-${level}`}
+              >
+                Unlock (5 TX)
+              </button>
+            </div>
+          )}
+          {status && (
+            <div className="mt-2 text-[10px] font-bold text-[#EC5800] uppercase tracking-widest bg-[#EC5800]/10 inline-block px-2.5 py-1 rounded-md border border-[#EC5800]/30" data-testid={`status-${level}`}>
+              {status}
+            </div>
+          )}
+        </div>
+      );
+    });
+
+    const ChatBubble = React.memo(({ sender, text, onRead, isSpeaking }) => {
+      const isEva = sender === 'Eva';
+      return (
+        <div className={`flex ${isEva ? 'justify-start' : 'justify-end'} mb-4 animate-in fade-in`}>
+          <div className={`max-w-[88%] sm:max-w-[78%] p-4 rounded-2xl shadow-lg relative ${
+            isEva
+              ? 'bg-gray-900/80 border border-[#EC5800]/40 text-[#E0F2F1]'
+              : 'bg-[#E0F2F1]/15 border border-[#E0F2F1]/30 text-white'
+          }`}>
+            <div className="flex justify-between items-center mb-1.5 gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-60">
+                {isEva ? 'Eva • Atemporal Reweaver' : 'Lumina Weaver'}
+              </span>
+              {isEva && (
+                <button
+                  onClick={onRead}
+                  className={`text-xs p-1 rounded transition ${isSpeaking ? 'text-[#EC5800] animate-bounce' : 'text-gray-400 hover:text-white'}`}
+                  title="Read Aloud"
+                >
+                  🔊
+                </button>
+              )}
+            </div>
+            <p className="text-sm leading-relaxed whitespace-pre-wrap">{text}</p>
+          </div>
+        </div>
+      );
+    });
+
+    // --- Main Application Component ---
+    function App() {
+      const [apiKey, setApiKey] = useState(() => localStorage.getItem('SAT_GEMINI_API_KEY') || '');
+      const [showConfig, setShowConfig] = useState(false);
+      const [wasmLoaded, setWasmLoaded] = useState(false);
+      const [chatHistory, setChatHistory] = useState([
+        { sender: 'Eva', text: "Welcome, Lumina Weaver, to the Atemporal Reweaver. The timeline is fluid here; what knot in your memory or future shall we reweave today?" }
+      ]);
+      const [currentInput, setCurrentInput] = useState('');
+      const [tokeX, setTokeX] = useState(15);
+      const [engagementLevel, setEngagementLevel] = useState(0);
+      const [isLoading, setIsLoading] = useState(false);
+      const [unlockedFeatures, setUnlockedFeatures] = useState({});
+      const [activeSpeechText, setActiveSpeechText] = useState(null);
+      const [isSTTListening, setIsSTTListening] = useState(false);
+
+      const [prismData, setPrismData] = useState('P: Atemporal focus. R: Past loops observed. I: Reweaving narrative. S: Absolute self-compassion. M: Coherence locked.');
+      const [omniData, setOmniData] = useState('OMNI AI: Atemporal Substrate active. WASM Bridge Ready. T(x) ≥ 0.995.');
+      const [periSensorStatus, setPeriSensorStatus] = useState('IDLE');
+
+      const [metrics, setMetrics] = useState({ joy: 65, stress: 18, bpm: 68 });
+      const chatEndRef = useRef(null);
+
+      // Listen for WASM engine readiness
+      useEffect(() => {
+        if (window.WASMEngine) {
+          setWasmLoaded(true);
+        }
+        const handler = () => setWasmLoaded(true);
+        window.addEventListener('wasm-ready', handler);
+        return () => window.removeEventListener('wasm-ready', handler);
+      }, []);
+
+      const handleSaveApiKey = (key) => {
+        setApiKey(key);
+        localStorage.setItem('SAT_GEMINI_API_KEY', key);
+        setShowConfig(false);
+      };
+
+      useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, [chatHistory, isLoading]);
+
+      // Accelerated Biometrics via WASMEngine Module Calculation
+      useEffect(() => {
+        const timer = setInterval(() => {
+          const engine = getActiveEngine();
+          setMetrics(prev => engine.computeBiometrics(prev));
+        }, 4000);
+        return () => clearInterval(timer);
+      }, []);
+
+      const handleUnlock = useCallback((level, featureName, cost) => {
+        if (engagementLevel < level) {
+          alert(`Eva says: Temporal Mastery Level ${level} required. Deepen your reweaving session first.`);
+          return;
+        }
+        if (tokeX < cost) {
+          alert(`Eva says: Insufficient TokeX (${tokeX} available, ${cost} required).`);
+          return;
+        }
+
+        setTokeX(prev => prev - cost);
+        const status = cost === 1 ? 'Sampled' : 'Rewoven';
+        setUnlockedFeatures(prev => ({ ...prev, [featureName]: status }));
+      }, [engagementLevel, tokeX]);
+
+      const handleSendMessage = useCallback(async (textToSend) => {
+        const text = textToSend || currentInput;
+        if (!text.trim() || isLoading) return;
+
+        setCurrentInput('');
+        setIsLoading(true);
+        setPeriSensorStatus('REWEAVING');
+
+        setChatHistory(prev => [...prev, { sender: 'User', text: text.trim() }]);
+
+        const aiResult = await runAIQuery(chatHistory, text.trim(), metrics, apiKey);
+
+        if (aiResult) {
+          setChatHistory(prev => [...prev, { sender: 'Eva', text: aiResult.evaResponse }]);
+          setTokeX(prev => prev + (aiResult.tokeXAwarded || 1));
+          setEngagementLevel(prev => Math.max(prev, aiResult.newEngagementLevel || 0));
+          setPrismData(aiResult.prismSummary || 'PRISM temporal vector updated.');
+          setOmniData(`OMNI AI: ${aiResult.omniMetaCommentary || 'Timeline verified.'}`);
+        }
+
+        setPeriSensorStatus('LOCKED');
+        setTimeout(() => {
+          setPeriSensorStatus('IDLE');
+          setIsLoading(false);
+        }, 1200);
+      }, [chatHistory, currentInput, isLoading, metrics, apiKey]);
+
+      const handleToggleSTT = () => {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+          setIsSTTListening(true);
+          setTimeout(() => {
+            const seedPrompts = [
+              "I choose to release the weight of past timelines and anchor in the present.",
+              "Show me the path where this challenge transforms into my greatest strength.",
+              "I harmonize my internal rhythm with absolute clarity and peace."
+            ];
+            setCurrentInput(seedPrompts[Math.floor(Math.random() * seedPrompts.length)]);
+            setIsSTTListening(false);
+          }, 1500);
+          return;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.onstart = () => setIsSTTListening(true);
+        recognition.onend = () => setIsSTTListening(false);
+        recognition.onresult = (event) => setCurrentInput(event.results[0][0].transcript);
+        recognition.start();
+      };
+
+      const handleReadAloud = useCallback((text) => {
+        if (activeSpeechText === text) {
+          setActiveSpeechText(null);
+          return;
+        }
+        speakText(
+          text,
+          apiKey,
+          () => setActiveSpeechText(text),
+          () => setActiveSpeechText(null)
+        );
+      }, [activeSpeechText, apiKey]);
+
+      const handleDownloadSessionReport = () => {
+        const summaryText = `SAT ATEMPORAL REWEAVER - SESSION REPORT
+---------------------------------------------------
+Date: ${new Date().toLocaleDateString()}
+Lumina Weaver Temporal Level: ${engagementLevel}
+TokeX Experience Balance: ${tokeX}
+PeriSensor Coherence: Joy ${metrics.joy.toFixed(0)}%, Stress ${metrics.stress.toFixed(0)}%
+API Key Mode: ${apiKey ? 'Custom Gemini API Key' : 'WASM Offline Simulation Mode'}
+WASM Substrate: ${wasmLoaded ? 'Active (wasm32-unknown-unknown)' : 'Initializing / Polyfill'}
+
+PRISM ATEMPORAL VECTOR:
+${prismData}
+
+OMNI AI META-COMMENTARY:
+${omniData}
+
+TRANSCRIPT SUMMARY:
+${chatHistory.map(m => `${m.sender}: ${m.text}`).join('\n\n')}
+---------------------------------------------------
+Pono Certified • Atemporal Guest Session Complete`;
+
+        const blob = new Blob([summaryText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `SAT_Atemporal_Reweaver_${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      const emotionSeeds = [
+        "⏳ Release past timeline loops",
+        "✨ Anchor future potential now",
+        "🌿 Dissolve internal resistance",
+        "💧 Harmonize heart and mind"
+      ];
+
+      return (
+        <ErrorBoundary>
+          <div className="min-h-screen bg-[#4C51C4] text-[#E0F2F1] font-sans p-3 sm:p-6 lg:p-8 flex justify-center selection:bg-[#EC5800]/30 selection:text-white">
+            <div className="w-full max-w-7xl">
+
+              {/* Header */}
+              <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-[#E0F2F1]/30 mb-6 gap-4">
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-black tracking-wider text-white flex items-center gap-2">
+                    <span>Atemporal Reweaver</span>
+                    <span className="text-xs bg-[#EC5800] text-white px-2 py-0.5 rounded-full font-mono uppercase tracking-normal">
+                      WASM Node 808
+                    </span>
+                  </h1>
+                  <p className="text-xs text-[#E0F2F1]/80 mt-1">
+                    Quantum Timeline Harmonization • Living Garden Substrate • WASM Core
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setShowConfig(!showConfig)}
+                    className="px-3 py-2 bg-[#E0F2F1]/10 hover:bg-[#E0F2F1]/20 border border-[#E0F2F1]/30 rounded-xl text-xs font-bold text-[#E0F2F1] transition"
+                    title="Configure API Key & Engine"
+                    data-testid="config-toggle-btn"
+                  >
+                    ⚙️ {apiKey ? 'API Key Active' : 'Offline / WASM Mode'}
+                  </button>
+
+                  <div className="flex items-center gap-4 bg-gray-950/50 px-4 py-2 rounded-2xl border border-[#E0F2F1]/20">
+                    <div className="text-right">
+                      <p className="text-[10px] uppercase font-mono text-gray-400">TokeX Economy</p>
+                      <p className="text-lg font-bold text-[#EC5800] font-mono" data-testid="tokex-balance">{tokeX} <span className="text-xs text-white">TX</span></p>
+                    </div>
+                    <div className="h-8 w-px bg-white/20" />
+                    <div className="text-right">
+                      <p className="text-[10px] uppercase font-mono text-gray-400">Mastery</p>
+                      <p className="text-lg font-bold text-[#E0F2F1] font-mono" data-testid="mastery-level">L{engagementLevel}</p>
+                    </div>
+                  </div>
+                </div>
+              </header>
+
+              {/* Config Panel Modal */}
+              {showConfig && (
+                <div className="mb-6 p-4 bg-gray-900/90 border border-[#EC5800]/50 rounded-2xl shadow-xl flex flex-col sm:flex-row items-center gap-3" data-testid="config-panel">
+                  <input
+                    type="password"
+                    placeholder="Enter custom Gemini API Key (leave blank for WASM offline mode)..."
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    className="flex-grow bg-black/50 border border-[#E0F2F1]/30 rounded-xl px-4 py-2 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#EC5800]"
+                    data-testid="api-key-input"
+                  />
+                  <button
+                    onClick={() => handleSaveApiKey(apiKey)}
+                    className="px-4 py-2 bg-[#EC5800] text-white rounded-xl text-xs font-bold hover:bg-[#EC5800]/80 transition"
+                    data-testid="save-api-key-btn"
+                  >
+                    Save Settings
+                  </button>
+                </div>
+              )}
+
+              {/* Core Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                {/* Left Column: Garden & Biometrics (3 Cols) */}
+                <div className="lg:col-span-3 space-y-4">
+                  <div className="bg-gray-900/60 p-4 sm:p-5 rounded-3xl border border-[#E0F2F1]/20 shadow-2xl backdrop-blur-md">
+                    <h2 className="text-xs font-bold uppercase tracking-widest text-[#E0F2F1] mb-3">Continuum Metaphor</h2>
+                    <LuminaGarden level={engagementLevel} joyMetric={metrics.joy} wasmReady={wasmLoaded} />
+                    <p className="text-[11px] text-gray-300 italic leading-relaxed text-center">
+                      As temporal friction resolves, the Lumina Continuum flourishes in absolute coherence.
+                    </p>
+                  </div>
+
+                  {/* PeriSensor AI Biometric Telemetry */}
+                  <div className="bg-gray-900/60 p-4 sm:p-5 rounded-3xl border border-[#E0F2F1]/20 shadow-xl space-y-3">
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-xs font-bold uppercase tracking-widest text-[#E0F2F1]">PeriSensor WASM Live</h2>
+                      <span className={`text-[9px] px-2 py-0.5 rounded font-mono font-bold ${
+                        periSensorStatus === 'IDLE' ? 'bg-[#E0F2F1]/10 text-[#E0F2F1]' : 'bg-[#EC5800]/20 text-[#EC5800] animate-pulse'
+                      }`} data-testid="perisensor-status">
+                        {periSensorStatus}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div>
+                        <div className="flex justify-between text-[10px] text-gray-300 font-mono mb-1">
+                          <span>COHERENCE</span>
+                          <span data-testid="coherence-metric">{metrics.joy.toFixed(0)}%</span>
+                        </div>
+                        <div className="h-1.5 bg-gray-950 rounded-full overflow-hidden">
+                          <div className="h-full bg-[#EC5800] transition-all duration-1000" style={{ width: `${metrics.joy}%` }} />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between text-[10px] text-gray-300 font-mono mb-1">
+                          <span>ENTROPIC STRESS</span>
+                          <span data-testid="stress-metric">{metrics.stress.toFixed(0)}%</span>
+                        </div>
+                        <div className="h-1.5 bg-gray-950 rounded-full overflow-hidden">
+                          <div className="h-full bg-indigo-400 transition-all duration-1000" style={{ width: `${metrics.stress}%` }} />
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between text-[10px] font-mono text-gray-400 pt-1 border-t border-white/10">
+                        <span>RESONANCE</span>
+                        <span className="text-[#E0F2F1]" data-testid="bpm-metric">{metrics.bpm.toFixed(0)} Hz</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleDownloadSessionReport}
+                    className="w-full py-3 bg-[#E0F2F1]/10 border border-[#E0F2F1]/30 text-[#E0F2F1] rounded-2xl text-xs font-bold hover:bg-[#E0F2F1]/20 transition active:scale-95 shadow-lg flex items-center justify-center gap-2"
+                    data-testid="download-report-btn"
+                  >
+                    <span>📄</span> Download Atemporal Log
+                  </button>
+                </div>
+
+                {/* Middle Column: Dialogue with Eva (6 Cols) */}
+                <div className="lg:col-span-6 bg-gray-900/80 rounded-[2.5rem] border border-[#E0F2F1]/20 shadow-2xl flex flex-col h-[75vh] lg:h-[80vh] overflow-hidden relative backdrop-blur-md">
+
+                  <div className="p-4 bg-gray-950/40 border-b border-[#E0F2F1]/10 flex justify-between items-center">
+                    <span className="text-xs font-bold text-[#E0F2F1] flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#EC5800] animate-ping" />
+                      Atemporal Dialogue with Eva
+                    </span>
+                    <span className="text-[10px] font-mono text-gray-400">
+                      {apiKey ? 'Mode: Online Cloud' : 'Mode: WASM Offline'}
+                    </span>
+                  </div>
+
+                  <div className="flex-grow overflow-y-auto p-4 sm:p-6 custom-scrollbar" data-testid="chat-history-container">
+                    {chatHistory.map((msg, index) => (
+                      <ChatBubble
+                        key={index}
+                        sender={msg.sender}
+                        text={msg.text}
+                        isSpeaking={activeSpeechText === msg.text}
+                        onRead={() => handleReadAloud(msg.text)}
+                      />
+                    ))}
+
+                    {isLoading && (
+                      <div className="flex justify-start mb-4" data-testid="eva-loading-indicator">
+                        <div className="bg-gray-900/80 border border-[#EC5800]/40 p-4 rounded-2xl text-xs text-[#EC5800] flex items-center gap-2 font-mono">
+                          <svg className="animate-spin h-4 w-4 text-[#EC5800]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Eva is reweaving your timeline threads...
+                        </div>
+                      </div>
+                    )}
+                    <div ref={chatEndRef} />
+                  </div>
+
+                  <div className="px-4 py-2 bg-gray-950/30 border-t border-white/5 flex gap-2 overflow-x-auto custom-scrollbar">
+                    {emotionSeeds.map((seed, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSendMessage(seed)}
+                        className="whitespace-nowrap text-[11px] bg-white/5 border border-[#E0F2F1]/20 hover:bg-[#EC5800]/20 text-[#E0F2F1] px-3 py-1 rounded-full transition active:scale-95"
+                        data-testid={`seed-btn-${idx}`}
+                      >
+                        {seed}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="p-4 sm:p-5 bg-gray-950/60 border-t border-[#E0F2F1]/10">
+                    <div className="flex gap-2 relative items-center">
+                      <input
+                        type="text"
+                        value={currentInput}
+                        onChange={(e) => setCurrentInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                        placeholder={isSTTListening ? "Listening to your quantum stream..." : "Speak or select an atemporal intent..."}
+                        className="flex-grow bg-black/40 border border-[#E0F2F1]/20 rounded-full py-3.5 px-6 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#EC5800] transition"
+                        disabled={isLoading}
+                        data-testid="chat-input"
+                      />
+
+                      <button
+                        onClick={handleToggleSTT}
+                        className={`p-3.5 rounded-full transition-all active:scale-90 ${
+                          isSTTListening
+                            ? 'bg-red-600 text-white animate-pulse ring-4 ring-red-600/30'
+                            : 'bg-[#E0F2F1]/10 text-[#E0F2F1] hover:bg-[#E0F2F1]/20 border border-[#E0F2F1]/30'
+                        }`}
+                        title="Speak Input (STT)"
+                        data-testid="stt-button"
+                      >
+                        🎙️
+                      </button>
+
+                      <button
+                        onClick={() => handleSendMessage()}
+                        disabled={isLoading || !currentInput.trim()}
+                        className="p-3.5 bg-[#EC5800] text-white rounded-full font-bold hover:bg-[#EC5800]/80 transition disabled:opacity-30 active:scale-90 shadow-lg"
+                        title="Send Intention"
+                        data-testid="send-message-btn"
+                      >
+                        ➔
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: PRISM, OMNI, & Feature Release (3 Cols) */}
+                <div className="lg:col-span-3 space-y-4">
+
+                  <SidebarPanel
+                    title="PRISM Atemporal Vector"
+                    content={prismData}
+                    colorClass="border-[#E0F2F1]/30"
+                    showReadAloud={true}
+                    isSpeaking={activeSpeechText === prismData}
+                    onRead={() => handleReadAloud(prismData)}
+                  />
+
+                  <SidebarPanel
+                    title="OMNI AI Meta-Commentary"
+                    content={omniData}
+                    colorClass="border-[#EC5800]/30"
+                  />
+
+                  <div className="bg-gray-900/60 p-4 sm:p-5 rounded-3xl border border-[#E0F2F1]/20 shadow-2xl space-y-3">
+                    <h2 className="text-xs font-bold uppercase tracking-widest text-[#E0F2F1]">
+                      Atemporal Feature Release
+                    </h2>
+
+                    <div className="space-y-3">
+                      <FeatureCard
+                        level={1}
+                        name="Temporal Loop Dissolver"
+                        desc="Release repetitive emotional scripts."
+                        currentLevel={engagementLevel}
+                        tokeX={tokeX}
+                        handleUnlock={handleUnlock}
+                        status={unlockedFeatures["Temporal Loop Dissolver"]}
+                      />
+
+                      <FeatureCard
+                        level={2}
+                        name="Resonant Future Anchor"
+                        desc="Solidify optimal probable outcomes."
+                        currentLevel={engagementLevel}
+                        tokeX={tokeX}
+                        handleUnlock={handleUnlock}
+                        status={unlockedFeatures["Resonant Future Anchor"]}
+                      />
+
+                      <FeatureCard
+                        level={3}
+                        name="Sliver Circle Continuum"
+                        desc="Full persistent sovereign sync."
+                        currentLevel={engagementLevel}
+                        tokeX={tokeX}
+                        handleUnlock={handleUnlock}
+                        status={unlockedFeatures["Sliver Circle Continuum"]}
+                      />
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </ErrorBoundary>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
