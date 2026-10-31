@@ -453,46 +453,142 @@
 
             function makeUniqueSpecimenSvg(cat, i, title) {
                 const palettes = {
-                    'marine': { b1: '#032b43', b2: '#065a82', s1: '#1c7293', s2: '#38bdf8' },
-                    'botany': { b1: '#132a13', b2: '#31572c', s1: '#4f772d', s2: '#86efac' },
-                    'insects': { b1: '#28112b', b2: '#541344', s1: '#b45309', s2: '#fde047' },
-                    'animals': { b1: '#2b1810', b2: '#59291e', s1: '#8c4830', s2: '#fdba74' },
-                    'micro': { b1: '#141124', b2: '#2d244c', s1: '#4a3b78', s2: '#c084fc' }
+                    'marine': { b1: '#031926', b2: '#0b3954', s1: '#087e8b', s2: '#38bdf8', s3: '#67e8f9', ac: '#00ffcc' },
+                    'botany': { b1: '#0d1f12', b2: '#1b4332', s1: '#2d6a4f', s2: '#74c69d', s3: '#b7e4c7', ac: '#52b788' },
+                    'insects': { b1: '#231124', b2: '#4a154b', s1: '#a2238e', s2: '#f472b6', s3: '#fbcfe8', ac: '#fbbf24' },
+                    'animals': { b1: '#1c1917', b2: '#44403c', s1: '#78716c', s2: '#fb923c', s3: '#fed7aa', ac: '#f97316' },
+                    'micro': { b1: '#180e29', b2: '#3b1c61', s1: '#6d28d9', s2: '#a855f7', s3: '#e9d5ff', ac: '#c084fc' }
                 };
-                const pal = palettes[cat] || { b1: '#0f172a', b2: '#1e293b', s1: '#475569', s2: '#94a3b8' };
+                const pal = palettes[cat] || { b1: '#0f172a', b2: '#1e293b', s1: '#334155', s2: '#64748b', s3: '#cbd5e1', ac: '#38bdf8' };
+                const t = title.toLowerCase();
                 let inner = '';
-                if (cat === 'marine') {
-                    const r = 32 + (i % 6) * 8;
-                    inner = `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${pal.s1}" stroke-width="2.5" stroke-dasharray="${3+i},${2+i%3}"/>
-                             <path d="M 25,100 Q 60,${45+(i*9)%70} 100,100 T 175,100" fill="none" stroke="${pal.s2}" stroke-width="2"/>
-                             <circle cx="100" cy="100" r="12" fill="${pal.s2}" fill-opacity="0.2" stroke="${pal.s2}" stroke-width="1.5"/>`;
-                } else if (cat === 'botany') {
-                    const petals = 4 + (i % 6);
-                    let petStr = '';
-                    for (let p = 0; p < petals; p++) {
-                        const ang = (p / petals) * 360;
-                        petStr += `<ellipse cx="100" cy="65" rx="${12+(i%4)*2}" ry="${24+(i%3)*2}" transform="rotate(${ang} 100 100)" fill="none" stroke="${pal.s2}" stroke-width="1.8"/>`;
+
+                if (t.includes('nautilus') || t.includes('shell') || t.includes('chamber')) {
+                    let pts = [];
+                    for (let a = 0; a < 1300; a += 15) {
+                        const th = a * Math.PI / 180;
+                        const r = 4.5 * Math.exp(0.12 * th);
+                        if (r > 82) break;
+                        pts.push(`${(100 + r * Math.cos(th)).toFixed(1)},${(100 + r * Math.sin(th)).toFixed(1)}`);
                     }
-                    inner = petStr + `<circle cx="100" cy="100" r="${14+(i%4)*2}" fill="none" stroke="${pal.s1}" stroke-width="2.5"/>`;
-                } else if (cat === 'insects') {
-                    const wAng = 22 + (i % 18);
-                    inner = `<ellipse cx="100" cy="100" rx="14" ry="${38+(i%5)*3}" fill="none" stroke="${pal.s1}" stroke-width="2.5"/>
-                             <ellipse cx="62" cy="80" rx="32" ry="15" transform="rotate(${-wAng} 62 80)" fill="none" stroke="${pal.s2}" stroke-width="1.8"/>
-                             <ellipse cx="138" cy="80" rx="32" ry="15" transform="rotate(${wAng} 138 80)" fill="none" stroke="${pal.s2}" stroke-width="1.8"/>
-                             <ellipse cx="68" cy="120" rx="24" ry="12" transform="rotate(${wAng/2} 68 120)" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>
-                             <ellipse cx="132" cy="120" rx="24" ry="12" transform="rotate(${-wAng/2} 132 120)" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>`;
-                } else if (cat === 'animals') {
-                    const scR = 30 + (i % 5) * 6;
-                    inner = `<ellipse cx="100" cy="100" rx="${scR*1.1}" ry="${scR*0.75}" fill="none" stroke="${pal.s1}" stroke-width="2.5"/>
-                             <circle cx="${100-scR*0.7}" cy="${100-scR*0.2}" r="${scR*0.35}" fill="none" stroke="${pal.s2}" stroke-width="1.8"/>
-                             <path d="M ${100-scR*0.3},${100-scR*0.5} Q 100,100 ${100+scR*0.5},${100+scR*0.5}" fill="none" stroke="${pal.s2}" stroke-width="1.5"/>`;
+                    inner = `<polyline points="${pts.join(' ')}" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>`;
+                    for (let a = 120; a < 1100; a += 90) {
+                        const th = a * Math.PI / 180;
+                        const r = 4.5 * Math.exp(0.12 * th);
+                        if (r > 80) break;
+                        const x = (100 + r * Math.cos(th)).toFixed(1);
+                        const y = (100 + r * Math.sin(th)).toFixed(1);
+                        inner += `<line x1="100" y1="100" x2="${x}" y2="${y}" stroke="${pal.s1}" stroke-width="1.5" stroke-dasharray="2,2"/>
+                                  <circle cx="${x}" cy="${y}" r="2.2" fill="${pal.ac}"/>`;
+                    }
+                } else if (t.includes('turtle') || t.includes('carapace') || t.includes('scute') || t.includes('tortoise')) {
+                    inner = `<ellipse cx="100" cy="100" rx="55" ry="68" fill="none" stroke="${pal.s2}" stroke-width="3"/>
+                             <polygon points="90,50 110,50 115,65 100,72 85,65" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="90,75 110,75 116,95 100,102 84,95" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="90,105 110,105 115,125 100,132 85,125" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="84,80 55,72 52,92 84,96" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <polygon points="116,80 145,72 148,92 116,96" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <path d="M 55,60 Q 20,40 15,70 Q 25,95 52,80" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                             <path d="M 145,60 Q 180,40 185,70 Q 175,95 148,80" fill="none" stroke="${pal.s2}" stroke-width="2"/>`;
+                } else if (t.includes('jellyfish') || t.includes('medusa') || t.includes('bell')) {
+                    inner = `<path d="M 35,90 Q 100,20 165,90 Q 140,98 100,92 Q 60,98 35,90 Z" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 50,88 Q 100,38 150,88" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="3,3"/>
+                             <path d="M 90,92 Q 80,125 92,160 Q 100,140 108,160 Q 120,125 110,92" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 50,92 Q 62,125 50,155 T 60,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 75,92 Q 87,125 75,155 T 85,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 125,92 Q 113,125 125,155 T 115,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 150,92 Q 138,125 150,155 T 140,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('stomata') || t.includes('guard cell')) {
+                    inner = `<ellipse cx="80" cy="100" rx="18" ry="46" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="120" cy="100" rx="18" ry="46" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="100" cy="100" rx="6" ry="32" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <circle cx="80" cy="75" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="80" cy="100" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="80" cy="125" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="75" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="100" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="125" r="3.5" fill="${pal.s3}"/>
+                             <polygon points="40,50 70,54 62,90 35,85" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>
+                             <polygon points="160,50 130,54 138,90 165,85" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>`;
+                } else if (t.includes('bee') || t.includes('ant') || t.includes('beetle') || t.includes('cicada')) {
+                    inner = `<ellipse cx="100" cy="50" rx="14" ry="12" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                             <ellipse cx="100" cy="80" rx="20" ry="18" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <ellipse cx="100" cy="130" rx="22" ry="34" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 80,115 Q 100,123 120,115" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <path d="M 80,130 Q 100,138 120,130" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <path d="M 80,145 Q 100,153 120,145" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <ellipse cx="55" cy="75" rx="36" ry="15" transform="rotate(-32 55 75)" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <ellipse cx="145" cy="75" rx="36" ry="15" transform="rotate(32 145 75)" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <path d="M 94,40 Q 82,24 70,26" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 106,40 Q 118,24 130,26" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('butterfly') || t.includes('moth')) {
+                    inner = `<path d="M 100,80 Q 50,15 25,45 Q 15,80 70,105 Q 95,95 100,80" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 100,80 Q 150,15 175,45 Q 185,80 130,105 Q 105,95 100,80" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 95,100 Q 40,115 50,155 Q 80,175 98,125" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 105,100 Q 160,115 150,155 Q 120,175 102,125" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <ellipse cx="100" cy="100" rx="6" ry="32" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <circle cx="55" cy="60" r="6" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>
+                             <circle cx="145" cy="60" r="6" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>`;
+                } else if (t.includes('redwood') || t.includes('tree') || t.includes('ring') || t.includes('pine') || t.includes('bark') || t.includes('forest')) {
+                    inner = `<circle cx="100" cy="100" r="18" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="4,2"/>
+                             <circle cx="100" cy="100" r="34" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="5,3"/>
+                             <circle cx="100" cy="100" r="50" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="6,2"/>
+                             <circle cx="100" cy="100" r="68" fill="none" stroke="${pal.s1}" stroke-width="1.8"/>
+                             <circle cx="100" cy="100" r="84" fill="none" stroke="${pal.s2}" stroke-width="3"/>`;
+                    for (let a = 0; a < 360; a += 30) {
+                        const th = a * Math.PI / 180;
+                        inner += `<line x1="${(100 + 18 * Math.cos(th)).toFixed(1)}" y1="${(100 + 18 * Math.sin(th)).toFixed(1)}" x2="${(100 + 84 * Math.cos(th)).toFixed(1)}" y2="${(100 + 84 * Math.sin(th)).toFixed(1)}" stroke="${pal.s3}" stroke-width="1.2"/>`;
+                    }
+                    inner += `<circle cx="100" cy="100" r="6" fill="${pal.ac}"/>`;
+                } else if (t.includes('fungi') || t.includes('mushroom') || t.includes('mycorrhiz') || t.includes('gills')) {
+                    inner = `<path d="M 25,100 Q 100,20 175,100 Q 140,110 100,105 Q 60,110 25,100 Z" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>`;
+                    for (let gx = 40; gx <= 160; gx += 15) {
+                        inner += `<line x1="${gx}" y1="102" x2="100" y2="40" stroke="${pal.s1}" stroke-width="1.2"/>`;
+                    }
+                    inner += `<path d="M 85,105 L 80,165 Q 100,172 120,165 L 115,105" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                              <path d="M 100,168 Q 75,175 70,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                              <path d="M 100,168 Q 125,175 130,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('peacock') || t.includes('feather') || t.includes('barb') || t.includes('wing') || t.includes('down')) {
+                    inner = `<ellipse cx="100" cy="75" rx="32" ry="42" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <ellipse cx="100" cy="83" rx="20" ry="26" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <circle cx="100" cy="87" r="10" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <line x1="100" y1="30" x2="100" y2="180" stroke="${pal.s2}" stroke-width="3"/>`;
+                    for (let y = 45; y < 175; y += 14) {
+                        const w = 55 - (y - 45) * 0.28;
+                        inner += `<line x1="100" y1="${y}" x2="${100 - w}" y2="${y - 15}" stroke="${pal.s1}" stroke-width="1.4"/>
+                                  <line x1="100" y1="${y}" x2="${100 + w}" y2="${y - 15}" stroke="${pal.s1}" stroke-width="1.4"/>`;
+                    }
+                } else if (t.includes('lotus') || t.includes('flower') || t.includes('petal') || t.includes('venation') || t.includes('leaf')) {
+                    let petStr = '';
+                    const petals = 8;
+                    for (let p = 0; p < petals; p++) {
+                        const ang = p * 45;
+                        petStr += `<ellipse cx="100" cy="58" rx="14" ry="32" transform="rotate(${ang} 100 100)" fill="none" stroke="${pal.s2}" stroke-width="2"/>`;
+                    }
+                    inner = petStr + `<circle cx="100" cy="100" r="16" fill="none" stroke="${pal.ac}" stroke-width="2.2"/>`;
+                } else if (t.includes('diatom') || t.includes('frustule') || t.includes('silica') || t.includes('radiolarian')) {
+                    inner = `<circle cx="100" cy="100" r="72" fill="none" stroke="${pal.s2}" stroke-width="3"/>
+                             <circle cx="100" cy="100" r="48" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <circle cx="100" cy="100" r="22" fill="none" stroke="${pal.ac}" stroke-width="2"/>`;
+                    for (let a = 0; a < 360; a += 30) {
+                        const th = a * Math.PI / 180;
+                        inner += `<circle cx="${(100 + 60 * Math.cos(th)).toFixed(1)}" cy="${(100 + 60 * Math.sin(th)).toFixed(1)}" r="3" fill="none" stroke="${pal.s1}" stroke-width="1.4"/>`;
+                    }
+                } else if (t.includes('dna') || t.includes('helix') || t.includes('neuron') || t.includes('axon')) {
+                    for (let y = 35; y < 175; y += 14) {
+                        const x1 = (100 + 35 * Math.sin(y * 0.08)).toFixed(1);
+                        const x2 = (100 - 35 * Math.sin(y * 0.08)).toFixed(1);
+                        inner += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${pal.s1}" stroke-width="1.8"/>
+                                  <circle cx="${x1}" cy="${y}" r="2.5" fill="${pal.ac}"/>
+                                  <circle cx="${x2}" cy="${y}" r="2.5" fill="${pal.s2}"/>`;
+                    }
                 } else {
-                    inner = `<circle cx="100" cy="100" r="${48+(i%5)*5}" fill="none" stroke="${pal.s1}" stroke-width="2.5"/>`;
-                    for (let d = 0; d < 8; d++) {
-                        const ang = (d / 8) * Math.PI * 2;
-                        const dx = 100 + Math.cos(ang) * (30 + (d % 3) * 5);
-                        const dy = 100 + Math.sin(ang) * (30 + (d % 3) * 5);
-                        inner += `<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="${3.5+(d+i)%2.5}" fill="none" stroke="${pal.s2}" stroke-width="1.5"/>`;
+                    const r = 32 + (i % 6) * 6;
+                    inner = `<ellipse cx="100" cy="100" rx="${(r * 1.2).toFixed(1)}" ry="${(r * 0.75).toFixed(1)}" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="${(100 - r * 0.7).toFixed(1)}" cy="${(100 - r * 0.2).toFixed(1)}" rx="${(r * 0.45).toFixed(1)}" ry="${(r * 0.35).toFixed(1)}" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 40,90 Q 100,85 160,95" fill="none" stroke="${pal.s1}" stroke-width="2"/>`;
+                    for (let rx = 70; rx <= 140; rx += 16) {
+                        inner += `<path d="M ${rx},88 Q ${rx + 6},110 ${rx - 2},126" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
                     }
                 }
 
@@ -505,7 +601,7 @@
                     </defs>
                     <rect width="200" height="200" rx="16" fill="url(#g_${cat}_${i})"/>
                     ${inner}
-                    <text x="100" y="185" font-family="system-ui, sans-serif" font-size="8.5" font-weight="bold" fill="${pal.s2}" text-anchor="middle" letter-spacing="0.5">${title.toUpperCase()}</text>
+                    <text x="100" y="185" font-family="system-ui, sans-serif" font-size="8.5" font-weight="bold" fill="${pal.s2}" text-anchor="middle" letter-spacing="0.5">${title.toUpperCase().slice(0, 24)}</text>
                 </svg>`;
                 return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
             }
@@ -934,53 +1030,71 @@
                 lum[j] = 0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2];
             }
 
-            // 2. 3x3 Box/Gaussian Smoothing to eliminate high-frequency noise & artifacts
+            // 2. 5x5 Bilateral/Gaussian Pre-Smoothing pass to remove micro-speckles while preserving sharp anatomical edges
             const smoothed = new Float32Array(w * h);
-            for (let y = 1; y < h - 1; y++) {
-                for (let x = 1; x < w - 1; x++) {
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
                     const idx = y * w + x;
-                    smoothed[idx] = (
-                        lum[idx - w - 1] + 2 * lum[idx - w] + lum[idx - w + 1] +
-                        2 * lum[idx - 1] + 4 * lum[idx]     + 2 * lum[idx + 1] +
-                        lum[idx + w - 1] + 2 * lum[idx + w] + lum[idx + w + 1]
-                    ) / 16.0;
+                    const centerVal = lum[idx];
+                    let sum = 0;
+                    let weightSum = 0;
+                    for (let dy = -2; dy <= 2; dy++) {
+                        for (let dx = -2; dx <= 2; dx++) {
+                            const nIdx = (y + dy) * w + (x + dx);
+                            const spatialDistSq = dx * dx + dy * dy;
+                            const colorDiff = lum[nIdx] - centerVal;
+                            // Bilateral kernel weighting: spatial decay * range similarity
+                            const wgt = Math.exp(-spatialDistSq / 4.0 - (colorDiff * colorDiff) / 900.0);
+                            sum += lum[nIdx] * wgt;
+                            weightSum += wgt;
+                        }
+                    }
+                    smoothed[idx] = weightSum > 0 ? sum / weightSum : centerVal;
                 }
             }
 
-            // 3. Sobel Convolution Pass (Gx and Gy matrices)
-            const edgeData = overlayCtx.createImageData(w, h);
-            const edgePixels = edgeData.data;
-            const threshold = detailThreshold;
-            const strokeColor = isGlowing ? [56, 189, 248, 255] : [241, 245, 249, 255];
-
+            // 3. Sobel Convolution Pass (Gx & Gy matrices) + Magnitude Map
+            const magMap = new Float32Array(w * h);
+            let avgMag = 0, edgeCount = 0;
             for (let y = 1; y < h - 1; y++) {
                 for (let x = 1; x < w - 1; x++) {
                     const idx = y * w + x;
-
                     const gx = -smoothed[idx - w - 1] + smoothed[idx - w + 1]
                                - 2 * smoothed[idx - 1] + 2 * smoothed[idx + 1]
                                - smoothed[idx + w - 1] + smoothed[idx + w + 1];
-
                     const gy = -smoothed[idx - w - 1] - 2 * smoothed[idx - w] - smoothed[idx - w + 1]
                                + smoothed[idx + w - 1] + 2 * smoothed[idx + w] + smoothed[idx + w + 1];
+                    const m = Math.sqrt(gx * gx + gy * gy);
+                    magMap[idx] = m;
+                    avgMag += m;
+                    edgeCount++;
+                }
+            }
+            avgMag = edgeCount > 0 ? avgMag / edgeCount : 30;
 
-                    const mag = Math.sqrt(gx * gx + gy * gy);
+            // 4. Adaptive Dual-Thresholding & Morphological Edge Dilation for crisp coloring-book outlines
+            const edgeData = overlayCtx.createImageData(w, h);
+            const edgePixels = edgeData.data;
+            const threshold = Math.max(detailThreshold, avgMag * 0.7);
+            const strokeColor = isGlowing ? [56, 189, 248, 255] : [248, 250, 252, 255];
 
-                    if (mag > threshold) {
-                        const pIdx = idx * 4;
-                        edgePixels[pIdx] = strokeColor[0];
-                        edgePixels[pIdx + 1] = strokeColor[1];
-                        edgePixels[pIdx + 2] = strokeColor[2];
-                        edgePixels[pIdx + 3] = strokeColor[3];
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
+                    const idx = y * w + x;
+                    const m = magMap[idx];
 
-                        // Connect fine neighbor contour pixels for crisp, smooth outlines
-                        if (mag > threshold * 1.35) {
-                            const rIdx = (idx + 1) * 4;
-                            edgePixels[rIdx] = strokeColor[0];
-                            edgePixels[rIdx + 1] = strokeColor[1];
-                            edgePixels[rIdx + 2] = strokeColor[2];
-                            edgePixels[rIdx + 3] = strokeColor[3];
-                        }
+                    if (m > threshold) {
+                        // Mark current and immediately adjacent pixel for clean 2pt coloring contour
+                        const offsets = [0, 1, w, w + 1];
+                        offsets.forEach(off => {
+                            const pIdx = (idx + off) * 4;
+                            if (pIdx < edgePixels.length) {
+                                edgePixels[pIdx] = strokeColor[0];
+                                edgePixels[pIdx + 1] = strokeColor[1];
+                                edgePixels[pIdx + 2] = strokeColor[2];
+                                edgePixels[pIdx + 3] = strokeColor[3];
+                            }
+                        });
                     }
                 }
             }
@@ -1019,135 +1133,215 @@
             const cat = activeModel.id.startsWith('lib-') ? activeModel.id.charAt(4) : '';
 
             if (mid === 'turtle') {
-                const shellR = Math.min(w, h) * 0.35;
-                overlayCtx.ellipse(cx, cy, shellR * 0.85, shellR, 0, 0, Math.PI * 2);
-                for (let i = -2; i <= 2; i++) {
-                    overlayCtx.moveTo(cx - shellR * 0.7, cy + i * (shellR * 0.3));
-                    overlayCtx.lineTo(cx + shellR * 0.7, cy + i * (shellR * 0.3));
-                }
+                // Authentic Green Sea Turtle Carapace: Vertebral & Costal polygonal scutes
+                const sR = Math.min(w, h) * 0.38;
+                // Outer carapace perimeter
+                overlayCtx.ellipse(cx, cy, sR * 0.82, sR, 0, 0, Math.PI * 2);
+                // Head and clawed flippers
+                overlayCtx.ellipse(cx, cy - sR * 1.15, sR * 0.22, sR * 0.28, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - sR * 0.88, cy - sR * 0.45, sR * 0.45, sR * 0.2, -Math.PI / 4, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + sR * 0.88, cy - sR * 0.45, sR * 0.45, sR * 0.2, Math.PI / 4, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - sR * 0.65, cy + sR * 0.75, sR * 0.28, sR * 0.18, Math.PI / 6, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + sR * 0.65, cy + sR * 0.75, sR * 0.28, sR * 0.18, -Math.PI / 6, 0, Math.PI * 2);
+                // 5 Hexagonal Vertebral Scutes down dorsal midline
+                const vScutes = [-sR * 0.65, -sR * 0.32, 0, sR * 0.32, sR * 0.65];
+                vScutes.forEach((sy, idx) => {
+                    const hw = (idx === 0 || idx === 4) ? sR * 0.18 : sR * 0.26;
+                    const hh = sR * 0.14;
+                    overlayCtx.moveTo(cx - hw * 0.6, cy + sy - hh);
+                    overlayCtx.lineTo(cx + hw * 0.6, cy + sy - hh);
+                    overlayCtx.lineTo(cx + hw, cy + sy);
+                    overlayCtx.lineTo(cx + hw * 0.6, cy + sy + hh);
+                    overlayCtx.lineTo(cx - hw * 0.6, cy + sy + hh);
+                    overlayCtx.lineTo(cx - hw, cy + sy);
+                    overlayCtx.closePath();
+                });
+                // Lateral Costal & Marginal Scutes
+                [-sR * 0.45, -sR * 0.15, sR * 0.15, sR * 0.45].forEach(sy => {
+                    overlayCtx.moveTo(cx - sR * 0.24, cy + sy);
+                    overlayCtx.lineTo(cx - sR * 0.76, cy + sy * 1.05);
+                    overlayCtx.moveTo(cx + sR * 0.24, cy + sy);
+                    overlayCtx.lineTo(cx + sR * 0.76, cy + sy * 1.05);
+                });
             } else if (mid === 'stomata') {
-                const r = Math.min(w, h) * 0.25;
-                overlayCtx.ellipse(cx - r * 0.7, cy, r * 0.6, r * 1.3, 0, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + r * 0.7, cy, r * 0.6, r * 1.3, 0, 0, Math.PI * 2);
+                // Stomatal Guard Cells & Microscopic Epidermal Cells
+                const r = Math.min(w, h) * 0.26;
+                // Paired reniform (kidney-shaped) guard cells
+                overlayCtx.ellipse(cx - r * 0.7, cy, r * 0.58, r * 1.35, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + r * 0.7, cy, r * 0.58, r * 1.35, 0, 0, Math.PI * 2);
+                // Stomatal pore aperture
+                overlayCtx.ellipse(cx, cy, r * 0.18, r * 0.95, 0, 0, Math.PI * 2);
+                // Chloroplast granules inside each guard cell
+                [-r * 0.8, -r * 0.4, 0, r * 0.4, r * 0.8].forEach(dy => {
+                    overlayCtx.moveTo(cx - r * 0.7 + r * 0.15, cy + dy);
+                    overlayCtx.arc(cx - r * 0.7, cy + dy, r * 0.12, 0, Math.PI * 2);
+                    overlayCtx.moveTo(cx + r * 0.7 + r * 0.15, cy + dy);
+                    overlayCtx.arc(cx + r * 0.7, cy + dy, r * 0.12, 0, Math.PI * 2);
+                });
+                // Surrounding jigsaw pavement epidermal cells
+                overlayCtx.rect(cx - r * 1.8, cy - r * 1.8, r * 3.6, r * 3.6);
+                overlayCtx.moveTo(cx - r * 1.8, cy - r * 0.6); overlayCtx.lineTo(cx - r * 1.25, cy - r * 0.6);
+                overlayCtx.moveTo(cx - r * 1.8, cy + r * 0.6); overlayCtx.lineTo(cx - r * 1.25, cy + r * 0.6);
+                overlayCtx.moveTo(cx + r * 1.8, cy - r * 0.6); overlayCtx.lineTo(cx + r * 1.25, cy - r * 0.6);
+                overlayCtx.moveTo(cx + r * 1.8, cy + r * 0.6); overlayCtx.lineTo(cx + r * 1.25, cy + r * 0.6);
             } else if (mid === 'honeybee') {
-                const hexR = Math.min(w, h) * 0.08;
-                for (let x = -2; x <= 2; x++) {
-                    for (let y = -2; y <= 2; y++) {
-                        const px = cx + x * hexR * 1.75;
-                        const py = cy + y * hexR * 2;
-                        overlayCtx.arc(px, py, hexR, 0, Math.PI * 2);
+                // Honeybee compound eye ommatidia lattice & hexagonal wax comb
+                const hexR = Math.min(w, h) * 0.085;
+                for (let qx = -3; qx <= 3; qx++) {
+                    for (let qy = -3; qy <= 3; qy++) {
+                        const px = cx + qx * hexR * 1.732 + (qy % 2 !== 0 ? hexR * 0.866 : 0);
+                        const py = cy + qy * hexR * 1.5;
+                        if (Math.hypot(px - cx, py - cy) < Math.min(w, h) * 0.38) {
+                            overlayCtx.moveTo(px + hexR * Math.cos(0), py + hexR * Math.sin(0));
+                            for (let s = 1; s <= 6; s++) {
+                                const ang = s * Math.PI / 3;
+                                overlayCtx.lineTo(px + hexR * Math.cos(ang), py + hexR * Math.sin(ang));
+                            }
+                            overlayCtx.closePath();
+                        }
                     }
                 }
             } else if (mid === 'jellyfish' || cat === 'm') {
-                // Marine & Jellyfish radial bell and tentacles
-                const bellR = Math.min(w, h) * 0.28;
-                overlayCtx.arc(cx, cy - 40, bellR, Math.PI, 0, false);
-                overlayCtx.bezierCurveTo(cx + bellR, cy + 20, cx - bellR, cy + 20, cx - bellR, cy - 40);
-                for (let t = -3; t <= 3; t++) {
-                    overlayCtx.moveTo(cx + t * (bellR / 4), cy);
-                    overlayCtx.bezierCurveTo(cx + t * 25 + 20, cy + 80, cx + t * 25 - 20, cy + 150, cx + t * 20, cy + 220);
+                // Translucent radial bell, rhopalia notches, and 8 undulating tentacles
+                const bellR = Math.min(w, h) * 0.32;
+                overlayCtx.arc(cx, cy - 35, bellR, Math.PI, 0, false);
+                overlayCtx.bezierCurveTo(cx + bellR, cy + 25, cx - bellR, cy + 25, cx - bellR, cy - 35);
+                overlayCtx.arc(cx, cy - 35, bellR * 0.65, Math.PI, 0, false);
+                // Radial canals inside bell
+                for (let a = Math.PI * 0.15; a <= Math.PI * 0.85; a += Math.PI * 0.12) {
+                    overlayCtx.moveTo(cx, cy - 35);
+                    overlayCtx.lineTo(cx - Math.cos(a) * bellR, cy - 35 - Math.sin(a) * bellR);
+                }
+                // Central ruffled oral arms
+                overlayCtx.moveTo(cx - 30, cy + 10);
+                overlayCtx.bezierCurveTo(cx - 60, cy + 120, cx, cy + 160, cx - 20, cy + 240);
+                overlayCtx.moveTo(cx + 30, cy + 10);
+                overlayCtx.bezierCurveTo(cx + 60, cy + 120, cx, cy + 160, cx + 20, cy + 240);
+                // Undulating marginal tentacles
+                for (let t = -4; t <= 4; t++) {
+                    const tx = cx + t * (bellR / 4.5);
+                    overlayCtx.moveTo(tx, cy + 20);
+                    overlayCtx.bezierCurveTo(tx + 25, cy + 100, tx - 25, cy + 170, tx + 15, cy + 250);
                 }
             } else if (mid === 'redwood' || cat === 'b') {
-                // Botany & Trees: concentric annual growth rings & vascular rays
-                const maxR = Math.min(w, h) * 0.36;
-                for (let r = 25; r <= maxR; r += 28) {
+                // Concentric annual tree rings with medullary vascular rays
+                const maxR = Math.min(w, h) * 0.38;
+                for (let r = 20; r <= maxR; r += 22) {
                     overlayCtx.moveTo(cx + r, cy);
                     overlayCtx.arc(cx, cy, r, 0, Math.PI * 2);
                 }
-                for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 4) {
-                    overlayCtx.moveTo(cx + Math.cos(ang) * 20, cy + Math.sin(ang) * 20);
+                for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 8) {
+                    overlayCtx.moveTo(cx + Math.cos(ang) * 18, cy + Math.sin(ang) * 18);
                     overlayCtx.lineTo(cx + Math.cos(ang) * maxR, cy + Math.sin(ang) * maxR);
                 }
+                // Heartwood core
+                overlayCtx.moveTo(cx + 12, cy);
+                overlayCtx.arc(cx, cy, 12, 0, Math.PI * 2);
             } else if (mid === 'mycorrhizae' || cat === 'u') {
-                // Micro-anatomy & Mycorrhizae: branching hyphal filament web
-                const rad = Math.min(w, h) * 0.32;
-                overlayCtx.arc(cx, cy, 35, 0, Math.PI * 2);
-                for (let i = 0; i < 8; i++) {
-                    const ang = (i / 8) * Math.PI * 2;
-                    const x1 = cx + Math.cos(ang) * 35;
-                    const y1 = cy + Math.sin(ang) * 35;
+                // Hyphal filament mycelium web with spore septa
+                const rad = Math.min(w, h) * 0.36;
+                overlayCtx.arc(cx, cy, 32, 0, Math.PI * 2);
+                for (let i = 0; i < 12; i++) {
+                    const ang = (i / 12) * Math.PI * 2;
+                    const x1 = cx + Math.cos(ang) * 32;
+                    const y1 = cy + Math.sin(ang) * 32;
                     const x2 = cx + Math.cos(ang) * rad;
                     const y2 = cy + Math.sin(ang) * rad;
                     overlayCtx.moveTo(x1, y1);
                     overlayCtx.lineTo(x2, y2);
+                    // Branching bifurcations
                     overlayCtx.moveTo(x2, y2);
-                    overlayCtx.lineTo(x2 + Math.cos(ang + 0.5) * 40, y2 + Math.sin(ang + 0.5) * 40);
+                    overlayCtx.lineTo(x2 + Math.cos(ang + 0.45) * 45, y2 + Math.sin(ang + 0.45) * 45);
                     overlayCtx.moveTo(x2, y2);
-                    overlayCtx.lineTo(x2 + Math.cos(ang - 0.5) * 40, y2 + Math.sin(ang - 0.5) * 40);
+                    overlayCtx.lineTo(x2 + Math.cos(ang - 0.45) * 45, y2 + Math.sin(ang - 0.45) * 45);
+                    // Terminal arbuscular vesicles
+                    overlayCtx.moveTo(x2 + 8, y2);
+                    overlayCtx.arc(x2, y2, 6, 0, Math.PI * 2);
                 }
-            } else if (cat === 'i') {
-                // Insects: bilateral wings & segmented chitin body
-                const bodyL = Math.min(w, h) * 0.3;
-                overlayCtx.ellipse(cx, cy, 18, bodyL, 0, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx - 70, cy - 30, 65, 35, -Math.PI / 6, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + 70, cy - 30, 65, 35, Math.PI / 6, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx - 55, cy + 40, 50, 25, Math.PI / 8, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + 55, cy + 40, 50, 25, -Math.PI / 8, 0, Math.PI * 2);
             } else if (mid === 'nautilus') {
-                // Nautilus: Logarithmic golden ratio equiangular spiral & chamber septa
-                const maxRad = Math.min(w, h) * 0.35;
+                // Nautilus: Logarithmic golden ratio spiral with chamber septa
+                const maxRad = Math.min(w, h) * 0.38;
                 let prevX = cx, prevY = cy;
-                for (let theta = 0; theta < Math.PI * 4.5; theta += 0.1) {
-                    const r = 8 * Math.exp(0.18 * theta);
+                for (let theta = 0; theta < Math.PI * 4.8; theta += 0.08) {
+                    const r = 6.5 * Math.exp(0.185 * theta);
                     if (r > maxRad) break;
                     const x = cx + r * Math.cos(theta);
                     const y = cy + r * Math.sin(theta);
                     if (theta === 0) overlayCtx.moveTo(x, y);
                     else overlayCtx.lineTo(x, y);
-                    if (Math.floor(theta * 10) % 7 === 0) {
-                        overlayCtx.moveTo(cx, cy);
+                    // Chamber septum dividers
+                    if (Math.floor(theta * 10) % 6 === 0) {
+                        const inR = Math.max(0, r - 25);
+                        overlayCtx.moveTo(cx + inR * Math.cos(theta), cy + inR * Math.sin(theta));
                         overlayCtx.lineTo(x, y);
                     }
                 }
-            } else if (mid === 'butterfly') {
-                // Monarch Butterfly: Bilateral forewings, hindwings, thorax, antennae
-                const wingW = Math.min(w, h) * 0.38;
-                // Left & Right Forewings
-                overlayCtx.ellipse(cx - wingW * 0.5, cy - wingW * 0.25, wingW * 0.45, wingW * 0.28, -Math.PI / 5, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + wingW * 0.5, cy - wingW * 0.25, wingW * 0.45, wingW * 0.28, Math.PI / 5, 0, Math.PI * 2);
-                // Left & Right Hindwings
-                overlayCtx.ellipse(cx - wingW * 0.35, cy + wingW * 0.3, wingW * 0.32, wingW * 0.22, Math.PI / 8, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + wingW * 0.35, cy + wingW * 0.3, wingW * 0.32, wingW * 0.22, -Math.PI / 8, 0, Math.PI * 2);
-                // Thorax & Abdomen
-                overlayCtx.ellipse(cx, cy, wingW * 0.08, wingW * 0.4, 0, 0, Math.PI * 2);
-                // Antennae
-                overlayCtx.moveTo(cx - 5, cy - wingW * 0.4);
-                overlayCtx.bezierCurveTo(cx - 30, cy - wingW * 0.65, cx - 45, cy - wingW * 0.55, cx - 50, cy - wingW * 0.6);
-                overlayCtx.moveTo(cx + 5, cy - wingW * 0.4);
-                overlayCtx.bezierCurveTo(cx + 30, cy - wingW * 0.65, cx + 45, cy - wingW * 0.55, cx + 50, cy - wingW * 0.6);
+            } else if (mid === 'butterfly' || cat === 'i') {
+                // Monarch Butterfly: Forewings, hindwings, discal cells & wing venation
+                const wingW = Math.min(w, h) * 0.42;
+                // Bilateral Forewings
+                overlayCtx.ellipse(cx - wingW * 0.52, cy - wingW * 0.28, wingW * 0.48, wingW * 0.3, -Math.PI / 4.8, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.52, cy - wingW * 0.28, wingW * 0.48, wingW * 0.3, Math.PI / 4.8, 0, Math.PI * 2);
+                // Discal cell vein rings
+                overlayCtx.ellipse(cx - wingW * 0.45, cy - wingW * 0.25, wingW * 0.2, wingW * 0.12, -Math.PI / 5, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.45, cy - wingW * 0.25, wingW * 0.2, wingW * 0.12, Math.PI / 5, 0, Math.PI * 2);
+                // Bilateral Hindwings
+                overlayCtx.ellipse(cx - wingW * 0.36, cy + wingW * 0.32, wingW * 0.34, wingW * 0.24, Math.PI / 8, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.36, cy + wingW * 0.32, wingW * 0.34, wingW * 0.24, -Math.PI / 8, 0, Math.PI * 2);
+                // Segmented Thorax & Abdomen
+                overlayCtx.ellipse(cx, cy - wingW * 0.1, wingW * 0.08, wingW * 0.18, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy + wingW * 0.2, wingW * 0.07, wingW * 0.24, 0, 0, Math.PI * 2);
+                // Antennae with clavate tips
+                overlayCtx.moveTo(cx - 5, cy - wingW * 0.28);
+                overlayCtx.bezierCurveTo(cx - 35, cy - wingW * 0.65, cx - 60, cy - wingW * 0.55, cx - 65, cy - wingW * 0.62);
+                overlayCtx.moveTo(cx + 5, cy - wingW * 0.28);
+                overlayCtx.bezierCurveTo(cx + 35, cy - wingW * 0.65, cx + 60, cy - wingW * 0.55, cx + 65, cy - wingW * 0.62);
             } else if (mid === 'peacock') {
-                // Peacock Eye Feather: Concentric heart/oval ocellus & radiating feather barbs
-                const fR = Math.min(w, h) * 0.32;
-                overlayCtx.ellipse(cx, cy, fR * 0.5, fR * 0.7, 0, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx, cy + 15, fR * 0.3, fR * 0.4, 0, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx, cy + 25, fR * 0.15, fR * 0.2, 0, 0, Math.PI * 2);
-                for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
-                    overlayCtx.moveTo(cx + Math.cos(a) * fR * 0.5, cy + Math.sin(a) * fR * 0.7);
-                    overlayCtx.lineTo(cx + Math.cos(a) * fR, cy + Math.sin(a) * fR * 1.2);
+                // Peacock Feathers: Central concentric ocellus & radiating barbs
+                const fR = Math.min(w, h) * 0.35;
+                overlayCtx.ellipse(cx, cy - 20, fR * 0.55, fR * 0.75, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy - 10, fR * 0.36, fR * 0.48, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy, fR * 0.18, fR * 0.24, 0, 0, Math.PI * 2);
+                overlayCtx.moveTo(cx, cy - fR * 0.9);
+                overlayCtx.lineTo(cx, cy + fR * 1.1);
+                for (let y = cy - fR * 0.7; y <= cy + fR * 0.9; y += 18) {
+                    const span = fR * 0.75;
+                    overlayCtx.moveTo(cx, y); overlayCtx.lineTo(cx - span, y - 25);
+                    overlayCtx.moveTo(cx, y); overlayCtx.lineTo(cx + span, y - 25);
                 }
             } else if (mid === 'venusflytrap') {
                 // Venus Flytrap: Bilateral snap lobes & marginal trigger cilia
-                const tW = Math.min(w, h) * 0.35;
-                overlayCtx.ellipse(cx - tW * 0.4, cy, tW * 0.4, tW * 0.65, -0.15, 0, Math.PI * 2);
-                overlayCtx.ellipse(cx + tW * 0.4, cy, tW * 0.4, tW * 0.65, 0.15, 0, Math.PI * 2);
-                for (let c = -4; c <= 4; c++) {
-                    overlayCtx.moveTo(cx - tW * 0.8, cy + c * 22);
-                    overlayCtx.lineTo(cx - tW * 0.8 - 25, cy + c * 22 - 10);
-                    overlayCtx.moveTo(cx + tW * 0.8, cy + c * 22);
-                    overlayCtx.lineTo(cx + tW * 0.8 + 25, cy + c * 22 - 10);
+                const tW = Math.min(w, h) * 0.36;
+                overlayCtx.ellipse(cx - tW * 0.42, cy, tW * 0.42, tW * 0.68, -0.18, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + tW * 0.42, cy, tW * 0.42, tW * 0.68, 0.18, 0, Math.PI * 2);
+                for (let c = -5; c <= 5; c++) {
+                    overlayCtx.moveTo(cx - tW * 0.84, cy + c * 22);
+                    overlayCtx.lineTo(cx - tW * 0.84 - 32, cy + c * 22 - 14);
+                    overlayCtx.moveTo(cx + tW * 0.84, cy + c * 22);
+                    overlayCtx.lineTo(cx + tW * 0.84 + 32, cy + c * 22 - 14);
                 }
+                // Sensitive trigger hairs in center
+                overlayCtx.moveTo(cx - tW * 0.4, cy - 15); overlayCtx.lineTo(cx - tW * 0.4 - 10, cy - 35);
+                overlayCtx.moveTo(cx - tW * 0.4, cy + 15); overlayCtx.lineTo(cx - tW * 0.4 - 10, cy + 35);
+                overlayCtx.moveTo(cx + tW * 0.4, cy - 15); overlayCtx.lineTo(cx + tW * 0.4 + 10, cy - 35);
+                overlayCtx.moveTo(cx + tW * 0.4, cy + 15); overlayCtx.lineTo(cx + tW * 0.4 + 10, cy + 35);
             } else if (cat === 'a') {
-                // Animals: organic morphological contours & anatomical geometry
-                const r = Math.min(w, h) * 0.3;
-                overlayCtx.ellipse(cx, cy, r * 1.1, r * 0.75, 0, 0, Math.PI * 2);
-                overlayCtx.arc(cx - r * 0.8, cy - r * 0.3, r * 0.4, 0, Math.PI * 2);
-                overlayCtx.moveTo(cx - r * 0.4, cy - r * 0.75);
-                overlayCtx.lineTo(cx + r * 0.6, cy - r * 0.5);
-                overlayCtx.lineTo(cx + r * 0.8, cy + r * 0.3);
+                // Animals: vertebrate anatomical contours
+                const r = Math.min(w, h) * 0.32;
+                overlayCtx.ellipse(cx, cy, r * 1.15, r * 0.75, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - r * 0.8, cy - r * 0.25, r * 0.45, r * 0.35, 0, 0, Math.PI * 2);
+                for (let rx = -r * 0.6; rx <= r * 0.6; rx += 22) {
+                    overlayCtx.moveTo(cx + rx, cy - r * 0.4);
+                    overlayCtx.lineTo(cx + rx + 8, cy + r * 0.5);
+                }
             } else {
-                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.3, 0, Math.PI * 2);
-                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.2, 0, Math.PI * 2);
-                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.1, 0, Math.PI * 2);
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.32, 0, Math.PI * 2);
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.22, 0, Math.PI * 2);
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.12, 0, Math.PI * 2);
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                    overlayCtx.moveTo(cx, cy);
+                    overlayCtx.lineTo(cx + Math.cos(a) * Math.min(w, h) * 0.32, cy + Math.sin(a) * Math.min(w, h) * 0.32);
+                }
             }
 
             overlayCtx.stroke();
