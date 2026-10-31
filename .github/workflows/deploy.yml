@@ -1,0 +1,43 @@
+name: CI and Test Verification
+
+on:
+  push:
+    branches:
+      - main
+      - feat/soren-v2-flower-learn-master-7018170207311919005
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest numpy wasmtime
+
+      - name: Run automated test suite
+        run: |
+          pytest tests/ -v
+
+      - name: Run build and package script
+        run: |
+          chmod +x package.sh init-learning-engine
+          ./package.sh
+
+      - name: Verify release artifacts
+        run: |
+          ls -la release/
+          test -f release/sliver_edge_veritas_master.zip
+          test -f release/flower_learn_soren_v2_production.zip
+          test -f checksums.sha256
+          test -f checksums.md5

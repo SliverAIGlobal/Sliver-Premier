@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Learn Studio: Bio-Kinetic Coloring Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .glow-active {
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.35);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased overflow-hidden select-none bg-slate-950 text-slate-100">
+
+    <!-- HEADER / TOP NAVIGATION BAR -->
+    <header class="h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 z-20 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold text-lg">
+                🌸
+            </div>
+            <div>
+                <h1 class="text-sm font-bold text-slate-100 tracking-wide flex items-center space-x-2">
+                    <span>Flower Learn Studio</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-teal-950 text-teal-400 border border-teal-800/50 font-mono">v2.2-allages</span>
+                </h1>
+                <p class="text-[10px] text-slate-400">All-Ages Bio-Kinetic Coloring Studio & Precision Engine</p>
+            </div>
+        </div>
+
+        <!-- Audio Synthesizer & Action Controls -->
+        <div class="flex items-center space-x-3">
+            <button id="audio-toggle-btn" onclick="toggleAudio()" class="px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-all flex items-center space-x-2">
+                <span id="audio-icon" class="text-teal-400">🎵</span>
+                <span id="audio-status">528Hz Off</span>
+            </button>
+            <button onclick="exportCanvasPNG()" class="px-3.5 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold transition-all shadow-lg shadow-teal-500/10 flex items-center space-x-1.5">
+                <span>⬇️</span>
+                <span>Export 2x PNG</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP LAYOUT CONTAINER -->
+    <div class="flex-1 flex overflow-hidden relative">
+
+        <!-- LEFT SIDEBAR: MODEL SELECTOR, UPLOADER & PRECISION TRACKER -->
+        <aside class="w-80 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 custom-scrollbar overflow-y-auto z-10">
+            <div class="p-4 space-y-5">
+
+                <!-- High-Detail Photo-to-Coloring Page Converter -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                        <span>📷 Photo & Art Converter</span>
+                        <span class="text-[10px] text-teal-400 font-mono">WASM Sobel</span>
+                    </label>
+                    <p class="text-[11px] text-slate-500 leading-normal">
+                        Turn any photo into detailed line art instantly. High-fidelity contour extraction for advanced colorists.
+                    </p>
+                    <label class="flex items-center justify-center space-x-2 bg-slate-800 hover:bg-slate-700 border border-dashed border-slate-700 hover:border-teal-500/50 rounded-xl p-3 cursor-pointer transition-all">
+                        <span class="text-base">📤</span>
+                        <span class="text-xs font-semibold text-slate-300">Upload Any Photo</span>
+                        <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    </label>
+
+                    <!-- Advanced Detail Level Slider -->
+                    <div class="p-2.5 bg-slate-950 border border-slate-800 rounded-xl space-y-1.5">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="text-slate-400 font-semibold">Contour Detail Level</span>
+                            <span id="detail-val-label" class="text-teal-400 font-mono">High</span>
+                        </div>
+                        <input type="range" id="detail-sensitivity" min="60" max="180" value="110" oninput="updateDetailThreshold(this.value)" class="w-full accent-teal-400 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- 100+ PRESET NATURE & BIOLOGICAL IMAGE LIBRARY WITH HORIZONTAL SCROLL BAR -->
+                <div class="space-y-2.5 pt-3 border-t border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>🖼️ 100+ Image Library</span>
+                        </label>
+                        <span id="library-count-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-teal-950 text-teal-400 border border-teal-800/50 font-mono">102 Specimen</span>
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 custom-scrollbar text-[10px] font-semibold">
+                        <button onclick="filterLibraryCategory('all')" id="cat-btn-all" class="cat-filter-btn active shrink-0 px-2.5 py-1 rounded-lg bg-teal-500 text-slate-950 font-bold transition-all">All (102)</button>
+                        <button onclick="filterLibraryCategory('marine')" id="cat-btn-marine" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🌊 Marine (20)</button>
+                        <button onclick="filterLibraryCategory('botany')" id="cat-btn-botany" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🌿 Botany (20)</button>
+                        <button onclick="filterLibraryCategory('insects')" id="cat-btn-insects" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🐝 Insects (20)</button>
+                        <button onclick="filterLibraryCategory('animals')" id="cat-btn-animals" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🐾 Animals (22)</button>
+                        <button onclick="filterLibraryCategory('micro')" id="cat-btn-micro" class="cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">🔬 Micro (20)</button>
+                    </div>
+
+                    <!-- Horizontal Scrollable Image Thumbnail Carousel -->
+                    <div class="relative group">
+                        <div id="library-horizontal-scroll" class="flex space-x-2.5 overflow-x-auto py-2 px-1 custom-scrollbar scroll-smooth snap-x">
+                            <!-- Thumbnails injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preset Biological Specimen Models -->
+                <div class="space-y-2 pt-2 border-t border-slate-800">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        🌿 Procedural Vector Specimen
+                    </label>
+                    <div class="space-y-1.5" id="preset-model-list">
+                        <!-- Presets dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- Precision Tracking & Secret Bio-Glow Upgrade -->
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-3" id="precision-card">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Precision Skill Score</span>
+                        <span id="precision-percentage" class="text-sm font-mono font-bold text-teal-400">0.0%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div id="precision-bar" class="bg-gradient-to-r from-teal-500 to-cyan-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+
+                    <!-- Bio Glow Reveal Indicator -->
+                    <div id="bio-glow-banner" class="hidden p-2.5 bg-cyan-950/60 border border-cyan-500/40 rounded-xl text-center space-y-1">
+                        <span class="text-xs font-black text-cyan-300 tracking-wide uppercase flex items-center justify-center space-x-1">
+                            <span>✨ Secret Bio-Glow Unlocked!</span>
+                        </span>
+                        <p class="text-[10px] text-cyan-200/80">Touch accuracy &gt;90% activated bioluminescent iridophores across line contours.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Active Model Info Footer with Dual Field Notes & Read Aloud -->
+            <div class="p-4 bg-slate-950/80 border-t border-slate-800 space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Field Notes Reader</span>
+
+                    <!-- Mode Switcher: Junior vs Adult -->
+                    <div class="flex items-center space-x-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[10px] font-bold">
+                        <button id="note-mode-junior-btn" onclick="setFieldNoteMode('junior')" class="px-2 py-0.5 rounded bg-teal-500 text-slate-950 transition-all">🌱 Junior</button>
+                        <button id="note-mode-adult-btn" onclick="setFieldNoteMode('adult')" class="px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all">🔬 Adult</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="active-model-title" class="text-xs font-bold text-slate-100 truncate">Chelonia mydas</h4>
+                    <p id="active-model-desc" class="text-[11px] text-slate-300 leading-snug mt-1 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 max-h-24 overflow-y-auto custom-scrollbar">
+                        Select a specimen to load biological field notes.
+                    </p>
+                </div>
+
+                <!-- Read Aloud Speech Synthesizer Control -->
+                <button id="tts-read-btn" onclick="toggleReadAloud()" class="w-full py-1.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold flex items-center justify-center space-x-2 transition-all">
+                    <span id="tts-icon" class="text-teal-400">🔊</span>
+                    <span id="tts-label">Read Notes Aloud</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CENTER CANVAS WORKSPACE -->
+        <main class="flex-1 relative flex flex-col items-center justify-center bg-slate-950 p-2 sm:p-4 overflow-hidden">
+
+            <!-- Canvas Multi-Layer Container -->
+            <div id="canvas-container" class="relative w-full h-full max-w-5xl max-h-[800px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex items-center justify-center">
+                <!-- Paint Surface Canvas -->
+                <canvas id="paint-canvas" class="absolute inset-0 w-full h-full cursor-crosshair z-0"></canvas>
+                <!-- Line Art Overlay Canvas -->
+                <canvas id="overlay-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+                <!-- Loading / Processing Spinner -->
+                <div id="canvas-loader" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-30 flex flex-col items-center justify-center space-y-3">
+                    <div class="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span id="loader-text" class="text-xs font-bold text-teal-300">Extracting Detailed Line Art...</span>
+                </div>
+            </div>
+
+            <!-- BOTTOM FLOATING TOOLBAR CONTROLS -->
+            <div class="absolute bottom-6 z-20 flex items-center space-x-2 bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-800 shadow-2xl max-w-full overflow-x-auto">
+                <!-- Tool Selector: Brush vs Bucket vs Eraser -->
+                <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                    <button id="tool-brush-btn" onclick="setTool('brush')" class="p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🖌️</span>
+                        <span class="hidden sm:inline">Brush</span>
+                    </button>
+                    <button id="tool-bucket-btn" onclick="setTool('bucket')" class="p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🪣</span>
+                        <span class="hidden sm:inline">Fill Bucket</span>
+                    </button>
+                    <button id="tool-eraser-btn" onclick="setTool('eraser')" class="p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all">
+                        <span>🧹</span>
+                        <span class="hidden sm:inline">Eraser</span>
+                    </button>
+                </div>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Stroke Size Slider -->
+                <div class="flex items-center space-x-2 px-2">
+                    <span class="text-xs text-slate-400 font-semibold">Size</span>
+                    <input type="range" id="brush-size" min="4" max="48" value="16" class="w-20 sm:w-28 accent-teal-400 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Somatic Tremor Smoothing Toggle -->
+                <button id="tremor-toggle-btn" onclick="toggleTremorSmooth()" class="px-2.5 py-1.5 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all flex items-center space-x-1">
+                    <span>⚡</span>
+                    <span class="hidden md:inline">Smooth Brush:</span>
+                    <span id="tremor-status" class="text-teal-400 font-bold">ON</span>
+                </button>
+
+                <div class="h-6 w-[1px] bg-slate-800 mx-1"></div>
+
+                <!-- Clear Paint Layer -->
+                <button onclick="clearPaintLayer()" class="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded-xl transition-all text-xs font-semibold flex items-center space-x-1">
+                    <span>🗑️</span>
+                    <span class="hidden sm:inline">Clear All</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR: BIOLOGICAL PIGMENTS & TEXTURES -->
+        <aside class="w-72 bg-slate-900 border-l border-slate-800 flex flex-col shrink-0 hidden xl:flex z-10 custom-scrollbar overflow-y-auto">
+            <div class="p-4 space-y-6">
+
+                <!-- Biological Pigments Section -->
+                <div class="space-y-3">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                        <span>🧪 Scientific Pigments</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2" id="pigment-swatch-list">
+                        <!-- Swatches dynamically injected based on active specimen -->
+                    </div>
+                </div>
+
+                <!-- Tactile Surface Micro-Textures -->
+                <div class="space-y-3 pt-4 border-t border-slate-800">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        🖐️ Surface Micro-Textures
+                    </label>
+                    <div class="grid grid-cols-1 gap-2" id="texture-selector-list">
+                        <button onclick="setTexture('scute')" id="tex-btn-scute" class="tex-btn active text-left p-2.5 rounded-xl border border-teal-500 bg-teal-950/30 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Scute Ridge</span>
+                            <span class="text-[10px] text-slate-400">Keratin layer stippling</span>
+                        </button>
+                        <button onclick="setTexture('iridescent')" id="tex-btn-iridescent" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Iridescent Shift</span>
+                            <span class="text-[10px] text-slate-400">Guanine crystal noise</span>
+                        </button>
+                        <button onclick="setTexture('coastal')" id="tex-btn-coastal" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Coastal Grain</span>
+                            <span class="text-[10px] text-slate-400">Fine siliceous sand grit</span>
+                        </button>
+                        <button onclick="setTexture('matte')" id="tex-btn-matte" class="tex-btn text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 text-xs font-semibold transition-all">
+                            <span class="block font-bold text-slate-200">Matte Smooth</span>
+                            <span class="text-[10px] text-slate-400">Flat organic pigment</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bio-Glow Visual Controls -->
+                <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-400">Bioluminescent Overlay</span>
+                        <input type="checkbox" id="toggle-glow-manual" onchange="renderOverlay()" class="accent-teal-400 cursor-pointer">
+                    </div>
+                    <p class="text-[10px] text-slate-500">Enable manually or achieve &gt;90% touch accuracy to trigger auto glow.</p>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC ENGINE -->
+    <script>
+        // ============================================================================
+        // GLOBAL STATE & DATA STRUCTURES
+        // ============================================================================
+        let paintCanvas, paintCtx, overlayCanvas, overlayCtx;
+        let isDrawing = false;
+        let strokePoints = [];
+        let activePigment = '#16a34a';
+        let activeTexture = 'scute';
+        let activeTool = 'brush'; // 'brush', 'bucket', 'eraser'
+        let brushSize = 16;
+        let tremorSmoothEnabled = true;
+        let bioGlowUnlocked = false;
+        let detailThreshold = 110;
+        let customImageElement = null;
+        let activeModel = null;
+
+        // Audio state
+        let audioCtx = null, gainNode = null, osc528 = null, oscThetaL = null, oscThetaR = null;
+        let isAudioPlaying = false;
+
+        // Procedural Vector Presets
+        const PRESET_MODELS = [
+            {
+                id: 'turtle',
+                name: 'Chelonia mydas',
+                subtitle: 'Green Sea Turtle Carapace',
+                juniorDesc: 'Green sea turtles swim thousands of miles across oceans! Their tough shell is made of scutes that protect them like armor.',
+                adultDesc: 'Chelonia mydas carapace exhibits keratinized epidermal scute patterns over underlying bony osteoderms, with guanine crystal iridophores reflecting ambient light.',
+                pigments: [
+                    { name: 'Scute Amber', color: '#d97706', code: 'AMB' },
+                    { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                    { name: 'Reef Algae Green', color: '#16a34a', code: 'ALG' },
+                    { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' },
+                    { name: 'Epidermal Keratin', color: '#92400e', code: 'KER' },
+                    { name: 'Osteoderm Bone', color: '#e2e8f0', code: 'OST' },
+                    { name: 'Ocean Indigo', color: '#1e1b4b', code: 'IND' },
+                    { name: 'Coral Sand Gold', color: '#fef08a', code: 'SND' },
+                    { name: 'Seagrass Chlorophyll', color: '#15803d', code: 'SGR' },
+                    { name: 'Hemoglobin Rust', color: '#991b1b', code: 'HEM' },
+                    { name: 'Biolum Iridophore', color: '#22d3ee', code: 'IRI' },
+                    { name: 'Pelagic Deep Blue', color: '#172554', code: 'PEL' }
+                ]
+            },
+            {
+                id: 'stomata',
+                name: 'Stomatal Guard Cells',
+                subtitle: 'Leaf Epidermis Micro-Anatomy',
+                juniorDesc: 'Plant leaves have microscopic mouths called stomata that open and close to let plants breathe in air and drink light!',
+                adultDesc: 'Stomatal pore aperture is dynamically regulated by guard cell turgor pressure, chloroplast thylakoid ion flux, and environmental CO2 concentrations.',
+                pigments: [
+                    { name: 'Chlorophyll A', color: '#16a34a', code: 'CHL-A' },
+                    { name: 'Chlorophyll B', color: '#4d7c0f', code: 'CHL-B' },
+                    { name: 'Carotenoid Gold', color: '#eab308', code: 'CAR' },
+                    { name: 'Cellulose White', color: '#f8fafc', code: 'CEL' },
+                    { name: 'Xanthophyll Yellow', color: '#fde047', code: 'XAN' },
+                    { name: 'Anthocyanin Violet', color: '#7e22ce', code: 'ANT' },
+                    { name: 'Thylakoid Emerald', color: '#047857', code: 'THY' },
+                    { name: 'Cuticle Wax Green', color: '#a3e635', code: 'CUT' },
+                    { name: 'Vacuole Sap Rose', color: '#be123c', code: 'VAC' },
+                    { name: 'Lignin Bark Brown', color: '#78350f', code: 'LIG' },
+                    { name: 'Stroma Cytosol Lime', color: '#84cc16', code: 'STR' },
+                    { name: 'Epidermis Shadow', color: '#334155', code: 'EPI' }
+                ]
+            },
+            {
+                id: 'honeybee',
+                name: 'Apis mellifera',
+                subtitle: 'Compound Eye & Wax Comb',
+                juniorDesc: 'Honeybees use hexagonal wax combs because six-sided shapes store the most delicious honey using the least amount of wax!',
+                adultDesc: 'Apis mellifera compound eyes feature thousands of hexagonal ommatidia facets optimized for polarized ultraviolet floral nectar navigation.',
+                pigments: [
+                    { name: 'Pollen Gold', color: '#f59e0b', code: 'POL' },
+                    { name: 'Chitin Obsidian', color: '#1e293b', code: 'CHT' },
+                    { name: 'Honey Amber', color: '#b45309', code: 'HNY' },
+                    { name: 'Royal Jelly Cream', color: '#fef3c7', code: 'ROY' },
+                    { name: 'Propolis Brown', color: '#78350f', code: 'PRP' },
+                    { name: 'Nectar Yellow', color: '#facc15', code: 'NEC' },
+                    { name: 'Wax Comb Ochre', color: '#d97706', code: 'WAX' },
+                    { name: 'Compound Eye Jet', color: '#020617', code: 'EYE' },
+                    { name: 'Venom Peptide Amber', color: '#f97316', code: 'VNM' },
+                    { name: 'Wing Vein Chitin', color: '#475569', code: 'WNG' },
+                    { name: 'Abdomen Black', color: '#0f172a', code: 'STR' },
+                    { name: 'Floral Pollen Violet', color: '#a855f7', code: 'FLR' }
+                ]
+            },
+            {
+                id: 'jellyfish',
+                name: 'Aequorea victoria',
+                subtitle: 'Bioluminescent Radial Canals',
+                juniorDesc: 'Bioluminescent jellyfish make their own magical glowing light in dark ocean waters to signal friends and scare off predators!',
+                adultDesc: 'Aequorea victoria hydrozoan mesoglea contains calcium-activated photoprotein aequorin and green fluorescent protein (GFP) radial structures.',
+                pigments: [
+                    { name: 'Luciferin Glow', color: '#38bdf8', code: 'LCF' },
+                    { name: 'GFP Emerald', color: '#10b981', code: 'GFP' },
+                    { name: 'Deep Ocean Blue', color: '#1e1b4b', code: 'OCN' },
+                    { name: 'Mesoglea Cyan', color: '#22d3ee', code: 'MSG' },
+                    { name: 'Photoprotein Blue', color: '#60a5fa', code: 'PHP' },
+                    { name: 'Tentacle Biolum', color: '#a855f7', code: 'TNT' },
+                    { name: 'Abyssal Midnight', color: '#020617', code: 'ABY' },
+                    { name: 'Calcium White', color: '#f8fafc', code: 'CAL' },
+                    { name: 'Aequorin Azure', color: '#0284c7', code: 'AEQ' },
+                    { name: 'Bell Margin Violet', color: '#7e22ce', code: 'MAR' },
+                    { name: 'Radial Canal Teal', color: '#14b8a6', code: 'RAD' },
+                    { name: 'Phosphor Seafoam', color: '#34d399', code: 'PHS' }
+                ]
+            },
+            {
+                id: 'redwood',
+                name: 'Sequoia sempervirens',
+                subtitle: 'Concentric Tree Ring Capillaries',
+                juniorDesc: 'Redwood trees are the tallest living things on Earth! Counting their trunk rings reveals how old the tree is and how wet each spring was.',
+                adultDesc: 'Sequoia sempervirens secondary xylem tracheids deposit thick lignified cell walls forming annual growth rings and radial sapwood transport channels.',
+                pigments: [
+                    { name: 'Tannin Bark Rust', color: '#9a3412', code: 'TAN' },
+                    { name: 'Sapwood Amber', color: '#d97706', code: 'SAP' },
+                    { name: 'Heartwood Crimson', color: '#881337', code: 'HRT' },
+                    { name: 'Needle Chlorophyll', color: '#15803d', code: 'NDL' },
+                    { name: 'Cambium Yellow', color: '#fef08a', code: 'CAM' },
+                    { name: 'Lichen Mint', color: '#86efac', code: 'LIC' },
+                    { name: 'Xylem Channel Olive', color: '#4d7c0f', code: 'XYL' },
+                    { name: 'Furrow Charcoal', color: '#1c1917', code: 'FRW' },
+                    { name: 'Cone Resin Ochre', color: '#b45309', code: 'RSN' },
+                    { name: 'Canopy Moss Green', color: '#16a34a', code: 'MSS' },
+                    { name: 'Humus Soil Umber', color: '#451a03', code: 'HUM' },
+                    { name: 'Fog Droplet Slate', color: '#94a3b8', code: 'FOG' }
+                ]
+            },
+            {
+                id: 'mycorrhizae',
+                name: 'Mycorrhizal Fungal Network',
+                subtitle: 'Hyphal Filament Web',
+                juniorDesc: 'Fungi build an underground "Wood Wide Web" that helps forest trees share nutrients and communicate with each other secretly!',
+                adultDesc: 'Symbiotic mycorrhizal hyphal networks penetrate plant root cortical cells, facilitating bilateral nutrient exchange of soil phosphorus and photosynthetic carbon.',
+                pigments: [
+                    { name: 'Spore Gold', color: '#ca8a04', code: 'SPR' },
+                    { name: 'Hyphal White', color: '#f1f5f9', code: 'HYP' },
+                    { name: 'Humus Brown', color: '#78350f', code: 'HUM' },
+                    { name: 'Mycelium Violet', color: '#6b21a8', code: 'MYC' },
+                    { name: 'Chitin Cell Wall', color: '#451a03', code: 'CWL' },
+                    { name: 'Cortical Root Ochre', color: '#d97706', code: 'CRT' },
+                    { name: 'Phosphorus Yellow', color: '#facc15', code: 'PHO' },
+                    { name: 'Basidium Cap Rust', color: '#9a3412', code: 'BSD' },
+                    { name: 'Sporangium Plum', color: '#581c87', code: 'SPG' },
+                    { name: 'Forest Detritus', color: '#0f172a', code: 'DET' },
+                    { name: 'Symbiont Root Green', color: '#15803d', code: 'SYM' },
+                    { name: 'Enzyme Amber', color: '#b45309', code: 'ENZ' }
+                ]
+            }
+        ];
+
+        // FULL 102 CURATED BIOLOGICAL & NATURE IMAGE LIBRARY SPECIMENS
+        const IMAGE_LIBRARY = [];
+
+        // Helper generator for 102 library entries
+        (function generateFullLibrary() {
+            const categories = [
+                { name: 'marine', count: 20, prefix: 'm', titles: ['Green Sea Turtle', 'Moon Jellyfish', 'Coral Reef Colony', 'Manta Ray Wing', 'Clownfish Anemone', 'Nautilus Shell', 'Basking Shark', 'Giant Kelp Forest', 'Crown-of-Thorns Starfish', 'Seahorse Tail', 'Blue Ringed Octopus', 'Whale Shark Spots', 'Sea Urchin Spines', 'Loxodonta Seal', 'Deep Sea Chimera', 'Stingray Pectoral', 'Parrotfish Beak', 'Harbor Porpoise', 'Dungeness Crab', 'Spotted Eagle Ray'] },
+                { name: 'botany', count: 20, prefix: 'b', titles: ['Fern Frond Leaf', 'Redwood Bark', 'Sunflower Fibonnaci', 'Monstera Fenestrations', 'Orchid Petals', 'Venus Flytrap Hair', 'Pinecone Scales', 'Water Lily Pad', 'Moss Capsule Seta', 'Bamboo Internode', 'Dandelion Seed Head', 'Cactus Areole Spines', 'Pitcher Plant Rim', 'Maple Leaf Veins', 'Ginkgo Biloba Leaf', 'Lotus Stem Channels', 'Baobab Bark', 'Eucalyptus Leaves', 'Oak Tree Canopy', 'Succulent Rosette'] },
+                { name: 'insects', count: 20, prefix: 'i', titles: ['Honeybee Compound Eye', 'Monarch Scale Wing', 'Dragonfly Wing Venation', 'Ladybug Elytra', 'Praying Mantis Foreleg', 'Luna Moth Antennae', 'Stag Beetle Mandibles', 'Cicada Transparent Wing', 'Katydid Leaf Mimic', 'Grasshopper Leg Muscle', 'Firefly Abdomen Segment', 'Hercules Beetle Horn', 'Leafcutter Ant Jaw', 'Jewel Beetle Carapace', 'Silk Moth Cocoon', 'Bumblebee Corbicula', 'Swallowtail Caterpillar', 'Wasp Waist Petiole', 'Water Strider Tarsus', 'Termite Mound Arch'] },
+                { name: 'animals', count: 22, prefix: 'a', titles: ['Chameleon Nanocrystals', 'Peacock Structural Barbules', 'Leopard Rosette Pattern', 'Zebra Stripe Alignment', 'Snowy Owl Feather Down', 'Gecko Toe Lamellae', 'Cheetah Claws', 'Toucan Serrated Beak', 'Panther Iris Anatomy', 'Pangolin Keratin Scales', 'Arctic Fox Coat', 'Flamingo Plumage', 'Koala Foot Paw', 'Kangaroo Tendon', 'Armadillo Shell Bands', 'Chimpanzee Fingerprint', 'Wolf Fur Texture', 'Elephant Trunk Rings', 'Giraffe Skin Tiles', 'Tree Frog Foot Pads', 'Walrus Tusk Ivory', 'Iguana Crest Spines'] },
+                { name: 'micro', count: 20, prefix: 'u', titles: ['Leaf Guard Cell Stomata', 'Diptera Ommatidia Facets', 'Chloroplast Thylakoids', 'Radiolarian Silica Skeleton', 'Foraminifera Shell Chamber', 'Paramecium Cilia Web', 'Euglena Flagellum Stem', 'Diatom Glass Frustule', 'Xylem Water Capillaries', 'Phloem Sieve Tubes', 'Onion Skin Epidermis', 'Pollen Grain Micro-Spikes', 'Amoeba Pseudopodium', 'Bone Tissue Haversian', 'Nerve Neuron Axon', 'Red Blood Cell Biconcave', 'Skeletal Muscle Striations', 'Capillary Vessel Wall', 'Root Tip Meristem', 'Mycorrhizal Arbuscule'] }
+            ];
+
+            function makeUniqueSpecimenSvg(cat, i, title) {
+                const palettes = {
+                    'marine': { b1: '#031926', b2: '#0b3954', s1: '#087e8b', s2: '#38bdf8', s3: '#67e8f9', ac: '#00ffcc' },
+                    'botany': { b1: '#0d1f12', b2: '#1b4332', s1: '#2d6a4f', s2: '#74c69d', s3: '#b7e4c7', ac: '#52b788' },
+                    'insects': { b1: '#231124', b2: '#4a154b', s1: '#a2238e', s2: '#f472b6', s3: '#fbcfe8', ac: '#fbbf24' },
+                    'animals': { b1: '#1c1917', b2: '#44403c', s1: '#78716c', s2: '#fb923c', s3: '#fed7aa', ac: '#f97316' },
+                    'micro': { b1: '#180e29', b2: '#3b1c61', s1: '#6d28d9', s2: '#a855f7', s3: '#e9d5ff', ac: '#c084fc' }
+                };
+                const pal = palettes[cat] || { b1: '#0f172a', b2: '#1e293b', s1: '#334155', s2: '#64748b', s3: '#cbd5e1', ac: '#38bdf8' };
+                const t = title.toLowerCase();
+                let inner = '';
+
+                if (t.includes('nautilus') || t.includes('shell') || t.includes('chamber')) {
+                    let pts = [];
+                    for (let a = 0; a < 1300; a += 15) {
+                        const th = a * Math.PI / 180;
+                        const r = 4.5 * Math.exp(0.12 * th);
+                        if (r > 82) break;
+                        pts.push(`${(100 + r * Math.cos(th)).toFixed(1)},${(100 + r * Math.sin(th)).toFixed(1)}`);
+                    }
+                    inner = `<polyline points="${pts.join(' ')}" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>`;
+                    for (let a = 120; a < 1100; a += 90) {
+                        const th = a * Math.PI / 180;
+                        const r = 4.5 * Math.exp(0.12 * th);
+                        if (r > 80) break;
+                        const x = (100 + r * Math.cos(th)).toFixed(1);
+                        const y = (100 + r * Math.sin(th)).toFixed(1);
+                        inner += `<line x1="100" y1="100" x2="${x}" y2="${y}" stroke="${pal.s1}" stroke-width="1.5" stroke-dasharray="2,2"/>
+                                  <circle cx="${x}" cy="${y}" r="2.2" fill="${pal.ac}"/>`;
+                    }
+                } else if (t.includes('turtle') || t.includes('carapace') || t.includes('scute') || t.includes('tortoise')) {
+                    inner = `<ellipse cx="100" cy="100" rx="55" ry="68" fill="none" stroke="${pal.s2}" stroke-width="3"/>
+                             <polygon points="90,50 110,50 115,65 100,72 85,65" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="90,75 110,75 116,95 100,102 84,95" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="90,105 110,105 115,125 100,132 85,125" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <polygon points="84,80 55,72 52,92 84,96" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <polygon points="116,80 145,72 148,92 116,96" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <path d="M 55,60 Q 20,40 15,70 Q 25,95 52,80" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                             <path d="M 145,60 Q 180,40 185,70 Q 175,95 148,80" fill="none" stroke="${pal.s2}" stroke-width="2"/>`;
+                } else if (t.includes('jellyfish') || t.includes('medusa') || t.includes('bell')) {
+                    inner = `<path d="M 35,90 Q 100,20 165,90 Q 140,98 100,92 Q 60,98 35,90 Z" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 50,88 Q 100,38 150,88" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="3,3"/>
+                             <path d="M 90,92 Q 80,125 92,160 Q 100,140 108,160 Q 120,125 110,92" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 50,92 Q 62,125 50,155 T 60,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 75,92 Q 87,125 75,155 T 85,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 125,92 Q 113,125 125,155 T 115,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 150,92 Q 138,125 150,155 T 140,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('stomata') || t.includes('guard cell')) {
+                    inner = `<ellipse cx="80" cy="100" rx="18" ry="46" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="120" cy="100" rx="18" ry="46" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="100" cy="100" rx="6" ry="32" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <circle cx="80" cy="75" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="80" cy="100" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="80" cy="125" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="75" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="100" r="3.5" fill="${pal.s3}"/>
+                             <circle cx="120" cy="125" r="3.5" fill="${pal.s3}"/>
+                             <polygon points="40,50 70,54 62,90 35,85" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>
+                             <polygon points="160,50 130,54 138,90 165,85" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>`;
+                } else if (t.includes('bee') || t.includes('ant') || t.includes('beetle') || t.includes('cicada')) {
+                    inner = `<ellipse cx="100" cy="50" rx="14" ry="12" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                             <ellipse cx="100" cy="80" rx="20" ry="18" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <ellipse cx="100" cy="130" rx="22" ry="34" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 80,115 Q 100,123 120,115" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <path d="M 80,130 Q 100,138 120,130" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <path d="M 80,145 Q 100,153 120,145" fill="none" stroke="${pal.s1}" stroke-width="2"/>
+                             <ellipse cx="55" cy="75" rx="36" ry="15" transform="rotate(-32 55 75)" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <ellipse cx="145" cy="75" rx="36" ry="15" transform="rotate(32 145 75)" fill="none" stroke="${pal.s3}" stroke-width="1.8"/>
+                             <path d="M 94,40 Q 82,24 70,26" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                             <path d="M 106,40 Q 118,24 130,26" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('butterfly') || t.includes('moth')) {
+                    inner = `<path d="M 100,80 Q 50,15 25,45 Q 15,80 70,105 Q 95,95 100,80" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 100,80 Q 150,15 175,45 Q 185,80 130,105 Q 105,95 100,80" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <path d="M 95,100 Q 40,115 50,155 Q 80,175 98,125" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 105,100 Q 160,115 150,155 Q 120,175 102,125" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <ellipse cx="100" cy="100" rx="6" ry="32" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <circle cx="55" cy="60" r="6" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>
+                             <circle cx="145" cy="60" r="6" fill="none" stroke="${pal.s1}" stroke-width="1.5"/>`;
+                } else if (t.includes('redwood') || t.includes('tree') || t.includes('ring') || t.includes('pine') || t.includes('bark') || t.includes('forest')) {
+                    inner = `<circle cx="100" cy="100" r="18" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="4,2"/>
+                             <circle cx="100" cy="100" r="34" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="5,3"/>
+                             <circle cx="100" cy="100" r="50" fill="none" stroke="${pal.s1}" stroke-width="1.8" stroke-dasharray="6,2"/>
+                             <circle cx="100" cy="100" r="68" fill="none" stroke="${pal.s1}" stroke-width="1.8"/>
+                             <circle cx="100" cy="100" r="84" fill="none" stroke="${pal.s2}" stroke-width="3"/>`;
+                    for (let a = 0; a < 360; a += 30) {
+                        const th = a * Math.PI / 180;
+                        inner += `<line x1="${(100 + 18 * Math.cos(th)).toFixed(1)}" y1="${(100 + 18 * Math.sin(th)).toFixed(1)}" x2="${(100 + 84 * Math.cos(th)).toFixed(1)}" y2="${(100 + 84 * Math.sin(th)).toFixed(1)}" stroke="${pal.s3}" stroke-width="1.2"/>`;
+                    }
+                    inner += `<circle cx="100" cy="100" r="6" fill="${pal.ac}"/>`;
+                } else if (t.includes('fungi') || t.includes('mushroom') || t.includes('mycorrhiz') || t.includes('gills')) {
+                    inner = `<path d="M 25,100 Q 100,20 175,100 Q 140,110 100,105 Q 60,110 25,100 Z" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>`;
+                    for (let gx = 40; gx <= 160; gx += 15) {
+                        inner += `<line x1="${gx}" y1="102" x2="100" y2="40" stroke="${pal.s1}" stroke-width="1.2"/>`;
+                    }
+                    inner += `<path d="M 85,105 L 80,165 Q 100,172 120,165 L 115,105" fill="none" stroke="${pal.s2}" stroke-width="2"/>
+                              <path d="M 100,168 Q 75,175 70,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>
+                              <path d="M 100,168 Q 125,175 130,185" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                } else if (t.includes('peacock') || t.includes('feather') || t.includes('barb') || t.includes('wing') || t.includes('down')) {
+                    inner = `<ellipse cx="100" cy="75" rx="32" ry="42" fill="none" stroke="${pal.s2}" stroke-width="2.5"/>
+                             <ellipse cx="100" cy="83" rx="20" ry="26" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <circle cx="100" cy="87" r="10" fill="none" stroke="${pal.ac}" stroke-width="2"/>
+                             <line x1="100" y1="30" x2="100" y2="180" stroke="${pal.s2}" stroke-width="3"/>`;
+                    for (let y = 45; y < 175; y += 14) {
+                        const w = 55 - (y - 45) * 0.28;
+                        inner += `<line x1="100" y1="${y}" x2="${100 - w}" y2="${y - 15}" stroke="${pal.s1}" stroke-width="1.4"/>
+                                  <line x1="100" y1="${y}" x2="${100 + w}" y2="${y - 15}" stroke="${pal.s1}" stroke-width="1.4"/>`;
+                    }
+                } else if (t.includes('lotus') || t.includes('flower') || t.includes('petal') || t.includes('venation') || t.includes('leaf')) {
+                    let petStr = '';
+                    const petals = 8;
+                    for (let p = 0; p < petals; p++) {
+                        const ang = p * 45;
+                        petStr += `<ellipse cx="100" cy="58" rx="14" ry="32" transform="rotate(${ang} 100 100)" fill="none" stroke="${pal.s2}" stroke-width="2"/>`;
+                    }
+                    inner = petStr + `<circle cx="100" cy="100" r="16" fill="none" stroke="${pal.ac}" stroke-width="2.2"/>`;
+                } else if (t.includes('diatom') || t.includes('frustule') || t.includes('silica') || t.includes('radiolarian')) {
+                    inner = `<circle cx="100" cy="100" r="72" fill="none" stroke="${pal.s2}" stroke-width="3"/>
+                             <circle cx="100" cy="100" r="48" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <circle cx="100" cy="100" r="22" fill="none" stroke="${pal.ac}" stroke-width="2"/>`;
+                    for (let a = 0; a < 360; a += 30) {
+                        const th = a * Math.PI / 180;
+                        inner += `<circle cx="${(100 + 60 * Math.cos(th)).toFixed(1)}" cy="${(100 + 60 * Math.sin(th)).toFixed(1)}" r="3" fill="none" stroke="${pal.s1}" stroke-width="1.4"/>`;
+                    }
+                } else if (t.includes('dna') || t.includes('helix') || t.includes('neuron') || t.includes('axon')) {
+                    for (let y = 35; y < 175; y += 14) {
+                        const x1 = (100 + 35 * Math.sin(y * 0.08)).toFixed(1);
+                        const x2 = (100 - 35 * Math.sin(y * 0.08)).toFixed(1);
+                        inner += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${pal.s1}" stroke-width="1.8"/>
+                                  <circle cx="${x1}" cy="${y}" r="2.5" fill="${pal.ac}"/>
+                                  <circle cx="${x2}" cy="${y}" r="2.5" fill="${pal.s2}"/>`;
+                    }
+                } else {
+                    const r = 32 + (i % 6) * 6;
+                    inner = `<ellipse cx="100" cy="100" rx="${(r * 1.2).toFixed(1)}" ry="${(r * 0.75).toFixed(1)}" fill="none" stroke="${pal.s2}" stroke-width="2.8"/>
+                             <ellipse cx="${(100 - r * 0.7).toFixed(1)}" cy="${(100 - r * 0.2).toFixed(1)}" rx="${(r * 0.45).toFixed(1)}" ry="${(r * 0.35).toFixed(1)}" fill="none" stroke="${pal.s3}" stroke-width="2"/>
+                             <path d="M 40,90 Q 100,85 160,95" fill="none" stroke="${pal.s1}" stroke-width="2"/>`;
+                    for (let rx = 70; rx <= 140; rx += 16) {
+                        inner += `<path d="M ${rx},88 Q ${rx + 6},110 ${rx - 2},126" fill="none" stroke="${pal.ac}" stroke-width="1.5"/>`;
+                    }
+                }
+
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+                    <defs>
+                        <radialGradient id="g_${cat}_${i}" cx="50%" cy="50%" r="70%">
+                            <stop offset="0%" stop-color="${pal.b2}"/>
+                            <stop offset="100%" stop-color="${pal.b1}"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="200" height="200" rx="16" fill="url(#g_${cat}_${i})"/>
+                    ${inner}
+                    <text x="100" y="185" font-family="system-ui, sans-serif" font-size="8.5" font-weight="bold" fill="${pal.s2}" text-anchor="middle" letter-spacing="0.5">${title.toUpperCase().slice(0, 24)}</text>
+                </svg>`;
+                return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+            }
+
+            categories.forEach(cat => {
+                for (let i = 1; i <= cat.count; i++) {
+                    const id = `${cat.prefix}${i}`;
+                    const title = cat.titles[i - 1] || `${cat.name} Specimen #${i}`;
+                    const svgDataUrl = makeUniqueSpecimenSvg(cat.name, i, title);
+
+                    IMAGE_LIBRARY.push({
+                        id: id,
+                        cat: cat.name,
+                        title: title,
+                        juniorDesc: `Discover the amazing ${title}! Nature shapes every line to help this organism survive and thrive.`,
+                        adultDesc: `${title} exhibits adaptive morphological structures optimized for biomechanical efficiency and biological resonance.`,
+                        url: svgDataUrl
+                    });
+                }
+            });
+        })();
+
+        let activeLibraryCategory = 'all';
+        let currentFieldNoteMode = 'junior'; // 'junior' or 'adult'
+        let isSpeakingNotes = false;
+
+        // ============================================================================
+        // INITIALIZATION & CANVAS RESIZING
+        // ============================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            paintCanvas = document.getElementById('paint-canvas');
+            paintCtx = paintCanvas.getContext('2d');
+            overlayCanvas = document.getElementById('overlay-canvas');
+            overlayCtx = overlayCanvas.getContext('2d');
+
+            window.addEventListener('resize', resizeCanvases);
+
+            renderPresetModelList();
+            renderLibraryCarousel();
+            setActiveModel(PRESET_MODELS[0]);
+
+            setupPaintListeners();
+
+            document.getElementById('brush-size').addEventListener('input', (e) => {
+                brushSize = parseInt(e.target.value, 10);
+            });
+        });
+
+        function resizeCanvases() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+
+            paintCanvas.width = w;
+            paintCanvas.height = h;
+            overlayCanvas.width = w;
+            overlayCanvas.height = h;
+
+            renderOverlay();
+            updatePrecisionScore();
+        }
+
+        function renderPresetModelList() {
+            const listEl = document.getElementById('preset-model-list');
+            if (!listEl) return;
+            listEl.innerHTML = PRESET_MODELS.map(model => `
+                <button onclick="selectPresetModel('${model.id}')" id="model-btn-${model.id}" class="model-btn w-full text-left p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-950/60 transition-all flex items-center justify-between">
+                    <div class="truncate">
+                        <span class="block text-xs font-bold text-slate-200 truncate">${model.name}</span>
+                        <span class="block text-[10px] text-slate-500 truncate">${model.subtitle}</span>
+                    </div>
+                    <span class="text-xs text-teal-400">✨</span>
+                </button>
+            `).join('');
+        }
+
+        function selectPresetModel(id) {
+            customImageElement = null;
+            const m = PRESET_MODELS.find(item => item.id === id);
+            if (m) {
+                setActiveModel(m);
+            }
+        }
+
+        // ============================================================================
+        // 100+ IMAGE LIBRARY CAROUSEL & CATEGORY FILTERING ENGINE
+        // ============================================================================
+        function filterLibraryCategory(cat) {
+            activeLibraryCategory = cat;
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                btn.className = "cat-filter-btn shrink-0 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all font-semibold";
+            });
+            const activeBtn = document.getElementById(`cat-btn-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = "cat-filter-btn active shrink-0 px-2.5 py-1 rounded-lg bg-teal-500 text-slate-950 font-bold transition-all";
+            }
+            renderLibraryCarousel();
+        }
+
+        function renderLibraryCarousel() {
+            const container = document.getElementById('library-horizontal-scroll');
+            if (!container) return;
+            const items = activeLibraryCategory === 'all'
+                ? IMAGE_LIBRARY
+                : IMAGE_LIBRARY.filter(img => img.cat === activeLibraryCategory);
+
+            container.innerHTML = items.map(img => `
+                <div onclick="selectLibraryImage('${img.id}')" class="shrink-0 w-24 h-24 rounded-xl bg-slate-950 border border-slate-800 hover:border-teal-400 cursor-pointer overflow-hidden relative group/thumb transition-all shadow-md snap-start flex flex-col justify-between">
+                    <img src="${img.url}" alt="${img.title}" class="absolute inset-0 w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-300 opacity-70 group-hover/thumb:opacity-100" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                    <div class="relative z-10 p-1.5 mt-auto">
+                        <span class="block text-[10px] font-bold text-slate-100 truncate drop-shadow-md">${img.title}</span>
+                        <span class="block text-[8px] text-teal-300 font-mono truncate opacity-90">${img.cat.toUpperCase()}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            const badge = document.getElementById('library-count-badge');
+            if (badge) badge.innerText = `${items.length} Specimen`;
+        }
+
+        function selectLibraryImage(id) {
+            const item = IMAGE_LIBRARY.find(img => img.id === id);
+            if (!item) return;
+
+            const loader = document.getElementById('canvas-loader');
+            document.getElementById('loader-text').innerText = `Extracting ${item.title} Line Art...`;
+            loader.classList.remove('hidden');
+
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                customImageElement = img;
+                activeModel = {
+                    id: 'lib-' + item.id,
+                    name: item.title,
+                    subtitle: `${item.cat.toUpperCase()} Specimen`,
+                    juniorDesc: item.juniorDesc || item.desc || "A fascinating living creature in nature!",
+                    adultDesc: item.adultDesc || item.desc || "Biological morphological structure specimen.",
+                    pigments: [
+                        { name: 'Chlorophyll A', color: '#16a34a', code: 'CHL-A' },
+                        { name: 'Chlorophyll B', color: '#4d7c0f', code: 'CHL-B' },
+                        { name: 'Carotenoid Gold', color: '#eab308', code: 'CAR' },
+                        { name: 'Scute Amber', color: '#d97706', code: 'AMB' },
+                        { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                        { name: 'Luciferin Glow', color: '#38bdf8', code: 'LCF' },
+                        { name: 'GFP Emerald', color: '#10b981', code: 'GFP' },
+                        { name: 'Anthocyanin Violet', color: '#7e22ce', code: 'ANT' },
+                        { name: 'Tannin Bark Rust', color: '#9a3412', code: 'TAN' },
+                        { name: 'Cellulose White', color: '#f8fafc', code: 'CEL' },
+                        { name: 'Pollen Ochre', color: '#f59e0b', code: 'POL' },
+                        { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' }
+                    ]
+                };
+
+                setActiveModel(activeModel);
+                loader.classList.add('hidden');
+            };
+            img.onerror = function() {
+                loader.classList.add('hidden');
+            };
+            img.src = item.url;
+        }
+
+        // ============================================================================
+        // FIELD NOTE MODE SWITCHER & READ ALOUD (TTS) ENGINE
+        // ============================================================================
+        function setFieldNoteMode(mode) {
+            currentFieldNoteMode = mode;
+
+            const jrBtn = document.getElementById('note-mode-junior-btn');
+            const adBtn = document.getElementById('note-mode-adult-btn');
+
+            if (mode === 'junior') {
+                jrBtn.className = "px-2 py-0.5 rounded bg-teal-500 text-slate-950 font-bold transition-all";
+                adBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all";
+            } else {
+                adBtn.className = "px-2 py-0.5 rounded bg-teal-500 text-slate-950 font-bold transition-all";
+                jrBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-slate-200 transition-all";
+            }
+
+            updateFieldNoteDisplay();
+        }
+
+        function updateFieldNoteDisplay() {
+            if (!activeModel) return;
+
+            const descEl = document.getElementById('active-model-desc');
+            const noteText = currentFieldNoteMode === 'junior'
+                ? (activeModel.juniorDesc || activeModel.desc)
+                : (activeModel.adultDesc || activeModel.desc);
+
+            if (descEl) descEl.innerText = noteText || "Biological details loading...";
+
+            if (isSpeakingNotes) {
+                stopReadAloud();
+            }
+        }
+
+        function toggleReadAloud() {
+            if (isSpeakingNotes) {
+                stopReadAloud();
+            } else {
+                startReadAloud();
+            }
+        }
+
+        function startReadAloud() {
+            if (!('speechSynthesis' in window)) {
+                alert("Text-to-Speech is not supported in this browser.");
+                return;
+            }
+
+            const noteText = document.getElementById('active-model-desc').innerText;
+            if (!noteText) return;
+
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(noteText);
+            utterance.rate = currentFieldNoteMode === 'junior' ? 0.9 : 1.0;
+            utterance.pitch = currentFieldNoteMode === 'junior' ? 1.1 : 1.0;
+
+            utterance.onend = function() { stopReadAloud(); };
+            utterance.onerror = function() { stopReadAloud(); };
+
+            window.speechSynthesis.speak(utterance);
+            isSpeakingNotes = true;
+
+            document.getElementById('tts-label').innerText = "Stop Reading";
+            document.getElementById('tts-icon').innerText = "⏹️";
+            document.getElementById('tts-read-btn').classList.add('border-teal-500', 'bg-teal-950/40');
+        }
+
+        function stopReadAloud() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isSpeakingNotes = false;
+
+            document.getElementById('tts-label').innerText = "Read Notes Aloud";
+            document.getElementById('tts-icon').innerText = "🔊";
+            document.getElementById('tts-read-btn').classList.remove('border-teal-500', 'bg-teal-950/40');
+        }
+
+        function setActiveModel(model) {
+            activeModel = model;
+
+            document.querySelectorAll('.model-btn').forEach(btn => {
+                btn.classList.remove('border-teal-500', 'bg-teal-950/30');
+                btn.classList.add('border-slate-800');
+            });
+            const activeBtn = document.getElementById(`model-btn-${model.id}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800');
+                activeBtn.classList.add('border-teal-500', 'bg-teal-950/30');
+            }
+
+            document.getElementById('active-model-title').innerText = model.name;
+            updateFieldNoteDisplay();
+            renderPigmentSwatches();
+
+            clearPaintLayer();
+            resizeCanvases();
+        }
+
+        function renderPigmentSwatches() {
+            const container = document.getElementById('pigment-swatch-list');
+            if (!container || !activeModel || !activeModel.pigments) return;
+            container.innerHTML = activeModel.pigments.map((p, idx) => `
+                <button onclick="setPigment('${p.color}')" id="pigment-btn-${idx}" class="pigment-btn p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-950 flex items-center space-x-2 transition-all">
+                    <span class="w-4 h-4 rounded-full border border-white/20 shrink-0" style="background-color: ${p.color};"></span>
+                    <div class="overflow-hidden text-left">
+                        <span class="block text-[10px] font-bold text-slate-200 truncate">${p.name}</span>
+                        <span class="block text-[8px] font-mono text-slate-500">${p.code}</span>
+                    </div>
+                </button>
+            `).join('');
+
+            if (activeModel.pigments.length > 0) {
+                setPigment(activeModel.pigments[0].color);
+            }
+        }
+
+        function setPigment(color) {
+            activePigment = color;
+            setTool('brush');
+
+            document.querySelectorAll('.pigment-btn').forEach(btn => {
+                btn.classList.remove('border-teal-400', 'ring-1', 'ring-teal-400');
+            });
+            if (activeModel && activeModel.pigments) {
+                const found = activeModel.pigments.findIndex(p => p.color === color);
+                if (found !== -1) {
+                    const activeBtn = document.getElementById(`pigment-btn-${found}`);
+                    if (activeBtn) activeBtn.classList.add('border-teal-400', 'ring-1', 'ring-teal-400');
+                }
+            }
+        }
+
+        function setTexture(tex) {
+            activeTexture = tex;
+            document.querySelectorAll('.tex-btn').forEach(btn => {
+                btn.classList.remove('border-teal-500', 'bg-teal-950/30');
+                btn.classList.add('border-slate-800');
+            });
+            const activeBtn = document.getElementById(`tex-btn-${tex}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800');
+                activeBtn.classList.add('border-teal-500', 'bg-teal-950/30');
+            }
+        }
+
+        function setTool(tool) {
+            activeTool = tool;
+            const bBtn = document.getElementById('tool-brush-btn');
+            const kBtn = document.getElementById('tool-bucket-btn');
+            const eBtn = document.getElementById('tool-eraser-btn');
+
+            [bBtn, kBtn, eBtn].forEach(btn => {
+                if (btn) btn.className = "p-2 rounded-lg text-slate-400 hover:text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            });
+
+            if (tool === 'brush') {
+                if (bBtn) bBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            } else if (tool === 'bucket') {
+                if (kBtn) kBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            } else {
+                if (eBtn) eBtn.className = "p-2 rounded-lg text-slate-200 bg-slate-800 font-bold text-xs flex items-center space-x-1.5 transition-all";
+            }
+        }
+
+        function toggleTremorSmooth() {
+            tremorSmoothEnabled = !tremorSmoothEnabled;
+            document.getElementById('tremor-status').innerText = tremorSmoothEnabled ? "ON" : "OFF";
+            document.getElementById('tremor-status').className = tremorSmoothEnabled ? "text-teal-400 font-bold" : "text-slate-500 font-bold";
+        }
+
+        function clearPaintLayer() {
+            if (paintCtx && paintCanvas) {
+                paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+            }
+            updatePrecisionScore();
+        }
+
+        // ============================================================================
+        // WASM-STYLE OFFLINE IMAGE SOBEL EDGE FILTER DE-COLORER & UPLOADER
+        // ============================================================================
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const loader = document.getElementById('canvas-loader');
+            loader.classList.remove('hidden');
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    customImageElement = img;
+                    activeModel = {
+                        id: 'upload-' + Date.now(),
+                        name: file.name.split('.')[0] || 'Uploaded Photo',
+                        subtitle: 'Local WASM Sobel Filter',
+                        juniorDesc: 'Your uploaded photo converted into custom line art!',
+                        adultDesc: 'Custom high-contrast spatial derivative line art extraction.',
+                        pigments: [
+                        { name: 'Chlorophyll A', color: '#16a34a', code: 'CHL-A' },
+                        { name: 'Chlorophyll B', color: '#4d7c0f', code: 'CHL-B' },
+                        { name: 'Carotenoid Gold', color: '#eab308', code: 'CAR' },
+                        { name: 'Scute Amber', color: '#d97706', code: 'AMB' },
+                        { name: 'Guanine Cyan', color: '#06b6d4', code: 'CYN' },
+                        { name: 'Luciferin Glow', color: '#38bdf8', code: 'LCF' },
+                        { name: 'GFP Emerald', color: '#10b981', code: 'GFP' },
+                        { name: 'Anthocyanin Violet', color: '#7e22ce', code: 'ANT' },
+                        { name: 'Tannin Bark Rust', color: '#9a3412', code: 'TAN' },
+                        { name: 'Cellulose White', color: '#f8fafc', code: 'CEL' },
+                        { name: 'Pollen Ochre', color: '#f59e0b', code: 'POL' },
+                        { name: 'Basalt Obsidian', color: '#0f172a', code: 'BAS' }
+                    ]
+                    };
+
+                    setActiveModel(activeModel);
+                    loader.classList.add('hidden');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateDetailThreshold(val) {
+            detailThreshold = parseInt(val, 10);
+            const label = document.getElementById('detail-val-label');
+            if (detailThreshold < 80) label.innerText = "Ultra Fine";
+            else if (detailThreshold < 130) label.innerText = "High";
+            else label.innerText = "Medium";
+
+            if (customImageElement) {
+                renderOverlay();
+            }
+        }
+
+                function renderUploadedImageSobel(w, h, isGlowing) {
+            if (!customImageElement) return;
+
+            const tempC = document.createElement('canvas');
+            tempC.width = w;
+            tempC.height = h;
+            const tempCtx = tempC.getContext('2d');
+
+            const scale = Math.min(w / customImageElement.width, h / customImageElement.height) * 0.88;
+            const nw = customImageElement.width * scale;
+            const nh = customImageElement.height * scale;
+            const nx = Math.floor((w - nw) / 2);
+            const ny = Math.floor((h - nh) / 2);
+
+            tempCtx.fillStyle = '#000000';
+            tempCtx.fillRect(0, 0, w, h);
+            tempCtx.drawImage(customImageElement, nx, ny, nw, nh);
+            const imgData = tempCtx.getImageData(0, 0, w, h);
+            const pixels = imgData.data;
+
+            // 1. Perceptual Luminance Extraction (BT.601)
+            const lum = new Float32Array(w * h);
+            for (let i = 0, j = 0; i < pixels.length; i += 4, j++) {
+                lum[j] = 0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2];
+            }
+
+            // 2. 5x5 Bilateral/Gaussian Pre-Smoothing pass to remove micro-speckles while preserving sharp anatomical edges
+            const smoothed = new Float32Array(w * h);
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
+                    const idx = y * w + x;
+                    const centerVal = lum[idx];
+                    let sum = 0;
+                    let weightSum = 0;
+                    for (let dy = -2; dy <= 2; dy++) {
+                        for (let dx = -2; dx <= 2; dx++) {
+                            const nIdx = (y + dy) * w + (x + dx);
+                            const spatialDistSq = dx * dx + dy * dy;
+                            const colorDiff = lum[nIdx] - centerVal;
+                            // Bilateral kernel weighting: spatial decay * range similarity
+                            const wgt = Math.exp(-spatialDistSq / 4.0 - (colorDiff * colorDiff) / 900.0);
+                            sum += lum[nIdx] * wgt;
+                            weightSum += wgt;
+                        }
+                    }
+                    smoothed[idx] = weightSum > 0 ? sum / weightSum : centerVal;
+                }
+            }
+
+            // 3. Sobel Convolution Pass (Gx & Gy matrices) + Magnitude Map
+            const magMap = new Float32Array(w * h);
+            let avgMag = 0, edgeCount = 0;
+            for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                    const idx = y * w + x;
+                    const gx = -smoothed[idx - w - 1] + smoothed[idx - w + 1]
+                               - 2 * smoothed[idx - 1] + 2 * smoothed[idx + 1]
+                               - smoothed[idx + w - 1] + smoothed[idx + w + 1];
+                    const gy = -smoothed[idx - w - 1] - 2 * smoothed[idx - w] - smoothed[idx - w + 1]
+                               + smoothed[idx + w - 1] + 2 * smoothed[idx + w] + smoothed[idx + w + 1];
+                    const m = Math.sqrt(gx * gx + gy * gy);
+                    magMap[idx] = m;
+                    avgMag += m;
+                    edgeCount++;
+                }
+            }
+            avgMag = edgeCount > 0 ? avgMag / edgeCount : 30;
+
+            // 4. Adaptive Dual-Thresholding & Morphological Edge Dilation for crisp coloring-book outlines
+            const edgeData = overlayCtx.createImageData(w, h);
+            const edgePixels = edgeData.data;
+            const threshold = Math.max(detailThreshold, avgMag * 0.7);
+            const strokeColor = isGlowing ? [56, 189, 248, 255] : [248, 250, 252, 255];
+
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
+                    const idx = y * w + x;
+                    const m = magMap[idx];
+
+                    if (m > threshold) {
+                        // Mark current and immediately adjacent pixel for clean 2pt coloring contour
+                        const offsets = [0, 1, w, w + 1];
+                        offsets.forEach(off => {
+                            const pIdx = (idx + off) * 4;
+                            if (pIdx < edgePixels.length) {
+                                edgePixels[pIdx] = strokeColor[0];
+                                edgePixels[pIdx + 1] = strokeColor[1];
+                                edgePixels[pIdx + 2] = strokeColor[2];
+                                edgePixels[pIdx + 3] = strokeColor[3];
+                            }
+                        });
+                    }
+                }
+            }
+
+            overlayCtx.putImageData(edgeData, 0, 0);
+        }
+
+        // ============================================================================
+        // PROCEDURAL VECTOR CONTOUR OVERLAY GENERATOR
+        // ============================================================================
+        function renderOverlay() {
+            if (!overlayCtx || !overlayCanvas || !activeModel) return;
+            const w = overlayCanvas.width;
+            const h = overlayCanvas.height;
+            const manualGlow = document.getElementById('toggle-glow-manual')?.checked;
+            const isGlowing = bioGlowUnlocked || manualGlow;
+
+            overlayCtx.clearRect(0, 0, w, h);
+
+            overlayCtx.strokeStyle = isGlowing ? '#38bdf8' : '#e2e8f0';
+            overlayCtx.lineWidth = 2;
+            overlayCtx.shadowColor = isGlowing ? '#06b6d4' : 'transparent';
+            overlayCtx.shadowBlur = isGlowing ? 12 : 0;
+
+            if (customImageElement) {
+                renderUploadedImageSobel(w, h, isGlowing);
+                return;
+            }
+
+                        const cx = w / 2;
+            const cy = h / 2;
+
+            overlayCtx.beginPath();
+
+            const mid = activeModel.id;
+            const cat = activeModel.id.startsWith('lib-') ? activeModel.id.charAt(4) : '';
+
+            if (mid === 'turtle') {
+                // Authentic Green Sea Turtle Carapace: Vertebral & Costal polygonal scutes
+                const sR = Math.min(w, h) * 0.38;
+                // Outer carapace perimeter
+                overlayCtx.ellipse(cx, cy, sR * 0.82, sR, 0, 0, Math.PI * 2);
+                // Head and clawed flippers
+                overlayCtx.ellipse(cx, cy - sR * 1.15, sR * 0.22, sR * 0.28, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - sR * 0.88, cy - sR * 0.45, sR * 0.45, sR * 0.2, -Math.PI / 4, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + sR * 0.88, cy - sR * 0.45, sR * 0.45, sR * 0.2, Math.PI / 4, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - sR * 0.65, cy + sR * 0.75, sR * 0.28, sR * 0.18, Math.PI / 6, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + sR * 0.65, cy + sR * 0.75, sR * 0.28, sR * 0.18, -Math.PI / 6, 0, Math.PI * 2);
+                // 5 Hexagonal Vertebral Scutes down dorsal midline
+                const vScutes = [-sR * 0.65, -sR * 0.32, 0, sR * 0.32, sR * 0.65];
+                vScutes.forEach((sy, idx) => {
+                    const hw = (idx === 0 || idx === 4) ? sR * 0.18 : sR * 0.26;
+                    const hh = sR * 0.14;
+                    overlayCtx.moveTo(cx - hw * 0.6, cy + sy - hh);
+                    overlayCtx.lineTo(cx + hw * 0.6, cy + sy - hh);
+                    overlayCtx.lineTo(cx + hw, cy + sy);
+                    overlayCtx.lineTo(cx + hw * 0.6, cy + sy + hh);
+                    overlayCtx.lineTo(cx - hw * 0.6, cy + sy + hh);
+                    overlayCtx.lineTo(cx - hw, cy + sy);
+                    overlayCtx.closePath();
+                });
+                // Lateral Costal & Marginal Scutes
+                [-sR * 0.45, -sR * 0.15, sR * 0.15, sR * 0.45].forEach(sy => {
+                    overlayCtx.moveTo(cx - sR * 0.24, cy + sy);
+                    overlayCtx.lineTo(cx - sR * 0.76, cy + sy * 1.05);
+                    overlayCtx.moveTo(cx + sR * 0.24, cy + sy);
+                    overlayCtx.lineTo(cx + sR * 0.76, cy + sy * 1.05);
+                });
+            } else if (mid === 'stomata') {
+                // Stomatal Guard Cells & Microscopic Epidermal Cells
+                const r = Math.min(w, h) * 0.26;
+                // Paired reniform (kidney-shaped) guard cells
+                overlayCtx.ellipse(cx - r * 0.7, cy, r * 0.58, r * 1.35, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + r * 0.7, cy, r * 0.58, r * 1.35, 0, 0, Math.PI * 2);
+                // Stomatal pore aperture
+                overlayCtx.ellipse(cx, cy, r * 0.18, r * 0.95, 0, 0, Math.PI * 2);
+                // Chloroplast granules inside each guard cell
+                [-r * 0.8, -r * 0.4, 0, r * 0.4, r * 0.8].forEach(dy => {
+                    overlayCtx.moveTo(cx - r * 0.7 + r * 0.15, cy + dy);
+                    overlayCtx.arc(cx - r * 0.7, cy + dy, r * 0.12, 0, Math.PI * 2);
+                    overlayCtx.moveTo(cx + r * 0.7 + r * 0.15, cy + dy);
+                    overlayCtx.arc(cx + r * 0.7, cy + dy, r * 0.12, 0, Math.PI * 2);
+                });
+                // Surrounding jigsaw pavement epidermal cells
+                overlayCtx.rect(cx - r * 1.8, cy - r * 1.8, r * 3.6, r * 3.6);
+                overlayCtx.moveTo(cx - r * 1.8, cy - r * 0.6); overlayCtx.lineTo(cx - r * 1.25, cy - r * 0.6);
+                overlayCtx.moveTo(cx - r * 1.8, cy + r * 0.6); overlayCtx.lineTo(cx - r * 1.25, cy + r * 0.6);
+                overlayCtx.moveTo(cx + r * 1.8, cy - r * 0.6); overlayCtx.lineTo(cx + r * 1.25, cy - r * 0.6);
+                overlayCtx.moveTo(cx + r * 1.8, cy + r * 0.6); overlayCtx.lineTo(cx + r * 1.25, cy + r * 0.6);
+            } else if (mid === 'honeybee') {
+                // Honeybee compound eye ommatidia lattice & hexagonal wax comb
+                const hexR = Math.min(w, h) * 0.085;
+                for (let qx = -3; qx <= 3; qx++) {
+                    for (let qy = -3; qy <= 3; qy++) {
+                        const px = cx + qx * hexR * 1.732 + (qy % 2 !== 0 ? hexR * 0.866 : 0);
+                        const py = cy + qy * hexR * 1.5;
+                        if (Math.hypot(px - cx, py - cy) < Math.min(w, h) * 0.38) {
+                            overlayCtx.moveTo(px + hexR * Math.cos(0), py + hexR * Math.sin(0));
+                            for (let s = 1; s <= 6; s++) {
+                                const ang = s * Math.PI / 3;
+                                overlayCtx.lineTo(px + hexR * Math.cos(ang), py + hexR * Math.sin(ang));
+                            }
+                            overlayCtx.closePath();
+                        }
+                    }
+                }
+            } else if (mid === 'jellyfish' || cat === 'm') {
+                // Translucent radial bell, rhopalia notches, and 8 undulating tentacles
+                const bellR = Math.min(w, h) * 0.32;
+                overlayCtx.arc(cx, cy - 35, bellR, Math.PI, 0, false);
+                overlayCtx.bezierCurveTo(cx + bellR, cy + 25, cx - bellR, cy + 25, cx - bellR, cy - 35);
+                overlayCtx.arc(cx, cy - 35, bellR * 0.65, Math.PI, 0, false);
+                // Radial canals inside bell
+                for (let a = Math.PI * 0.15; a <= Math.PI * 0.85; a += Math.PI * 0.12) {
+                    overlayCtx.moveTo(cx, cy - 35);
+                    overlayCtx.lineTo(cx - Math.cos(a) * bellR, cy - 35 - Math.sin(a) * bellR);
+                }
+                // Central ruffled oral arms
+                overlayCtx.moveTo(cx - 30, cy + 10);
+                overlayCtx.bezierCurveTo(cx - 60, cy + 120, cx, cy + 160, cx - 20, cy + 240);
+                overlayCtx.moveTo(cx + 30, cy + 10);
+                overlayCtx.bezierCurveTo(cx + 60, cy + 120, cx, cy + 160, cx + 20, cy + 240);
+                // Undulating marginal tentacles
+                for (let t = -4; t <= 4; t++) {
+                    const tx = cx + t * (bellR / 4.5);
+                    overlayCtx.moveTo(tx, cy + 20);
+                    overlayCtx.bezierCurveTo(tx + 25, cy + 100, tx - 25, cy + 170, tx + 15, cy + 250);
+                }
+            } else if (mid === 'redwood' || cat === 'b') {
+                // Concentric annual tree rings with medullary vascular rays
+                const maxR = Math.min(w, h) * 0.38;
+                for (let r = 20; r <= maxR; r += 22) {
+                    overlayCtx.moveTo(cx + r, cy);
+                    overlayCtx.arc(cx, cy, r, 0, Math.PI * 2);
+                }
+                for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 8) {
+                    overlayCtx.moveTo(cx + Math.cos(ang) * 18, cy + Math.sin(ang) * 18);
+                    overlayCtx.lineTo(cx + Math.cos(ang) * maxR, cy + Math.sin(ang) * maxR);
+                }
+                // Heartwood core
+                overlayCtx.moveTo(cx + 12, cy);
+                overlayCtx.arc(cx, cy, 12, 0, Math.PI * 2);
+            } else if (mid === 'mycorrhizae' || cat === 'u') {
+                // Hyphal filament mycelium web with spore septa
+                const rad = Math.min(w, h) * 0.36;
+                overlayCtx.arc(cx, cy, 32, 0, Math.PI * 2);
+                for (let i = 0; i < 12; i++) {
+                    const ang = (i / 12) * Math.PI * 2;
+                    const x1 = cx + Math.cos(ang) * 32;
+                    const y1 = cy + Math.sin(ang) * 32;
+                    const x2 = cx + Math.cos(ang) * rad;
+                    const y2 = cy + Math.sin(ang) * rad;
+                    overlayCtx.moveTo(x1, y1);
+                    overlayCtx.lineTo(x2, y2);
+                    // Branching bifurcations
+                    overlayCtx.moveTo(x2, y2);
+                    overlayCtx.lineTo(x2 + Math.cos(ang + 0.45) * 45, y2 + Math.sin(ang + 0.45) * 45);
+                    overlayCtx.moveTo(x2, y2);
+                    overlayCtx.lineTo(x2 + Math.cos(ang - 0.45) * 45, y2 + Math.sin(ang - 0.45) * 45);
+                    // Terminal arbuscular vesicles
+                    overlayCtx.moveTo(x2 + 8, y2);
+                    overlayCtx.arc(x2, y2, 6, 0, Math.PI * 2);
+                }
+            } else if (mid === 'nautilus') {
+                // Nautilus: Logarithmic golden ratio spiral with chamber septa
+                const maxRad = Math.min(w, h) * 0.38;
+                let prevX = cx, prevY = cy;
+                for (let theta = 0; theta < Math.PI * 4.8; theta += 0.08) {
+                    const r = 6.5 * Math.exp(0.185 * theta);
+                    if (r > maxRad) break;
+                    const x = cx + r * Math.cos(theta);
+                    const y = cy + r * Math.sin(theta);
+                    if (theta === 0) overlayCtx.moveTo(x, y);
+                    else overlayCtx.lineTo(x, y);
+                    // Chamber septum dividers
+                    if (Math.floor(theta * 10) % 6 === 0) {
+                        const inR = Math.max(0, r - 25);
+                        overlayCtx.moveTo(cx + inR * Math.cos(theta), cy + inR * Math.sin(theta));
+                        overlayCtx.lineTo(x, y);
+                    }
+                }
+            } else if (mid === 'butterfly' || cat === 'i') {
+                // Monarch Butterfly: Forewings, hindwings, discal cells & wing venation
+                const wingW = Math.min(w, h) * 0.42;
+                // Bilateral Forewings
+                overlayCtx.ellipse(cx - wingW * 0.52, cy - wingW * 0.28, wingW * 0.48, wingW * 0.3, -Math.PI / 4.8, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.52, cy - wingW * 0.28, wingW * 0.48, wingW * 0.3, Math.PI / 4.8, 0, Math.PI * 2);
+                // Discal cell vein rings
+                overlayCtx.ellipse(cx - wingW * 0.45, cy - wingW * 0.25, wingW * 0.2, wingW * 0.12, -Math.PI / 5, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.45, cy - wingW * 0.25, wingW * 0.2, wingW * 0.12, Math.PI / 5, 0, Math.PI * 2);
+                // Bilateral Hindwings
+                overlayCtx.ellipse(cx - wingW * 0.36, cy + wingW * 0.32, wingW * 0.34, wingW * 0.24, Math.PI / 8, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + wingW * 0.36, cy + wingW * 0.32, wingW * 0.34, wingW * 0.24, -Math.PI / 8, 0, Math.PI * 2);
+                // Segmented Thorax & Abdomen
+                overlayCtx.ellipse(cx, cy - wingW * 0.1, wingW * 0.08, wingW * 0.18, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy + wingW * 0.2, wingW * 0.07, wingW * 0.24, 0, 0, Math.PI * 2);
+                // Antennae with clavate tips
+                overlayCtx.moveTo(cx - 5, cy - wingW * 0.28);
+                overlayCtx.bezierCurveTo(cx - 35, cy - wingW * 0.65, cx - 60, cy - wingW * 0.55, cx - 65, cy - wingW * 0.62);
+                overlayCtx.moveTo(cx + 5, cy - wingW * 0.28);
+                overlayCtx.bezierCurveTo(cx + 35, cy - wingW * 0.65, cx + 60, cy - wingW * 0.55, cx + 65, cy - wingW * 0.62);
+            } else if (mid === 'peacock') {
+                // Peacock Feathers: Central concentric ocellus & radiating barbs
+                const fR = Math.min(w, h) * 0.35;
+                overlayCtx.ellipse(cx, cy - 20, fR * 0.55, fR * 0.75, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy - 10, fR * 0.36, fR * 0.48, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx, cy, fR * 0.18, fR * 0.24, 0, 0, Math.PI * 2);
+                overlayCtx.moveTo(cx, cy - fR * 0.9);
+                overlayCtx.lineTo(cx, cy + fR * 1.1);
+                for (let y = cy - fR * 0.7; y <= cy + fR * 0.9; y += 18) {
+                    const span = fR * 0.75;
+                    overlayCtx.moveTo(cx, y); overlayCtx.lineTo(cx - span, y - 25);
+                    overlayCtx.moveTo(cx, y); overlayCtx.lineTo(cx + span, y - 25);
+                }
+            } else if (mid === 'venusflytrap') {
+                // Venus Flytrap: Bilateral snap lobes & marginal trigger cilia
+                const tW = Math.min(w, h) * 0.36;
+                overlayCtx.ellipse(cx - tW * 0.42, cy, tW * 0.42, tW * 0.68, -0.18, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx + tW * 0.42, cy, tW * 0.42, tW * 0.68, 0.18, 0, Math.PI * 2);
+                for (let c = -5; c <= 5; c++) {
+                    overlayCtx.moveTo(cx - tW * 0.84, cy + c * 22);
+                    overlayCtx.lineTo(cx - tW * 0.84 - 32, cy + c * 22 - 14);
+                    overlayCtx.moveTo(cx + tW * 0.84, cy + c * 22);
+                    overlayCtx.lineTo(cx + tW * 0.84 + 32, cy + c * 22 - 14);
+                }
+                // Sensitive trigger hairs in center
+                overlayCtx.moveTo(cx - tW * 0.4, cy - 15); overlayCtx.lineTo(cx - tW * 0.4 - 10, cy - 35);
+                overlayCtx.moveTo(cx - tW * 0.4, cy + 15); overlayCtx.lineTo(cx - tW * 0.4 - 10, cy + 35);
+                overlayCtx.moveTo(cx + tW * 0.4, cy - 15); overlayCtx.lineTo(cx + tW * 0.4 + 10, cy - 35);
+                overlayCtx.moveTo(cx + tW * 0.4, cy + 15); overlayCtx.lineTo(cx + tW * 0.4 + 10, cy + 35);
+            } else if (cat === 'a') {
+                // Animals: vertebrate anatomical contours
+                const r = Math.min(w, h) * 0.32;
+                overlayCtx.ellipse(cx, cy, r * 1.15, r * 0.75, 0, 0, Math.PI * 2);
+                overlayCtx.ellipse(cx - r * 0.8, cy - r * 0.25, r * 0.45, r * 0.35, 0, 0, Math.PI * 2);
+                for (let rx = -r * 0.6; rx <= r * 0.6; rx += 22) {
+                    overlayCtx.moveTo(cx + rx, cy - r * 0.4);
+                    overlayCtx.lineTo(cx + rx + 8, cy + r * 0.5);
+                }
+            } else {
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.32, 0, Math.PI * 2);
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.22, 0, Math.PI * 2);
+                overlayCtx.arc(cx, cy, Math.min(w, h) * 0.12, 0, Math.PI * 2);
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                    overlayCtx.moveTo(cx, cy);
+                    overlayCtx.lineTo(cx + Math.cos(a) * Math.min(w, h) * 0.32, cy + Math.sin(a) * Math.min(w, h) * 0.32);
+                }
+            }
+
+            overlayCtx.stroke();
+        }
+
+        // ============================================================================
+        // SOMATIC TREMOR SMOOTHING & PAINT INTERACTION ENGINE
+        // ============================================================================
+        function setupPaintListeners() {
+            const c = paintCanvas;
+
+            const getPos = (e) => {
+                const rect = c.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: Math.floor(clientX - rect.left),
+                    y: Math.floor(clientY - rect.top)
+                };
+            };
+
+            const startDraw = (e) => {
+                const pos = getPos(e);
+                if (activeTool === 'bucket') {
+                    floodFill(pos.x, pos.y, activePigment);
+                    updatePrecisionScore();
+                    return;
+                }
+                isDrawing = true;
+                strokePoints = [pos];
+            };
+
+            const moveDraw = (e) => {
+                if (!isDrawing || activeTool === 'bucket') return;
+                e.preventDefault();
+                const pos = getPos(e);
+
+                if (tremorSmoothEnabled && strokePoints.length > 0) {
+                    const prev = strokePoints[strokePoints.length - 1];
+                    const alpha = 0.25;
+                    const smoothedPos = {
+                        x: prev.x + alpha * (pos.x - prev.x),
+                        y: prev.y + alpha * (pos.y - prev.y)
+                    };
+                    strokePoints.push(smoothedPos);
+                    renderStrokePoint(prev, smoothedPos);
+                } else {
+                    const prev = strokePoints[strokePoints.length - 1] || pos;
+                    strokePoints.push(pos);
+                    renderStrokePoint(prev, pos);
+                }
+            };
+
+            const stopDraw = () => {
+                if (!isDrawing) return;
+                isDrawing = false;
+                strokePoints = [];
+                updatePrecisionScore();
+            };
+
+            c.addEventListener('mousedown', startDraw);
+            c.addEventListener('mousemove', moveDraw);
+            window.addEventListener('mouseup', stopDraw);
+
+            c.addEventListener('touchstart', startDraw, { passive: false });
+            c.addEventListener('touchmove', moveDraw, { passive: false });
+            window.addEventListener('touchend', stopDraw);
+        }
+
+        function floodFill(startX, startY, fillColorHex) {
+            const w = paintCanvas.width;
+            const h = paintCanvas.height;
+            if (startX < 0 || startX >= w || startY < 0 || startY >= h) return;
+
+            const paintImgData = paintCtx.getImageData(0, 0, w, h);
+            const overlayImgData = overlayCtx.getImageData(0, 0, w, h);
+            const data = paintImgData.data;
+            const overlayData = overlayImgData.data;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.style.color = fillColorHex;
+            document.body.appendChild(tempDiv);
+            const rgbStr = window.getComputedStyle(tempDiv).color;
+            document.body.removeChild(tempDiv);
+            const rgbValues = rgbStr.match(/\d+/g).map(Number);
+            const fillR = rgbValues[0], fillG = rgbValues[1], fillB = rgbValues[2], fillA = 255;
+
+            const startIdx = (startY * w + startX) * 4;
+            const targetR = data[startIdx];
+            const targetG = data[startIdx + 1];
+            const targetB = data[startIdx + 2];
+            const targetA = data[startIdx + 3];
+
+            if (targetR === fillR && targetG === fillG && targetB === fillB && targetA === fillA) return;
+
+            const stack = [[startX, startY]];
+
+            while (stack.length > 0) {
+                const [x, y] = stack.pop();
+                const idx = (y * w + x) * 4;
+
+                if (overlayData[idx + 3] > 100) continue;
+
+                if (
+                    x >= 0 && x < w && y >= 0 && y < h &&
+                    data[idx] === targetR &&
+                    data[idx + 1] === targetG &&
+                    data[idx + 2] === targetB &&
+                    data[idx + 3] === targetA
+                ) {
+                    data[idx] = fillR;
+                    data[idx + 1] = fillG;
+                    data[idx + 2] = fillB;
+                    data[idx + 3] = fillA;
+
+                    stack.push([x + 1, y]);
+                    stack.push([x - 1, y]);
+                    stack.push([x, y + 1]);
+                    stack.push([x, y - 1]);
+                }
+            }
+
+            paintCtx.putImageData(paintImgData, 0, 0);
+        }
+
+        function renderStrokePoint(p1, p2) {
+            paintCtx.save();
+
+            if (activeTool === 'eraser') {
+                paintCtx.globalCompositeOperation = 'destination-out';
+                paintCtx.lineWidth = brushSize * 1.5;
+                paintCtx.lineCap = 'round';
+                paintCtx.lineJoin = 'round';
+                paintCtx.beginPath();
+                paintCtx.moveTo(p1.x, p1.y);
+                paintCtx.lineTo(p2.x, p2.y);
+                paintCtx.stroke();
+            } else {
+                paintCtx.globalCompositeOperation = 'source-over';
+                paintCtx.strokeStyle = activePigment;
+                paintCtx.fillStyle = activePigment;
+                paintCtx.lineWidth = brushSize;
+                paintCtx.lineCap = 'round';
+                paintCtx.lineJoin = 'round';
+
+                paintCtx.beginPath();
+                paintCtx.moveTo(p1.x, p1.y);
+                paintCtx.lineTo(p2.x, p2.y);
+                paintCtx.stroke();
+
+                applyTextureStippling(p2.x, p2.y);
+            }
+
+            paintCtx.restore();
+        }
+
+        function applyTextureStippling(cx, cy) {
+            if (activeTexture === 'matte') return;
+
+            const density = activeTexture === 'coastal' ? 18 : 10;
+            const radius = brushSize * 0.8;
+
+            for (let i = 0; i < density; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * radius;
+                const px = cx + Math.cos(angle) * r;
+                const py = cy + Math.sin(angle) * r;
+
+                if (activeTexture === 'scute') {
+                    paintCtx.fillStyle = 'rgba(0,0,0,0.15)';
+                    paintCtx.fillRect(px, py, 1.5, 1.5);
+                } else if (activeTexture === 'iridescent') {
+                    paintCtx.fillStyle = 'rgba(255,255,255,0.35)';
+                    paintCtx.fillRect(px, py, 2, 2);
+                } else if (activeTexture === 'coastal') {
+                    paintCtx.fillStyle = 'rgba(255,255,255,0.2)';
+                    paintCtx.fillRect(px, py, 1, 1);
+                }
+            }
+        }
+
+        // ============================================================================
+        // SOMATIC PRECISION SKILL TRACKER & BIO-GLOW REVEAL ENGINE
+        // ============================================================================
+        function updatePrecisionScore() {
+            if (!overlayCtx || !paintCtx) return;
+
+            const w = overlayCanvas.width;
+            const h = overlayCanvas.height;
+            if (w === 0 || h === 0) return;
+
+            const sampleW = 80;
+            const sampleH = 80;
+
+            const overlayData = overlayCtx.getImageData(0, 0, w, h).data;
+            const paintData = paintCtx.getImageData(0, 0, w, h).data;
+
+            let targetPixels = 0;
+            let hitCount = 0;
+
+            const stepX = Math.floor(w / sampleW) || 1;
+            const stepY = Math.floor(h / sampleH) || 1;
+
+            for (let y = 0; y < h; y += stepY) {
+                for (let x = 0; x < w; x += stepX) {
+                    const idx = (y * w + x) * 4;
+
+                    const isContour = overlayData[idx + 3] > 50;
+                    const isPainted = paintData[idx + 3] > 50;
+
+                    if (isContour) {
+                        targetPixels++;
+                        if (isPainted) {
+                            hitCount++;
+                        }
+                    }
+                }
+            }
+
+            const score = targetPixels > 0 ? Math.min(100, ((hitCount / targetPixels) * 100 * 1.8)).toFixed(1) : "0.0";
+
+            const percEl = document.getElementById('precision-percentage');
+            const barEl = document.getElementById('precision-bar');
+            if (percEl) percEl.innerText = `${score}%`;
+            if (barEl) barEl.style.width = `${score}%`;
+
+            if (parseFloat(score) >= 90.0 && !bioGlowUnlocked) {
+                bioGlowUnlocked = true;
+                const banner = document.getElementById('bio-glow-banner');
+                const container = document.getElementById('canvas-container');
+                if (banner) banner.classList.remove('hidden');
+                if (container) container.classList.add('glow-active');
+                renderOverlay();
+            }
+        }
+
+        // ============================================================================
+        // WEB AUDIO SYNTHESIZER (528Hz Solfeggio & 3.0Hz Binaural Theta Wave Drone)
+        // ============================================================================
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                stopAudio();
+            } else {
+                startAudio();
+            }
+        }
+
+        function startAudio() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioCtx();
+
+                gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.connect(audioCtx.destination);
+
+                osc528 = audioCtx.createOscillator();
+                osc528.type = 'sine';
+                osc528.frequency.setValueAtTime(528, audioCtx.currentTime);
+
+                oscThetaL = audioCtx.createOscillator();
+                oscThetaR = audioCtx.createOscillator();
+                oscThetaL.type = 'sine';
+                oscThetaR.type = 'sine';
+                oscThetaL.frequency.setValueAtTime(100, audioCtx.currentTime);
+                oscThetaR.frequency.setValueAtTime(103, audioCtx.currentTime);
+
+                osc528.connect(gainNode);
+                oscThetaL.connect(gainNode);
+                oscThetaR.connect(gainNode);
+
+                osc528.start();
+                oscThetaL.start();
+                oscThetaR.start();
+
+                isAudioPlaying = true;
+                document.getElementById('audio-status').innerText = '528Hz Active';
+                document.getElementById('audio-icon').innerText = '🔊';
+            } catch (e) {
+                console.error("Web Audio API Initialisation failed:", e);
+            }
+        }
+
+        function stopAudio() {
+            if (osc528) osc528.stop();
+            if (oscThetaL) oscThetaL.stop();
+            if (oscThetaR) oscThetaR.stop();
+            if (audioCtx) audioCtx.close();
+
+            isAudioPlaying = false;
+            document.getElementById('audio-status').innerText = '528Hz Off';
+            document.getElementById('audio-icon').innerText = '🎵';
+        }
+
+        // ============================================================================
+        // HIGH-RESOLUTION EXPORT ENGINE (2x Canvas Super-Sampling)
+        // ============================================================================
+        function exportCanvasPNG() {
+            const w = paintCanvas.width;
+            const h = paintCanvas.height;
+
+            const exportCanvas = document.createElement('canvas');
+            exportCanvas.width = w * 2;
+            exportCanvas.height = h * 2;
+            const exportCtx = exportCanvas.getContext('2d');
+
+            exportCtx.scale(2, 2);
+
+            exportCtx.fillStyle = '#020617';
+            exportCtx.fillRect(0, 0, w, h);
+
+            exportCtx.drawImage(paintCanvas, 0, 0);
+            exportCtx.drawImage(overlayCanvas, 0, 0);
+
+            const dataUrl = exportCanvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `FlowerLearnStudio_${activeModel ? activeModel.id : 'export'}_${Date.now()}.png`;
+            link.href = dataUrl;
+            link.click();
+        }
+    </script>
+</body>
+</html>
