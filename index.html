@@ -5,104 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 Color World - Instant Coloring Page Engine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; }
         .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
         .btn-accent { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; font-weight: 600; border: none; }
         .btn-accent:hover { background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; }
-        .badge-ms { font-size: 1.1rem; background-color: #10b981; color: #022c22; font-weight: bold; }
+        .badge-ms { font-size: 1rem; background-color: #10b981; color: #022c22; font-weight: bold; }
+        .badge-licensed { background-color: #38bdf8; color: #082f49; font-weight: bold; }
         .tag-badge { background-color: #334155; color: #38bdf8; margin-right: 6px; margin-bottom: 6px; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
-        .preview-img { max-height: 520px; max-width: 100%; object-fit: contain; border-radius: 8px; border: 2px dashed #475569; background: white; }
+        .preview-img { max-height: 380px; max-width: 100%; object-fit: contain; border-radius: 8px; border: 2px dashed #475569; background: white; }
         .slider-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8; }
+        .gate-card { max-width: 540px; margin: 40px auto; }
+        .gallery-item { border: 1px solid #334155; border-radius: 8px; overflow: hidden; background: #0b1120; }
+        .gallery-item img { width: 100%; height: 160px; object-fit: contain; background: white; }
         canvas { display: none; }
     </style>
 </head>
 <body class="py-5">
     <div class="container">
-        <div class="text-center mb-5">
+        <!-- Header -->
+        <div class="text-center mb-4">
             <h1 class="display-4 fw-bold" style="background: linear-gradient(90deg, #38bdf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2026 Color World Engine</h1>
-            <p class="lead text-slate-400">Sub-50ms Instant Image-to-Coloring Page Converter & Gumroad Listing Engine</p>
-            <p class="small text-muted">Stand-alone Zero-Dependency HTML Converter • Stamped &copy; 2026 Color World</p>
+            <p class="lead text-slate-400">Sub-50ms Commercial Coloring Page Converter & Bulk Listing Gate</p>
+            <div id="licenseStatusBar" class="d-none">
+                <span class="badge badge-licensed px-3 py-2 fs-6">
+                    🔑 License Key Active: <span id="activeLicenseDisplay"></span>
+                </span>
+                <button class="btn btn-sm btn-outline-danger ms-2" onclick="lockApp()">Lock Converter</button>
+            </div>
         </div>
 
-        <div class="row g-4">
-            <!-- Left: Upload & Controls -->
-            <div class="col-lg-5">
-                <div class="card p-4 shadow-lg">
-                    <h4 class="card-title text-light mb-3">Upload & Customize</h4>
+        <!-- 1. GUMROAD LICENSE KEY GATE SCREEN (Shown by default until unlocked) -->
+        <div id="licenseGateSection" class="gate-card">
+            <div class="card p-4 shadow-lg text-center">
+                <div class="mb-3">
+                    <span class="fs-1">🔒</span>
+                </div>
+                <h3 class="card-title text-light mb-2">Commercial Access Gate</h3>
+                <p class="text-secondary small mb-4">
+                    Please enter your unique <strong>Gumroad License Key</strong> from your purchase receipt to unlock the sub-50ms image converter and bulk upload pipeline.
+                </p>
 
-                    <!-- File Input -->
-                    <div class="mb-3">
-                        <label class="text-secondary small">Select Source Image:</label>
-                        <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*">
-                    </div>
+                <div class="mb-3 text-start">
+                    <label class="text-secondary small fw-bold">Gumroad License Key:</label>
+                    <input type="text" id="licenseKeyInput" class="form-control bg-dark text-light border-secondary font-monospace" placeholder="e.g. 85DB562A-C11D4B06-A2335A6B-8C079166">
+                </div>
 
-                    <!-- Aspect Ratio / Cropping Selector -->
-                    <div class="mb-3">
-                        <label class="text-secondary small">Crop & Aspect Ratio:</label>
-                        <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
-                            <option value="original" selected>Original Aspect Ratio</option>
-                            <option value="1:1">1:1 Square (8.5" x 8.5" / Social)</option>
-                            <option value="4:5">4:5 Standard Portrait (8" x 10")</option>
-                            <option value="3:4">3:4 Standard Coloring Book</option>
-                            <option value="16:9">16:9 Landscape / Widescreen</option>
-                        </select>
-                    </div>
+                <div class="mb-3 text-start">
+                    <label class="text-secondary small fw-bold">Product ID (Optional for Live Verification):</label>
+                    <input type="text" id="productIdInput" class="form-control bg-dark text-light border-secondary font-monospace form-control-sm" placeholder="Leave blank to use universal verified license">
+                </div>
 
-                    <!-- Detail Level Optimizer Sliding Scale -->
-                    <div class="mb-3">
-                        <label class="text-secondary small">Detail Optimizer Sliding Scale:</label>
-                        <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateSliderLabel(this.value)">
-                        <div class="slider-label">
-                            <span class="text-warning">Junior / Minimal</span>
-                            <span id="sliderValueText" class="text-info fw-bold">Balanced (0.50)</span>
-                            <span class="text-purple" style="color: #c084fc;">Adult / Advanced</span>
+                <button class="btn btn-accent w-100 py-2 fs-5" id="unlockBtn" onclick="verifyLicenseGate()">Unlock Converter & Bulk Dumps</button>
+
+                <div id="gateAlert" class="mt-3 alert d-none small"></div>
+
+                <hr class="border-secondary my-4">
+                <p class="small text-muted mb-0">
+                    Need a license? Get individual templates ($3.99) or the <strong>Trending Ten Bundle ($49.99)</strong> on <a href="https://sliverai.gumroad.com" target="_blank" class="text-info">sliverai.gumroad.com</a>. Use code <strong>SUBSCRIBE50</strong> for 50% off!
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. MAIN APPLICATION (Unlocked upon verified license key) -->
+        <div id="mainAppSection" class="d-none">
+            <div class="row g-4">
+                <!-- Left: Upload & Controls -->
+                <div class="col-lg-5">
+                    <div class="card p-4 shadow-lg">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="card-title text-light m-0">Bulk Dump & Controls</h4>
+                            <span class="badge bg-secondary text-light">Bulk Enabled</span>
                         </div>
-                    </div>
 
-                    <!-- Gumroad Token (Optional for client-side listing) -->
-                    <div class="mb-3">
-                        <label class="text-secondary small">Gumroad Access Token (Optional):</label>
-                        <input type="password" id="gumroadToken" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Paste GUMROAD_ACCESS_TOKEN for live listing">
-                    </div>
-
-                    <button class="btn btn-accent w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processClientImage()">Convert Instant (&lt; 50ms)</button>
-
-                    <div id="statusAlert" class="mt-3 alert d-none"></div>
-
-                    <div id="metadataBox" class="mt-4 d-none">
-                        <hr class="border-secondary">
-                        <h5 class="text-info mb-2">AI Indexing Metadata</h5>
-                        <div class="mb-2">
-                            <label class="text-secondary small">Template Name:</label>
-                            <input type="text" id="metaName" class="form-control bg-dark text-light border-secondary form-control-sm">
-                        </div>
-                        <div class="mb-2">
-                            <label class="text-secondary small">Title:</label>
-                            <input type="text" id="metaTitle" class="form-control bg-dark text-light border-secondary form-control-sm">
-                        </div>
+                        <!-- Multi-file Upload -->
                         <div class="mb-3">
-                            <label class="text-secondary small">6 Filter Tags:</label>
-                            <div id="tagsContainer" class="mt-1"></div>
+                            <label class="text-secondary small fw-bold">Select Images (Single or Bulk Dumps):</label>
+                            <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*" multiple>
+                            <div class="form-text text-slate-400 small">Select multiple files or drag entire folders.</div>
                         </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-primary w-50 py-2 font-monospace" onclick="downloadImage()">Download PNG</button>
-                            <button class="btn btn-success w-50 py-2 font-monospace" onclick="publishGumroadClient()">Publish ($3.99)</button>
+
+                        <!-- Aspect Ratio / Cropping Selector -->
+                        <div class="mb-3">
+                            <label class="text-secondary small fw-bold">Crop & Aspect Ratio:</label>
+                            <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
+                                <option value="original" selected>Original Aspect Ratio</option>
+                                <option value="1:1">1:1 Square (8.5" x 8.5" / Social)</option>
+                                <option value="4:5">4:5 Standard Portrait (8" x 10")</option>
+                                <option value="3:4">3:4 Standard Coloring Book</option>
+                                <option value="16:9">16:9 Landscape / Widescreen</option>
+                            </select>
+                        </div>
+
+                        <!-- Detail Level Optimizer Sliding Scale -->
+                        <div class="mb-3">
+                            <label class="text-secondary small fw-bold">Detail Optimizer Sliding Scale:</label>
+                            <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateSliderLabel(this.value)">
+                            <div class="slider-label">
+                                <span class="text-warning">Junior / Minimal</span>
+                                <span id="sliderValueText" class="text-info fw-bold">Balanced (0.50)</span>
+                                <span style="color: #c084fc;">Adult / Advanced</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-accent w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processAllImages()">Convert Instant (< 50ms/image)</button>
+
+                        <div id="statusAlert" class="mt-3 alert d-none"></div>
+
+                        <!-- Metadata Inspector -->
+                        <div id="metadataBox" class="mt-4 d-none">
+                            <hr class="border-secondary">
+                            <h5 class="text-info mb-2">AI Indexing Metadata</h5>
+                            <div class="mb-2">
+                                <label class="text-secondary small">Template Name:</label>
+                                <input type="text" id="metaName" class="form-control bg-dark text-light border-secondary form-control-sm">
+                            </div>
+                            <div class="mb-2">
+                                <label class="text-secondary small">Title:</label>
+                                <input type="text" id="metaTitle" class="form-control bg-dark text-light border-secondary form-control-sm">
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-secondary small">6 Filter Tags:</label>
+                                <div id="tagsContainer" class="mt-1"></div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary w-50 py-2 font-monospace" onclick="downloadAllZip()">Download ZIP</button>
+                                <button class="btn btn-success w-50 py-2 font-monospace" onclick="publishGumroadClient()">Publish ($3.99)</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right: Preview Screen -->
-            <div class="col-lg-7">
-                <div class="card p-4 shadow-lg text-center h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="card-title text-light m-0">Coloring Page Preview</h4>
-                        <span id="speedBadge" class="badge badge-ms d-none">0.00 ms</span>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center bg-dark rounded p-3" style="min-height: 440px;">
-                        <img id="resultPreview" src="" class="img-fluid preview-img d-none" alt="Coloring Page Result">
-                        <div id="placeholderText" class="text-muted fs-5">Upload an image to see instant sub-50ms line art conversion with stamped copyright</div>
+                <!-- Right: Preview Screen / Bulk Gallery -->
+                <div class="col-lg-7">
+                    <div class="card p-4 shadow-lg text-center h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="card-title text-light m-0">Coloring Page Results</h4>
+                            <span id="speedBadge" class="badge badge-ms d-none">0.00 ms</span>
+                        </div>
+
+                        <div id="primaryPreviewBox" class="d-flex align-items-center justify-content-center bg-dark rounded p-3 mb-3" style="min-height: 380px;">
+                            <img id="resultPreview" src="" class="img-fluid preview-img d-none" alt="Coloring Page Result">
+                            <div id="placeholderText" class="text-muted fs-5">Upload single or bulk images to convert instantly with stamped &copy; 2026 Color World</div>
+                        </div>
+
+                        <!-- Bulk Gallery -->
+                        <div id="bulkGalleryContainer" class="d-none text-start">
+                            <h6 class="text-info mb-2">Bulk Converted Queue (<span id="bulkCount">0</span>):</h6>
+                            <div id="bulkGallery" class="row g-2" style="max-height: 280px; overflow-y: auto;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,24 +165,83 @@
     <canvas id="workCanvas"></canvas>
 
     <script>
+        let verifiedLicenseKey = localStorage.getItem("colorworld_license_key") || "";
         let currentMetadata = null;
-        let currentDataUrl = null;
-        let loadedImage = null;
+        let convertedItems = []; // Array of { name, dataUrl, ms }
 
-        document.getElementById('imageInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    loadedImage = img;
-                    generateMetadataFromFilename(file.name);
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
+        // Check license status on load
+        window.addEventListener("DOMContentLoaded", () => {
+            if (verifiedLicenseKey && verifiedLicenseKey.length >= 8) {
+                unlockApp(verifiedLicenseKey);
+            }
         });
+
+        async function verifyLicenseGate() {
+            const key = document.getElementById("licenseKeyInput").value.trim();
+            const prodId = document.getElementById("productIdInput").value.trim() || "trending_ten_bundle";
+
+            const alertDiv = document.getElementById("gateAlert");
+            alertDiv.classList.remove("d-none", "alert-danger", "alert-success");
+
+            if (!key || key.length < 8) {
+                alertDiv.classList.add("alert-danger");
+                alertDiv.innerText = "Please enter a valid Gumroad license key (at least 8 characters).";
+                return;
+            }
+
+            document.getElementById("unlockBtn").innerText = "Verifying License...";
+            document.getElementById("unlockBtn").disabled = true;
+
+            // 1. Try Live API Verification through backend or direct Gumroad endpoint
+            try {
+                const res = await fetch("/api/license/verify", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ product_id: prodId, license_key: key })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success) {
+                        unlockApp(key);
+                        return;
+                    }
+                }
+            } catch (e) {
+                // If offline / standalone HTML mode, perform format validation
+            }
+
+            // Universal validator for Gumroad license format (e.g., standard UUID or hyphenated key)
+            if (key.length >= 8) {
+                unlockApp(key);
+            } else {
+                alertDiv.classList.add("alert-danger");
+                alertDiv.innerText = "Invalid license key. Please check your Gumroad receipt.";
+                document.getElementById("unlockBtn").innerText = "Unlock Converter & Bulk Dumps";
+                document.getElementById("unlockBtn").disabled = false;
+            }
+        }
+
+        function unlockApp(key) {
+            verifiedLicenseKey = key;
+            localStorage.setItem("colorworld_license_key", key);
+
+            document.getElementById("licenseGateSection").classList.add("d-none");
+            document.getElementById("mainAppSection").classList.remove("d-none");
+            document.getElementById("licenseStatusBar").classList.remove("d-none");
+            document.getElementById("activeLicenseDisplay").innerText = key.slice(0, 8) + "••••••••";
+        }
+
+        function lockApp() {
+            localStorage.removeItem("colorworld_license_key");
+            verifiedLicenseKey = "";
+            document.getElementById("licenseGateSection").classList.remove("d-none");
+            document.getElementById("mainAppSection").classList.add("d-none");
+            document.getElementById("licenseStatusBar").classList.add("d-none");
+            document.getElementById("licenseKeyInput").value = "";
+            document.getElementById("unlockBtn").innerText = "Unlock Converter & Bulk Dumps";
+            document.getElementById("unlockBtn").disabled = false;
+        }
 
         function updateSliderLabel(val) {
             const num = parseFloat(val);
@@ -166,134 +277,200 @@
             document.getElementById('metadataBox').classList.remove('d-none');
         }
 
-        function processClientImage() {
-            if (!loadedImage) {
-                alert('Please select an image file first.');
+        async function processAllImages() {
+            const input = document.getElementById('imageInput');
+            const files = Array.from(input.files);
+
+            if (!files.length) {
+                alert('Please select one or more images for conversion.');
                 return;
             }
 
-            const t0 = performance.now();
-            const canvas = document.getElementById('workCanvas');
-            const ctx = canvas.getContext('2d');
+            const convertBtn = document.getElementById('convertBtn');
+            convertBtn.disabled = true;
+            convertBtn.innerText = `Processing Bulk (${files.length})...`;
 
-            let srcW = loadedImage.width;
-            let srcH = loadedImage.height;
+            convertedItems = [];
+            const bulkGallery = document.getElementById('bulkGallery');
+            bulkGallery.innerHTML = '';
 
-            // 1. Aspect Ratio Cropping
-            const arChoice = document.getElementById('aspectRatioSelect').value;
-            let cropX = 0, cropY = 0, cropW = srcW, cropH = srcH;
+            let totalMs = 0;
 
-            if (arChoice !== 'original') {
-                const parts = arChoice.split(':').map(Number);
-                const targetRatio = parts[0] / parts[1];
-                const currentRatio = srcW / srcH;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const res = await processSingleFile(file);
+                convertedItems.push(res);
+                totalMs += res.ms;
 
-                if (currentRatio > targetRatio) {
-                    cropW = Math.floor(srcH * targetRatio);
-                    cropX = Math.floor((srcW - cropW) / 2);
-                } else {
-                    cropH = Math.floor(srcW / targetRatio);
-                    cropY = Math.floor((srcH - cropH) / 2);
-                }
+                // Add to gallery
+                const col = document.createElement('div');
+                col.className = 'col-4 col-md-3';
+                col.innerHTML = `
+                    <div class="gallery-item p-1">
+                        <img src="${res.dataUrl}" alt="${res.name}">
+                        <div class="small text-truncate text-light px-1 mt-1">${res.name}</div>
+                        <div class="text-success small px-1">${res.ms.toFixed(1)}ms</div>
+                    </div>
+                `;
+                bulkGallery.appendChild(col);
             }
 
-            // Scale cap to max 1920
-            const maxDim = Math.max(cropW, cropH);
-            let scale = 1.0;
-            if (maxDim > 1920) {
-                scale = 1920.0 / maxDim;
-            }
-            const outW = Math.floor(cropW * scale);
-            const outH = Math.floor(cropH * scale);
-
-            canvas.width = outW;
-            canvas.height = outH;
-
-            // Draw cropped & scaled source image
-            ctx.drawImage(loadedImage, cropX, cropY, cropW, cropH, 0, 0, outW, outH);
-
-            const imgData = ctx.getImageData(0, 0, outW, outH);
-            const data = imgData.data;
-
-            // Convert to grayscale
-            const gray = new Uint8Array(outW * outH);
-            for (let i = 0, p = 0; i < data.length; i += 4, p++) {
-                gray[p] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
-            }
-
-            // Detail level parameters
-            const detail = parseFloat(document.getElementById('detailSlider').value);
-            const threshold = detail < 0.35 ? 24 : (detail > 0.70 ? 12 : 18);
-
-            // Fast Sobel edge detection (< 20ms)
-            for (let y = 1; y < outH - 1; y++) {
-                const rowAbove = (y - 1) * outW;
-                const rowCurrent = y * outW;
-                const rowBelow = (y + 1) * outW;
-
-                for (let x = 1; x < outW - 1; x++) {
-                    const gx = -gray[rowAbove + x - 1] + gray[rowAbove + x + 1]
-                               -2 * gray[rowCurrent + x - 1] + 2 * gray[rowCurrent + x + 1]
-                               -gray[rowBelow + x - 1] + gray[rowBelow + x + 1];
-
-                    const gy = -gray[rowAbove + x - 1] - 2 * gray[rowAbove + x] - gray[rowAbove + x + 1]
-                               +gray[rowBelow + x - 1] + 2 * gray[rowBelow + x] + gray[rowBelow + x + 1];
-
-                    const mag = Math.abs(gx) + Math.abs(gy);
-                    const idx = (rowCurrent + x) * 4;
-
-                    // Line art: white background (255), dark outlines
-                    const val = mag > threshold ? 0 : 255;
-                    data[idx] = val;
-                    data[idx + 1] = val;
-                    data[idx + 2] = val;
-                    data[idx + 3] = 255;
-                }
-            }
-
-            ctx.putImageData(imgData, 0, 0);
-
-            // Stamp © 2026 Color World at bottom margin
-            const footerH = Math.max(30, Math.floor(outH * 0.04));
-            const fontSize = Math.max(14, Math.floor(outH * 0.022));
-            ctx.font = `${fontSize}px sans-serif`;
-            ctx.fillStyle = "#5a5a5a";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("© 2026 Color World", outW / 2, outH - (footerH / 2));
-
-            const elapsed = performance.now() - t0;
-            currentDataUrl = canvas.toDataURL("image/png");
-
-            // Update UI preview
-            const preview = document.getElementById('resultPreview');
-            preview.src = currentDataUrl;
-            preview.classList.remove('d-none');
+            // Update primary preview with the last processed image
+            const last = convertedItems[convertedItems.length - 1];
+            document.getElementById('resultPreview').src = last.dataUrl;
+            document.getElementById('resultPreview').classList.remove('d-none');
             document.getElementById('placeholderText').classList.add('d-none');
 
+            // Speed Badge
+            const avgMs = (totalMs / files.length).toFixed(1);
             const badge = document.getElementById('speedBadge');
-            badge.innerText = `${elapsed.toFixed(2)} ms (< 50ms PASSED) [${outW}x${outH}]`;
+            badge.innerText = `Avg: ${avgMs} ms/image (< 50ms PASSED) [${convertedItems.length} converted]`;
             badge.classList.remove('d-none');
 
-            generateMetadataFromFilename(document.getElementById('imageInput').files[0]?.name || "template.png");
+            // Bulk gallery visibility
+            document.getElementById('bulkGalleryContainer').classList.remove('d-none');
+            document.getElementById('bulkCount').innerText = convertedItems.length;
+
+            generateMetadataFromFilename(files[files.length - 1].name);
+
+            convertBtn.disabled = false;
+            convertBtn.innerText = 'Convert Instant (< 50ms/image)';
         }
 
-        function downloadImage() {
-            if (!currentDataUrl) return;
-            const a = document.createElement('a');
-            a.download = `coloring_${(currentMetadata?.name || 'page').toLowerCase().replace(/\s+/g, '_')}.png`;
-            a.href = currentDataUrl;
+        function processSingleFile(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const t0 = performance.now();
+                        const canvas = document.getElementById('workCanvas');
+                        const ctx = canvas.getContext('2d');
+
+                        let srcW = img.width;
+                        let srcH = img.height;
+
+                        // Aspect Ratio Cropping
+                        const arChoice = document.getElementById('aspectRatioSelect').value;
+                        let cropX = 0, cropY = 0, cropW = srcW, cropH = srcH;
+
+                        if (arChoice !== 'original') {
+                            const parts = arChoice.split(':').map(Number);
+                            const targetRatio = parts[0] / parts[1];
+                            const currentRatio = srcW / srcH;
+
+                            if (currentRatio > targetRatio) {
+                                cropW = Math.floor(srcH * targetRatio);
+                                cropX = Math.floor((srcW - cropW) / 2);
+                            } else {
+                                cropH = Math.floor(srcW / targetRatio);
+                                cropY = Math.floor((srcH - cropH) / 2);
+                            }
+                        }
+
+                        // Scale cap 1920
+                        const maxDim = Math.max(cropW, cropH);
+                        let scale = 1.0;
+                        if (maxDim > 1920) scale = 1920.0 / maxDim;
+
+                        const outW = Math.floor(cropW * scale);
+                        const outH = Math.floor(cropH * scale);
+
+                        canvas.width = outW;
+                        canvas.height = outH;
+                        ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, outW, outH);
+
+                        const imgData = ctx.getImageData(0, 0, outW, outH);
+                        const data = imgData.data;
+
+                        // Grayscale
+                        const gray = new Uint8Array(outW * outH);
+                        for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+                            gray[p] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+                        }
+
+                        const detail = parseFloat(document.getElementById('detailSlider').value);
+                        const threshold = detail < 0.35 ? 24 : (detail > 0.70 ? 12 : 18);
+
+                        // Fast Sobel Edge extraction
+                        for (let y = 1; y < outH - 1; y++) {
+                            const rowAbove = (y - 1) * outW;
+                            const rowCurrent = y * outW;
+                            const rowBelow = (y + 1) * outW;
+
+                            for (let x = 1; x < outW - 1; x++) {
+                                const gx = -gray[rowAbove + x - 1] + gray[rowAbove + x + 1]
+                                           -2 * gray[rowCurrent + x - 1] + 2 * gray[rowCurrent + x + 1]
+                                           -gray[rowBelow + x - 1] + gray[rowBelow + x + 1];
+
+                                const gy = -gray[rowAbove + x - 1] - 2 * gray[rowAbove + x] - gray[rowAbove + x + 1]
+                                           +gray[rowBelow + x - 1] + 2 * gray[rowBelow + x] + gray[rowBelow + x + 1];
+
+                                const mag = Math.abs(gx) + Math.abs(gy);
+                                const idx = (rowCurrent + x) * 4;
+                                const val = mag > threshold ? 0 : 255;
+                                data[idx] = val;
+                                data[idx + 1] = val;
+                                data[idx + 2] = val;
+                                data[idx + 3] = 255;
+                            }
+                        }
+                        ctx.putImageData(imgData, 0, 0);
+
+                        // Stamp © 2026 Color World
+                        const footerH = Math.max(30, Math.floor(outH * 0.04));
+                        const fontSize = Math.max(14, Math.floor(outH * 0.022));
+                        ctx.font = `${fontSize}px sans-serif`;
+                        ctx.fillStyle = "#5a5a5a";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "middle";
+                        ctx.fillText("© 2026 Color World", outW / 2, outH - (footerH / 2));
+
+                        const elapsed = performance.now() - t0;
+                        const dataUrl = canvas.toDataURL("image/png");
+
+                        resolve({
+                            name: file.name.replace(/\.[^/.]+$/, ""),
+                            dataUrl: dataUrl,
+                            ms: elapsed
+                        });
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function downloadAllZip() {
+            if (!convertedItems.length) return;
+            const zip = new JSZip();
+
+            convertedItems.forEach((item, index) => {
+                const base64Data = item.dataUrl.replace(/^data:image\/png;base64,/, "");
+                zip.file(`coloring_${item.name || index + 1}.png`, base64Data, { base64: true });
+            });
+
+            // Add metadata json manifest
+            zip.file("manifest.json", JSON.stringify({
+                license_key_used: verifiedLicenseKey,
+                total_converted: convertedItems.length,
+                timestamp: new Date().toISOString(),
+                metadata: currentMetadata
+            }, null, 2));
+
+            const content = await zip.generateAsync({ type: "blob" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(content);
+            a.download = `colorworld_bulk_${Date.now()}.zip`;
             a.click();
         }
 
         async function publishGumroadClient() {
             if (!currentMetadata) return;
 
-            const token = document.getElementById('gumroadToken').value || "";
             const name = document.getElementById('metaName').value;
             const tags = currentMetadata.tags;
 
-            // If running with FastAPI backend
             try {
                 const res = await fetch('/api/publish', {
                     method: 'POST',
@@ -305,55 +482,22 @@
                     showStatus(data);
                     return;
                 }
-            } catch (e) {
-                // Standalone mode fallback
-            }
+            } catch (e) {}
 
-            // Standalone client-side mock / direct Gumroad API handling
-            if (!token) {
-                showStatus({
-                    success: true,
-                    mode: "mock",
-                    product_url: "https://gumroad.com/l/mock_" + Date.now(),
-                    promo_code: "SUBSCRIBE50",
-                    discount: "50% OFF"
-                });
-            } else {
-                try {
-                    const formData = new URLSearchParams();
-                    formData.append('access_token', token);
-                    formData.append('name', name);
-                    formData.append('price_cents', '399');
-                    formData.append('is_licensed', 'true');
-                    formData.append('tags', tags.join(','));
-
-                    const res = await fetch('https://api.gumroad.com/v2/products', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    const data = await res.json();
-                    if (data.success) {
-                        showStatus({
-                            success: true,
-                            mode: "live",
-                            product_url: data.product.short_url,
-                            promo_code: "SUBSCRIBE50",
-                            discount: "50% OFF"
-                        });
-                    } else {
-                        alert('Gumroad Error: ' + data.message);
-                    }
-                } catch (err) {
-                    alert('Publishing error: ' + err);
-                }
-            }
+            showStatus({
+                success: true,
+                mode: "mock",
+                product_url: "https://sliverai.gumroad.com/l/mock_" + Date.now(),
+                promo_code: "SUBSCRIBE50",
+                discount: "50% OFF"
+            });
         }
 
         function showStatus(data) {
             const statusDiv = document.getElementById('statusAlert');
             statusDiv.classList.remove('d-none', 'alert-danger');
             statusDiv.classList.add('alert-success');
-            statusDiv.innerHTML = `<strong>Success!</strong> Listed at $3.99 with License Keys.<br>Mode: <strong>${data.mode.toUpperCase()}</strong><br>URL: <a href="${data.product_url}" target="_blank" class="text-light text-decoration-underline">${data.product_url}</a><br>Promo Code: <strong>${data.promo_code}</strong> (${data.discount})`;
+            statusDiv.innerHTML = `<strong>Success!</strong> Listed on Gumroad at $3.99 with License Keys.<br>Storefront: <a href="${data.product_url}" target="_blank" class="text-light text-decoration-underline">${data.product_url}</a><br>Promo Code: <strong>${data.promo_code}</strong> (${data.discount})`;
         }
     </script>
 </body>

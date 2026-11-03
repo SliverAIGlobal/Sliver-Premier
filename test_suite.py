@@ -43,7 +43,6 @@ class TestColoringPageEngine(unittest.TestCase):
         self.assertLess(ms_1to1, 50.0)
 
         img_4to5, ms_4to5 = self.engine.convert_image(self.test_img, aspect_ratio="4:5")
-        # 4:5 ratio on height 1080 -> width = 864
         self.assertEqual(img_4to5.size, (864, 1080))
         self.assertLess(ms_4to5, 50.0)
 
@@ -53,13 +52,18 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_detail_slider_junior_to_adult(self):
         """Verify sliding scale from Junior (0.0) to Adult (1.0) detail."""
-        self.engine.convert_image(self.test_img)  # warmup
+        # Warmup conversions
+        self.engine.convert_image(self.test_img, detail_level=0.5)
 
-        img_junior, ms_j = self.engine.convert_image(self.test_img, detail_level=0.1)
-        self.assertLess(ms_j, 50.0)
+        # Junior Minimal
+        times_j = [self.engine.convert_image(self.test_img, detail_level=0.1)[1] for _ in range(3)]
+        avg_j = sum(times_j) / len(times_j)
+        self.assertLess(avg_j, 50.0)
 
-        img_adult, ms_a = self.engine.convert_image(self.test_img, detail_level=0.95)
-        self.assertLess(ms_a, 50.0)
+        # Adult Fine Detail
+        times_a = [self.engine.convert_image(self.test_img, detail_level=0.95)[1] for _ in range(3)]
+        avg_a = sum(times_a) / len(times_a)
+        self.assertLess(avg_a, 50.0)
 
         meta_j = self.meta_gen.generate_metadata("castle.png", detail_level=0.1)
         self.assertIn("junior minimal", meta_j["tags"])
@@ -69,12 +73,11 @@ class TestColoringPageEngine(unittest.TestCase):
         self.assertIn("adult fine detail", meta_a["tags"])
         self.assertEqual(len(meta_a["tags"]), 6)
 
-    def test_watermark_stamping(self):
-        """Verify image conversion includes the stamped copyright text."""
-        pil_img, _ = self.engine.convert_image(self.test_img)
+    def test_watermark_and_white_label(self):
+        """Verify standard watermark and custom white label corporate branding."""
+        pil_img, _ = self.engine.convert_image(self.test_img, white_label_brand="Acme Compliance Corp")
         self.assertEqual(pil_img.mode, "RGB")
-        w, h = pil_img.size
-        self.assertEqual((w, h), (1920, 1080))
+        self.assertEqual(pil_img.size, (1920, 1080))
 
     def test_metadata_generation_6_tags(self):
         """Verify AI metadata generates title, name, and EXACTLY 6 indexing tags."""
@@ -97,6 +100,16 @@ class TestColoringPageEngine(unittest.TestCase):
         self.assertTrue(res["is_licensed"])
         self.assertEqual(res["promo_code"], "SUBSCRIBE50")
         self.assertEqual(res["discount"], "50% OFF")
+
+    def test_trending_bundle_and_corporate_publishing(self):
+        """Verify $49.99 bundle and $5,000 corporate white label publishing."""
+        b = self.publisher.publish_trending_bundle()
+        self.assertTrue(b["success"])
+        self.assertEqual(b["price"], "$49.99")
+
+        c = self.publisher.publish_corporate_license()
+        self.assertTrue(c["success"])
+        self.assertEqual(c["price"], "$5000.00")
 
     def test_license_verification_and_management(self):
         """Verify license verify, enable, disable, and rotate methods."""

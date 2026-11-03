@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Color World - Enterprise White Label Compliance Engine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body { background-color: #0b1329; color: #f8fafc; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        .card { background-color: #151f38; border: 1px solid #28375a; border-radius: 12px; }
+        .btn-gold { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; font-weight: 700; border: none; }
+        .btn-gold:hover { background: linear-gradient(135deg, #b45309, #d97706); color: #fff; }
+        .corporate-header-preview { border-bottom: 2px solid #334155; padding-bottom: 15px; margin-bottom: 15px; background: white; color: #0f172a; border-radius: 8px 8px 0 0; padding: 20px; }
+        .preview-canvas-container { background: white; border: 2px solid #334155; border-radius: 8px; overflow: hidden; }
+        .preview-img { width: 100%; max-height: 520px; object-fit: contain; }
+        .tag-badge { background-color: #28375a; color: #38bdf8; margin-right: 4px; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; }
+        canvas { display: none; }
+    </style>
+</head>
+<body class="py-4">
+    <div class="container">
+        <!-- Enterprise Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
+            <div>
+                <h2 class="fw-bold text-warning m-0">Corporate White Label Compliance & Training Engine</h2>
+                <p class="text-secondary small m-0">Enterprise Lifetime License • Custom Letterhead • Custom Branded Copyright</p>
+            </div>
+            <div id="enterpriseBadge" class="badge bg-warning text-dark px-3 py-2 fs-6">
+                ⭐ Enterprise Unlimited Lifetime Access
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left: Corporate Settings & Ingestion -->
+            <div class="col-lg-5">
+                <div class="card p-4 shadow-lg mb-4">
+                    <h5 class="text-info mb-3">1. Corporate Branding & Letterhead</h5>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Company / Organization Name:</label>
+                        <input type="text" id="companyNameInput" class="form-control bg-dark text-light border-secondary" value="Acme Global Corporation" oninput="updateLetterhead()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Department / Training Manual Title:</label>
+                        <input type="text" id="trainingTitleInput" class="form-control bg-dark text-light border-secondary" value="Employee Wellness & Compliance Training Manual" oninput="updateLetterhead()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Upload Corporate Logo (Header):</label>
+                        <input type="file" id="logoInput" class="form-control bg-dark text-light border-secondary form-control-sm" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Custom Branded Bottom Stamp:</label>
+                        <input type="text" id="customStampInput" class="form-control bg-dark text-light border-secondary font-monospace form-control-sm" value="© 2026 Acme Global Corporation | All Rights Reserved. Proprietary Training Asset.">
+                    </div>
+                </div>
+
+                <div class="card p-4 shadow-lg">
+                    <h5 class="text-info mb-3">2. Ingest Training Images</h5>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Select Image(s) or Bulk Manual Diagrams:</label>
+                        <input type="file" id="imageInput" class="form-control bg-dark text-light border-secondary" accept="image/*" multiple>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Aspect Ratio:</label>
+                        <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
+                            <option value="4:5" selected>4:5 Standard Document / Manual (8" x 10")</option>
+                            <option value="original">Original Aspect Ratio</option>
+                            <option value="1:1">1:1 Square</option>
+                            <option value="16:9">16:9 Slide Deck Widescreen</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small fw-bold">Diagram Line Cleanliness (Detail Level):</label>
+                        <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.4">
+                        <div class="d-flex justify-content-between small text-secondary">
+                            <span>Clean Diagram Contours</span>
+                            <span>Standard</span>
+                            <span>Detailed Schematic</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-gold w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processCorporateImages()">Convert to Training Coloring Sheets (< 50ms)</button>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-primary w-50 py-2" onclick="downloadAllZip()">Export Manual ZIP</button>
+                        <button class="btn btn-outline-light w-50 py-2" onclick="printSheet()">Print PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Corporate Letterhead & Coloring Page Sheet -->
+            <div class="col-lg-7">
+                <div class="card p-4 shadow-lg">
+                    <h5 class="text-light mb-3">Live Corporate Training Sheet Preview</h5>
+
+                    <div class="preview-canvas-container" id="printableSheet">
+                        <!-- Top Corporate Letterhead -->
+                        <div class="corporate-header-preview d-flex justify-content-between align-items-center" id="letterheadHeader">
+                            <div class="d-flex align-items-center gap-3">
+                                <img id="logoPreview" src="https://via.placeholder.com/80x80.png?text=LOGO" alt="Corporate Logo" style="max-height: 60px; max-width: 120px; object-fit: contain;">
+                                <div>
+                                    <h5 class="fw-bold m-0" id="headerCompanyName">Acme Global Corporation</h5>
+                                    <p class="text-muted small m-0" id="headerTrainingTitle">Employee Wellness & Compliance Training Manual</p>
+                                </div>
+                            </div>
+                            <div class="text-end text-muted small">
+                                <div><strong>Document:</strong> SOP-TR-2026</div>
+                                <div><strong>Classification:</strong> Internal Use</div>
+                            </div>
+                        </div>
+
+                        <!-- Coloring Page Image -->
+                        <div class="p-3 text-center bg-white">
+                            <img id="resultPreview" src="" class="preview-img d-none" alt="Corporate Coloring Page">
+                            <div id="placeholderText" class="py-5 text-muted">Upload training diagram to generate corporate compliance line art sheet.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="workCanvas"></canvas>
+
+    <script>
+        let convertedItems = [];
+        let logoDataUrl = "";
+
+        document.getElementById("logoInput").addEventListener("change", function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                logoDataUrl = evt.target.result;
+                document.getElementById("logoPreview").src = logoDataUrl;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function updateLetterhead() {
+            const cName = document.getElementById("companyNameInput").value.trim() || "Corporate Entity";
+            const title = document.getElementById("trainingTitleInput").value.trim() || "Compliance Training Sheet";
+            document.getElementById("headerCompanyName").innerText = cName;
+            document.getElementById("headerTrainingTitle").innerText = title;
+            document.getElementById("customStampInput").value = `© 2026 ${cName} | All Rights Reserved. Proprietary Training Asset.`;
+        }
+
+        async function processCorporateImages() {
+            const files = Array.from(document.getElementById("imageInput").files);
+            if (!files.length) {
+                alert("Please select one or more images first.");
+                return;
+            }
+
+            convertedItems = [];
+            const stamp = document.getElementById("customStampInput").value.trim();
+
+            for (let i = 0; i < files.length; i++) {
+                const res = await processSingleFile(files[i], stamp);
+                convertedItems.push(res);
+            }
+
+            const last = convertedItems[convertedItems.length - 1];
+            document.getElementById("resultPreview").src = last.dataUrl;
+            document.getElementById("resultPreview").classList.remove("d-none");
+            document.getElementById("placeholderText").classList.add("d-none");
+        }
+
+        function processSingleFile(file, stampText) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.getElementById("workCanvas");
+                        const ctx = canvas.getContext("2d");
+
+                        let srcW = img.width, srcH = img.height;
+                        const arChoice = document.getElementById("aspectRatioSelect").value;
+                        let cropX = 0, cropY = 0, cropW = srcW, cropH = srcH;
+
+                        if (arChoice !== "original") {
+                            const parts = arChoice.split(":").map(Number);
+                            const targetRatio = parts[0] / parts[1];
+                            const currentRatio = srcW / srcH;
+                            if (currentRatio > targetRatio) {
+                                cropW = Math.floor(srcH * targetRatio);
+                                cropX = Math.floor((srcW - cropW) / 2);
+                            } else {
+                                cropH = Math.floor(srcW / targetRatio);
+                                cropY = Math.floor((srcH - cropH) / 2);
+                            }
+                        }
+
+                        const maxDim = Math.max(cropW, cropH);
+                        const scale = maxDim > 1920 ? 1920.0 / maxDim : 1.0;
+                        const outW = Math.floor(cropW * scale);
+                        const outH = Math.floor(cropH * scale);
+
+                        canvas.width = outW;
+                        canvas.height = outH;
+                        ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, outW, outH);
+
+                        const imgData = ctx.getImageData(0, 0, outW, outH);
+                        const data = imgData.data;
+
+                        // Grayscale
+                        const gray = new Uint8Array(outW * outH);
+                        for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+                            gray[p] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+                        }
+
+                        const detail = parseFloat(document.getElementById("detailSlider").value);
+                        const threshold = detail < 0.35 ? 24 : (detail > 0.70 ? 12 : 18);
+
+                        for (let y = 1; y < outH - 1; y++) {
+                            const rowAbove = (y - 1) * outW;
+                            const rowCurrent = y * outW;
+                            const rowBelow = (y + 1) * outW;
+
+                            for (let x = 1; x < outW - 1; x++) {
+                                const gx = -gray[rowAbove + x - 1] + gray[rowAbove + x + 1]
+                                           -2 * gray[rowCurrent + x - 1] + 2 * gray[rowCurrent + x + 1]
+                                           -gray[rowBelow + x - 1] + gray[rowBelow + x + 1];
+
+                                const gy = -gray[rowAbove + x - 1] - 2 * gray[rowAbove + x] - gray[rowAbove + x + 1]
+                                           +gray[rowBelow + x - 1] + 2 * gray[rowBelow + x] + gray[rowBelow + x + 1];
+
+                                const mag = Math.abs(gx) + Math.abs(gy);
+                                const idx = (rowCurrent + x) * 4;
+                                const val = mag > threshold ? 0 : 255;
+                                data[idx] = val;
+                                data[idx + 1] = val;
+                                data[idx + 2] = val;
+                                data[idx + 3] = 255;
+                            }
+                        }
+                        ctx.putImageData(imgData, 0, 0);
+
+                        // Stamp Corporate Branded Copyright at bottom
+                        const footerH = Math.max(34, Math.floor(outH * 0.045));
+                        const fontSize = Math.max(14, Math.floor(outH * 0.022));
+                        ctx.font = `${fontSize}px sans-serif`;
+                        ctx.fillStyle = "#4b5563";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "middle";
+                        ctx.fillText(stampText, outW / 2, outH - (footerH / 2));
+
+                        resolve({
+                            name: file.name.replace(/\.[^/.]+$/, ""),
+                            dataUrl: canvas.toDataURL("image/png")
+                        });
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function downloadAllZip() {
+            if (!convertedItems.length) return;
+            const zip = new JSZip();
+            convertedItems.forEach((item, idx) => {
+                const b64 = item.dataUrl.replace(/^data:image\/png;base64,/, "");
+                zip.file(`corporate_sheet_${item.name || idx + 1}.png`, b64, { base64: true });
+            });
+            const blob = await zip.generateAsync({ type: "blob" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `corporate_training_sheets_${Date.now()}.zip`;
+            a.click();
+        }
+
+        function printSheet() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Any
 logger = logging.getLogger("GumroadPublisher")
 
 class GumroadPublisher:
-    """Official Gumroad API v2 Publisher and License Management Client."""
+    """Official Gumroad API v2 Publisher, Bundle Manager, and License Client."""
 
     def __init__(self, access_token: Optional[str] = None):
         self.access_token = access_token or os.getenv("GUMROAD_ACCESS_TOKEN")
@@ -30,7 +30,7 @@ class GumroadPublisher:
                 "success": True,
                 "mode": "mock",
                 "product_id": mock_id,
-                "product_url": f"https://gumroad.com/l/{mock_id}",
+                "product_url": f"https://sliverai.gumroad.com/l/{mock_id}",
                 "price": f"${price_cents / 100:.2f}",
                 "is_licensed": True,
                 "promo_code": promo_code,
@@ -39,16 +39,20 @@ class GumroadPublisher:
             }
 
         try:
-            payload = {
-                "access_token": self.access_token,
-                "name": name,
-                "price_cents": price_cents,
-                "description": description,
-                "is_licensed": "true",
-                "tags": ",".join(tags) if tags else ""
-            }
+            payload = [
+                ("access_token", self.access_token),
+                ("name", name),
+                ("price", str(price_cents)),
+                ("price_cents", str(price_cents)),
+                ("description", description),
+                ("is_licensed", "true")
+            ]
 
-            response = requests.post(self.products_endpoint, data=payload, timeout=10)
+            if tags:
+                for t in tags:
+                    payload.append(("tags[]", t))
+
+            response = requests.post(self.products_endpoint, data=payload, timeout=12)
             res_data = response.json()
 
             if not res_data.get("success"):
@@ -58,8 +62,9 @@ class GumroadPublisher:
 
             product = res_data.get("product", {})
             product_id = product.get("id")
-            product_url = product.get("short_url")
+            product_url = product.get("short_url") or product.get("landing_url")
 
+            # Attach promo offer code
             if product_id:
                 promo_url = f"{self.products_endpoint}/{product_id}/offer_codes"
                 promo_payload = {
@@ -83,6 +88,28 @@ class GumroadPublisher:
         except Exception as e:
             logger.exception("Failed to connect to API")
             return {"success": False, "error": str(e)}
+
+    def publish_trending_bundle(self) -> Dict[str, Any]:
+        """Publishes the $49.99 Trending Ten Bundle with native license key and SUBSCRIBE50 promo code."""
+        return self.publish_product(
+            name="2026 Color World: Trending Ten Commercial Bundle",
+            price_cents=4999,
+            description="The complete 10-volume flagship coloring collection with universal commercial distribution license key. Includes botanical anatomy, fantasy realms, cyberpunk neon, cozy hygge, and corporate training guides. 50% OFF promo code SUBSCRIBE50.",
+            tags=["trending bundle", "coloring collection", "commercial license", "line art", "2026 color world", "instant download"],
+            promo_code="SUBSCRIBE50",
+            discount_percent=50
+        )
+
+    def publish_corporate_license(self) -> Dict[str, Any]:
+        """Publishes the $5,000 Corporate White Label Lifetime Training License with unlimited usage."""
+        return self.publish_product(
+            name="2026 Color World: Corporate White Label Lifetime Training License",
+            price_cents=500000,
+            description="One-time $5,000 corporate purchase for unlimited lifetime enterprise usage. Includes standalone zero-dependency corporate HTML training engine, custom corporate letterhead/logo upload, branded corporate copyright footer stamping, and employee manual diagram conversions.",
+            tags=["corporate training", "white label", "employee manual", "enterprise license", "2026 color world", "compliance"],
+            promo_code="ENTERPRISE50",
+            discount_percent=50
+        )
 
     # ==========================================
     # Gumroad License Verification & Management
