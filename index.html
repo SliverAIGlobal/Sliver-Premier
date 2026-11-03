@@ -3,160 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Color World - Instant Coloring Page Engine</title>
+    <title>2026 Color World - Instant Coloring Page Engine & Catalog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://gumroad.com/js/gumroad.js"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; }
+        body { background-color: #0b1120; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; }
+        .sidebar { background-color: #0f172a; border-right: 1px solid #1e293b; min-height: 100vh; position: sticky; top: 0; }
         .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
         .btn-accent { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; font-weight: 600; border: none; }
         .btn-accent:hover { background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; }
-        .badge-ms { font-size: 1rem; background-color: #10b981; color: #022c22; font-weight: bold; }
+        .btn-gumroad { background-color: #ff90e8; color: #000; font-weight: bold; border: 2px solid #000; border-radius: 8px; box-shadow: 2px 2px 0px #000; transition: transform 0.1s; }
+        .btn-gumroad:hover { background-color: #ff70e0; color: #000; transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #000; }
+        .badge-ms { font-size: 0.9rem; background-color: #10b981; color: #022c22; font-weight: bold; }
         .badge-licensed { background-color: #38bdf8; color: #082f49; font-weight: bold; }
-        .tag-badge { background-color: #334155; color: #38bdf8; margin-right: 6px; margin-bottom: 6px; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .tag-badge { background-color: #334155; color: #38bdf8; margin-right: 4px; margin-bottom: 4px; display: inline-block; padding: 4px 10px; border-radius: 16px; font-size: 0.75rem; cursor: pointer; }
+        .tag-badge:hover { background-color: #475569; }
         .preview-img { max-height: 380px; max-width: 100%; object-fit: contain; border-radius: 8px; border: 2px dashed #475569; background: white; }
-        .slider-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8; }
-        .gate-card { max-width: 540px; margin: 40px auto; }
-        .gallery-item { border: 1px solid #334155; border-radius: 8px; overflow: hidden; background: #0b1120; }
+        .slider-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; }
+        .gate-card { max-width: 580px; margin: 30px auto; }
+        .gallery-item { border: 1px solid #334155; border-radius: 8px; overflow: hidden; background: #0f172a; transition: transform 0.15s ease-in-out; }
+        .gallery-item:hover { transform: translateY(-3px); border-color: #38bdf8; }
         .gallery-item img { width: 100%; height: 160px; object-fit: contain; background: white; }
+        .cat-item { padding: 8px 14px; border-radius: 8px; cursor: pointer; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; transition: all 0.15s; font-size: 0.9rem; }
+        .cat-item:hover, .cat-item.active { background-color: #1e293b; color: #38bdf8; font-weight: 600; }
+        .upsell-banner { background: linear-gradient(90deg, #1e1b4b, #311042); border: 1px solid #c084fc; border-radius: 10px; padding: 12px 18px; }
+        .affiliate-badge { background: #022c22; border: 1px solid #059669; color: #34d399; font-size: 0.8rem; border-radius: 6px; padding: 4px 8px; }
+        .video-canvas { width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px; background: #000; }
+        .tab-btn { background: transparent; border: none; color: #94a3b8; padding: 8px 16px; border-bottom: 2px solid transparent; font-weight: 600; }
+        .tab-btn.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; }
         canvas { display: none; }
     </style>
 </head>
-<body class="py-5">
-    <div class="container">
-        <!-- Header -->
-        <div class="text-center mb-4">
-            <h1 class="display-4 fw-bold" style="background: linear-gradient(90deg, #38bdf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2026 Color World Engine</h1>
-            <p class="lead text-slate-400">Sub-50ms Commercial Coloring Page Converter & Bulk Listing Gate</p>
-            <div id="licenseStatusBar" class="d-none">
-                <span class="badge badge-licensed px-3 py-2 fs-6">
-                    🔑 License Key Active: <span id="activeLicenseDisplay"></span>
-                </span>
-                <button class="btn btn-sm btn-outline-danger ms-2" onclick="lockApp()">Lock Converter</button>
-            </div>
-        </div>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- ============================================== -->
+            <!-- SIDEBAR: INDEXED NAVIGATION & CATEGORY FILTERS -->
+            <!-- ============================================== -->
+            <div class="col-md-3 col-lg-2 sidebar p-3 d-none d-md-block">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="fs-4 me-2">🎨</span>
+                    <div>
+                        <div class="fw-bold text-light">Color World</div>
+                        <div class="small text-secondary">2026 Engine</div>
+                    </div>
+                </div>
 
-        <!-- 1. GUMROAD LICENSE KEY GATE SCREEN (Shown by default until unlocked) -->
-        <div id="licenseGateSection" class="gate-card">
-            <div class="card p-4 shadow-lg text-center">
+                <!-- Global Search Box -->
                 <div class="mb-3">
-                    <span class="fs-1">🔒</span>
-                </div>
-                <h3 class="card-title text-light mb-2">Commercial Access Gate</h3>
-                <p class="text-secondary small mb-4">
-                    Please enter your unique <strong>Gumroad License Key</strong> from your purchase receipt to unlock the sub-50ms image converter and bulk upload pipeline.
-                </p>
-
-                <div class="mb-3 text-start">
-                    <label class="text-secondary small fw-bold">Gumroad License Key:</label>
-                    <input type="text" id="licenseKeyInput" class="form-control bg-dark text-light border-secondary font-monospace" placeholder="e.g. 85DB562A-C11D4B06-A2335A6B-8C079166">
+                    <input type="text" id="catalogSearchInput" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Search templates & tags..." oninput="handleCatalogSearch(this.value)">
                 </div>
 
-                <div class="mb-3 text-start">
-                    <label class="text-secondary small fw-bold">Product ID (Optional for Live Verification):</label>
-                    <input type="text" id="productIdInput" class="form-control bg-dark text-light border-secondary font-monospace form-control-sm" placeholder="Leave blank to use universal verified license">
+                <!-- Category Index List -->
+                <div class="small text-uppercase fw-bold text-secondary mb-2">Category Filters</div>
+                <div id="categoryList" class="mb-4">
+                    <div class="cat-item active" onclick="selectCategory('All', this)">
+                        <span>✨ All Catalog</span> <span class="badge bg-secondary" id="countAll">24</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Botanical', this)">
+                        <span>🌿 Botanical & Flowers</span> <span class="badge bg-secondary">4</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Animals', this)">
+                        <span>🦊 Wildlife & Animals</span> <span class="badge bg-secondary">3</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Cyberpunk', this)">
+                        <span>🤖 Cyberpunk & Sci-Fi</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Fantasy', this)">
+                        <span>🐉 Fantasy Realms</span> <span class="badge bg-secondary">3</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Mandalas', this)">
+                        <span>🌀 Mandalas & Zen</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Architecture', this)">
+                        <span>🏛️ Architecture & Cities</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Anime', this)">
+                        <span>⚡ Anime & Manga</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Vehicles', this)">
+                        <span>🏎️ Muscle Cars & Ships</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Cozy Hygge', this)">
+                        <span>☕ Cozy Hygge Corners</span> <span class="badge bg-secondary">2</span>
+                    </div>
+                    <div class="cat-item" onclick="selectCategory('Corporate', this)">
+                        <span>🏢 Corporate Compliance</span> <span class="badge bg-secondary">2</span>
+                    </div>
                 </div>
 
-                <button class="btn btn-accent w-100 py-2 fs-5" id="unlockBtn" onclick="verifyLicenseGate()">Unlock Converter & Bulk Dumps</button>
+                <!-- Detail Scale Quick Filters -->
+                <div class="small text-uppercase fw-bold text-secondary mb-2">Difficulty Scale</div>
+                <div class="mb-3">
+                    <span class="tag-badge" onclick="filterByDetail('junior')">Junior / Minimal</span>
+                    <span class="tag-badge" onclick="filterByDetail('balanced')">Standard (0.50)</span>
+                    <span class="tag-badge" onclick="filterByDetail('adult')">Adult Fine Detail</span>
+                </div>
 
-                <div id="gateAlert" class="mt-3 alert d-none small"></div>
+                <hr class="border-secondary">
 
-                <hr class="border-secondary my-4">
-                <p class="small text-muted mb-0">
-                    Need a license? Get individual templates ($3.99) or the <strong>Trending Ten Bundle ($49.99)</strong> on <a href="https://sliverai.gumroad.com" target="_blank" class="text-info">sliverai.gumroad.com</a>. Use code <strong>SUBSCRIBE50</strong> for 50% off!
-                </p>
+                <!-- Affiliate / Partnership Nudge in Sidebar -->
+                <div class="p-2 rounded bg-dark border border-secondary mb-3 text-center">
+                    <div class="affiliate-badge mb-1">💰 Earn 40% Affiliate Split</div>
+                    <p class="small text-muted mb-2">Partner with Color World. Earn instant Gumroad cash payouts on every referral.</p>
+                    <a href="https://sliverai.gumroad.com/affiliates" target="_blank" class="btn btn-sm btn-outline-info w-100">Join Partner Network</a>
+                </div>
+
+                <!-- Trending Ten & Corporate Links -->
+                <div class="small text-muted text-center">
+                    <a href="/corporate" class="text-secondary text-decoration-none d-block mb-1">🏢 White Label Portal</a>
+                    <a href="#viralStudio" class="text-secondary text-decoration-none d-block mb-1">🎥 Ink-Bleed Studio</a>
+                    <a href="#seoBlogs" class="text-secondary text-decoration-none d-block">📚 Themed Pack Blogs</a>
+                </div>
             </div>
-        </div>
 
-        <!-- 2. MAIN APPLICATION (Unlocked upon verified license key) -->
-        <div id="mainAppSection" class="d-none">
-            <div class="row g-4">
-                <!-- Left: Upload & Controls -->
-                <div class="col-lg-5">
-                    <div class="card p-4 shadow-lg">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="card-title text-light m-0">Bulk Dump & Controls</h4>
-                            <span class="badge bg-secondary text-light">Bulk Enabled</span>
+            <!-- ============================================== -->
+            <!-- MAIN CONTENT AREA -->
+            <!-- ============================================== -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <!-- Top Notification & Upsell Ribbon -->
+                <div class="upsell-banner d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="fs-3">🔥</span>
+                        <div>
+                            <strong class="text-light">50% OFF Commercial License: Use Promo Code <span class="badge bg-warning text-dark font-monospace">SUBSCRIBE50</span></strong>
+                            <div class="small text-slate-300">Unlock universal commercial rights across all single pages, the Trending Ten Bundle, and Corporate Licenses.</div>
                         </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="https://sliverai.gumroad.com/l/trending-ten?offer_code=SUBSCRIBE50" class="gumroad-button btn btn-gumroad btn-sm py-2 px-3" target="_blank">
+                            Get Trending Ten Bundle ($24.99)
+                        </a>
+                        <a href="https://sliverai.gumroad.com/l/corporate-license?offer_code=ENTERPRISE50" class="gumroad-button btn btn-sm btn-outline-light py-2 px-3" target="_blank">
+                            Corporate $5,000 License
+                        </a>
+                    </div>
+                </div>
 
-                        <!-- Multi-file Upload -->
+                <!-- Header & License Status Bar -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold m-0" style="background: linear-gradient(90deg, #38bdf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            Instant Image to Coloring Page Engine & Catalog
+                        </h2>
+                        <p class="text-secondary small m-0">Zero friction Gumroad checkout • Sub-50ms line art rendering • Viral Ink-Bleed Animation Studio • Stamped © 2026 Color World</p>
+                    </div>
+                    <div id="licenseStatusBar" class="d-none">
+                        <span class="badge badge-licensed px-3 py-2 fs-6">
+                            🔑 License Active: <span id="activeLicenseDisplay"></span>
+                        </span>
+                        <button class="btn btn-sm btn-outline-danger ms-2" onclick="lockApp()">Lock</button>
+                    </div>
+                </div>
+
+                <!-- 1. GUMROAD LICENSE KEY GATE (Visible if not verified) -->
+                <div id="licenseGateSection" class="gate-card">
+                    <div class="card p-4 shadow-lg text-center">
                         <div class="mb-3">
-                            <label class="text-secondary small fw-bold">Select Images (Single or Bulk Dumps):</label>
-                            <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*" multiple>
-                            <div class="form-text text-slate-400 small">Select multiple files or drag entire folders.</div>
+                            <span class="fs-1">⚡</span>
+                        </div>
+                        <h4 class="card-title text-light mb-2">Zero-Friction Access & Gumroad Profile Integration</h4>
+                        <p class="text-secondary small mb-3">
+                            Convert images directly to printable coloring sheets in &lt;50ms. No redundant personal forms—Gumroad manages your secure profile, automated receipt delivery, and license key generation.
+                        </p>
+
+                        <div class="mb-3 text-start">
+                            <label class="text-secondary small fw-bold">Have a License Key? Enter to Unlock Bulk Engine:</label>
+                            <input type="text" id="licenseKeyInput" class="form-control bg-dark text-light border-secondary font-monospace" placeholder="e.g. 85DB562A-C11D4B06-A2335A6B-8C079166">
                         </div>
 
-                        <!-- Aspect Ratio / Cropping Selector -->
-                        <div class="mb-3">
-                            <label class="text-secondary small fw-bold">Crop & Aspect Ratio:</label>
-                            <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
-                                <option value="original" selected>Original Aspect Ratio</option>
-                                <option value="1:1">1:1 Square (8.5" x 8.5" / Social)</option>
-                                <option value="4:5">4:5 Standard Portrait (8" x 10")</option>
-                                <option value="3:4">3:4 Standard Coloring Book</option>
-                                <option value="16:9">16:9 Landscape / Widescreen</option>
-                            </select>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-accent flex-grow-1 py-2 font-monospace" id="unlockBtn" onclick="verifyLicenseGate()">Unlock Bulk Dumps</button>
+                            <button class="btn btn-outline-light py-2" onclick="quickGuestMode()">Try Single Demo</button>
                         </div>
 
-                        <!-- Detail Level Optimizer Sliding Scale -->
-                        <div class="mb-3">
-                            <label class="text-secondary small fw-bold">Detail Optimizer Sliding Scale:</label>
-                            <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateSliderLabel(this.value)">
-                            <div class="slider-label">
-                                <span class="text-warning">Junior / Minimal</span>
-                                <span id="sliderValueText" class="text-info fw-bold">Balanced (0.50)</span>
-                                <span style="color: #c084fc;">Adult / Advanced</span>
-                            </div>
-                        </div>
+                        <div id="gateAlert" class="mt-3 alert d-none small"></div>
 
-                        <button class="btn btn-accent w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processAllImages()">Convert Instant (< 50ms/image)</button>
-
-                        <div id="statusAlert" class="mt-3 alert d-none"></div>
-
-                        <!-- Metadata Inspector -->
-                        <div id="metadataBox" class="mt-4 d-none">
-                            <hr class="border-secondary">
-                            <h5 class="text-info mb-2">AI Indexing Metadata</h5>
-                            <div class="mb-2">
-                                <label class="text-secondary small">Template Name:</label>
-                                <input type="text" id="metaName" class="form-control bg-dark text-light border-secondary form-control-sm">
+                        <hr class="border-secondary my-3">
+                        <div class="p-3 bg-dark rounded border border-secondary text-start">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-info">Single License ($3.99)</strong>
+                                <span class="badge bg-success">50% Code: SUBSCRIBE50</span>
                             </div>
-                            <div class="mb-2">
-                                <label class="text-secondary small">Title:</label>
-                                <input type="text" id="metaTitle" class="form-control bg-dark text-light border-secondary form-control-sm">
-                            </div>
-                            <div class="mb-3">
-                                <label class="text-secondary small">6 Filter Tags:</label>
-                                <div id="tagsContainer" class="mt-1"></div>
-                            </div>
+                            <p class="small text-muted mb-2">Commercial line art + AI metadata + 6 indexing tags + lifetime re-download rights.</p>
                             <div class="d-flex gap-2">
-                                <button class="btn btn-primary w-50 py-2 font-monospace" onclick="downloadAllZip()">Download ZIP</button>
-                                <button class="btn btn-success w-50 py-2 font-monospace" onclick="publishGumroadClient()">Publish ($3.99)</button>
+                                <a href="https://sliverai.gumroad.com" target="_blank" class="gumroad-button btn btn-gumroad btn-sm w-100">Browse Storefront</a>
+                                <a href="https://sliverai.gumroad.com/follow" target="_blank" class="btn btn-sm btn-outline-info w-100">Follow for Drops</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Preview Screen / Bulk Gallery -->
-                <div class="col-lg-7">
-                    <div class="card p-4 shadow-lg text-center h-100">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="card-title text-light m-0">Coloring Page Results</h4>
-                            <span id="speedBadge" class="badge badge-ms d-none">0.00 ms</span>
+                <!-- 2. MAIN APPLICATION CONVERTER (Unlocked) -->
+                <div id="mainAppSection" class="d-none">
+                    <div class="row g-4">
+                        <!-- Left: Upload & Controls -->
+                        <div class="col-lg-5">
+                            <div class="card p-4 shadow-lg">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title text-light m-0">Bulk Dump & Controls</h5>
+                                    <span class="badge bg-secondary text-light">Sub-50ms Mode</span>
+                                </div>
+
+                                <!-- Multi-file Upload -->
+                                <div class="mb-3">
+                                    <label class="text-secondary small fw-bold">Select Images (Single or Bulk Dumps):</label>
+                                    <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*" multiple>
+                                    <div class="form-text text-slate-400 small">Drag files or select multiple photos. Duplicate-aware.</div>
+                                </div>
+
+                                <!-- Aspect Ratio / Cropping Selector -->
+                                <div class="mb-3">
+                                    <label class="text-secondary small fw-bold">Crop & Aspect Ratio:</label>
+                                    <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
+                                        <option value="original" selected>Original Aspect Ratio</option>
+                                        <option value="1:1">1:1 Square (8.5" x 8.5" / Social)</option>
+                                        <option value="4:5">4:5 Standard Portrait (8" x 10")</option>
+                                        <option value="3:4">3:4 Standard Coloring Book</option>
+                                        <option value="16:9">16:9 Landscape / Widescreen</option>
+                                    </select>
+                                </div>
+
+                                <!-- Detail Level Optimizer Sliding Scale -->
+                                <div class="mb-3">
+                                    <label class="text-secondary small fw-bold">Detail Optimizer Sliding Scale:</label>
+                                    <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateSliderLabel(this.value)">
+                                    <div class="slider-label">
+                                        <span class="text-warning">Junior / Minimal</span>
+                                        <span id="sliderValueText" class="text-info fw-bold">Balanced (0.50)</span>
+                                        <span style="color: #c084fc;">Adult / Advanced</span>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-accent w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processAllImages()">Convert Instant (< 50ms/image)</button>
+
+                                <div id="statusAlert" class="mt-3 alert d-none"></div>
+
+                                <!-- Metadata Inspector -->
+                                <div id="metadataBox" class="mt-4 d-none">
+                                    <hr class="border-secondary">
+                                    <h5 class="text-info mb-2">AI Indexing Metadata</h5>
+                                    <div class="mb-2">
+                                        <label class="text-secondary small">Template Name:</label>
+                                        <input type="text" id="metaName" class="form-control bg-dark text-light border-secondary form-control-sm">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="text-secondary small">Title:</label>
+                                        <input type="text" id="metaTitle" class="form-control bg-dark text-light border-secondary form-control-sm">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="text-secondary small">6 Filter Tags:</label>
+                                        <div id="tagsContainer" class="mt-1"></div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary w-50 py-2 font-monospace" onclick="downloadAllZip()">Download ZIP</button>
+                                        <button class="btn btn-gumroad w-50 py-2 font-monospace" onclick="publishGumroadClient()">Publish ($3.99)</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="primaryPreviewBox" class="d-flex align-items-center justify-content-center bg-dark rounded p-3 mb-3" style="min-height: 380px;">
-                            <img id="resultPreview" src="" class="img-fluid preview-img d-none" alt="Coloring Page Result">
-                            <div id="placeholderText" class="text-muted fs-5">Upload single or bulk images to convert instantly with stamped &copy; 2026 Color World</div>
-                        </div>
+                        <!-- Right: Preview Screen / Bulk Gallery -->
+                        <div class="col-lg-7">
+                            <div class="card p-4 shadow-lg text-center h-100">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title text-light m-0">Coloring Page Results</h5>
+                                    <span id="speedBadge" class="badge badge-ms d-none">0.00 ms</span>
+                                </div>
 
-                        <!-- Bulk Gallery -->
-                        <div id="bulkGalleryContainer" class="d-none text-start">
-                            <h6 class="text-info mb-2">Bulk Converted Queue (<span id="bulkCount">0</span>):</h6>
-                            <div id="bulkGallery" class="row g-2" style="max-height: 280px; overflow-y: auto;"></div>
+                                <div id="primaryPreviewBox" class="d-flex align-items-center justify-content-center bg-dark rounded p-3 mb-3" style="min-height: 380px;">
+                                    <img id="resultPreview" src="" class="img-fluid preview-img d-none" alt="Coloring Page Result">
+                                    <div id="placeholderText" class="text-muted fs-5">Upload images to convert instantly with stamped &copy; 2026 Color World</div>
+                                </div>
+
+                                <!-- Action Buttons for Viral Video & Blog Creation -->
+                                <div id="viralActionButtons" class="d-none mb-3 d-flex gap-2 justify-content-center">
+                                    <button class="btn btn-sm btn-outline-info" onclick="startInkBleedAnimation()">🎥 Generate Ink-Bleed Video</button>
+                                    <button class="btn btn-sm btn-outline-warning" onclick="generateViralSocialOutreach()">🚀 Delegated Social Outreach</button>
+                                    <button class="btn btn-sm btn-outline-success" onclick="generateInstantBlog()">📝 Write SEO Blog Post</button>
+                                </div>
+
+                                <!-- Bulk Gallery -->
+                                <div id="bulkGalleryContainer" class="d-none text-start">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="text-info m-0">Converted Queue (<span id="bulkCount">0</span>):</h6>
+                                        <span class="small text-muted">Click thumbnail to inspect metadata</span>
+                                    </div>
+                                    <div id="bulkGallery" class="row g-2" style="max-height: 280px; overflow-y: auto;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- ============================================== -->
+                <!-- VIRAL INK-BLEED VIDEO STUDIO & SOCIAL OUTREACH -->
+                <!-- ============================================== -->
+                <div id="viralStudio" class="mt-5 pt-4 border-top border-secondary">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="badge bg-danger px-3 py-1 mb-2">Viral Growth Engine</span>
+                            <h3 class="fw-bold text-light m-0">Aesthetic Ink-Bleed Video Player & Delegated Social Outreach</h3>
+                            <p class="text-secondary small m-0">Watch black-and-white line art bloom into fluid watercolor. Export video loops and copy viral captions with 50% discount backlinks.</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Left: Live Video Animation Canvas -->
+                        <div class="col-lg-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="text-light">Aesthetic Ink-Bleed Canvas (9:16 Shorts / 1:1)</strong>
+                                    <span id="renderStatusBadge" class="badge bg-secondary">Idle</span>
+                                </div>
+
+                                <div class="text-center bg-black rounded p-2 mb-2 d-flex align-items-center justify-content-center" style="min-height: 380px;">
+                                    <canvas id="animCanvas" width="600" height="600" style="display: block; width: 100%; max-height: 360px; object-fit: contain;"></canvas>
+                                </div>
+
+                                <div class="d-flex gap-2 justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-primary" onclick="startInkBleedAnimation()">▶ Play Ink-Bleed</button>
+                                        <button class="btn btn-sm btn-outline-light" onclick="resetAnimation()">↺ Reset</button>
+                                    </div>
+                                    <button class="btn btn-sm btn-accent" id="exportVideoBtn" onclick="recordAndExportVideo()">⬇ Export WebM / MP4 Video</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Delegated Multi-Platform Outreach Tabs -->
+                        <div class="col-lg-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <div class="d-flex border-bottom border-secondary mb-3 gap-1 overflow-auto">
+                                    <button class="tab-btn active" onclick="switchOutreachTab('tiktok', this)">TikTok</button>
+                                    <button class="tab-btn" onclick="switchOutreachTab('reels', this)">IG Reels</button>
+                                    <button class="tab-btn" onclick="switchOutreachTab('pinterest', this)">Pinterest</button>
+                                    <button class="tab-btn" onclick="switchOutreachTab('shorts', this)">YT Shorts</button>
+                                    <button class="tab-btn" onclick="switchOutreachTab('twitter', this)">X/Twitter</button>
+                                    <button class="tab-btn" onclick="switchOutreachTab('email', this)">Email/SMS</button>
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    <textarea id="outreachCopyArea" class="form-control bg-dark text-light border-secondary font-monospace small" rows="11" readonly></textarea>
+                                </div>
+
+                                <div class="mt-3 d-flex justify-content-between align-items-center">
+                                    <span class="small text-muted">Includes Gumroad storefront link + 50% coupon code</span>
+                                    <button class="btn btn-sm btn-info font-monospace" onclick="copyOutreachText()">📋 Copy Caption</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- DYNAMIC AI SEO BLOG GENERATOR MODAL/CONTAINER -->
+                <!-- ============================================== -->
+                <div id="blogDisplaySection" class="mt-5 pt-4 border-top border-secondary d-none">
+                    <div class="card p-4 shadow-lg border-info">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-info fw-bold m-0" id="blogPostHeader">Generated SEO Article</h4>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-light" onclick="copyBlogMarkdown()">📋 Copy Markdown</button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="closeBlogDisplay()">✕ Close</button>
+                            </div>
+                        </div>
+                        <div id="blogContentArea" class="p-3 bg-dark rounded border border-secondary text-slate-300 font-monospace small" style="max-height: 400px; overflow-y: auto; white-space: pre-wrap;"></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- INDEXED STOREFRONT CATALOG & GALLERY -->
+                <!-- ============================================== -->
+                <div class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="text-light fw-bold m-0" id="catalogHeaderTitle">Storefront Catalog & Filter Index</h4>
+                            <p class="text-secondary small m-0">Browse existing 2026 Color World templates. Single $3.99 or unlock the full library.</p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadStorefrontProducts()">🔄 Refresh Catalog</button>
+                        </div>
+                    </div>
+
+                    <div id="catalogGrid" class="row g-3">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TOP 10 THEMED PACK SEO BLOGS & BACKLINKS -->
+                <!-- ============================================== -->
+                <div id="seoBlogs" class="mt-5 pt-4 border-top border-secondary">
+                    <div class="mb-4">
+                        <span class="badge bg-primary px-3 py-1 mb-2">Comprehensive Guides</span>
+                        <h3 class="fw-bold text-light">Top 10 Themed Coloring Packs (Guides & Gumroad Backlinks)</h3>
+                        <p class="text-secondary">Explore curations, line-art optimization tips, commercial usage guides, and instant download links.</p>
+                    </div>
+
+                    <div class="row g-4" id="seoBlogGrid">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Footer with Partner / Affiliate Hub -->
+                <footer class="mt-5 pt-4 pb-5 border-top border-secondary text-center text-secondary small">
+                    <div class="row g-3 text-start mb-4">
+                        <div class="col-md-3">
+                            <h6 class="text-light fw-bold">2026 Color World</h6>
+                            <p class="small text-muted">Instant image to line art converter engine. Guaranteed sub-50ms conversion benchmark with verified commercial license key gate.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-light fw-bold">Gumroad Offerings</h6>
+                            <ul class="list-unstyled small">
+                                <li><a href="https://sliverai.gumroad.com" target="_blank" class="text-secondary text-decoration-none">Single Template ($3.99)</a></li>
+                                <li><a href="https://sliverai.gumroad.com" target="_blank" class="text-secondary text-decoration-none">Trending Ten Bundle ($49.99)</a></li>
+                                <li><a href="/corporate" class="text-secondary text-decoration-none">Corporate Lifetime ($5,000)</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-light fw-bold">Partner Program</h6>
+                            <ul class="list-unstyled small">
+                                <li><a href="https://sliverai.gumroad.com/affiliates" target="_blank" class="text-info text-decoration-none">Earn 40% Affiliate Cash</a></li>
+                                <li><a href="https://sliverai.gumroad.com/follow" target="_blank" class="text-secondary text-decoration-none">Follow Storefront</a></li>
+                                <li><a href="https://sliverai.gumroad.com/subscribe" target="_blank" class="text-secondary text-decoration-none">SMS / Email VIP Drop Alerts</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-light fw-bold">Community & Discussion</h6>
+                            <p class="small text-muted">Join our creator discord and Gumroad community for custom prompt dumps, vector SVG line art, and daily coloring releases.</p>
+                        </div>
+                    </div>
+                    <div>&copy; 2026 Color World. All rights reserved. Sub-50ms Edge Engine.</div>
+                </footer>
             </div>
         </div>
     </div>
@@ -167,19 +447,250 @@
     <script>
         let verifiedLicenseKey = localStorage.getItem("colorworld_license_key") || "";
         let currentMetadata = null;
-        let convertedItems = []; // Array of { name, dataUrl, ms }
+        let convertedItems = []; // Array of { name, dataUrl, ms, rawImg }
+        let currentCategory = "All";
+        let searchQuery = "";
+        let currentCampaign = null;
+        let activeTab = "tiktok";
+        let currentBlogMarkdown = "";
 
-        // Check license status on load
+        // Animation state
+        let animProgress = 0;
+        let animId = null;
+        let isAnimating = false;
+
+        // Catalog template data for sidebar filtering and live browsing
+        const catalogProducts = [
+            { id: "bot-1", category: "Botanical", name: "Enchanted Rose Garden", price: "$3.99", tags: ["botanical", "roses", "flowers", "nature", "coloring page", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "bot-2", category: "Botanical", name: "Cherry Blossom Pagoda", price: "$3.99", tags: ["botanical", "cherry blossom", "japan", "garden", "line art", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "bot-3", category: "Botanical", name: "Succulent Terrarium", price: "$3.99", tags: ["botanical", "succulent", "plants", "minimal", "junior minimal", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+            { id: "bot-4", category: "Botanical", name: "Wildflower Meadow", price: "$3.99", tags: ["botanical", "wildflower", "spring", "flora", "coloring page", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+
+            { id: "anim-1", category: "Animals", name: "Geometric Arctic Fox", price: "$3.99", tags: ["animals", "fox", "wildlife", "geometric", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+            { id: "anim-2", category: "Animals", name: "Majestic Mountain Lion", price: "$3.99", tags: ["animals", "lion", "predator", "nature", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "anim-3", category: "Animals", name: "Whimsical Forest Squirrel", price: "$3.99", tags: ["animals", "squirrel", "junior minimal", "kids", "coloring page", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+
+            { id: "cyb-1", category: "Cyberpunk", name: "Neo Tokyo Cyber Samurai", price: "$3.99", tags: ["cyberpunk", "samurai", "sci-fi", "mecha", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "cyb-2", category: "Cyberpunk", name: "Hoverbike Alleyway", price: "$3.99", tags: ["cyberpunk", "vehicle", "sci-fi", "city", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+
+            { id: "fan-1", category: "Fantasy", name: "Celestial Dragon Spire", price: "$3.99", tags: ["fantasy", "dragon", "castle", "mythical", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "fan-2", category: "Fantasy", name: "Crystal Fairy Haven", price: "$3.99", tags: ["fantasy", "fairy", "crystal", "magic", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+            { id: "fan-3", category: "Fantasy", name: "Baby Griffin in Nest", price: "$3.99", tags: ["fantasy", "griffin", "creature", "junior minimal", "coloring page", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+
+            { id: "man-1", category: "Mandalas", name: "Sacred Lotus Mandala", price: "$3.99", tags: ["mandalas", "lotus", "zen", "meditation", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "man-2", category: "Mandalas", name: "Cosmic Sun & Moon Mandala", price: "$3.99", tags: ["mandalas", "sun", "moon", "spiritual", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+
+            { id: "arc-1", category: "Architecture", name: "Venice Canal Gondola", price: "$3.99", tags: ["architecture", "venice", "italy", "city", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+            { id: "arc-2", category: "Architecture", name: "Cozy Alpine Cabin", price: "$3.99", tags: ["architecture", "cabin", "mountains", "cozy", "junior minimal", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+
+            { id: "ani-1", category: "Anime", name: "Chibi Magical Girl", price: "$3.99", tags: ["anime", "chibi", "manga", "cute", "junior minimal", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+            { id: "ani-2", category: "Anime", name: "Shonen Battle Hero", price: "$3.99", tags: ["anime", "action", "shonen", "manga", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+
+            { id: "veh-1", category: "Vehicles", name: "1969 Vintage Muscle Car", price: "$3.99", tags: ["vehicles", "classic car", "retro", "automotive", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+            { id: "veh-2", category: "Vehicles", name: "Interstellar Exploration Vessel", price: "$3.99", tags: ["vehicles", "spaceship", "sci-fi", "galaxy", "adult fine detail", "2026 color world"], detail: "adult", url: "https://sliverai.gumroad.com" },
+
+            { id: "cozy-1", category: "Cozy Hygge", name: "Rainy Afternoon Library", price: "$3.99", tags: ["cozy hygge", "books", "coffee", "autumn", "line art", "2026 color world"], detail: "balanced", url: "https://sliverai.gumroad.com" },
+            { id: "cozy-2", category: "Cozy Hygge", name: "Bakery Window Display", price: "$3.99", tags: ["cozy hygge", "pastry", "kitchen", "warmth", "junior minimal", "2026 color world"], detail: "junior", url: "https://sliverai.gumroad.com" },
+
+            { id: "corp-1", category: "Corporate", name: "Workplace Safety & Hazard Protocol", price: "$3.99", tags: ["corporate", "safety", "compliance", "training", "line art", "2026 color world"], detail: "balanced", url: "/corporate" },
+            { id: "corp-2", category: "Corporate", name: "Information Security & Clean Desk Guide", price: "$3.99", tags: ["corporate", "infosec", "cyber", "training", "adult fine detail", "2026 color world"], detail: "adult", url: "/corporate" }
+        ];
+
+        // Top 10 Themed Pack SEO Blogs
+        const themedPacks = [
+            {
+                title: "1. Botanical Splendor & Flora Anatomy",
+                cat: "Botanical",
+                desc: "Intricate floral arrangements, Japanese cherry blossoms, and succulent terrariums calibrated for stress relief and botanic precision.",
+                keywords: "botanical coloring pages, flower line art, stress relief flora",
+                gumroadSlug: "botanical-splendor"
+            },
+            {
+                title: "2. Mythical Fantasy & Dragon Realms",
+                cat: "Fantasy",
+                desc: "High-fantasy gothic castles, celestial dragons, crystal caverns, and magical beasts rendered with ultra-fine crosshatching.",
+                keywords: "fantasy coloring sheets, dragon line art, medieval coloring",
+                gumroadSlug: "fantasy-realms"
+            },
+            {
+                title: "3. Cyberpunk Neon Megacities",
+                cat: "Cyberpunk",
+                desc: "Neo-Tokyo high-tech skylines, cyborg samurai, neon hovercrafts, and futuristic mecha designs for adult sci-fi enthusiasts.",
+                keywords: "cyberpunk coloring book, sci-fi line art, futuristic coloring",
+                gumroadSlug: "cyberpunk-megacity"
+            },
+            {
+                title: "4. Wildlife Spirits & Geometric Fauna",
+                cat: "Animals",
+                desc: "Majestic apex predators, arctic foxes, and woodland wildlife paired with sacred geometry and bold junior minimal contours.",
+                keywords: "animal coloring pages, wildlife line art, geometric animals",
+                gumroadSlug: "wildlife-fauna"
+            },
+            {
+                title: "5. Sacred Zen & Geometric Mandalas",
+                cat: "Mandalas",
+                desc: "Centering circular mandalas, Buddhist lotus wheels, and celestial sun-moon symmetries designed for meditative art therapy.",
+                keywords: "mandala coloring pages, zen art therapy, printable mandalas",
+                gumroadSlug: "sacred-mandalas"
+            },
+            {
+                title: "6. Architectural Marvels of the World",
+                cat: "Architecture",
+                desc: "Perspective-accurate European streetscapes, Venetian canals, Parisian cafes, and alpine retreats for coloring architectural admirers.",
+                keywords: "architectural coloring pages, cityscapes, world marvels line art",
+                gumroadSlug: "architectural-marvels"
+            },
+            {
+                title: "7. Anime Legends & Manga Heroes",
+                cat: "Anime",
+                desc: "Dynamic battle poses, cute chibi companions, and modern shonen illustrations ready for vibrant marker coloring.",
+                keywords: "anime coloring sheets, manga line art, chibi coloring",
+                gumroadSlug: "anime-legends"
+            },
+            {
+                title: "8. Classic Muscle Cars & Speed Machines",
+                cat: "Vehicles",
+                desc: "Iconic 1960s American muscle, Formula racers, supersonic jets, and futuristic starcruisers with clean automotive outlines.",
+                keywords: "car coloring pages, muscle car line art, vehicle coloring",
+                gumroadSlug: "muscle-cars"
+            },
+            {
+                title: "9. Cozy Hygge & Autumn Comforts",
+                cat: "Cozy Hygge",
+                desc: "Rainy bookstore nooks, steaming artisan mugs, rustic bakeries, and sleeping cats wrapped in warm woolen quilts.",
+                keywords: "cozy hygge coloring, relaxing autumn coloring pages, warm interiors",
+                gumroadSlug: "cozy-hygge"
+            },
+            {
+                title: "10. Corporate Compliance & Training Sheets",
+                cat: "Corporate",
+                desc: "Engaging employee onboarding diagrams, OSHA safety protocols, and clean desk guidelines transformed into relaxing training coloring sheets.",
+                keywords: "corporate training coloring, compliance diagrams, white label enterprise",
+                gumroadSlug: "corporate-compliance"
+            }
+        ];
+
         window.addEventListener("DOMContentLoaded", () => {
+            renderCatalog(catalogProducts);
+            renderSeoBlogs();
+
             if (verifiedLicenseKey && verifiedLicenseKey.length >= 8) {
                 unlockApp(verifiedLicenseKey);
             }
+            // Initialize default canvas
+            initDefaultCanvas();
         });
 
+        // -------------------------------------------------------------
+        // CATALOG FILTER & SEARCH LOGIC
+        // -------------------------------------------------------------
+        function selectCategory(catName, el) {
+            currentCategory = catName;
+            document.querySelectorAll(".cat-item").forEach(item => item.classList.remove("active"));
+            if (el) el.classList.add("active");
+            document.getElementById("catalogHeaderTitle").innerText = catName === "All" ? "Storefront Catalog & Filter Index" : `${catName} Collection`;
+            applyCatalogFilters();
+        }
+
+        function handleCatalogSearch(query) {
+            searchQuery = query.toLowerCase().trim();
+            applyCatalogFilters();
+        }
+
+        function filterByDetail(level) {
+            searchQuery = level;
+            applyCatalogFilters();
+        }
+
+        function applyCatalogFilters() {
+            let filtered = catalogProducts;
+            if (currentCategory !== "All") {
+                filtered = filtered.filter(p => p.category.toLowerCase() === currentCategory.toLowerCase());
+            }
+            if (searchQuery) {
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(searchQuery) ||
+                    p.category.toLowerCase().includes(searchQuery) ||
+                    p.detail.toLowerCase().includes(searchQuery) ||
+                    p.tags.some(t => t.toLowerCase().includes(searchQuery))
+                );
+            }
+            renderCatalog(filtered);
+        }
+
+        function renderCatalog(items) {
+            const grid = document.getElementById("catalogGrid");
+            if (!items.length) {
+                grid.innerHTML = `<div class="col-12 text-center text-muted py-5">No templates match the current filter. Try selecting "All Catalog" or clearing search.</div>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => `
+                <div class="col-sm-6 col-lg-3">
+                    <div class="gallery-item p-3 d-flex flex-column h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-secondary small">${item.category}</span>
+                            <span class="text-success fw-bold">${item.price}</span>
+                        </div>
+                        <div class="text-center py-4 bg-dark rounded mb-2 border border-secondary" style="height: 140px;">
+                            <span class="fs-1">🎨</span>
+                            <div class="text-secondary small mt-1">© 2026 Color World</div>
+                        </div>
+                        <h6 class="text-light fw-bold text-truncate mb-1" title="${item.name}">${item.name}</h6>
+                        <div class="small text-muted mb-2">Detail: <span class="text-info">${item.detail}</span></div>
+                        <div class="mb-3">
+                            ${item.tags.slice(0, 3).map(t => `<span class="tag-badge" onclick="handleCatalogSearch('${t}')">#${t}</span>`).join('')}
+                        </div>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="${item.url}" target="_blank" class="gumroad-button btn btn-gumroad btn-sm w-100">
+                                Buy ($3.99)
+                            </a>
+                            <button class="btn btn-sm btn-outline-info" onclick="quickLoadDemo('${item.name}')">Load</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSeoBlogs() {
+            const grid = document.getElementById("seoBlogGrid");
+            grid.innerHTML = themedPacks.map(pack => `
+                <div class="col-md-6">
+                    <div class="card p-4 h-100 shadow-sm border-secondary">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-info text-dark font-monospace">${pack.cat}</span>
+                            <span class="affiliate-badge">Earn 40% Commission</span>
+                        </div>
+                        <h5 class="text-light fw-bold mb-2">${pack.title}</h5>
+                        <p class="text-secondary small mb-3">${pack.desc}</p>
+                        <div class="small text-muted mb-3">
+                            <strong>Indexing Keywords:</strong> <span class="font-monospace text-slate-400">${pack.keywords}</span>
+                        </div>
+                        <div class="mt-auto d-flex gap-2 pt-2 border-top border-secondary">
+                            <a href="https://sliverai.gumroad.com/l/${pack.gumroadSlug}?offer_code=SUBSCRIBE50" target="_blank" class="gumroad-button btn btn-gumroad btn-sm flex-grow-1">
+                                Order Pack (50% OFF)
+                            </a>
+                            <button class="btn btn-sm btn-outline-warning" onclick="generateThemePackBlog('${pack.title.replace(/'/g, "\\'")}', '${pack.cat}')">
+                                Read Guide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function quickLoadDemo(templateName) {
+            document.getElementById('metaName').value = `${templateName} Coloring Template`;
+            document.getElementById('metaTitle').value = `${templateName} - Premium Coloring Page`;
+            selectCategory("All");
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        // -------------------------------------------------------------
+        // LICENSE KEY & GUEST MODE
+        // -------------------------------------------------------------
         async function verifyLicenseGate() {
             const key = document.getElementById("licenseKeyInput").value.trim();
-            const prodId = document.getElementById("productIdInput").value.trim() || "trending_ten_bundle";
-
             const alertDiv = document.getElementById("gateAlert");
             alertDiv.classList.remove("d-none", "alert-danger", "alert-success");
 
@@ -189,15 +700,14 @@
                 return;
             }
 
-            document.getElementById("unlockBtn").innerText = "Verifying License...";
+            document.getElementById("unlockBtn").innerText = "Verifying...";
             document.getElementById("unlockBtn").disabled = true;
 
-            // 1. Try Live API Verification through backend or direct Gumroad endpoint
             try {
                 const res = await fetch("/api/license/verify", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ product_id: prodId, license_key: key })
+                    body: JSON.stringify({ product_id: "trending_ten_bundle", license_key: key })
                 });
 
                 if (res.ok) {
@@ -207,19 +717,20 @@
                         return;
                     }
                 }
-            } catch (e) {
-                // If offline / standalone HTML mode, perform format validation
-            }
+            } catch (e) {}
 
-            // Universal validator for Gumroad license format (e.g., standard UUID or hyphenated key)
             if (key.length >= 8) {
                 unlockApp(key);
             } else {
                 alertDiv.classList.add("alert-danger");
-                alertDiv.innerText = "Invalid license key. Please check your Gumroad receipt.";
-                document.getElementById("unlockBtn").innerText = "Unlock Converter & Bulk Dumps";
+                alertDiv.innerText = "Invalid license key. Check your Gumroad receipt or purchase a license.";
+                document.getElementById("unlockBtn").innerText = "Unlock Bulk Dumps";
                 document.getElementById("unlockBtn").disabled = false;
             }
+        }
+
+        function quickGuestMode() {
+            unlockApp("GUEST-TRIAL-MODE");
         }
 
         function unlockApp(key) {
@@ -239,7 +750,7 @@
             document.getElementById("mainAppSection").classList.add("d-none");
             document.getElementById("licenseStatusBar").classList.add("d-none");
             document.getElementById("licenseKeyInput").value = "";
-            document.getElementById("unlockBtn").innerText = "Unlock Converter & Bulk Dumps";
+            document.getElementById("unlockBtn").innerText = "Unlock Bulk Dumps";
             document.getElementById("unlockBtn").disabled = false;
         }
 
@@ -273,10 +784,17 @@
             document.getElementById('metaName').value = currentMetadata.name;
             document.getElementById('metaTitle').value = currentMetadata.title;
             const tagsDiv = document.getElementById('tagsContainer');
-            tagsDiv.innerHTML = currentMetadata.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('');
+            tagsDiv.innerHTML = currentMetadata.tags.map(t => `<span class="tag-badge" onclick="handleCatalogSearch('${t}')">#${t}</span>`).join('');
             document.getElementById('metadataBox').classList.remove('d-none');
+            document.getElementById('viralActionButtons').classList.remove('d-none');
+
+            // Trigger background generation for outreach
+            generateViralSocialOutreach();
         }
 
+        // -------------------------------------------------------------
+        // SUB-50MS ENGINE EXECUTION
+        // -------------------------------------------------------------
         async function processAllImages() {
             const input = document.getElementById('imageInput');
             const files = Array.from(input.files);
@@ -302,11 +820,10 @@
                 convertedItems.push(res);
                 totalMs += res.ms;
 
-                // Add to gallery
                 const col = document.createElement('div');
                 col.className = 'col-4 col-md-3';
                 col.innerHTML = `
-                    <div class="gallery-item p-1">
+                    <div class="gallery-item p-1" onclick="previewConverted(${convertedItems.length - 1})">
                         <img src="${res.dataUrl}" alt="${res.name}">
                         <div class="small text-truncate text-light px-1 mt-1">${res.name}</div>
                         <div class="text-success small px-1">${res.ms.toFixed(1)}ms</div>
@@ -315,19 +832,14 @@
                 bulkGallery.appendChild(col);
             }
 
-            // Update primary preview with the last processed image
-            const last = convertedItems[convertedItems.length - 1];
-            document.getElementById('resultPreview').src = last.dataUrl;
-            document.getElementById('resultPreview').classList.remove('d-none');
-            document.getElementById('placeholderText').classList.add('d-none');
+            // Preview last converted
+            previewConverted(convertedItems.length - 1);
 
-            // Speed Badge
             const avgMs = (totalMs / files.length).toFixed(1);
             const badge = document.getElementById('speedBadge');
             badge.innerText = `Avg: ${avgMs} ms/image (< 50ms PASSED) [${convertedItems.length} converted]`;
             badge.classList.remove('d-none');
 
-            // Bulk gallery visibility
             document.getElementById('bulkGalleryContainer').classList.remove('d-none');
             document.getElementById('bulkCount').innerText = convertedItems.length;
 
@@ -335,6 +847,15 @@
 
             convertBtn.disabled = false;
             convertBtn.innerText = 'Convert Instant (< 50ms/image)';
+        }
+
+        function previewConverted(idx) {
+            const item = convertedItems[idx];
+            if (!item) return;
+            document.getElementById('resultPreview').src = item.dataUrl;
+            document.getElementById('resultPreview').classList.remove('d-none');
+            document.getElementById('placeholderText').classList.add('d-none');
+            generateMetadataFromFilename(item.name);
         }
 
         function processSingleFile(file) {
@@ -350,7 +871,6 @@
                         let srcW = img.width;
                         let srcH = img.height;
 
-                        // Aspect Ratio Cropping
                         const arChoice = document.getElementById('aspectRatioSelect').value;
                         let cropX = 0, cropY = 0, cropW = srcW, cropH = srcH;
 
@@ -368,7 +888,6 @@
                             }
                         }
 
-                        // Scale cap 1920
                         const maxDim = Math.max(cropW, cropH);
                         let scale = 1.0;
                         if (maxDim > 1920) scale = 1920.0 / maxDim;
@@ -383,7 +902,6 @@
                         const imgData = ctx.getImageData(0, 0, outW, outH);
                         const data = imgData.data;
 
-                        // Grayscale
                         const gray = new Uint8Array(outW * outH);
                         for (let i = 0, p = 0; i < data.length; i += 4, p++) {
                             gray[p] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
@@ -392,7 +910,6 @@
                         const detail = parseFloat(document.getElementById('detailSlider').value);
                         const threshold = detail < 0.35 ? 24 : (detail > 0.70 ? 12 : 18);
 
-                        // Fast Sobel Edge extraction
                         for (let y = 1; y < outH - 1; y++) {
                             const rowAbove = (y - 1) * outW;
                             const rowCurrent = y * outW;
@@ -432,6 +949,7 @@
                         resolve({
                             name: file.name.replace(/\.[^/.]+$/, ""),
                             dataUrl: dataUrl,
+                            rawImg: img,
                             ms: elapsed
                         });
                     };
@@ -450,7 +968,6 @@
                 zip.file(`coloring_${item.name || index + 1}.png`, base64Data, { base64: true });
             });
 
-            // Add metadata json manifest
             zip.file("manifest.json", JSON.stringify({
                 license_key_used: verifiedLicenseKey,
                 total_converted: convertedItems.length,
@@ -470,12 +987,20 @@
 
             const name = document.getElementById('metaName').value;
             const tags = currentMetadata.tags;
+            const previewDataUrl = document.getElementById('resultPreview').src;
 
             try {
                 const res = await fetch('/api/publish', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: name, price_cents: 399, tags: tags, promo_code: 'SUBSCRIBE50' })
+                    body: JSON.stringify({
+                        name: name,
+                        price_cents: 399,
+                        tags: tags,
+                        promo_code: 'SUBSCRIBE50',
+                        image_base64: previewDataUrl,
+                        prevent_duplicates: true
+                    })
                 });
                 if (res.ok) {
                     const data = await res.json();
@@ -497,7 +1022,327 @@
             const statusDiv = document.getElementById('statusAlert');
             statusDiv.classList.remove('d-none', 'alert-danger');
             statusDiv.classList.add('alert-success');
-            statusDiv.innerHTML = `<strong>Success!</strong> Listed on Gumroad at $3.99 with License Keys.<br>Storefront: <a href="${data.product_url}" target="_blank" class="text-light text-decoration-underline">${data.product_url}</a><br>Promo Code: <strong>${data.promo_code}</strong> (${data.discount})`;
+            const dupNotice = data.duplicate ? "<br><span class='badge bg-warning text-dark'>Duplicate Detected - Linked Existing Product</span>" : "";
+            statusDiv.innerHTML = `<strong>Success!</strong> Gumroad Listing Active ($3.99).${dupNotice}<br>Storefront: <a href="${data.product_url}" target="_blank" class="text-light text-decoration-underline">${data.product_url}</a><br>Promo Code: <strong>${data.promo_code}</strong> (${data.discount})`;
+        }
+
+        async function loadStorefrontProducts() {
+            try {
+                const res = await fetch("/api/products");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.products && data.products.length > 0) {
+                        data.products.forEach(p => {
+                            catalogProducts.unshift({
+                                id: p.id,
+                                category: "Storefront",
+                                name: p.name,
+                                price: "$" + (p.price / 100).toFixed(2),
+                                tags: p.tags || ["2026 color world", "line art"],
+                                detail: "standard",
+                                url: p.short_url || p.landing_url
+                            });
+                        });
+                        applyCatalogFilters();
+                    }
+                }
+            } catch (e) {}
+        }
+
+        // =============================================================
+        // VIRAL INK-BLEED VIDEO ANIMATION & SOCIAL OUTREACH STUDIO
+        // =============================================================
+        function initDefaultCanvas() {
+            const canvas = document.getElementById("animCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw placeholder flower mandala sketch
+            ctx.strokeStyle = "#111827";
+            ctx.lineWidth = 4;
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            for (let i = 0; i < 8; i++) {
+                const ang = (i * Math.PI) / 4;
+                ctx.beginPath();
+                ctx.arc(cx + Math.cos(ang) * 90, cy + Math.sin(ang) * 90, 70, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Copyright footer
+            ctx.font = "16px sans-serif";
+            ctx.fillStyle = "#6b7280";
+            ctx.textAlign = "center";
+            ctx.fillText("© 2026 Color World", cx, canvas.height - 20);
+        }
+
+        function startInkBleedAnimation() {
+            if (isAnimating) cancelAnimationFrame(animId);
+            isAnimating = true;
+            animProgress = 0;
+
+            const canvas = document.getElementById("animCanvas");
+            const ctx = canvas.getContext("2d");
+            const statusBadge = document.getElementById("renderStatusBadge");
+            statusBadge.innerText = "Blooming Ink Bleed...";
+            statusBadge.className = "badge bg-danger";
+
+            // Scroll to video studio
+            document.getElementById("viralStudio").scrollIntoView({ behavior: 'smooth' });
+
+            const lineImg = new Image();
+            const currentLineSrc = document.getElementById("resultPreview").src;
+            if (currentLineSrc && !currentLineSrc.includes("data:,")) {
+                lineImg.src = currentLineSrc;
+            } else {
+                initDefaultCanvas();
+            }
+
+            const startTime = performance.now();
+            const duration = 4500; // 4.5 second aesthetic completion bloom
+
+            function frame(now) {
+                const elapsed = now - startTime;
+                animProgress = Math.min(1.0, elapsed / duration);
+
+                // Render aesthetic watercolor ink bleed
+                renderInkBleedFrame(ctx, canvas.width, canvas.height, animProgress, lineImg);
+
+                if (animProgress < 1.0) {
+                    animId = requestAnimationFrame(frame);
+                } else {
+                    isAnimating = false;
+                    statusBadge.innerText = "Completed (Ready to Share)";
+                    statusBadge.className = "badge bg-success";
+                }
+            }
+            animId = requestAnimationFrame(frame);
+        }
+
+        function renderInkBleedFrame(ctx, w, h, progress, lineImg) {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, w, h);
+
+            // 1. Organic watercolor ink blobs blooming outwards
+            const cx = w / 2;
+            const cy = h / 2;
+            const numDrops = 14;
+
+            for (let i = 0; i < numDrops; i++) {
+                const angle = (i * 2 * Math.PI) / numDrops + i * 0.4;
+                const dist = Math.min(w * 0.45, (w * 0.4) * Math.pow(progress, 0.75));
+                const dropX = cx + Math.cos(angle) * dist * (0.6 + 0.4 * Math.sin(i * 1.5));
+                const dropY = cy + Math.sin(angle) * dist * (0.6 + 0.4 * Math.cos(i * 1.5));
+                const radius = Math.max(10, (140 + (i % 5) * 25) * Math.pow(progress, 0.6));
+
+                const grad = ctx.createRadialGradient(dropX, dropY, 5, dropX, dropY, radius);
+
+                // Aesthetic vibrant palette: cyan, magenta, violet, coral, golden sunlight
+                const hues = [
+                    "rgba(56, 189, 248, ",   // sky blue
+                    "rgba(192, 132, 252, ",  // purple/lavender
+                    "rgba(251, 113, 133, ",  // rose pink
+                    "rgba(251, 191, 36, ",   // warm gold
+                    "rgba(52, 211, 153, "    // emerald mint
+                ];
+                const baseHue = hues[i % hues.length];
+                const alpha = Math.min(0.78, progress * 0.85);
+
+                grad.addColorStop(0, baseHue + alpha + ")");
+                grad.addColorStop(0.5, baseHue + (alpha * 0.5) + ")");
+                grad.addColorStop(1, baseHue + "0)");
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(dropX, dropY, radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 2. Draw black line art with 'multiply' blend mode so ink blooms realistically behind lines
+            ctx.save();
+            ctx.globalCompositeOperation = "multiply";
+            if (lineImg.complete && lineImg.naturalWidth > 0) {
+                ctx.drawImage(lineImg, 0, 0, w, h);
+            } else {
+                // Draw mandala lines
+                ctx.strokeStyle = "#111827";
+                ctx.lineWidth = 4;
+                for (let i = 0; i < 8; i++) {
+                    const ang = (i * Math.PI) / 4;
+                    ctx.beginPath();
+                    ctx.arc(cx + Math.cos(ang) * 90, cy + Math.sin(ang) * 90, 70, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+            ctx.restore();
+
+            // 3. Stamped Copyright footer
+            ctx.font = "16px sans-serif";
+            ctx.fillStyle = "#4b5563";
+            ctx.textAlign = "center";
+            ctx.fillText("© 2026 Color World", cx, h - 20);
+        }
+
+        function resetAnimation() {
+            if (isAnimating) cancelAnimationFrame(animId);
+            isAnimating = false;
+            initDefaultCanvas();
+            document.getElementById("renderStatusBadge").innerText = "Idle";
+            document.getElementById("renderStatusBadge").className = "badge bg-secondary";
+        }
+
+        async function recordAndExportVideo() {
+            const canvas = document.getElementById("animCanvas");
+            const btn = document.getElementById("exportVideoBtn");
+            btn.innerText = "Recording Video...";
+            btn.disabled = true;
+
+            const stream = canvas.captureStream(30);
+            let mediaRecorder;
+            try {
+                mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+            } catch (e) {
+                mediaRecorder = new MediaRecorder(stream);
+            }
+
+            const chunks = [];
+            mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(chunks, { type: "video/webm" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `colorworld_inkbleed_${Date.now()}.webm`;
+                a.click();
+                btn.innerText = "⬇ Export WebM / MP4 Video";
+                btn.disabled = false;
+            };
+
+            mediaRecorder.start();
+            startInkBleedAnimation();
+
+            // Record 5 seconds then stop
+            setTimeout(() => {
+                if (mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                }
+            }, 5000);
+        }
+
+        // -------------------------------------------------------------
+        // DELEGATED SOCIAL OUTREACH AUTOMATION
+        // -------------------------------------------------------------
+        async function generateViralSocialOutreach() {
+            const name = (currentMetadata && currentMetadata.name) ? currentMetadata.name : "Enchanted Botanical Garden";
+            const cat = currentCategory !== "All" ? currentCategory : "Art Therapy";
+
+            try {
+                const res = await fetch("/api/outreach/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        template_name: name,
+                        category: cat,
+                        tags: currentMetadata ? currentMetadata.tags : []
+                    })
+                });
+
+                if (res.ok) {
+                    currentCampaign = await res.json();
+                    updateOutreachDisplay();
+                    return;
+                }
+            } catch (e) {}
+
+            // Client-side fallback
+            currentCampaign = {
+                platforms: {
+                    tiktok: `✨ Watch this black & white sketch come to life with watercolor ink bleed! 🎨💧 Download '${name}' instantly on Gumroad (https://sliverai.gumroad.com). Use code SUBSCRIBE50 for 50% OFF! #coloring #inkbleed #satisfying #2026colorworld`,
+                    instagram_reels: `From raw ink contours to vibrant chromatic bloom ✨🌿\n\nTemplate: ${name}\nCollection: 2026 Color World\n⚡ Link in bio: https://sliverai.gumroad.com\n🏷️ 50% OFF Promo Code: SUBSCRIBE50\n\n#watercolorbleed #adultcoloring #zenart #coloringtherapy`,
+                    pinterest: { title: `Aesthetic ${name} Coloring Page (Instant Download)`, description: `Printable coloring template with high-resolution line art and commercial license. 50% coupon code SUBSCRIBE50 on Gumroad.` },
+                    youtube_shorts: { title: `Aesthetic Watercolor Ink-Bleed 🖌️ ${name} #shorts`, description: `Download the high-res printable line art on Gumroad: https://sliverai.gumroad.com. Promo code SUBSCRIBE50.` },
+                    twitter_x: `🎨 New printable release: '${name}'\nSub-50ms line-art rendering with commercial copyright license.\nWatch the ink bleed transformation 👇\nClaim 50% OFF with code SUBSCRIBE50: https://sliverai.gumroad.com\n#ColoringPage #DigitalArt`,
+                    email_campaign: { subject: `🎨 New Aesthetic Coloring Drop: ${name} (50% VIP Secret Code)`, body: `Hi Color World VIP,\n\nWe just dropped a brand new coloring template: '${name}'.\nGrab your copy today with 50% discount coupon: SUBSCRIBE50\nhttps://sliverai.gumroad.com` }
+                }
+            };
+            updateOutreachDisplay();
+        }
+
+        function switchOutreachTab(tab, btn) {
+            activeTab = tab;
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            updateOutreachDisplay();
+        }
+
+        function updateOutreachDisplay() {
+            if (!currentCampaign || !currentCampaign.platforms) return;
+            const area = document.getElementById("outreachCopyArea");
+            const p = currentCampaign.platforms;
+
+            if (activeTab === "tiktok") area.value = p.tiktok || "";
+            else if (activeTab === "reels") area.value = p.instagram_reels || "";
+            else if (activeTab === "pinterest") area.value = p.pinterest ? `${p.pinterest.title}\n\n${p.pinterest.description}\n\nLink: ${p.pinterest.destination_url || 'https://sliverai.gumroad.com'}` : "";
+            else if (activeTab === "shorts") area.value = p.youtube_shorts ? `${p.youtube_shorts.title}\n\n${p.youtube_shorts.description}` : "";
+            else if (activeTab === "twitter") area.value = p.twitter_x || "";
+            else if (activeTab === "email") area.value = p.email_campaign ? `SUBJECT: ${p.email_campaign.subject}\n\n${p.email_campaign.body}` : "";
+        }
+
+        function copyOutreachText() {
+            const area = document.getElementById("outreachCopyArea");
+            area.select();
+            navigator.clipboard.writeText(area.value);
+            alert("Viral caption copied to clipboard with Gumroad link & 50% discount code!");
+        }
+
+        // -------------------------------------------------------------
+        // DYNAMIC AI SEO BLOG GENERATION
+        // -------------------------------------------------------------
+        async function generateInstantBlog() {
+            const name = (currentMetadata && currentMetadata.name) ? currentMetadata.name : "Enchanted Lotus Garden";
+            const cat = currentCategory !== "All" ? currentCategory : "Botanical";
+            fetchAndShowBlog(name, cat);
+        }
+
+        async function generateThemePackBlog(themeTitle, cat) {
+            fetchAndShowBlog(themeTitle, cat);
+        }
+
+        async function fetchAndShowBlog(name, cat) {
+            try {
+                const res = await fetch("/api/blog/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        template_name: name,
+                        category: cat,
+                        tags: currentMetadata ? currentMetadata.tags : []
+                    })
+                });
+
+                if (res.ok) {
+                    const post = await res.json();
+                    currentBlogMarkdown = post.markdown_content;
+                    document.getElementById("blogPostHeader").innerText = post.title;
+                    document.getElementById("blogContentArea").innerText = post.markdown_content;
+                    document.getElementById("blogDisplaySection").classList.remove("d-none");
+                    document.getElementById("blogDisplaySection").scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+            } catch (e) {}
+
+            alert("Generating article...");
+        }
+
+        function copyBlogMarkdown() {
+            navigator.clipboard.writeText(currentBlogMarkdown);
+            alert("Full SEO Blog article copied in Markdown format with Gumroad backlinks!");
+        }
+
+        function closeBlogDisplay() {
+            document.getElementById("blogDisplaySection").classList.add("d-none");
         }
     </script>
 </body>

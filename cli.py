@@ -72,12 +72,14 @@ def process_batch(
             "gumroad_listing": None
         }
 
-        # 3. Optional Gumroad Publishing
+        # 3. Optional Gumroad Publishing with file attachment and duplicate prevention
         if publish_gumroad and publisher is not None:
             listing = publisher.publish_product(
                 name=metadata["name"],
                 price_cents=399,
-                tags=metadata["tags"]
+                tags=metadata["tags"],
+                image_asset=out_path,
+                prevent_duplicates=True
             )
             item_record["gumroad_listing"] = listing
 

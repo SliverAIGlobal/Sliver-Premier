@@ -6,6 +6,8 @@ import cv2
 from PIL import Image
 from engine import ColoringPageEngine, MetadataGenerator
 from gumroad_client import GumroadPublisher
+from outreach_engine import ViralOutreachEngine
+from blog_generator import BlogGenerator
 
 class TestColoringPageEngine(unittest.TestCase):
 
@@ -13,6 +15,8 @@ class TestColoringPageEngine(unittest.TestCase):
         self.engine = ColoringPageEngine(copyright_text="© 2026 Color World")
         self.meta_gen = MetadataGenerator()
         self.publisher = GumroadPublisher()
+        self.outreach = ViralOutreachEngine()
+        self.blogger = BlogGenerator()
 
         # Create 1080p synthetic test image
         self.test_img = np.zeros((1080, 1920, 3), dtype=np.uint8)
@@ -21,10 +25,8 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_sub_50ms_conversion_latency(self):
         """Verify image conversion completes under 50ms requirement."""
-        # Warmup
         self.engine.convert_image(self.test_img)
 
-        # Benchmark run
         times = []
         for _ in range(5):
             _, elapsed_ms = self.engine.convert_image(self.test_img)
@@ -36,7 +38,7 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_aspect_ratio_cropping(self):
         """Verify 1:1, 4:5, and custom crop box functionality."""
-        self.engine.convert_image(self.test_img)  # warmup
+        self.engine.convert_image(self.test_img)
 
         img_1to1, ms_1to1 = self.engine.convert_image(self.test_img, aspect_ratio="1:1")
         self.assertEqual(img_1to1.size[0], img_1to1.size[1])
@@ -52,15 +54,12 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_detail_slider_junior_to_adult(self):
         """Verify sliding scale from Junior (0.0) to Adult (1.0) detail."""
-        # Warmup conversions
         self.engine.convert_image(self.test_img, detail_level=0.5)
 
-        # Junior Minimal
         times_j = [self.engine.convert_image(self.test_img, detail_level=0.1)[1] for _ in range(3)]
         avg_j = sum(times_j) / len(times_j)
         self.assertLess(avg_j, 50.0)
 
-        # Adult Fine Detail
         times_a = [self.engine.convert_image(self.test_img, detail_level=0.95)[1] for _ in range(3)]
         avg_a = sum(times_a) / len(times_a)
         self.assertLess(avg_a, 50.0)
@@ -126,6 +125,37 @@ class TestColoringPageEngine(unittest.TestCase):
         r = self.publisher.rotate_license("prod_abc", "LIC-12345")
         self.assertTrue(r["success"])
         self.assertIn("MOCK-NEW", r["new_license_key"])
+
+    def test_viral_outreach_generation(self):
+        """Verify viral outreach engine creates posts across TikTok, Reels, Pinterest, Shorts, and X."""
+        campaign = self.outreach.generate_viral_campaign(
+            template_name="Mystic Rose",
+            category="Botanical",
+            tags=["botanical", "roses", "flowers", "coloring", "relaxing", "2026 color world"]
+        )
+        self.assertIn("platforms", campaign)
+        p = campaign["platforms"]
+        self.assertIn("tiktok", p)
+        self.assertIn("instagram_reels", p)
+        self.assertIn("pinterest", p)
+        self.assertIn("youtube_shorts", p)
+        self.assertIn("twitter_x", p)
+        self.assertIn("email_campaign", p)
+        self.assertIn("sms_blast", p)
+        self.assertIn("SUBSCRIBE50", p["tiktok"])
+
+    def test_seo_blog_generation_with_backlinks(self):
+        """Verify dynamic AI SEO blog generator creates markdown articles with Gumroad backlinks."""
+        blog = self.blogger.generate_blog_post(
+            template_name="Neon Samurai",
+            category="Cyberpunk"
+        )
+        self.assertIn("markdown_content", blog)
+        content = blog["markdown_content"]
+        self.assertIn("sliverai.gumroad.com", content)
+        self.assertIn("SUBSCRIBE50", content)
+        self.assertIn("© 2026 Color World", content)
+        self.assertGreater(len(content), 1000)
 
 if __name__ == "__main__":
     unittest.main()

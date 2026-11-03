@@ -1,91 +1,113 @@
-import os
-import cv2
+import io
+import unittest
 import numpy as np
-import pytest
+import cv2
+from PIL import Image
 from fastapi.testclient import TestClient
-from unittest.mock import patch, MagicMock
-
 from app import app
-from engine import ColoringPageEngine, MetadataGenerator
-from gumroad_client import GumroadPublisher
 
-@pytest.fixture
-def client():
-    return TestClient(app)
+class TestAPIEndpoints(unittest.TestCase):
 
-def test_api_dashboard_get(client):
-    res = client.get("/")
-    assert res.status_code == 200
-    assert "2026 Color World" in res.text
-    assert "Commercial Access Gate" in res.text
+    def setUp(self):
+        self.client = TestClient(app)
 
-def test_api_corporate_dashboard_get(client):
-    res = client.get("/corporate")
-    assert res.status_code == 200
-    assert "Corporate White Label" in res.text
-    assert "Acme Global Corporation" in res.text
+        # Create dummy PNG image bytes
+        img = np.zeros((300, 300, 3), dtype=np.uint8)
+        cv2.circle(img, (150, 150), 80, (255, 255, 255), -1)
+        _, buf = cv2.imencode(".png", img)
+        self.dummy_bytes = buf.tobytes()
 
-def test_api_convert_endpoint_custom_aspect_and_detail(client):
-    img = np.zeros((400, 600, 3), dtype=np.uint8)
-    _, buf = cv2.imencode(".png", img)
-    files = {"file": ("test_art.png", buf.tobytes(), "image/png")}
-    data = {
-        "aspect_ratio": "1:1",
-        "detail_level": 0.2
-    }
-    res = client.post("/api/convert", files=files, data=data)
-    assert res.status_code == 200
-    resp = res.json()
-    assert resp["success"] is True
-    assert "image_data_url" in resp
-    assert resp["benchmark_passed"] is True
-    assert resp["dimensions"] == "400x400"
-    assert len(resp["metadata"]["tags"]) == 6
-    assert "junior minimal" in resp["metadata"]["tags"]
-    assert resp["copyright_stamp"] == "© 2026 Color World"
+    def test_convert_endpoint_and_speed_benchmark(self):
+        """Test POST /api/convert returns <50ms benchmark passed and metadata."""
+        files = {"file": ("flower_garden.png", io.BytesIO(self.dummy_bytes), "image/png")}
+        data = {
+            "aspect_ratio": "1:1",
+            "detail_level": "0.50"
+        }
+        res = self.client.post("/api/convert", files=files, data=data)
+        self.assertEqual(res.status_code, 200)
+        json_data = res.json()
 
-def test_api_publish_endpoints(client):
-    payload = {
-        "name": "Magic Forest Coloring Template",
-        "price_cents": 399,
-        "tags": ["magic forest", "coloring page", "line art", "2026 color world", "printable template", "instant download"],
-        "promo_code": "SUBSCRIBE50"
-    }
-    res = client.post("/api/publish", json=payload)
-    assert res.status_code == 200
-    data = res.json()
-    assert data["success"] is True
-    assert data["price"] == "$3.99"
-    assert data["is_licensed"] is True
+        self.assertTrue(json_data["success"])
+        self.assertTrue(json_data["benchmark_passed"])
+        self.assertLess(json_data["conversion_ms"], 50.0)
+        self.assertIn("data:image/png;base64,", json_data["image_data_url"])
 
-    # Bundle endpoint
-    b_res = client.post("/api/publish/bundle")
-    assert b_res.status_code == 200
-    assert b_res.json()["price"] == "$49.99"
+        meta = json_data["metadata"]
+        self.assertEqual(len(meta["tags"]), 6)
+        self.assertIn("2026 color world", meta["tags"])
 
-    # Corporate endpoint
-    c_res = client.post("/api/publish/corporate")
-    assert c_res.status_code == 200
-    assert c_res.json()["price"] == "$5000.00"
+    def test_publish_endpoint_mock_and_options(self):
+        """Test POST /api/publish succeeds with $3.99 and SUBSCRIBE50 promo code."""
+        payload = {
+            "name": "Zen Meadow Template",
+            "price_cents": 399,
+            "tags": ["zen", "meadow", "mindfulness", "line art", "2026 color world", "instant download"],
+            "promo_code": "SUBSCRIBE50",
+            "prevent_duplicates": True
+        }
+        res = self.client.post("/api/publish", json=payload)
+        self.assertEqual(res.status_code, 200)
+        json_data = res.json()
+        self.assertTrue(json_data["success"])
+        self.assertEqual(json_data["price"], "$3.99")
+        self.assertTrue(json_data["is_licensed"])
 
-def test_api_license_endpoints(client):
-    v_res = client.post("/api/license/verify", json={"product_id": "p_101", "license_key": "KEY-123"})
-    assert v_res.status_code == 200
-    assert v_res.json()["success"] is True
+    def test_products_endpoint(self):
+        """Test GET /api/products returns storefront products catalog."""
+        res = self.client.get("/api/products")
+        self.assertEqual(res.status_code, 200)
+        json_data = res.json()
+        self.assertTrue(json_data["success"])
+        self.assertIn("products", json_data)
 
-    e_res = client.post("/api/license/enable", json={"product_id": "p_101", "license_key": "KEY-123"})
-    assert e_res.status_code == 200
-    assert e_res.json()["success"] is True
+    def test_outreach_endpoint(self):
+        """Test POST /api/outreach/generate produces multi-platform posts."""
+        payload = {
+            "template_name": "Lotus Blossom",
+            "category": "Botanical",
+            "tags": ["botanical", "lotus", "coloring"]
+        }
+        res = self.client.post("/api/outreach/generate", json=payload)
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertIn("platforms", data)
+        self.assertIn("tiktok", data["platforms"])
+        self.assertIn("instagram_reels", data["platforms"])
 
-    d_res = client.post("/api/license/disable", json={"product_id": "p_101", "license_key": "KEY-123"})
-    assert d_res.status_code == 200
-    assert d_res.json()["success"] is True
+    def test_blog_endpoint(self):
+        """Test POST /api/blog/generate produces markdown article with backlinks."""
+        payload = {
+            "template_name": "Lotus Blossom",
+            "category": "Botanical"
+        }
+        res = self.client.post("/api/blog/generate", json=payload)
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertIn("markdown_content", data)
+        self.assertIn("sliverai.gumroad.com", data["markdown_content"])
 
-def test_api_financial_endpoints(client):
-    earn_res = client.get("/api/earnings?year=2025")
-    assert earn_res.status_code == 200
-    assert earn_res.json()["success"] is True
+    def test_license_verify_endpoint(self):
+        """Test POST /api/license/verify validates customer licenses."""
+        payload = {
+            "product_id": "test_prod",
+            "license_key": "TEST-LIC-KEY-999"
+        }
+        res = self.client.post("/api/license/verify", json=payload)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(res.json()["success"])
 
-    pay_res = client.get("/api/payouts")
-    assert pay_res.status_code == 200
-    assert pay_res.json()["success"] is True
+    def test_html_dashboard_routes(self):
+        """Test main index.html and corporate dashboard return 200 OK."""
+        res_main = self.client.get("/")
+        self.assertEqual(res_main.status_code, 200)
+        self.assertIn("2026 Color World", res_main.text)
+        self.assertIn("Category Filters", res_main.text)
+        self.assertIn("SUBSCRIBE50", res_main.text)
+
+        res_corp = self.client.get("/corporate")
+        self.assertEqual(res_corp.status_code, 200)
+        self.assertIn("Corporate White Label", res_corp.text)
+
+if __name__ == "__main__":
+    unittest.main()

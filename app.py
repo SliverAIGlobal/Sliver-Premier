@@ -2,7 +2,7 @@ import os
 import io
 import base64
 import logging
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict, Any
 import numpy as np
 import cv2
 from PIL import Image
@@ -13,14 +13,16 @@ from pydantic import BaseModel
 
 from engine import ColoringPageEngine, MetadataGenerator
 from gumroad_client import GumroadPublisher
+from outreach_engine import ViralOutreachEngine
+from blog_generator import BlogGenerator
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ColorWorldFastAPI")
 
 app = FastAPI(
     title="2026 Color World - Instant Coloring Page Engine",
-    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright, Aspect Cropping, Detail Optimization, and Gumroad API Integration",
-    version="1.2.0"
+    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright, Aspect Cropping, Detail Optimization, Gumroad API Integration, Ink-Bleed Video Engine, and Viral Outreach Generator",
+    version="2.0.0"
 )
 
 app.add_middleware(
@@ -34,12 +36,29 @@ app.add_middleware(
 engine = ColoringPageEngine(copyright_text="© 2026 Color World")
 meta_gen = MetadataGenerator()
 publisher = GumroadPublisher()
+outreach = ViralOutreachEngine(storefront_url="https://sliverai.gumroad.com", promo_code="SUBSCRIBE50")
+blogger = BlogGenerator(storefront_url="https://sliverai.gumroad.com", promo_code="SUBSCRIBE50")
 
 class PublishRequest(BaseModel):
     name: str
     price_cents: int = 399
     tags: List[str]
     promo_code: str = "SUBSCRIBE50"
+    image_base64: Optional[str] = None
+    prevent_duplicates: bool = True
+
+class OutreachRequest(BaseModel):
+    template_name: str
+    category: str = "General"
+    product_url: Optional[str] = None
+    tags: Optional[List[str]] = None
+
+class BlogRequest(BaseModel):
+    template_name: str
+    category: str = "Art Therapy"
+    description: Optional[str] = ""
+    tags: Optional[List[str]] = None
+    product_url: Optional[str] = None
 
 class LicenseVerifyRequest(BaseModel):
     product_id: str
@@ -84,7 +103,8 @@ async def convert_image_endpoint(
 
         buffered = io.BytesIO()
         pil_img.save(buffered, format="PNG")
-        base64_img = base64.b64encode(buffered.getvalue()).decode("utf-8")
+        raw_png_bytes = buffered.getvalue()
+        base64_img = base64.b64encode(raw_png_bytes).decode("utf-8")
 
         metadata = meta_gen.generate_metadata(
             filename=file.filename or "template",
@@ -110,12 +130,22 @@ async def convert_image_endpoint(
 
 @app.post("/api/publish")
 async def publish_endpoint(req: PublishRequest):
-    """Publishes page to Gumroad for $3.99 with license keys and 50% promo code."""
+    """Publishes page to Gumroad for $3.99 with license keys, 50% promo code, cover file upload, and duplicate prevention."""
+    image_bytes = None
+    if req.image_base64:
+        try:
+            b64_str = req.image_base64.split(",")[-1]
+            image_bytes = base64.b64decode(b64_str)
+        except Exception as e:
+            logger.warning(f"Failed to decode image_base64 for product upload: {e}")
+
     res = publisher.publish_product(
         name=req.name,
         price_cents=req.price_cents,
         tags=req.tags,
-        promo_code=req.promo_code
+        image_asset=image_bytes,
+        promo_code=req.promo_code,
+        prevent_duplicates=req.prevent_duplicates
     )
     return JSONResponse(res)
 
@@ -131,46 +161,80 @@ async def publish_corporate_endpoint():
     res = publisher.publish_corporate_license()
     return JSONResponse(res)
 
+@app.get("/api/products")
+async def get_products_endpoint():
+    """Retrieves all existing storefront products with category and tag metadata."""
+    existing = publisher.get_existing_product_names(force_refresh=True)
+    return JSONResponse({
+        "success": True,
+        "count": len(existing),
+        "products": list(existing.values())
+    })
+
+# ==========================================
+# Viral Outreach & Blog Generation APIs
+# ==========================================
+
+@app.post("/api/outreach/generate")
+async def generate_outreach_endpoint(req: OutreachRequest):
+    """Generates multi-platform viral outreach copy (TikTok, Reels, Pinterest, Shorts, X, Email, SMS)."""
+    campaign = outreach.generate_viral_campaign(
+        template_name=req.template_name,
+        category=req.category,
+        product_url=req.product_url,
+        tags=req.tags
+    )
+    return JSONResponse(campaign)
+
+@app.post("/api/blog/generate")
+async def generate_blog_endpoint(req: BlogRequest):
+    """Generates an 800+ word SEO blog post with backlinked Gumroad integration."""
+    post = blogger.generate_blog_post(
+        template_name=req.template_name,
+        category=req.category,
+        description=req.description or "",
+        tags=req.tags,
+        product_url=req.product_url
+    )
+    return JSONResponse(post)
+
+# ==========================================
+# License Management & Payouts
+# ==========================================
+
 @app.post("/api/license/verify")
 async def verify_license_endpoint(req: LicenseVerifyRequest):
-    """Verifies a Gumroad customer license key."""
     res = publisher.verify_license(req.product_id, req.license_key, req.increment_uses_count)
     return JSONResponse(res)
 
 @app.post("/api/license/enable")
 async def enable_license_endpoint(req: LicenseActionRequest):
-    """Enables a Gumroad customer license."""
     res = publisher.enable_license(req.product_id, req.license_key)
     return JSONResponse(res)
 
 @app.post("/api/license/disable")
 async def disable_license_endpoint(req: LicenseActionRequest):
-    """Disables a Gumroad customer license."""
     res = publisher.disable_license(req.product_id, req.license_key)
     return JSONResponse(res)
 
 @app.get("/api/earnings")
 async def get_earnings_endpoint(year: int = Query(2025)):
-    """Retrieves tax center annual earnings summary from Gumroad."""
     res = publisher.get_earnings(year)
     return JSONResponse(res)
 
 @app.get("/api/payouts")
 async def get_payouts_endpoint():
-    """Retrieves upcoming and completed payouts from Gumroad."""
     res = publisher.get_payouts()
     return JSONResponse(res)
 
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard():
-    """Serves the standalone single-page Web App UI from index.html."""
     with open("index.html", "r", encoding="utf-8") as f:
         content = f.read()
     return HTMLResponse(content=content)
 
 @app.get("/corporate", response_class=HTMLResponse)
 async def get_corporate_dashboard():
-    """Serves the corporate white label training sheet engine."""
     with open("corporate_white_label.html", "r", encoding="utf-8") as f:
         content = f.read()
     return HTMLResponse(content=content)
