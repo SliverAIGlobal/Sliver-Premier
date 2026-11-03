@@ -2,14 +2,14 @@ import os
 import io
 import base64
 import logging
+from typing import List, Optional, Tuple
 import numpy as np
 import cv2
 from PIL import Image
-from fastapi import FastAPI, File, UploadFile, HTTPException, Query
+from fastapi import FastAPI, File, UploadFile, HTTPException, Query, Form
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
 
 from engine import ColoringPageEngine, MetadataGenerator
 from gumroad_client import GumroadPublisher
@@ -19,8 +19,8 @@ logger = logging.getLogger("ColorWorldFastAPI")
 
 app = FastAPI(
     title="2026 Color World - Instant Coloring Page Engine",
-    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright and Gumroad API Integration",
-    version="1.0.0"
+    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright, Aspect Cropping, Detail Optimization, and Gumroad API Integration",
+    version="1.1.0"
 )
 
 app.add_middleware(
@@ -51,8 +51,16 @@ class LicenseActionRequest(BaseModel):
     license_key: str
 
 @app.post("/api/convert")
-async def convert_image_endpoint(file: UploadFile = File(...)):
-    """Uploads an image, converts to line art in <50ms with stamp, and returns base64 preview + AI metadata."""
+async def convert_image_endpoint(
+    file: UploadFile = File(...),
+    aspect_ratio: Optional[str] = Form("original"),
+    detail_level: Optional[float] = Form(0.5),
+    crop_x: Optional[int] = Form(None),
+    crop_y: Optional[int] = Form(None),
+    crop_w: Optional[int] = Form(None),
+    crop_h: Optional[int] = Form(None)
+):
+    """Uploads an image, applies optional cropping, aspect ratio, and detail optimization (<50ms), returning line art preview + AI metadata."""
     try:
         contents = await file.read()
         nparr = np.frombuffer(contents, np.uint8)
@@ -61,22 +69,37 @@ async def convert_image_endpoint(file: UploadFile = File(...)):
         if img is None:
             raise HTTPException(status_code=400, detail="Invalid image file format.")
 
-        # Sub-50ms conversion
-        pil_img, elapsed_ms = engine.convert_image(img)
+        crop_box = None
+        if all(v is not None for v in (crop_x, crop_y, crop_w, crop_h)):
+            crop_box = (crop_x, crop_y, crop_w, crop_h)
+
+        # Sub-50ms optimized conversion with sliding detail & cropping
+        pil_img, elapsed_ms = engine.convert_image(
+            image_input=img,
+            crop_box=crop_box,
+            aspect_ratio=aspect_ratio,
+            detail_level=detail_level or 0.5
+        )
 
         # Encode PIL image to Base64 PNG
         buffered = io.BytesIO()
         pil_img.save(buffered, format="PNG")
         base64_img = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-        # Metadata generation
-        metadata = meta_gen.generate_metadata(file.filename or "template")
+        # Metadata generation with detail styling
+        metadata = meta_gen.generate_metadata(
+            filename=file.filename or "template",
+            detail_level=detail_level or 0.5
+        )
 
         return JSONResponse({
             "success": True,
             "filename": file.filename,
             "conversion_ms": round(elapsed_ms, 2),
             "benchmark_passed": elapsed_ms < 50.0,
+            "aspect_ratio": aspect_ratio,
+            "detail_level": detail_level,
+            "dimensions": f"{pil_img.size[0]}x{pil_img.size[1]}",
             "copyright_stamp": "© 2026 Color World",
             "image_data_url": f"data:image/png;base64,{base64_img}",
             "metadata": metadata
@@ -129,7 +152,7 @@ async def get_payouts_endpoint():
 
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard():
-    """Serves the interactive single-page Web App UI for image upload, live preview, and Gumroad publishing."""
+    """Serves the interactive single-page Web App UI for image upload, live preview, cropping, detail sliding scale, and Gumroad publishing."""
     html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,6 +168,7 @@ async def get_dashboard():
         .badge-ms { font-size: 1.1rem; background-color: #10b981; color: #022c22; font-weight: bold; }
         .tag-badge { background-color: #334155; color: #38bdf8; margin-right: 6px; margin-bottom: 6px; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
         .preview-img { max-height: 480px; object-fit: contain; border-radius: 8px; border: 2px dashed #475569; }
+        .slider-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8; }
     </style>
 </head>
 <body class="py-5">
@@ -158,11 +182,38 @@ async def get_dashboard():
             <!-- Left: Upload & Controls -->
             <div class="col-lg-5">
                 <div class="card p-4 shadow-lg">
-                    <h4 class="card-title text-light mb-3">Upload Image</h4>
+                    <h4 class="card-title text-light mb-3">Upload & Customize</h4>
+
+                    <!-- File Input -->
                     <div class="mb-3">
+                        <label class="text-secondary small">Select Source Image:</label>
                         <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*">
                     </div>
-                    <button class="btn btn-accent w-100 py-2 fs-5" id="convertBtn" onclick="processImage()">Convert Instant (&lt; 50ms)</button>
+
+                    <!-- Aspect Ratio / Cropping Selector -->
+                    <div class="mb-3">
+                        <label class="text-secondary small">Crop & Aspect Ratio:</label>
+                        <select id="aspectRatioSelect" class="form-select bg-dark text-light border-secondary">
+                            <option value="original" selected>Original Aspect Ratio</option>
+                            <option value="1:1">1:1 Square (8.5" x 8.5" / Social)</option>
+                            <option value="4:5">4:5 Standard Portrait (8" x 10")</option>
+                            <option value="3:4">3:4 Standard Coloring Book</option>
+                            <option value="16:9">16:9 Landscape / Widescreen</option>
+                        </select>
+                    </div>
+
+                    <!-- Detail Level Optimizer Sliding Scale -->
+                    <div class="mb-3">
+                        <label class="text-secondary small">Detail Optimizer Sliding Scale:</label>
+                        <input type="range" class="form-range" id="detailSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateSliderLabel(this.value)">
+                        <div class="slider-label">
+                            <span class="text-warning">Junior / Minimal</span>
+                            <span id="sliderValueText" class="text-info fw-bold">Balanced (0.50)</span>
+                            <span class="text-purple" style="color: #c084fc;">Adult / Advanced</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-accent w-100 py-2 fs-5 mt-2" id="convertBtn" onclick="processImage()">Convert Instant (&lt; 50ms)</button>
 
                     <div id="statusAlert" class="mt-3 alert d-none"></div>
 
@@ -205,6 +256,14 @@ async def get_dashboard():
     <script>
         let currentMetadata = null;
 
+        function updateSliderLabel(val) {
+            const num = parseFloat(val);
+            let desc = "Balanced (" + num.toFixed(2) + ")";
+            if (num < 0.35) desc = "Junior Minimal (" + num.toFixed(2) + ")";
+            else if (num > 0.70) desc = "Adult Fine Detail (" + num.toFixed(2) + ")";
+            document.getElementById('sliderValueText').innerText = desc;
+        }
+
         async function processImage() {
             const input = document.getElementById('imageInput');
             if (!input.files[0]) {
@@ -214,6 +273,8 @@ async def get_dashboard():
 
             const formData = new FormData();
             formData.append('file', input.files[0]);
+            formData.append('aspect_ratio', document.getElementById('aspectRatioSelect').value);
+            formData.append('detail_level', document.getElementById('detailSlider').value);
 
             const convertBtn = document.getElementById('convertBtn');
             convertBtn.disabled = true;
@@ -229,7 +290,7 @@ async def get_dashboard():
                     document.getElementById('placeholderText').classList.add('d-none');
 
                     const badge = document.getElementById('speedBadge');
-                    badge.innerText = `${data.conversion_ms} ms (${data.benchmark_passed ? '< 50ms PASSED' : 'SLOW'})`;
+                    badge.innerText = `${data.conversion_ms} ms (${data.benchmark_passed ? '< 50ms PASSED' : 'SLOW'}) [${data.dimensions}]`;
                     badge.classList.remove('d-none');
 
                     currentMetadata = data.metadata;

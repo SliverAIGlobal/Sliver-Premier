@@ -17,20 +17,28 @@ def test_api_dashboard_get(client):
     res = client.get("/")
     assert res.status_code == 200
     assert "2026 Color World" in res.text
+    assert "aspectRatioSelect" in res.text
+    assert "detailSlider" in res.text
 
-def test_api_convert_endpoint(client):
-    # Create test image
-    img = np.zeros((100, 100, 3), dtype=np.uint8)
+def test_api_convert_endpoint_custom_aspect_and_detail(client):
+    # Create 400x600 test image
+    img = np.zeros((400, 600, 3), dtype=np.uint8)
     _, buf = cv2.imencode(".png", img)
     files = {"file": ("test_art.png", buf.tobytes(), "image/png")}
-    res = client.post("/api/convert", files=files)
+    data = {
+        "aspect_ratio": "1:1",
+        "detail_level": 0.2
+    }
+    res = client.post("/api/convert", files=files, data=data)
     assert res.status_code == 200
-    data = res.json()
-    assert data["success"] is True
-    assert "image_data_url" in data
-    assert data["benchmark_passed"] is True
-    assert len(data["metadata"]["tags"]) == 6
-    assert data["copyright_stamp"] == "© 2026 Color World"
+    resp = res.json()
+    assert resp["success"] is True
+    assert "image_data_url" in resp
+    assert resp["benchmark_passed"] is True
+    assert resp["dimensions"] == "400x400"
+    assert len(resp["metadata"]["tags"]) == 6
+    assert "junior minimal" in resp["metadata"]["tags"]
+    assert resp["copyright_stamp"] == "© 2026 Color World"
 
 def test_api_publish_endpoint(client):
     payload = {

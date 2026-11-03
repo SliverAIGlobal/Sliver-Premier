@@ -34,6 +34,37 @@ class TestColoringPageEngine(unittest.TestCase):
         print(f"\n[BENCHMARK] Average Conversion Latency: {avg_time:.2f} ms (Target: < 50ms)")
         self.assertLess(avg_time, 50.0, f"Conversion speed ({avg_time:.2f}ms) exceeded 50ms budget!")
 
+    def test_aspect_ratio_cropping(self):
+        """Verify 1:1, 4:5, and custom crop box functionality."""
+        img_1to1, ms_1to1 = self.engine.convert_image(self.test_img, aspect_ratio="1:1")
+        self.assertEqual(img_1to1.size[0], img_1to1.size[1])
+        self.assertLess(ms_1to1, 50.0)
+
+        img_4to5, ms_4to5 = self.engine.convert_image(self.test_img, aspect_ratio="4:5")
+        # 4:5 ratio on height 1080 -> width = 864
+        self.assertEqual(img_4to5.size, (864, 1080))
+        self.assertLess(ms_4to5, 50.0)
+
+        img_box, ms_box = self.engine.convert_image(self.test_img, crop_box=(100, 100, 500, 500))
+        self.assertEqual(img_box.size, (500, 500))
+        self.assertLess(ms_box, 50.0)
+
+    def test_detail_slider_junior_to_adult(self):
+        """Verify sliding scale from Junior (0.0) to Adult (1.0) detail."""
+        img_junior, ms_j = self.engine.convert_image(self.test_img, detail_level=0.1)
+        self.assertLess(ms_j, 50.0)
+
+        img_adult, ms_a = self.engine.convert_image(self.test_img, detail_level=0.95)
+        self.assertLess(ms_a, 50.0)
+
+        meta_j = self.meta_gen.generate_metadata("castle.png", detail_level=0.1)
+        self.assertIn("junior minimal", meta_j["tags"])
+        self.assertEqual(len(meta_j["tags"]), 6)
+
+        meta_a = self.meta_gen.generate_metadata("castle.png", detail_level=0.95)
+        self.assertIn("adult fine detail", meta_a["tags"])
+        self.assertEqual(len(meta_a["tags"]), 6)
+
     def test_watermark_stamping(self):
         """Verify image conversion includes the stamped copyright text."""
         pil_img, _ = self.engine.convert_image(self.test_img)
