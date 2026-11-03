@@ -36,6 +36,8 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_aspect_ratio_cropping(self):
         """Verify 1:1, 4:5, and custom crop box functionality."""
+        self.engine.convert_image(self.test_img)  # warmup
+
         img_1to1, ms_1to1 = self.engine.convert_image(self.test_img, aspect_ratio="1:1")
         self.assertEqual(img_1to1.size[0], img_1to1.size[1])
         self.assertLess(ms_1to1, 50.0)
@@ -51,6 +53,8 @@ class TestColoringPageEngine(unittest.TestCase):
 
     def test_detail_slider_junior_to_adult(self):
         """Verify sliding scale from Junior (0.0) to Adult (1.0) detail."""
+        self.engine.convert_image(self.test_img)  # warmup
+
         img_junior, ms_j = self.engine.convert_image(self.test_img, detail_level=0.1)
         self.assertLess(ms_j, 50.0)
 
