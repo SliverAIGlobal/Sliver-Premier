@@ -63,5 +63,21 @@ class TestColoringPageEngine(unittest.TestCase):
         self.assertEqual(res["promo_code"], "SUBSCRIBE50")
         self.assertEqual(res["discount"], "50% OFF")
 
+    def test_license_verification_and_management(self):
+        """Verify license verify, enable, disable, and rotate methods."""
+        v = self.publisher.verify_license("prod_abc", "LIC-12345")
+        self.assertTrue(v["success"])
+        self.assertEqual(v["purchase"]["price"], 399)
+
+        e = self.publisher.enable_license("prod_abc", "LIC-12345")
+        self.assertTrue(e["success"])
+
+        d = self.publisher.disable_license("prod_abc", "LIC-12345")
+        self.assertTrue(d["success"])
+
+        r = self.publisher.rotate_license("prod_abc", "LIC-12345")
+        self.assertTrue(r["success"])
+        self.assertIn("MOCK-NEW", r["new_license_key"])
+
 if __name__ == "__main__":
     unittest.main()

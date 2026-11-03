@@ -48,6 +48,35 @@ def test_api_publish_endpoint(client):
     assert data["promo_code"] == "SUBSCRIBE50"
     assert data["discount"] == "50% OFF"
 
+def test_api_license_endpoints(client):
+    # Verify license
+    v_res = client.post("/api/license/verify", json={"product_id": "p_101", "license_key": "KEY-123"})
+    assert v_res.status_code == 200
+    assert v_res.json()["success"] is True
+    assert v_res.json()["purchase"]["price"] == 399
+
+    # Enable license
+    e_res = client.post("/api/license/enable", json={"product_id": "p_101", "license_key": "KEY-123"})
+    assert e_res.status_code == 200
+    assert e_res.json()["success"] is True
+
+    # Disable license
+    d_res = client.post("/api/license/disable", json={"product_id": "p_101", "license_key": "KEY-123"})
+    assert d_res.status_code == 200
+    assert d_res.json()["success"] is True
+
+def test_api_financial_endpoints(client):
+    # Earnings
+    earn_res = client.get("/api/earnings?year=2025")
+    assert earn_res.status_code == 200
+    assert earn_res.json()["success"] is True
+    assert earn_res.json()["currency"] == "usd"
+
+    # Payouts
+    pay_res = client.get("/api/payouts")
+    assert pay_res.status_code == 200
+    assert pay_res.json()["success"] is True
+
 def test_gumroad_live_call_success():
     with patch("requests.post") as mock_post:
         # Mock product creation

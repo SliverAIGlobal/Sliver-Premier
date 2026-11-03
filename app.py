@@ -5,7 +5,7 @@ import logging
 import numpy as np
 import cv2
 from PIL import Image
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Query
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -40,6 +40,15 @@ class PublishRequest(BaseModel):
     price_cents: int = 399
     tags: List[str]
     promo_code: str = "SUBSCRIBE50"
+
+class LicenseVerifyRequest(BaseModel):
+    product_id: str
+    license_key: str
+    increment_uses_count: bool = True
+
+class LicenseActionRequest(BaseModel):
+    product_id: str
+    license_key: str
 
 @app.post("/api/convert")
 async def convert_image_endpoint(file: UploadFile = File(...)):
@@ -86,6 +95,36 @@ async def publish_endpoint(req: PublishRequest):
         tags=req.tags,
         promo_code=req.promo_code
     )
+    return JSONResponse(res)
+
+@app.post("/api/license/verify")
+async def verify_license_endpoint(req: LicenseVerifyRequest):
+    """Verifies a Gumroad customer license key."""
+    res = publisher.verify_license(req.product_id, req.license_key, req.increment_uses_count)
+    return JSONResponse(res)
+
+@app.post("/api/license/enable")
+async def enable_license_endpoint(req: LicenseActionRequest):
+    """Enables a Gumroad customer license."""
+    res = publisher.enable_license(req.product_id, req.license_key)
+    return JSONResponse(res)
+
+@app.post("/api/license/disable")
+async def disable_license_endpoint(req: LicenseActionRequest):
+    """Disables a Gumroad customer license."""
+    res = publisher.disable_license(req.product_id, req.license_key)
+    return JSONResponse(res)
+
+@app.get("/api/earnings")
+async def get_earnings_endpoint(year: int = Query(2025)):
+    """Retrieves tax center annual earnings summary from Gumroad."""
+    res = publisher.get_earnings(year)
+    return JSONResponse(res)
+
+@app.get("/api/payouts")
+async def get_payouts_endpoint():
+    """Retrieves upcoming and completed payouts from Gumroad."""
+    res = publisher.get_payouts()
     return JSONResponse(res)
 
 @app.get("/", response_class=HTMLResponse)

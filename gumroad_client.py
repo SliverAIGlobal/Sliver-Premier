@@ -6,12 +6,12 @@ from typing import Dict, List, Optional, Any
 logger = logging.getLogger("GumroadPublisher")
 
 class GumroadPublisher:
-    """Official Gumroad API Publisher with mock mode & error resilience."""
+    """Official Gumroad API v2 Publisher and License Management Client."""
 
     def __init__(self, access_token: Optional[str] = None):
         self.access_token = access_token or os.getenv("GUMROAD_ACCESS_TOKEN")
-        host_parts = ["api", "gumroad", "com"]
-        self.products_endpoint = f"https://{'.'.join(host_parts)}/v2/products"
+        self.base_url = "https://api.gumroad.com/v2"
+        self.products_endpoint = f"{self.base_url}/products"
 
     def publish_product(
         self,
@@ -83,3 +83,142 @@ class GumroadPublisher:
         except Exception as e:
             logger.exception("Failed to connect to API")
             return {"success": False, "error": str(e)}
+
+    # ==========================================
+    # Gumroad License Verification & Management
+    # ==========================================
+
+    def verify_license(self, product_id: str, license_key: str, increment_uses_count: bool = True) -> Dict[str, Any]:
+        """POST /licenses/verify - Verify customer license key."""
+        if not self.access_token:
+            return {
+                "success": True,
+                "uses": 1,
+                "mode": "mock",
+                "purchase": {
+                    "product_id": product_id,
+                    "license_key": license_key,
+                    "price": 399,
+                    "refunded": False,
+                    "disputed": False,
+                    "chargebacked": False
+                }
+            }
+
+        url = f"{self.base_url}/licenses/verify"
+        payload = {
+            "product_id": product_id,
+            "license_key": license_key,
+            "increment_uses_count": "true" if increment_uses_count else "false"
+        }
+        res = requests.post(url, data=payload, timeout=10)
+        return res.json()
+
+    def enable_license(self, product_id: str, license_key: str) -> Dict[str, Any]:
+        """PUT /licenses/enable - Enable a customer license."""
+        if not self.access_token:
+            return {"success": True, "mode": "mock", "product_id": product_id, "license_key": license_key}
+
+        url = f"{self.base_url}/licenses/enable"
+        payload = {
+            "access_token": self.access_token,
+            "product_id": product_id,
+            "license_key": license_key
+        }
+        res = requests.put(url, data=payload, timeout=10)
+        return res.json()
+
+    def disable_license(self, product_id: str, license_key: str) -> Dict[str, Any]:
+        """PUT /licenses/disable - Disable a customer license."""
+        if not self.access_token:
+            return {"success": True, "mode": "mock", "product_id": product_id, "license_key": license_key}
+
+        url = f"{self.base_url}/licenses/disable"
+        payload = {
+            "access_token": self.access_token,
+            "product_id": product_id,
+            "license_key": license_key
+        }
+        res = requests.put(url, data=payload, timeout=10)
+        return res.json()
+
+    def decrement_license_uses(self, product_id: str, license_key: str) -> Dict[str, Any]:
+        """PUT /licenses/decrement_uses_count - Decrement license uses count."""
+        if not self.access_token:
+            return {"success": True, "mode": "mock", "product_id": product_id, "license_key": license_key}
+
+        url = f"{self.base_url}/licenses/decrement_uses_count"
+        payload = {
+            "access_token": self.access_token,
+            "product_id": product_id,
+            "license_key": license_key
+        }
+        res = requests.put(url, data=payload, timeout=10)
+        return res.json()
+
+    def rotate_license(self, product_id: str, license_key: str) -> Dict[str, Any]:
+        """PUT /licenses/rotate - Rotate an existing customer license key."""
+        if not self.access_token:
+            return {
+                "success": True,
+                "mode": "mock",
+                "product_id": product_id,
+                "new_license_key": "MOCK-NEW-" + license_key
+            }
+
+        url = f"{self.base_url}/licenses/rotate"
+        payload = {
+            "access_token": self.access_token,
+            "product_id": product_id,
+            "license_key": license_key
+        }
+        res = requests.put(url, data=payload, timeout=10)
+        return res.json()
+
+    # ==========================================
+    # Financial: Payouts & Earnings
+    # ==========================================
+
+    def get_earnings(self, year: int) -> Dict[str, Any]:
+        """GET /earnings - Retrieve annual earnings breakdown."""
+        if not self.access_token:
+            return {
+                "success": True,
+                "year": year,
+                "currency": "usd",
+                "gross_cents": 39900,
+                "fees_cents": 3990,
+                "taxes_cents": 0,
+                "affiliate_credit_cents": 0,
+                "net_cents": 35910
+            }
+
+        url = f"{self.base_url}/earnings"
+        params = {"access_token": self.access_token, "year": year}
+        res = requests.get(url, params=params, timeout=10)
+        return res.json()
+
+    def get_payouts(self, before: Optional[str] = None, after: Optional[str] = None) -> Dict[str, Any]:
+        """GET /payouts - Retrieves payouts list."""
+        if not self.access_token:
+            return {
+                "success": True,
+                "payouts": [
+                    {
+                        "id": None,
+                        "amount": "399.00",
+                        "currency": "USD",
+                        "status": "payable",
+                        "payment_processor": "stripe"
+                    }
+                ]
+            }
+
+        url = f"{self.base_url}/payouts"
+        params = {"access_token": self.access_token}
+        if before:
+            params["before"] = before
+        if after:
+            params["after"] = after
+        res = requests.get(url, params=params, timeout=10)
+        return res.json()
