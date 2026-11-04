@@ -11,6 +11,7 @@ from pathlib import Path
 def test_core_files_exist():
     required_files = [
         "index.html",
+        "coloring-studio-ultra-standalone.html",
         "styles.css",
         "app.js",
         "audio-fx.js",
@@ -146,6 +147,27 @@ def test_manifest_and_pwa_serviceworker():
         sw = f.read()
     assert "caches.open" in sw
     assert "wasm_decolorizer.wasm" in sw
+
+
+def test_standalone_single_file_html():
+    standalone_path = Path("coloring-studio-ultra-standalone.html")
+    assert standalone_path.exists()
+    content = standalone_path.read_text(encoding="utf-8")
+
+    # Verify no external CSS / script links
+    assert '<link rel="stylesheet"' not in content
+    assert '<script src="' not in content
+    assert "<style>" in content
+    assert "window.WASM_BASE64_PAYLOAD =" in content
+    assert "window.COLORING_PAGES =" in content
+    assert "window.STICKERS_DATA =" in content
+    assert "class SoundEngine" in content
+    assert "class ColoringStudio" in content
+
+    # Verify release copy
+    release_standalone = Path("release/coloring-studio-ultra-standalone.html")
+    assert release_standalone.exists()
+    assert release_standalone.stat().st_size == standalone_path.stat().st_size
 
 
 def test_package_script_execution():

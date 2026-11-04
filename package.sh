@@ -22,7 +22,7 @@ cargo test --manifest-path wasm_decolorizer/Cargo.toml
 mkdir -p static/wasm
 cp wasm_decolorizer/target/wasm32-unknown-unknown/release/wasm_decolorizer.wasm static/wasm/wasm_decolorizer.wasm
 
-# 3. Regenerate embedded Base64 payload & build index.html
+# 3. Regenerate embedded Base64 payload & build index.html + single-file HTML
 echo "📦 [2/5] Updating Embedded WASM Base64 & Compiling Data..."
 python3 -c "
 import base64
@@ -34,10 +34,12 @@ with open('wasm_base64.txt', 'w') as f:
 python3 scripts/generate_pages.py
 python3 scripts/generate_stickers.py
 python3 scripts/build_index.py
+python3 scripts/build_standalone.py
 
 # 4. Stage Assets into Release Directory Structure
 echo "🚚 [3/5] Staging distribution assets..."
 cp index.html "${STAGE_DIR}/"
+cp coloring-studio-ultra-standalone.html "${STAGE_DIR}/"
 cp styles.css "${STAGE_DIR}/"
 cp app.js "${STAGE_DIR}/"
 cp audio-fx.js "${STAGE_DIR}/"
@@ -50,6 +52,9 @@ cp MARKETING_COPY.md "${STAGE_DIR}/"
 
 mkdir -p "${STAGE_DIR}/static/wasm"
 cp static/wasm/wasm_decolorizer.wasm "${STAGE_DIR}/static/wasm/"
+
+# Copy single-file standalone HTML directly into release/ folder for 1-click device download
+cp coloring-studio-ultra-standalone.html "${RELEASE_DIR}/"
 
 # 5. Create ZIP Package and Compute Manifests
 echo "🗜️  [4/5] Compiling Release ZIP Archive..."

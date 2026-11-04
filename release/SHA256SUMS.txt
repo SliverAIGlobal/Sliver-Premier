@@ -1,1 +1,1 @@
-6de0f5a03c06ac1ac3bcc25d26e46fada5af4ff7784c03af4a2ba77c5582a2d7  release/sliver-kids-wasm-coloring-studio-v2.zip
+abe0feabc5e990b6d5978a8cf567b202500d2081887f9968c6022ff46d34cde3  release/sliver-kids-wasm-coloring-studio-v2.zip
