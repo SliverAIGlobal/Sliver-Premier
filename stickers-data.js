@@ -1,0 +1,425 @@
+// 60 Magic Sticker Stamps across 6 Categories for Version 2 ULTRA
+// Zero external assets - 100% offline inline SVGs
+
+window.STICKERS_DATA = [
+  {
+    "id": "star_gold",
+    "category": "stars_magic",
+    "name": "Gold Star",
+    "icon": "\u2b50",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36\" fill=\"#FFD700\" stroke=\"#E6A100\" stroke-width=\"4\"/></svg>"
+  },
+  {
+    "id": "star_glowing",
+    "category": "stars_magic",
+    "name": "Glowing Star",
+    "icon": "\ud83c\udf1f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"42\" fill=\"#FFF8B0\"/><polygon points=\"50,10 62,38 92,40 68,60 76,90 50,72 24,90 32,60 8,40 38,38\" fill=\"#FFA500\" stroke=\"#FF4500\" stroke-width=\"3\"/></svg>"
+  },
+  {
+    "id": "sparkles",
+    "category": "stars_magic",
+    "name": "Sparkles",
+    "icon": "\u2728",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,10 Q50,45 15,50 Q50,55 50,90 Q50,55 85,50 Q50,45 50,10 Z\" fill=\"#9966FF\" stroke=\"#4B0082\" stroke-width=\"3\"/><circle cx=\"75\" cy=\"25\" r=\"8\" fill=\"#FFD700\"/></svg>"
+  },
+  {
+    "id": "star_dizzy",
+    "category": "stars_magic",
+    "name": "Dizzy Star",
+    "icon": "\ud83d\udcab",
+    "svg": "<svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"50\" rx=\"40\" ry=\"18\" fill=\"none\" stroke=\"#00E5FF\" stroke-width=\"6\" transform=\"rotate(-25 50 50)\"/><polygon points=\"50,20 58,40 80,40 62,54 68,75 50,62 32,75 38,54 20,40 42,40\" fill=\"#FFEB3B\" stroke=\"#F57F17\" stroke-width=\"3\"/></svg>"
+  },
+  {
+    "id": "lightning",
+    "category": "stars_magic",
+    "name": "Lightning",
+    "icon": "\u26a1",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"55,5 20,55 50,55 42,95 82,45 52,45\" fill=\"#FFD600\" stroke=\"#FF6F00\" stroke-width=\"4\"/></svg>"
+  },
+  {
+    "id": "crescent_moon",
+    "category": "stars_magic",
+    "name": "Moon",
+    "icon": "\ud83c\udf19",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M70,15 A38,38 0 1,1 25,75 A42,42 0 0,0 70,15 Z\" fill=\"#FFE082\" stroke=\"#FFB300\" stroke-width=\"4\"/></svg>"
+  },
+  {
+    "id": "sun_smile",
+    "category": "stars_magic",
+    "name": "Sun",
+    "icon": "\u2600\ufe0f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"#FFA726\" stroke=\"#E65100\" stroke-width=\"4\"/><circle cx=\"40\" cy=\"45\" r=\"4\" fill=\"#000\"/><circle cx=\"60\" cy=\"45\" r=\"4\" fill=\"#000\"/><path d=\"M38,60 Q50,72 62,60\" fill=\"none\" stroke=\"#000\" stroke-width=\"4\" stroke-linecap=\"round\"/></svg>"
+  },
+  {
+    "id": "rainbow",
+    "category": "stars_magic",
+    "name": "Rainbow",
+    "icon": "\ud83c\udf08",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M15,80 A35,35 0 0,1 85,80\" fill=\"none\" stroke=\"#FF3D00\" stroke-width=\"8\"/><path d=\"M23,80 A27,27 0 0,1 77,80\" fill=\"none\" stroke=\"#FFEA00\" stroke-width=\"8\"/><path d=\"M31,80 A19,19 0 0,1 69,80\" fill=\"none\" stroke=\"#00E676\" stroke-width=\"8\"/><path d=\"M39,80 A11,11 0 0,1 61,80\" fill=\"none\" stroke=\"#2979FF\" stroke-width=\"8\"/></svg>"
+  },
+  {
+    "id": "magic_crystal",
+    "category": "stars_magic",
+    "name": "Magic Crystal",
+    "icon": "\ud83d\udd2e",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"45\" r=\"35\" fill=\"#E1BEE7\" stroke=\"#8E24AA\" stroke-width=\"5\"/><polygon points=\"25,85 75,85 65,75 35,75\" fill=\"#6A1B9A\"/><ellipse cx=\"40\" cy=\"35\" rx=\"10\" ry=\"6\" fill=\"#FFFFFF\" opacity=\"0.7\"/></svg>"
+  },
+  {
+    "id": "magic_wand",
+    "category": "stars_magic",
+    "name": "Magic Wand",
+    "icon": "\ud83e\ude84",
+    "svg": "<svg viewBox=\"0 0 100 100\"><line x1=\"20\" y1=\"80\" x2=\"65\" y2=\"35\" stroke=\"#795548\" stroke-width=\"8\" stroke-linecap=\"round\"/><polygon points=\"75,15 80,30 95,35 80,40 75,55 70,40 55,35 70,30\" fill=\"#FFEB3B\" stroke=\"#F57F17\" stroke-width=\"2\"/></svg>"
+  },
+  {
+    "id": "cute_kitty",
+    "category": "cute_animals",
+    "name": "Kitty",
+    "icon": "\ud83d\udc31",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"35\" fill=\"#FFB74D\"/><polygon points=\"25,35 20,15 40,25\" fill=\"#FF9800\"/><polygon points=\"75,35 80,15 60,25\" fill=\"#FF9800\"/><circle cx=\"38\" cy=\"50\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"50\" r=\"4\" fill=\"#000\"/><polygon points=\"50,58 45,54 55,54\" fill=\"#E91E63\"/></svg>"
+  },
+  {
+    "id": "cute_puppy",
+    "category": "cute_animals",
+    "name": "Puppy",
+    "icon": "\ud83d\udc36",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"35\" fill=\"#FFE0B2\"/><ellipse cx=\"20\" cy=\"50\" rx=\"10\" ry=\"22\" fill=\"#8D6E63\"/><ellipse cx=\"80\" cy=\"50\" rx=\"10\" ry=\"22\" fill=\"#8D6E63\"/><circle cx=\"38\" cy=\"50\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"50\" r=\"4\" fill=\"#000\"/><ellipse cx=\"50\" cy=\"62\" rx=\"8\" ry=\"6\" fill=\"#3E2723\"/></svg>"
+  },
+  {
+    "id": "cute_bear",
+    "category": "cute_animals",
+    "name": "Bear",
+    "icon": "\ud83d\udc3b",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"35\" fill=\"#A1887F\"/><circle cx=\"25\" cy=\"30\" r=\"14\" fill=\"#8D6E63\"/><circle cx=\"75\" cy=\"30\" r=\"14\" fill=\"#8D6E63\"/><ellipse cx=\"50\" cy=\"65\" rx=\"18\" ry=\"12\" fill=\"#D7CCC8\"/><circle cx=\"50\" cy=\"60\" r=\"6\" fill=\"#000\"/><circle cx=\"38\" cy=\"48\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"48\" r=\"4\" fill=\"#000\"/></svg>"
+  },
+  {
+    "id": "cute_bunny",
+    "category": "cute_animals",
+    "name": "Bunny",
+    "icon": "\ud83d\udc30",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"60\" r=\"32\" fill=\"#FFFFFF\" stroke=\"#E0E0E0\" stroke-width=\"3\"/><ellipse cx=\"32\" cy=\"25\" rx=\"9\" ry=\"25\" fill=\"#FFFFFF\" stroke=\"#E0E0E0\" stroke-width=\"3\"/><ellipse cx=\"32\" cy=\"25\" rx=\"5\" ry=\"18\" fill=\"#F8BBD0\"/><ellipse cx=\"68\" cy=\"25\" rx=\"9\" ry=\"25\" fill=\"#FFFFFF\" stroke=\"#E0E0E0\" stroke-width=\"3\"/><ellipse cx=\"68\" cy=\"25\" rx=\"5\" ry=\"18\" fill=\"#F8BBD0\"/><circle cx=\"38\" cy=\"55\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"55\" r=\"4\" fill=\"#000\"/><polygon points=\"50,62 46,58 54,58\" fill=\"#FF80AB\"/></svg>"
+  },
+  {
+    "id": "cute_fox",
+    "category": "cute_animals",
+    "name": "Fox",
+    "icon": "\ud83e\udd8a",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"50,85 15,35 85,35\" fill=\"#FF7043\"/><polygon points=\"20,35 15,10 40,25\" fill=\"#D84315\"/><polygon points=\"80,35 85,10 60,25\" fill=\"#D84315\"/><polygon points=\"50,85 15,35 35,55\" fill=\"#FFFFFF\"/><polygon points=\"50,85 85,35 65,55\" fill=\"#FFFFFF\"/><circle cx=\"50\" cy=\"78\" r=\"5\" fill=\"#000\"/><circle cx=\"35\" cy=\"45\" r=\"4\" fill=\"#000\"/><circle cx=\"65\" cy=\"45\" r=\"4\" fill=\"#000\"/></svg>"
+  },
+  {
+    "id": "cute_panda",
+    "category": "cute_animals",
+    "name": "Panda",
+    "icon": "\ud83d\udc3c",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"35\" fill=\"#FFFFFF\" stroke=\"#000\" stroke-width=\"3\"/><circle cx=\"22\" cy=\"28\" r=\"12\" fill=\"#000\"/><circle cx=\"78\" cy=\"28\" r=\"12\" fill=\"#000\"/><ellipse cx=\"36\" cy=\"52\" rx=\"9\" ry=\"12\" fill=\"#000\" transform=\"rotate(-15 36 52)\"/><ellipse cx=\"64\" cy=\"52\" rx=\"9\" ry=\"12\" fill=\"#000\" transform=\"rotate(15 64 52)\"/><circle cx=\"36\" cy=\"50\" r=\"3\" fill=\"#FFF\"/><circle cx=\"64\" cy=\"50\" r=\"3\" fill=\"#FFF\"/><ellipse cx=\"50\" cy=\"65\" rx=\"6\" ry=\"4\" fill=\"#000\"/></svg>"
+  },
+  {
+    "id": "cute_lion",
+    "category": "cute_animals",
+    "name": "Lion",
+    "icon": "\ud83e\udd81",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"42\" fill=\"#E65100\"/><circle cx=\"50\" cy=\"52\" r=\"30\" fill=\"#FFB74D\"/><circle cx=\"38\" cy=\"46\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"46\" r=\"4\" fill=\"#000\"/><polygon points=\"50,56 44,50 56,50\" fill=\"#5D4037\"/><path d=\"M42,64 Q50,72 58,64\" fill=\"none\" stroke=\"#5D4037\" stroke-width=\"3\"/></svg>"
+  },
+  {
+    "id": "cute_tiger",
+    "category": "cute_animals",
+    "name": "Tiger",
+    "icon": "\ud83d\udc2f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"35\" fill=\"#FFA726\"/><path d=\"M50,22 L50,38 M40,26 L46,38 M60,26 L54,38\" stroke=\"#000\" stroke-width=\"4\"/><circle cx=\"38\" cy=\"50\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"50\" r=\"4\" fill=\"#000\"/><ellipse cx=\"50\" cy=\"62\" rx=\"7\" ry=\"5\" fill=\"#D84315\"/></svg>"
+  },
+  {
+    "id": "cute_unicorn",
+    "category": "cute_animals",
+    "name": "Unicorn",
+    "icon": "\ud83e\udd84",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"58\" r=\"32\" fill=\"#FFFFFF\" stroke=\"#E1BEE7\" stroke-width=\"3\"/><polygon points=\"50,8 42,32 58,32\" fill=\"#FFD54F\" stroke=\"#FFA000\" stroke-width=\"2\"/><path d=\"M30,35 C35,45 25,60 20,70\" stroke=\"#FF4081\" stroke-width=\"6\" fill=\"none\"/><circle cx=\"45\" cy=\"55\" r=\"4\" fill=\"#000\"/><path d=\"M60,65 Q50,75 45,68\" stroke=\"#9C27B0\" stroke-width=\"2\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "paw_prints",
+    "category": "cute_animals",
+    "name": "Paw Prints",
+    "icon": "\ud83d\udc3e",
+    "svg": "<svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"65\" rx=\"18\" ry=\"14\" fill=\"#5D4037\"/><circle cx=\"28\" cy=\"42\" r=\"8\" fill=\"#5D4037\"/><circle cx=\"43\" cy=\"32\" r=\"8\" fill=\"#5D4037\"/><circle cx=\"57\" cy=\"32\" r=\"8\" fill=\"#5D4037\"/><circle cx=\"72\" cy=\"42\" r=\"8\" fill=\"#5D4037\"/></svg>"
+  },
+  {
+    "id": "ice_cream_cone",
+    "category": "yummy_snacks",
+    "name": "Ice Cream",
+    "icon": "\ud83c\udf66",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"30,50 70,50 50,95\" fill=\"#D7CCC8\" stroke=\"#8D6E63\" stroke-width=\"3\"/><circle cx=\"50\" cy=\"40\" r=\"24\" fill=\"#F48FB1\"/><circle cx=\"50\" cy=\"22\" r=\"18\" fill=\"#80DEEA\"/><circle cx=\"50\" cy=\"10\" r=\"6\" fill=\"#D50000\"/></svg>"
+  },
+  {
+    "id": "pizza_slice",
+    "category": "yummy_snacks",
+    "name": "Pizza",
+    "icon": "\ud83c\udf55",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"50,15 15,85 85,85\" fill=\"#FFD54F\" stroke=\"#FF8F00\" stroke-width=\"4\"/><circle cx=\"50\" cy=\"45\" r=\"7\" fill=\"#C62828\"/><circle cx=\"36\" cy=\"70\" r=\"6\" fill=\"#C62828\"/><circle cx=\"64\" cy=\"68\" r=\"6\" fill=\"#C62828\"/><path d=\"M10,85 Q50,95 90,85\" stroke=\"#8D6E63\" stroke-width=\"8\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "donut",
+    "category": "yummy_snacks",
+    "name": "Donut",
+    "icon": "\ud83c\udf69",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"38\" fill=\"#FF80AB\" stroke=\"#C2185B\" stroke-width=\"3\"/><circle cx=\"50\" cy=\"50\" r=\"14\" fill=\"#FFF\"/><line x1=\"30\" y1=\"35\" x2=\"38\" y2=\"30\" stroke=\"#FFEB3B\" stroke-width=\"4\"/><line x1=\"60\" y1=\"35\" x2=\"68\" y2=\"40\" stroke=\"#00E5FF\" stroke-width=\"4\"/><line x1=\"45\" y1=\"72\" x2=\"55\" y2=\"70\" stroke=\"#76FF03\" stroke-width=\"4\"/></svg>"
+  },
+  {
+    "id": "burger",
+    "category": "yummy_snacks",
+    "name": "Burger",
+    "icon": "\ud83c\udf54",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M20,40 A30,25 0 0,1 80,40 Z\" fill=\"#FFA726\"/><rect x=\"18\" y=\"44\" width=\"64\" height=\"8\" fill=\"#4CAF50\" rx=\"3\"/><rect x=\"16\" y=\"54\" width=\"68\" height=\"12\" fill=\"#5D4037\" rx=\"4\"/><rect x=\"20\" y=\"68\" width=\"60\" height=\"14\" fill=\"#FFA726\" rx=\"6\"/><circle cx=\"40\" cy=\"30\" r=\"2\" fill=\"#FFF\"/><circle cx=\"55\" cy=\"28\" r=\"2\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "popcorn",
+    "category": "yummy_snacks",
+    "name": "Popcorn",
+    "icon": "\ud83c\udf7f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"30,45 70,45 62,90 38,90\" fill=\"#E53935\"/><line x1=\"42\" y1=\"45\" x2=\"44\" y2=\"90\" stroke=\"#FFF\" stroke-width=\"4\"/><line x1=\"58\" y1=\"45\" x2=\"56\" y2=\"90\" stroke=\"#FFF\" stroke-width=\"4\"/><circle cx=\"40\" cy=\"35\" r=\"12\" fill=\"#FFF59D\"/><circle cx=\"60\" cy=\"35\" r=\"12\" fill=\"#FFF59D\"/><circle cx=\"50\" cy=\"25\" r=\"14\" fill=\"#FFF59D\"/></svg>"
+  },
+  {
+    "id": "strawberry",
+    "category": "yummy_snacks",
+    "name": "Strawberry",
+    "icon": "\ud83c\udf53",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,90 C15,60 20,35 50,35 C80,35 85,60 50,90 Z\" fill=\"#E53935\"/><polygon points=\"50,35 40,20 50,25 60,20\" fill=\"#43A047\"/><circle cx=\"40\" cy=\"50\" r=\"2\" fill=\"#FFF\"/><circle cx=\"60\" cy=\"50\" r=\"2\" fill=\"#FFF\"/><circle cx=\"50\" cy=\"65\" r=\"2\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "watermelon",
+    "category": "yummy_snacks",
+    "name": "Watermelon",
+    "icon": "\ud83c\udf49",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M15,35 A45,45 0 0,0 85,35 Z\" fill=\"#E53935\"/><path d=\"M10,35 A50,50 0 0,0 90,35\" stroke=\"#2E7D32\" stroke-width=\"8\" fill=\"none\"/><circle cx=\"35\" cy=\"48\" r=\"3\" fill=\"#000\"/><circle cx=\"50\" cy=\"55\" r=\"3\" fill=\"#000\"/><circle cx=\"65\" cy=\"48\" r=\"3\" fill=\"#000\"/></svg>"
+  },
+  {
+    "id": "cupcake",
+    "category": "yummy_snacks",
+    "name": "Cupcake",
+    "icon": "\ud83e\uddc1",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"32,55 68,55 62,90 38,90\" fill=\"#BCAAA4\"/><path d=\"M28,55 C25,35 75,35 72,55 Z\" fill=\"#F48FB1\"/><circle cx=\"50\" cy=\"32\" r=\"8\" fill=\"#D50000\"/><circle cx=\"40\" cy=\"45\" r=\"2\" fill=\"#FFF\"/><circle cx=\"60\" cy=\"45\" r=\"2\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "boba_tea",
+    "category": "yummy_snacks",
+    "name": "Boba Tea",
+    "icon": "\ud83e\uddcb",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"30,30 70,30 65,85 35,85\" fill=\"#FFE0B2\" stroke=\"#BCAAA4\" stroke-width=\"3\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"40\" stroke=\"#8E24AA\" stroke-width=\"6\" stroke-linecap=\"round\"/><circle cx=\"42\" cy=\"75\" r=\"5\" fill=\"#3E2723\"/><circle cx=\"58\" cy=\"75\" r=\"5\" fill=\"#3E2723\"/><circle cx=\"50\" cy=\"65\" r=\"5\" fill=\"#3E2723\"/></svg>"
+  },
+  {
+    "id": "taco",
+    "category": "yummy_snacks",
+    "name": "Taco",
+    "icon": "\ud83c\udf2e",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M15,65 A40,35 0 0,1 85,65 Z\" fill=\"#FFD54F\" stroke=\"#FFA000\" stroke-width=\"3\"/><path d=\"M25,60 Q50,45 75,60\" stroke=\"#388E3C\" stroke-width=\"8\" fill=\"none\"/><circle cx=\"40\" cy=\"55\" r=\"4\" fill=\"#C62828\"/><circle cx=\"60\" cy=\"55\" r=\"4\" fill=\"#C62828\"/></svg>"
+  },
+  {
+    "id": "rocket_toy",
+    "category": "toys_gadgets",
+    "name": "Rocket",
+    "icon": "\ud83d\ude80",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,10 C65,30 65,70 50,85 C35,70 35,30 50,10 Z\" fill=\"#E53935\"/><polygon points=\"35,60 20,80 35,78\" fill=\"#1E88E5\"/><polygon points=\"65,60 80,80 65,78\" fill=\"#1E88E5\"/><circle cx=\"50\" cy=\"40\" r=\"10\" fill=\"#E0F7FA\"/></svg>"
+  },
+  {
+    "id": "ufo_gadget",
+    "category": "toys_gadgets",
+    "name": "UFO",
+    "icon": "\ud83d\udef8",
+    "svg": "<svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"55\" rx=\"42\" ry=\"15\" fill=\"#78909C\"/><ellipse cx=\"50\" cy=\"45\" rx=\"22\" ry=\"20\" fill=\"#80DEEA\" opacity=\"0.8\"/><circle cx=\"30\" cy=\"55\" r=\"4\" fill=\"#FFEB3B\"/><circle cx=\"50\" cy=\"55\" r=\"4\" fill=\"#FFEB3B\"/><circle cx=\"70\" cy=\"55\" r=\"4\" fill=\"#FFEB3B\"/></svg>"
+  },
+  {
+    "id": "race_car_toy",
+    "category": "toys_gadgets",
+    "name": "Race Car",
+    "icon": "\ud83c\udfce\ufe0f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><rect x=\"15\" y=\"45\" width=\"70\" height=\"20\" fill=\"#D32F2F\" rx=\"8\"/><polygon points=\"35,45 45,30 65,30 75,45\" fill=\"#1976D2\"/><circle cx=\"30\" cy=\"68\" r=\"10\" fill=\"#000\"/><circle cx=\"30\" cy=\"68\" r=\"4\" fill=\"#FFF\"/><circle cx=\"70\" cy=\"68\" r=\"10\" fill=\"#000\"/><circle cx=\"70\" cy=\"68\" r=\"4\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "robot_head",
+    "category": "toys_gadgets",
+    "name": "Robot",
+    "icon": "\ud83e\udd16",
+    "svg": "<svg viewBox=\"0 0 100 100\"><rect x=\"25\" y=\"30\" width=\"50\" height=\"45\" fill=\"#90A4AE\" rx=\"6\"/><line x1=\"50\" y1=\"15\" x2=\"50\" y2=\"30\" stroke=\"#546E7A\" stroke-width=\"4\"/><circle cx=\"50\" cy=\"12\" r=\"5\" fill=\"#F44336\"/><circle cx=\"40\" cy=\"48\" r=\"6\" fill=\"#00E5FF\"/><circle cx=\"60\" cy=\"48\" r=\"6\" fill=\"#00E5FF\"/><rect x=\"36\" y=\"62\" width=\"28\" height=\"6\" fill=\"#37474F\"/></svg>"
+  },
+  {
+    "id": "royal_crown",
+    "category": "toys_gadgets",
+    "name": "Crown",
+    "icon": "\ud83d\udc51",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"15,75 85,75 80,35 60,55 50,25 40,55 20,35\" fill=\"#FFD700\" stroke=\"#FFA000\" stroke-width=\"4\"/><circle cx=\"50\" cy=\"22\" r=\"4\" fill=\"#E91E63\"/><circle cx=\"20\" cy=\"32\" r=\"4\" fill=\"#2196F3\"/><circle cx=\"80\" cy=\"32\" r=\"4\" fill=\"#4CAF50\"/></svg>"
+  },
+  {
+    "id": "balloon_party",
+    "category": "toys_gadgets",
+    "name": "Balloon",
+    "icon": "\ud83c\udf88",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"40\" r=\"30\" fill=\"#E91E63\"/><polygon points=\"50,70 45,76 55,76\" fill=\"#C2185B\"/><path d=\"M50,76 Q45,88 52,95\" stroke=\"#757575\" stroke-width=\"2\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "gift_box",
+    "category": "toys_gadgets",
+    "name": "Gift Box",
+    "icon": "\ud83c\udf81",
+    "svg": "<svg viewBox=\"0 0 100 100\"><rect x=\"25\" y=\"40\" width=\"50\" height=\"45\" fill=\"#4CAF50\" rx=\"4\"/><rect x=\"20\" y=\"32\" width=\"60\" height=\"12\" fill=\"#388E3C\" rx=\"3\"/><line x1=\"50\" y1=\"32\" x2=\"50\" y2=\"85\" stroke=\"#FFD700\" stroke-width=\"8\"/><circle cx=\"50\" cy=\"26\" r=\"8\" fill=\"#FFD700\"/></svg>"
+  },
+  {
+    "id": "gold_trophy",
+    "category": "toys_gadgets",
+    "name": "Trophy",
+    "icon": "\ud83c\udfc6",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M30,25 L70,25 L65,55 C65,65 55,70 50,70 C45,70 35,65 35,55 Z\" fill=\"#FFD700\" stroke=\"#FFA000\" stroke-width=\"3\"/><rect x=\"42\" y=\"70\" width=\"16\" height=\"12\" fill=\"#FFA000\"/><rect x=\"30\" y=\"82\" width=\"40\" height=\"10\" fill=\"#795548\" rx=\"2\"/></svg>"
+  },
+  {
+    "id": "blue_diamond",
+    "category": "toys_gadgets",
+    "name": "Diamond",
+    "icon": "\ud83d\udc8e",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"30,25 70,25 88,50 50,85 12,50\" fill=\"#00E5FF\" stroke=\"#00B0FF\" stroke-width=\"4\"/><line x1=\"30\" y1=\"25\" x2=\"50\" y2=\"85\" stroke=\"#FFF\" stroke-width=\"2\"/><line x1=\"70\" y1=\"25\" x2=\"50\" y2=\"85\" stroke=\"#FFF\" stroke-width=\"2\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\" stroke=\"#FFF\" stroke-width=\"2\"/></svg>"
+  },
+  {
+    "id": "yo_yo",
+    "category": "toys_gadgets",
+    "name": "Yo-Yo",
+    "icon": "\ud83e\ude80",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"48\" cy=\"55\" r=\"30\" fill=\"#E040FB\" stroke=\"#7B1FA2\" stroke-width=\"4\"/><circle cx=\"55\" cy=\"50\" r=\"30\" fill=\"#EA80FC\" stroke=\"#AA00FF\" stroke-width=\"4\"/><path d=\"M48,25 Q40,10 50,5\" stroke=\"#FFF\" stroke-width=\"3\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "heart_red",
+    "category": "expressive_moods",
+    "name": "Heart",
+    "icon": "\ud83d\udc96",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,85 C20,60 10,35 25,20 C40,5 50,30 50,30 C50,30 60,5 75,20 C90,35 80,60 50,85 Z\" fill=\"#FF1744\" stroke=\"#D50000\" stroke-width=\"3\"/></svg>"
+  },
+  {
+    "id": "cool_sunglasses",
+    "category": "expressive_moods",
+    "name": "Sunglasses",
+    "icon": "\ud83d\ude0e",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"38\" fill=\"#FFD54F\"/><rect x=\"22\" y=\"42\" width=\"24\" height=\"16\" rx=\"4\" fill=\"#212121\"/><rect x=\"54\" y=\"42\" width=\"24\" height=\"16\" rx=\"4\" fill=\"#212121\"/><line x1=\"46\" y1=\"46\" x2=\"54\" y2=\"46\" stroke=\"#212121\" stroke-width=\"4\"/><path d=\"M35,68 Q50,78 65,68\" stroke=\"#000\" stroke-width=\"4\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "party_face",
+    "category": "expressive_moods",
+    "name": "Party Face",
+    "icon": "\ud83e\udd73",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"55\" r=\"36\" fill=\"#FFD54F\"/><polygon points=\"35,28 75,10 60,40\" fill=\"#E91E63\"/><circle cx=\"38\" cy=\"52\" r=\"4\" fill=\"#000\"/><circle cx=\"62\" cy=\"52\" r=\"4\" fill=\"#000\"/><path d=\"M42,68 Q50,76 58,68\" stroke=\"#000\" stroke-width=\"3\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "star_eyes",
+    "category": "expressive_moods",
+    "name": "Star Eyes",
+    "icon": "\ud83e\udd29",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"38\" fill=\"#FFD54F\"/><polygon points=\"36,36 40,44 48,44 42,48 44,56 36,52 28,56 30,48 24,44 32,44\" fill=\"#FF6D00\"/><polygon points=\"64,36 68,44 76,44 70,48 72,56 64,52 56,56 58,48 52,44 60,44\" fill=\"#FF6D00\"/><path d=\"M35,68 Q50,82 65,68\" stroke=\"#000\" stroke-width=\"4\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "cherry_blossom",
+    "category": "expressive_moods",
+    "name": "Cherry Blossom",
+    "icon": "\ud83c\udf38",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"10\" fill=\"#FFEB3B\"/><path d=\"M50,40 C45,15 55,15 50,40 Z\" fill=\"#F48FB1\"/><path d=\"M50,60 C45,85 55,85 50,60 Z\" fill=\"#F48FB1\"/><path d=\"M40,50 C15,45 15,55 40,50 Z\" fill=\"#F48FB1\"/><path d=\"M60,50 C85,45 85,55 60,50 Z\" fill=\"#F48FB1\"/></svg>"
+  },
+  {
+    "id": "hibiscus_flower",
+    "category": "expressive_moods",
+    "name": "Hibiscus",
+    "icon": "\ud83c\udf3a",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"14\" fill=\"#FF1744\"/><path d=\"M50,30 C30,10 70,10 50,30 Z\" fill=\"#FF4081\"/><path d=\"M30,50 C10,30 10,70 30,50 Z\" fill=\"#FF4081\"/><path d=\"M70,50 C90,30 90,70 70,50 Z\" fill=\"#FF4081\"/><path d=\"M40,68 C20,88 60,95 40,68 Z\" fill=\"#FF4081\"/><path d=\"M60,68 C40,95 80,88 60,68 Z\" fill=\"#FF4081\"/><line x1=\"50\" y1=\"50\" x2=\"68\" y2=\"25\" stroke=\"#FFD700\" stroke-width=\"4\" stroke-linecap=\"round\"/></svg>"
+  },
+  {
+    "id": "peace_sign",
+    "category": "expressive_moods",
+    "name": "Peace Sign",
+    "icon": "\u270c\ufe0f",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"38\" fill=\"#7C4DFF\"/><circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"80\" stroke=\"#FFF\" stroke-width=\"6\"/><line x1=\"50\" y1=\"50\" x2=\"28\" y2=\"70\" stroke=\"#FFF\" stroke-width=\"6\"/><line x1=\"50\" y1=\"50\" x2=\"72\" y2=\"70\" stroke=\"#FFF\" stroke-width=\"6\"/></svg>"
+  },
+  {
+    "id": "fire_flame",
+    "category": "expressive_moods",
+    "name": "Fire",
+    "icon": "\ud83d\udd25",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,10 C65,35 85,55 75,80 C68,95 32,95 25,80 C15,60 40,40 50,10 Z\" fill=\"#FF3D00\"/><path d=\"M50,45 C60,60 70,70 65,85 C60,92 40,92 35,85 C30,75 45,60 50,45 Z\" fill=\"#FFEA00\"/></svg>"
+  },
+  {
+    "id": "water_drop",
+    "category": "expressive_moods",
+    "name": "Water Drop",
+    "icon": "\ud83d\udca7",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,15 C65,45 80,60 80,75 C80,90 65,95 50,95 C35,95 20,90 20,75 C20,60 35,45 50,15 Z\" fill=\"#29B6F6\"/><circle cx=\"40\" cy=\"65\" r=\"8\" fill=\"#E1F5FE\" opacity=\"0.8\"/></svg>"
+  },
+  {
+    "id": "lightbulb_idea",
+    "category": "expressive_moods",
+    "name": "Lightbulb",
+    "icon": "\ud83d\udca1",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M35,45 A20,20 0 1,1 65,45 C65,55 58,62 58,70 L42,70 C42,62 35,55 35,45 Z\" fill=\"#FFEB3B\" stroke=\"#FBC02D\" stroke-width=\"3\"/><rect x=\"44\" y=\"72\" width=\"12\" height=\"10\" fill=\"#9E9E9E\" rx=\"2\"/></svg>"
+  },
+  {
+    "id": "trex_badge",
+    "category": "dinos_nature",
+    "name": "T-Rex",
+    "icon": "\ud83e\udd96",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"38\" fill=\"#4CAF50\"/><path d=\"M30,35 C30,25 55,20 65,30 C75,40 75,55 60,55 L45,55 L40,75 L30,75 Z\" fill=\"#388E3C\"/><circle cx=\"55\" cy=\"32\" r=\"4\" fill=\"#000\"/><polygon points=\"50,45 55,40 60,45 65,40\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "palm_tree_sticker",
+    "category": "dinos_nature",
+    "name": "Palm Tree",
+    "icon": "\ud83c\udf34",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,90 Q40,60 52,40\" stroke=\"#795548\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M52,40 C35,30 20,40 15,50\" stroke=\"#2E7D32\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M52,40 C65,30 80,40 85,50\" stroke=\"#2E7D32\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M52,40 C52,20 52,15 52,10\" stroke=\"#2E7D32\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "seashell",
+    "category": "dinos_nature",
+    "name": "Seashell",
+    "icon": "\ud83d\udc1a",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,85 C25,85 15,40 50,15 C85,40 75,85 50,85 Z\" fill=\"#FFE082\" stroke=\"#FFA000\" stroke-width=\"3\"/><line x1=\"50\" y1=\"85\" x2=\"30\" y2=\"40\" stroke=\"#FFA000\" stroke-width=\"2\"/><line x1=\"50\" y1=\"85\" x2=\"50\" y2=\"30\" stroke=\"#FFA000\" stroke-width=\"2\"/><line x1=\"50\" y1=\"85\" x2=\"70\" y2=\"40\" stroke=\"#FFA000\" stroke-width=\"2\"/></svg>"
+  },
+  {
+    "id": "ocean_wave",
+    "category": "dinos_nature",
+    "name": "Ocean Waves",
+    "icon": "\ud83c\udf0a",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M10,65 C25,45 35,50 45,65 C60,45 70,50 85,65 L85,85 L10,85 Z\" fill=\"#0288D1\"/><path d=\"M25,50 C35,30 55,25 70,45\" stroke=\"#E1F5FE\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+  },
+  {
+    "id": "mushroom",
+    "category": "dinos_nature",
+    "name": "Mushroom",
+    "icon": "\ud83c\udf44",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M20,55 C20,25 80,25 80,55 Z\" fill=\"#E53935\"/><rect x=\"42\" y=\"55\" width=\"16\" height=\"30\" fill=\"#FFF8E1\" rx=\"4\"/><circle cx=\"35\" cy=\"42\" r=\"6\" fill=\"#FFF\"/><circle cx=\"65\" cy=\"42\" r=\"6\" fill=\"#FFF\"/><circle cx=\"50\" cy=\"32\" r=\"5\" fill=\"#FFF\"/></svg>"
+  },
+  {
+    "id": "busy_bee",
+    "category": "dinos_nature",
+    "name": "Bee",
+    "icon": "\ud83d\udc1d",
+    "svg": "<svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"55\" rx=\"28\" ry=\"20\" fill=\"#FFEB3B\"/><line x1=\"42\" y1=\"36\" x2=\"42\" y2=\"74\" stroke=\"#000\" stroke-width=\"5\"/><line x1=\"56\" y1=\"36\" x2=\"56\" y2=\"74\" stroke=\"#000\" stroke-width=\"5\"/><ellipse cx=\"45\" cy=\"30\" rx=\"8\" ry=\"14\" fill=\"#E0F7FA\" opacity=\"0.8\"/><circle cx=\"70\" cy=\"50\" r=\"3\" fill=\"#000\"/></svg>"
+  },
+  {
+    "id": "butterfly",
+    "category": "dinos_nature",
+    "name": "Butterfly",
+    "icon": "\ud83e\udd8b",
+    "svg": "<svg viewBox=\"0 0 100 100\"><path d=\"M50,50 C30,20 10,40 25,65 C35,80 50,60 50,50 Z\" fill=\"#AB47BC\"/><path d=\"M50,50 C70,20 90,40 75,65 C65,80 50,60 50,50 Z\" fill=\"#AB47BC\"/><ellipse cx=\"50\" cy=\"52\" rx=\"4\" ry=\"18\" fill=\"#4A148C\"/><circle cx=\"35\" cy=\"45\" r=\"4\" fill=\"#FFD54F\"/><circle cx=\"65\" cy=\"45\" r=\"4\" fill=\"#FFD54F\"/></svg>"
+  },
+  {
+    "id": "volcano_island",
+    "category": "dinos_nature",
+    "name": "Volcano",
+    "icon": "\ud83c\udf0b",
+    "svg": "<svg viewBox=\"0 0 100 100\"><polygon points=\"20,85 80,85 62,45 38,45\" fill=\"#5D4037\"/><path d=\"M40,45 C50,25 50,15 50,10\" stroke=\"#FF3D00\" stroke-width=\"6\" fill=\"none\"/><circle cx=\"50\" cy=\"15\" r=\"6\" fill=\"#FFD600\"/><polygon points=\"44,45 50,38 56,45\" fill=\"#FF6D00\"/></svg>"
+  },
+  {
+    "id": "four_leaf_clover",
+    "category": "dinos_nature",
+    "name": "Clover",
+    "icon": "\ud83c\udf40",
+    "svg": "<svg viewBox=\"0 0 100 100\"><circle cx=\"40\" cy=\"40\" r=\"14\" fill=\"#43A047\"/><circle cx=\"60\" cy=\"40\" r=\"14\" fill=\"#43A047\"/><circle cx=\"40\" cy=\"60\" r=\"14\" fill=\"#43A047\"/><circle cx=\"60\" cy=\"60\" r=\"14\" fill=\"#43A047\"/><path d=\"M50,60 Q55,85 45,95\" stroke=\"#2E7D32\" stroke-width=\"4\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "cactus",
+    "category": "dinos_nature",
+    "name": "Cactus",
+    "icon": "\ud83c\udf35",
+    "svg": "<svg viewBox=\"0 0 100 100\"><rect x=\"42\" y=\"25\" width=\"16\" height=\"60\" fill=\"#388E3C\" rx=\"8\"/><path d=\"M30,45 L42,45 M30,35 L30,55\" stroke=\"#388E3C\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M70,55 L58,55 M70,45 L70,65\" stroke=\"#388E3C\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/><circle cx=\"50\" cy=\"20\" r=\"5\" fill=\"#E91E63\"/></svg>"
+  }
+];
