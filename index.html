@@ -8,34 +8,234 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://gumroad.com/js/gumroad.js"></script>
     <style>
-        body { background-color: #0b1120; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; }
-        .sidebar { background-color: #0f172a; border-right: 1px solid #1e293b; min-height: 100vh; position: sticky; top: 0; }
-        .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
-        .btn-accent { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; font-weight: 600; border: none; }
-        .btn-accent:hover { background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; }
-        .btn-gumroad { background-color: #ff90e8; color: #000; font-weight: bold; border: 2px solid #000; border-radius: 8px; box-shadow: 2px 2px 0px #000; transition: transform 0.1s; }
-        .btn-gumroad:hover { background-color: #ff70e0; color: #000; transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #000; }
-        .badge-ms { font-size: 0.9rem; background-color: #10b981; color: #022c22; font-weight: bold; }
-        .badge-licensed { background-color: #38bdf8; color: #082f49; font-weight: bold; }
-        .tag-badge { background-color: #334155; color: #38bdf8; margin-right: 4px; margin-bottom: 4px; display: inline-block; padding: 4px 10px; border-radius: 16px; font-size: 0.75rem; cursor: pointer; }
-        .tag-badge:hover { background-color: #475569; }
-        .preview-img { max-height: 380px; max-width: 100%; object-fit: contain; border-radius: 8px; border: 2px dashed #475569; background: white; }
-        .slider-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; }
-        .gate-card { max-width: 580px; margin: 30px auto; }
-        .gallery-item { border: 1px solid #334155; border-radius: 8px; overflow: hidden; background: #0f172a; transition: transform 0.15s ease-in-out; }
-        .gallery-item:hover { transform: translateY(-3px); border-color: #38bdf8; }
-        .gallery-item img { width: 100%; height: 160px; object-fit: contain; background: white; }
-        .cat-item { padding: 8px 14px; border-radius: 8px; cursor: pointer; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; transition: all 0.15s; font-size: 0.9rem; }
-        .cat-item:hover, .cat-item.active { background-color: #1e293b; color: #38bdf8; font-weight: 600; }
-        .upsell-banner { background: linear-gradient(90deg, #1e1b4b, #311042); border: 1px solid #c084fc; border-radius: 10px; padding: 12px 18px; }
-        .affiliate-badge { background: #022c22; border: 1px solid #059669; color: #34d399; font-size: 0.8rem; border-radius: 6px; padding: 4px 8px; }
-        .video-canvas { width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px; background: #000; }
-        .tab-btn { background: transparent; border: none; color: #94a3b8; padding: 8px 16px; border-bottom: 2px solid transparent; font-weight: 600; }
-        .tab-btn.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; }
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --border-subtle: #334155;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+            --accent-hover: linear-gradient(135deg, #4f46e5, #9333ea);
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius-card: 12px;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid #1e293b;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1040;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+        }
+
+        .btn-accent {
+            background: var(--accent-gradient);
+            color: white !important;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .btn-accent:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .btn-accent:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-gumroad {
+            background-color: #ff90e8;
+            color: #000 !important;
+            font-weight: bold;
+            border: 2px solid #000;
+            border-radius: 8px;
+            box-shadow: 2px 2px 0px #000;
+            transition: all 0.15s ease;
+        }
+        .btn-gumroad:hover:not(:disabled) {
+            background-color: #ff70e0;
+            color: #000 !important;
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .badge-ms {
+            font-size: 0.9rem;
+            background-color: var(--success);
+            color: #022c22;
+            font-weight: bold;
+        }
+        .badge-licensed {
+            background-color: #38bdf8;
+            color: #082f49;
+            font-weight: bold;
+        }
+        .tag-badge {
+            background-color: #334155;
+            color: #38bdf8;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .tag-badge:hover {
+            background-color: #475569;
+            transform: scale(1.05);
+        }
+
+        .preview-img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px dashed #475569;
+            background: white;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .gallery-item {
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-3px);
+            border-color: #38bdf8;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.15);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            background: white;
+        }
+
+        .cat-item {
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s;
+            font-size: 0.9rem;
+        }
+        .cat-item:hover, .cat-item.active {
+            background-color: var(--bg-card);
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .drop-zone {
+            border: 2px dashed #6366f1;
+            border-radius: var(--radius-card);
+            padding: 2.2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(99, 102, 241, 0.03);
+            transition: all 0.2s ease;
+        }
+        .drop-zone:hover, .drop-zone.drag-over {
+            background: rgba(99, 102, 241, 0.08);
+            border-color: #a855f7;
+            transform: scale(1.01);
+        }
+
+        .upsell-banner {
+            background: linear-gradient(90deg, #1e1b4b, #311042);
+            border: 1px solid #c084fc;
+            border-radius: 10px;
+            padding: 12px 18px;
+        }
+        .affiliate-badge {
+            background: #022c22;
+            border: 1px solid #059669;
+            color: #34d399;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            padding: 4px 8px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+        }
+        .tab-btn.active {
+            color: #38bdf8;
+            border-bottom: 2px solid #38bdf8;
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1080;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 350px;
+        }
+        .toast-message {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            font-size: 0.9rem;
+            color: #fff;
+        }
+        .toast-message.error { border-left-color: var(--danger); }
+        .toast-message.warning { border-left-color: var(--warning); }
+        .toast-message.info { border-left-color: #38bdf8; }
+
         canvas { display: none; }
     </style>
 </head>
 <body>
+    <div class="toast-container" id="toastContainer"></div>
+
     <div class="container-fluid">
         <div class="row">
             <!-- ============================================== -->
@@ -206,11 +406,12 @@
                                     <span class="badge bg-secondary text-light">Sub-50ms Mode</span>
                                 </div>
 
-                                <!-- Multi-file Upload -->
-                                <div class="mb-3">
-                                    <label class="text-secondary small fw-bold">Select Images (Single or Bulk Dumps):</label>
-                                    <input class="form-control bg-dark text-light border-secondary" type="file" id="imageInput" accept="image/*" multiple>
-                                    <div class="form-text text-slate-400 small">Drag files or select multiple photos. Duplicate-aware.</div>
+                                <!-- Drag & Drop Interactive Drop Zone -->
+                                <div class="drop-zone mb-3" id="dropZone" onclick="document.getElementById('imageInput').click()">
+                                    <div class="fs-1 mb-1">📤</div>
+                                    <div class="fw-bold text-light">Drop Images Here or Click to Browse</div>
+                                    <div class="small text-secondary">Single or Bulk conversions • Sub-50ms engine</div>
+                                    <input class="d-none" type="file" id="imageInput" accept="image/*" multiple onchange="handleFileSelect(this.files)">
                                 </div>
 
                                 <!-- Aspect Ratio / Cropping Selector -->
@@ -278,7 +479,7 @@
                                 </div>
 
                                 <!-- Action Buttons for Viral Video & Blog Creation -->
-                                <div id="viralActionButtons" class="d-none mb-3 d-flex gap-2 justify-content-center">
+                                <div id="viralActionButtons" class="d-none mb-3 d-flex gap-2 justify-content-center flex-wrap">
                                     <button class="btn btn-sm btn-outline-info" onclick="startInkBleedAnimation()">🎥 Generate Ink-Bleed Video</button>
                                     <button class="btn btn-sm btn-outline-warning" onclick="generateViralSocialOutreach()">🚀 Delegated Social Outreach</button>
                                     <button class="btn btn-sm btn-outline-success" onclick="generateInstantBlog()">📝 Write SEO Blog Post</button>
@@ -447,7 +648,7 @@
     <script>
         let verifiedLicenseKey = localStorage.getItem("colorworld_license_key") || "";
         let currentMetadata = null;
-        let convertedItems = []; // Array of { name, dataUrl, ms, rawImg }
+        let convertedItems = [];
         let currentCategory = "All";
         let searchQuery = "";
         let currentCampaign = null;
@@ -458,6 +659,53 @@
         let animProgress = 0;
         let animId = null;
         let isAnimating = false;
+
+        function showToast(message, type = 'success', duration = 3000) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast-message ${type}`;
+            toast.innerHTML = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Setup Drag and Drop
+        function setupDropZone() {
+            const dz = document.getElementById('dropZone');
+            if (!dz) return;
+            ['dragenter', 'dragover'].forEach(evt => {
+                dz.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    dz.classList.add('drag-over');
+                });
+            });
+            ['dragleave', 'drop'].forEach(evt => {
+                dz.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    dz.classList.remove('drag-over');
+                });
+            });
+            dz.addEventListener('drop', (e) => {
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                if (files.length > 0) {
+                    handleFileSelect(files);
+                }
+            });
+        }
+
+        function handleFileSelect(files) {
+            if (files && files.length > 0) {
+                showToast(`📁 ${files.length} image(s) loaded. Ready to convert!`, 'info');
+                // Store in input element
+                const dt = new DataTransfer();
+                for (let i = 0; i < files.length; i++) dt.items.add(files[i]);
+                document.getElementById('imageInput').files = dt.files;
+            }
+        }
 
         // Catalog template data for sidebar filtering and live browsing
         const catalogProducts = [
@@ -573,11 +821,11 @@
         window.addEventListener("DOMContentLoaded", () => {
             renderCatalog(catalogProducts);
             renderSeoBlogs();
+            setupDropZone();
 
             if (verifiedLicenseKey && verifiedLicenseKey.length >= 8) {
                 unlockApp(verifiedLicenseKey);
             }
-            // Initialize default canvas
             initDefaultCanvas();
         });
 
@@ -684,6 +932,7 @@
             document.getElementById('metaTitle').value = `${templateName} - Premium Coloring Page`;
             selectCategory("All");
             window.scrollTo({ top: 300, behavior: 'smooth' });
+            showToast(`Loaded ${templateName} template into inspector.`, 'info');
         }
 
         // -------------------------------------------------------------
@@ -714,6 +963,7 @@
                     const data = await res.json();
                     if (data.success) {
                         unlockApp(key);
+                        showToast("License key verified! Bulk dumps unlocked.", "success");
                         return;
                     }
                 }
@@ -721,6 +971,7 @@
 
             if (key.length >= 8) {
                 unlockApp(key);
+                showToast("License key accepted! Converter unlocked.", "success");
             } else {
                 alertDiv.classList.add("alert-danger");
                 alertDiv.innerText = "Invalid license key. Check your Gumroad receipt or purchase a license.";
@@ -731,6 +982,7 @@
 
         function quickGuestMode() {
             unlockApp("GUEST-TRIAL-MODE");
+            showToast("Demo mode active. Try converting any image!", "info");
         }
 
         function unlockApp(key) {
@@ -788,7 +1040,6 @@
             document.getElementById('metadataBox').classList.remove('d-none');
             document.getElementById('viralActionButtons').classList.remove('d-none');
 
-            // Trigger background generation for outreach
             generateViralSocialOutreach();
         }
 
@@ -800,7 +1051,7 @@
             const files = Array.from(input.files);
 
             if (!files.length) {
-                alert('Please select one or more images for conversion.');
+                showToast('Please select or drop one or more images for conversion.', 'warning');
                 return;
             }
 
@@ -832,7 +1083,6 @@
                 bulkGallery.appendChild(col);
             }
 
-            // Preview last converted
             previewConverted(convertedItems.length - 1);
 
             const avgMs = (totalMs / files.length).toFixed(1);
@@ -847,6 +1097,7 @@
 
             convertBtn.disabled = false;
             convertBtn.innerText = 'Convert Instant (< 50ms/image)';
+            showToast(`Converted ${convertedItems.length} images! Avg speed: ${avgMs}ms.`, 'success');
         }
 
         function previewConverted(idx) {
@@ -980,6 +1231,7 @@
             a.href = URL.createObjectURL(content);
             a.download = `colorworld_bulk_${Date.now()}.zip`;
             a.click();
+            showToast("ZIP archive downloaded!", "success");
         }
 
         async function publishGumroadClient() {
@@ -1024,6 +1276,7 @@
             statusDiv.classList.add('alert-success');
             const dupNotice = data.duplicate ? "<br><span class='badge bg-warning text-dark'>Duplicate Detected - Linked Existing Product</span>" : "";
             statusDiv.innerHTML = `<strong>Success!</strong> Gumroad Listing Active ($3.99).${dupNotice}<br>Storefront: <a href="${data.product_url}" target="_blank" class="text-light text-decoration-underline">${data.product_url}</a><br>Promo Code: <strong>${data.promo_code}</strong> (${data.discount})`;
+            showToast("Product listed on Gumroad storefront!", "success");
         }
 
         async function loadStorefrontProducts() {
@@ -1044,6 +1297,7 @@
                             });
                         });
                         applyCatalogFilters();
+                        showToast(`Refreshed catalog: ${data.products.length} live products loaded.`, 'info');
                     }
                 }
             } catch (e) {}
@@ -1058,7 +1312,6 @@
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw placeholder flower mandala sketch
             ctx.strokeStyle = "#111827";
             ctx.lineWidth = 4;
             const cx = canvas.width / 2;
@@ -1071,7 +1324,6 @@
                 ctx.stroke();
             }
 
-            // Copyright footer
             ctx.font = "16px sans-serif";
             ctx.fillStyle = "#6b7280";
             ctx.textAlign = "center";
@@ -1089,7 +1341,6 @@
             statusBadge.innerText = "Blooming Ink Bleed...";
             statusBadge.className = "badge bg-danger";
 
-            // Scroll to video studio
             document.getElementById("viralStudio").scrollIntoView({ behavior: 'smooth' });
 
             const lineImg = new Image();
@@ -1101,13 +1352,12 @@
             }
 
             const startTime = performance.now();
-            const duration = 4500; // 4.5 second aesthetic completion bloom
+            const duration = 4500;
 
             function frame(now) {
                 const elapsed = now - startTime;
                 animProgress = Math.min(1.0, elapsed / duration);
 
-                // Render aesthetic watercolor ink bleed
                 renderInkBleedFrame(ctx, canvas.width, canvas.height, animProgress, lineImg);
 
                 if (animProgress < 1.0) {
@@ -1125,7 +1375,6 @@
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, w, h);
 
-            // 1. Organic watercolor ink blobs blooming outwards
             const cx = w / 2;
             const cy = h / 2;
             const numDrops = 14;
@@ -1139,13 +1388,12 @@
 
                 const grad = ctx.createRadialGradient(dropX, dropY, 5, dropX, dropY, radius);
 
-                // Aesthetic vibrant palette: cyan, magenta, violet, coral, golden sunlight
                 const hues = [
-                    "rgba(56, 189, 248, ",   // sky blue
-                    "rgba(192, 132, 252, ",  // purple/lavender
-                    "rgba(251, 113, 133, ",  // rose pink
-                    "rgba(251, 191, 36, ",   // warm gold
-                    "rgba(52, 211, 153, "    // emerald mint
+                    "rgba(56, 189, 248, ",
+                    "rgba(192, 132, 252, ",
+                    "rgba(251, 113, 133, ",
+                    "rgba(251, 191, 36, ",
+                    "rgba(52, 211, 153, "
                 ];
                 const baseHue = hues[i % hues.length];
                 const alpha = Math.min(0.78, progress * 0.85);
@@ -1160,13 +1408,11 @@
                 ctx.fill();
             }
 
-            // 2. Draw black line art with 'multiply' blend mode so ink blooms realistically behind lines
             ctx.save();
             ctx.globalCompositeOperation = "multiply";
             if (lineImg.complete && lineImg.naturalWidth > 0) {
                 ctx.drawImage(lineImg, 0, 0, w, h);
             } else {
-                // Draw mandala lines
                 ctx.strokeStyle = "#111827";
                 ctx.lineWidth = 4;
                 for (let i = 0; i < 8; i++) {
@@ -1178,7 +1424,6 @@
             }
             ctx.restore();
 
-            // 3. Stamped Copyright footer
             ctx.font = "16px sans-serif";
             ctx.fillStyle = "#4b5563";
             ctx.textAlign = "center";
@@ -1218,12 +1463,12 @@
                 a.click();
                 btn.innerText = "⬇ Export WebM / MP4 Video";
                 btn.disabled = false;
+                showToast("Ink-bleed video exported!", "success");
             };
 
             mediaRecorder.start();
             startInkBleedAnimation();
 
-            // Record 5 seconds then stop
             setTimeout(() => {
                 if (mediaRecorder.state === "recording") {
                     mediaRecorder.stop();
@@ -1256,7 +1501,6 @@
                 }
             } catch (e) {}
 
-            // Client-side fallback
             currentCampaign = {
                 platforms: {
                     tiktok: `✨ Watch this black & white sketch come to life with watercolor ink bleed! 🎨💧 Download '${name}' instantly on Gumroad (https://sliverai.gumroad.com). Use code SUBSCRIBE50 for 50% OFF! #coloring #inkbleed #satisfying #2026colorworld`,
@@ -1294,7 +1538,7 @@
             const area = document.getElementById("outreachCopyArea");
             area.select();
             navigator.clipboard.writeText(area.value);
-            alert("Viral caption copied to clipboard with Gumroad link & 50% discount code!");
+            showToast("Viral caption copied with Gumroad link & 50% discount code!", "success");
         }
 
         // -------------------------------------------------------------
@@ -1329,16 +1573,17 @@
                     document.getElementById("blogContentArea").innerText = post.markdown_content;
                     document.getElementById("blogDisplaySection").classList.remove("d-none");
                     document.getElementById("blogDisplaySection").scrollIntoView({ behavior: 'smooth' });
+                    showToast("SEO Blog article generated!", "success");
                     return;
                 }
             } catch (e) {}
 
-            alert("Generating article...");
+            showToast("Generating article...", "info");
         }
 
         function copyBlogMarkdown() {
             navigator.clipboard.writeText(currentBlogMarkdown);
-            alert("Full SEO Blog article copied in Markdown format with Gumroad backlinks!");
+            showToast("Full SEO Blog article copied in Markdown format!", "success");
         }
 
         function closeBlogDisplay() {
