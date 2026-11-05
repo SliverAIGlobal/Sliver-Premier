@@ -1,13 +1,204 @@
 import os
 import time
 import logging
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 import numpy as np
 import cv2
 from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ColorWorldEngine")
+
+# Curated Collections for Children/Junior and Adult/Advanced
+COLLECTION_CATALOG = {
+    "junior": {
+        "title": "KAWAII WINTER 2026 Collection",
+        "description": "Magical creatures, cozy animals, cosmos adventures, snowy dinosaurs, underwater realms, and enchanted forests with warm Hygge themes.",
+        "themes": [
+            {
+                "id": "magical-snow-unicorn",
+                "name": "Magical Snow Unicorn",
+                "category": "Magical",
+                "tags": ["kawaii", "unicorn", "winter 2026", "magic", "children", "hygge"],
+                "icon": "🦄",
+                "svg_prompt": "cute magical unicorn in winter snow with star horn and cozy scarf"
+            },
+            {
+                "id": "cozy-winter-bear",
+                "name": "Hygge Cozy Winter Bear",
+                "category": "Animal & Hygge",
+                "tags": ["cozy bear", "winter", "hygge", "cute animal", "tea time", "snow"],
+                "icon": "🐻",
+                "svg_prompt": "cozy kawaii bear drinking hot cocoa beside cabin window"
+            },
+            {
+                "id": "starry-cosmos-voyage",
+                "name": "Cosmos Starry Snow Explorer",
+                "category": "Cosmos",
+                "tags": ["cosmos", "space", "stars", "cute astronaut", "galaxy", "planets"],
+                "icon": "🚀",
+                "svg_prompt": "kawaii astronaut cat discovering glowing crystalline ice planet"
+            },
+            {
+                "id": "merry-snow-dino",
+                "name": "Merry Snow Dinosaur",
+                "category": "Dinosaurs",
+                "tags": ["dinosaur", "snow", "brontosaurus", "winter fun", "cute dino", "junior"],
+                "icon": "🦕",
+                "svg_prompt": "adorable dinosaur rolling giant snowball in winter wonderland"
+            },
+            {
+                "id": "underwater-frost-mermaid",
+                "name": "Underwater Frost Mermaid & Narwhal",
+                "category": "Underwater",
+                "tags": ["underwater", "mermaid", "narwhal", "ocean", "winter sea", "magic"],
+                "icon": "🐳",
+                "svg_prompt": "playful narwhal and little mermaid swimming around coral snowglobe"
+            },
+            {
+                "id": "enchanted-mushroom-forest",
+                "name": "Enchanted Snowy Fairy Forest",
+                "category": "Enchanted Forest",
+                "tags": ["enchanted forest", "fairies", "mushrooms", "woodland", "lanterns", "cozy"],
+                "icon": "🍄",
+                "svg_prompt": "snowy fairy mushroom house glowing with hanging paper lanterns"
+            }
+        ]
+    },
+    "adult": {
+        "title": "Adult / Advanced Artistry Collection",
+        "description": "Botanical flowers with field notes, intricate tattoo skeletons, ethereal shadow worlds, aesthetically pleasing digital wonderlands, and minimal fine-detailed repeats.",
+        "themes": [
+            {
+                "id": "botanical-flowers-notes",
+                "name": "Botanical Florals & Field Notes",
+                "category": "Flowers & Field Notes",
+                "tags": ["botanical", "flowers", "field notes", "adult coloring", "fine detail", "vintage flora"],
+                "icon": "🌺",
+                "svg_prompt": "intricate vintage botanical peony and poppy with scientific field notes and anatomy"
+            },
+            {
+                "id": "ornate-tattoo-skeleton",
+                "name": "Ornate Tattoo Skeletons & Roses",
+                "category": "Tattoo Skeletons",
+                "tags": ["tattoo skeleton", "fine line", "roses", "dark art", "skulls", "ornate"],
+                "icon": "💀",
+                "svg_prompt": "masterpiece anatomical skull wrapped in thorned garden roses and gothic baroque filigree"
+            },
+            {
+                "id": "shadow-world-nocturne",
+                "name": "Shadow World Nocturne",
+                "category": "Shadow World",
+                "tags": ["shadow world", "nocturne", "mystic", "gothic", "crescent moon", "intricate"],
+                "icon": "🌑",
+                "svg_prompt": "mystic shadow forest with moonlit silhouette stag and ethereal spirit wisps"
+            },
+            {
+                "id": "digital-wonderland-isometric",
+                "name": "Aesthetic Digital Wonderland",
+                "category": "Digital Wonderlands",
+                "tags": ["digital wonderland", "isometric", "cyber chill", "lo-fi", "cozy room", "geometric"],
+                "icon": "🔮",
+                "svg_prompt": "cozy aesthetic cyberpunk greenhouse tea room with glowing bonsai and monitors"
+            },
+            {
+                "id": "hygge-botanical-sanctuary",
+                "name": "Cozy Sanctuary & Hearth",
+                "category": "Cozy & Hygge",
+                "tags": ["hygge sanctuary", "hearth", "cozy books", "indoor plants", "relaxation", "mindfulness"],
+                "icon": "🪴",
+                "svg_prompt": "cozy library alcove with roaring fireplace, Monstera leaves, and antique books"
+            },
+            {
+                "id": "minimal-fine-repeats",
+                "name": "Minimal Fine-Detailed Repeats",
+                "category": "Fine Detailed Repeats",
+                "tags": ["minimal repeat", "sacred geometry", "tessellation", "mindfulness", "zen", "patterns"],
+                "icon": "✨",
+                "svg_prompt": "hypnotic ultra-fine geometric mandalas and repeating organic leaf fractals"
+            }
+        ]
+    }
+}
+
+# True-to-life pigment palettes and biological textures
+PALETTE_PRESETS = {
+    "earth_botanical": {
+        "name": "True Earth & Botanical Pigments",
+        "pigments": [
+            {"hex": "#2e5a44", "name": "Deep Forest Viridian", "rgb": [46, 90, 68]},
+            {"hex": "#4e7a5d", "name": "Sage Moss", "rgb": [78, 122, 93]},
+            {"hex": "#8ba888", "name": "Eucalyptus Mist", "rgb": [139, 168, 136]},
+            {"hex": "#c8a165", "name": "Raw Sienna Ochre", "rgb": [200, 161, 101]},
+            {"hex": "#8c4b2d", "name": "Burnt Terracotta", "rgb": [140, 75, 45]},
+            {"hex": "#4a2a18", "name": "Raw Umber Earth", "rgb": [74, 42, 24]},
+            {"hex": "#d47264", "name": "Wild Madder Rose", "rgb": [212, 114, 100]},
+            {"hex": "#f4ecd8", "name": "Natural Linen", "rgb": [244, 236, 216]}
+        ]
+    },
+    "kawaii_winter": {
+        "name": "Kawaii Winter 2026 Pastels",
+        "pigments": [
+            {"hex": "#fbcfe8", "name": "Rose Milk", "rgb": [251, 207, 232]},
+            {"hex": "#bae6fd", "name": "Frost Glaze", "rgb": [186, 230, 253]},
+            {"hex": "#ddd6fe", "name": "Lilac Dream", "rgb": [221, 214, 254]},
+            {"hex": "#bbf7d0", "name": "Mint Mitten", "rgb": [187, 247, 208]},
+            {"hex": "#fef08a", "name": "Butter Star", "rgb": [254, 240, 138]},
+            {"hex": "#fed7aa", "name": "Peach Cocoa", "rgb": [254, 215, 170]},
+            {"hex": "#f43f5e", "name": "Winter Berry", "rgb": [244, 63, 94]},
+            {"hex": "#ffffff", "name": "Snow White", "rgb": [255, 255, 255]}
+        ]
+    },
+    "bioluminescence": {
+        "name": "Deep Sea Bioluminescence & Glow",
+        "pigments": [
+            {"hex": "#06b6d4", "name": "Cyan Bio-Flare", "rgb": [6, 182, 212]},
+            {"hex": "#10b981", "name": "Electric Kelp", "rgb": [16, 185, 129]},
+            {"hex": "#3b82f6", "name": "Abyssal Indigo", "rgb": [59, 130, 246]},
+            {"hex": "#8b5cf6", "name": "Spectral Ultraviolet", "rgb": [139, 92, 246]},
+            {"hex": "#ec4899", "name": "Neon Coral Glow", "rgb": [236, 72, 153]},
+            {"hex": "#facc15", "name": "Angler Light Gold", "rgb": [250, 204, 21]},
+            {"hex": "#0f172a", "name": "Midnight Trench", "rgb": [15, 23, 42]},
+            {"hex": "#e0f2fe", "name": "Phosphor Spark", "rgb": [224, 242, 254]}
+        ]
+    },
+    "iridescent_opal": {
+        "name": "Iridescent Opal & Shimmer",
+        "pigments": [
+            {"hex": "#e0e7ff", "name": "Pearl Luster", "rgb": [224, 231, 255]},
+            {"hex": "#c7d2fe", "name": "Opal Violet", "rgb": [199, 210, 254]},
+            {"hex": "#a5f3fc", "name": "Aura Turquoise", "rgb": [165, 243, 252]},
+            {"hex": "#fbcfe8", "name": "Prism Pink", "rgb": [251, 207, 232]},
+            {"hex": "#fef9c3", "name": "Solar Flare Yellow", "rgb": [254, 249, 195]},
+            {"hex": "#d8b4fe", "name": "Amethyst Spark", "rgb": [216, 180, 254]},
+            {"hex": "#cbd5e1", "name": "Moonstone Silver", "rgb": [203, 213, 225]},
+            {"hex": "#38bdf8", "name": "Holographic Blue", "rgb": [56, 189, 248]}
+        ]
+    },
+    "chrome_metallics": {
+        "name": "Liquid Chrome & Precision Metallics",
+        "pigments": [
+            {"hex": "#e2e8f0", "name": "Mirror Liquid Chrome", "rgb": [226, 232, 240]},
+            {"hex": "#94a3b8", "name": "Polished Platinum", "rgb": [148, 163, 184]},
+            {"hex": "#d97706", "name": "Burnished Royal Gold", "rgb": [217, 119, 6]},
+            {"hex": "#b45309", "name": "Antique Bronze", "rgb": [180, 83, 9]},
+            {"hex": "#fbbf24", "name": "Reflective 24K Gold", "rgb": [251, 191, 36]},
+            {"hex": "#64748b", "name": "Gunmetal Steel", "rgb": [100, 116, 139]},
+            {"hex": "#e11d48", "name": "Ruby Chrome", "rgb": [225, 29, 72]},
+            {"hex": "#0284c7", "name": "Sapphire Anodized", "rgb": [2, 132, 199]}
+        ]
+    }
+}
+
+TEXTURE_PRESETS = [
+    {"id": "smooth", "name": "Smooth Velvet Wash", "icon": "🎨", "description": "Flat, pure pigment saturation."},
+    {"id": "scales", "name": "Reptile & Mermaid Scales", "icon": "🐉", "description": "Micro-imbricated biological fish and dragon scales."},
+    {"id": "shine", "name": "Liquid Gloss & Wet Specular", "icon": "✨", "description": "Deep glossy sheen with high-specular white highlights."},
+    {"id": "glow", "name": "Sub-Surface Glow (SSS)", "icon": "💡", "description": "Soft inner luminescence radiating outward."},
+    {"id": "iridescent", "name": "Chameleon Opal Iridescence", "icon": "🪞", "description": "Angle-shifting optical prism refraction."},
+    {"id": "chrome", "name": "Mirror Chrome Reflection", "icon": "🪙", "description": "Metallic mirror reflection with razor-sharp horizon lines."},
+    {"id": "rainbow", "name": "Prismatic Rainbow Sweep", "icon": "🌈", "description": "Continuous spectrum gradient fill with dynamic wave cycling."}
+]
 
 class ColoringPageEngine:
     """High-speed image to line art converter (< 50ms benchmark requirement) with detail optimization, corporate white labeling, and aspect cropping."""

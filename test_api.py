@@ -37,6 +37,17 @@ class TestAPIEndpoints(unittest.TestCase):
         self.assertEqual(len(meta["tags"]), 6)
         self.assertIn("2026 color world", meta["tags"])
 
+    def test_catalog_collections_endpoint(self):
+        """Test GET /api/catalog/collections returns Junior and Adult curated collections."""
+        res = self.client.get("/api/catalog/collections")
+        self.assertEqual(res.status_code, 200)
+        json_data = res.json()
+        self.assertTrue(json_data["success"])
+        self.assertIn("junior", json_data["collections"])
+        self.assertIn("adult", json_data["collections"])
+        self.assertIn("palettes", json_data)
+        self.assertIn("textures", json_data)
+
     def test_publish_endpoint_mock_and_options(self):
         """Test POST /api/publish succeeds with $3.99 and SUBSCRIBE50 promo code."""
         payload = {
@@ -101,8 +112,8 @@ class TestAPIEndpoints(unittest.TestCase):
         """Test main index.html and corporate dashboard return 200 OK."""
         res_main = self.client.get("/")
         self.assertEqual(res_main.status_code, 200)
-        self.assertIn("2026 Color World", res_main.text)
-        self.assertIn("Category Filters", res_main.text)
+        self.assertIn("COLORWORLD", res_main.text)
+        self.assertIn("KAWAII WINTER 2026", res_main.text)
         self.assertIn("SUBSCRIBE50", res_main.text)
 
         res_corp = self.client.get("/corporate")

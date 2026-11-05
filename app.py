@@ -11,7 +11,13 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from engine import ColoringPageEngine, MetadataGenerator
+from engine import (
+    ColoringPageEngine,
+    MetadataGenerator,
+    COLLECTION_CATALOG,
+    PALETTE_PRESETS,
+    TEXTURE_PRESETS
+)
 from gumroad_client import GumroadPublisher
 from outreach_engine import ViralOutreachEngine
 from blog_generator import BlogGenerator
@@ -20,9 +26,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ColorWorldFastAPI")
 
 app = FastAPI(
-    title="2026 Color World - Instant Coloring Page Engine",
-    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright, Aspect Cropping, Detail Optimization, Gumroad API Integration, Ink-Bleed Video Engine, and Viral Outreach Generator",
-    version="2.0.0"
+    title="2026 Color World - Instant Coloring Page Engine & Digital Masterpiece Studio",
+    description="Sub-50ms Image to Line-Art Conversion Engine with Stamped Copyright, Curated Junior Kawaii & Adult Artistry Collections, True-to-Life Pigments, Biological Textures, Ink-Bleed Video Sharing, and Gumroad Monetization",
+    version="2.1.0"
 )
 
 app.add_middleware(
@@ -68,6 +74,16 @@ class LicenseVerifyRequest(BaseModel):
 class LicenseActionRequest(BaseModel):
     product_id: str
     license_key: str
+
+@app.get("/api/catalog/collections")
+async def get_collections_catalog():
+    """Returns curated collections: Children/Junior 'KAWAII WINTER 2026' and Adult/Advanced selections."""
+    return JSONResponse({
+        "success": True,
+        "collections": COLLECTION_CATALOG,
+        "palettes": PALETTE_PRESETS,
+        "textures": TEXTURE_PRESETS
+    })
 
 @app.post("/api/convert")
 async def convert_image_endpoint(
