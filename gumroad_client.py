@@ -257,6 +257,66 @@ class GumroadPublisher:
             discount_percent=50
         )
 
+    def publish_creator_wallpaper(
+        self,
+        title: str,
+        artist_name: str,
+        collection_source: str,
+        price_usd: float = 4.99,
+        precision_score: float = 95.0,
+        is_original_upload: bool = False,
+        wallpaper_image_bytes: Optional[bytes] = None,
+        animated_mp4_bytes: Optional[bytes] = None,
+        tags: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        """Publish a user-finished static/animated phone wallpaper as a derivative work.
+        - Precision gating: Requires Gold (95%+) to qualify for marketplace listing.
+        - Attribution requirement: 'Original artwork © 2026 Color World · Colored by {artist_name}'
+        - Split: 15% platform commission to Color World if based on standard collections; 0% if original photo upload.
+        """
+        if precision_score < 95.0:
+            raise ValueError(f"Quality gate requirement unmet: Precision score is {precision_score:.1f}%. Gold Tier (95%+) required to list on Creator Marketplace.")
+
+        commission_rate = 0.0 if is_original_upload else 0.15
+        cw_cut = round(price_usd * commission_rate, 2)
+        artist_payout = round(price_usd - cw_cut, 2)
+        price_cents = int(round(price_usd * 100))
+
+        attribution = f"Original artwork © 2026 Color World · Colored & Rendered by {artist_name}"
+        desc = (
+            f"{title}\n\n"
+            f"📱 Ultra High-Res Animated & Static Phone Wallpaper Edition\n"
+            f"🎨 {attribution}\n"
+            f"✨ Collection Lineage: {collection_source}\n"
+            f"🏆 Certified Gold Precision Score: {precision_score:.1f}%\n\n"
+            f"Includes:\n"
+            f"- Ultra-clarity static 4K phone wallpaper (PNG)\n"
+            f"- Seamless organic watercolor ink-bleed dynamic live wallpaper (MP4 / WebM)\n"
+            f"- Commercial derivative usage license key\n\n"
+            f"Platform Terms: {commission_rate*100:.0f}% platform fee to Color World, ${(artist_payout):.2f} net creator payout. Powered by Color World 2026."
+        )
+
+        default_tags = ["phone wallpaper", "live wallpaper", "animated wallpaper", "digital art", "color world", "kawaii winter"]
+        final_tags = (tags or default_tags)[:6]
+
+        result = self.publish_product(
+            name=f"{title} (Wallpaper Edition)",
+            price_cents=price_cents,
+            description=desc,
+            tags=final_tags,
+            image_asset=wallpaper_image_bytes
+        )
+        result["creator_royalty"] = {
+            "artist_name": artist_name,
+            "attribution": attribution,
+            "commission_rate_percent": commission_rate * 100,
+            "platform_cut_usd": cw_cut,
+            "artist_payout_usd": artist_payout,
+            "certified_precision": precision_score,
+            "is_original_upload": is_original_upload
+        }
+        return result
+
     # ==========================================
     # Gumroad License Verification & Management
     # ==========================================

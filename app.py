@@ -177,6 +177,47 @@ async def publish_corporate_endpoint():
     res = publisher.publish_corporate_license()
     return JSONResponse(res)
 
+class CreatorWallpaperRequest(BaseModel):
+    title: str
+    artist_name: str
+    collection_source: str
+    price_usd: float = 4.99
+    precision_score: float = 95.0
+    is_original_upload: bool = False
+    wallpaper_image_base64: Optional[str] = None
+    tags: Optional[List[str]] = None
+
+@app.post("/api/publish/creator-wallpaper")
+async def publish_creator_wallpaper_endpoint(payload: CreatorWallpaperRequest):
+    """Publishes a user-colored derivative phone wallpaper to the Creator Marketplace.
+    Enforces the Gold Tier (95%+) quality gate, handles derivative attribution, and splits royalties.
+    """
+    try:
+        image_bytes = None
+        if payload.wallpaper_image_base64:
+            if "," in payload.wallpaper_image_base64:
+                raw_b64 = payload.wallpaper_image_base64.split(",", 1)[1]
+            else:
+                raw_b64 = payload.wallpaper_image_base64
+            image_bytes = base64.b64decode(raw_b64)
+
+        result = publisher.publish_creator_wallpaper(
+            title=payload.title,
+            artist_name=payload.artist_name,
+            collection_source=payload.collection_source,
+            price_usd=payload.price_usd,
+            precision_score=payload.precision_score,
+            is_original_upload=payload.is_original_upload,
+            wallpaper_image_bytes=image_bytes,
+            tags=payload.tags
+        )
+        return JSONResponse(result)
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
+    except Exception as e:
+        logger.error(f"Failed to publish creator wallpaper: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/api/products")
 async def get_products_endpoint():
     """Retrieves all existing storefront products with category and tag metadata."""

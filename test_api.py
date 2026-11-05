@@ -120,5 +120,37 @@ class TestAPIEndpoints(unittest.TestCase):
         self.assertEqual(res_corp.status_code, 200)
         self.assertIn("Corporate White Label", res_corp.text)
 
+    def test_creator_wallpaper_publishing_gold_gate(self):
+        """Test Creator Wallpaper publishing Gold Precision (95%+) quality gating and royalty computation."""
+        # Below 95% precision should be blocked by quality gate
+        fail_res = self.client.post("/api/publish/creator-wallpaper", json={
+            "title": "Low Precision Art",
+            "artist_name": "Novice",
+            "collection_source": "KAWAII WINTER 2026",
+            "price_usd": 4.99,
+            "precision_score": 82.5,
+            "is_original_upload": False
+        })
+        self.assertEqual(fail_res.status_code, 400)
+        self.assertIn("Quality gate requirement unmet", fail_res.json()["detail"])
+
+        # At or above 95% precision passes quality gate and computes royalty
+        pass_res = self.client.post("/api/publish/creator-wallpaper", json={
+            "title": "Snow Unicorn Prismatic Aurora",
+            "artist_name": "Studio Master",
+            "collection_source": "KAWAII WINTER 2026",
+            "price_usd": 4.99,
+            "precision_score": 96.8,
+            "is_original_upload": False
+        })
+        self.assertEqual(pass_res.status_code, 200)
+        data = pass_res.json()
+        self.assertTrue(data["success"])
+        self.assertIn("creator_royalty", data)
+        self.assertEqual(data["creator_royalty"]["artist_name"], "Studio Master")
+        self.assertEqual(data["creator_royalty"]["commission_rate_percent"], 15.0)
+        self.assertEqual(data["creator_royalty"]["artist_payout_usd"], 4.24)
+        self.assertIn("Original artwork © 2026 Color World", data["creator_royalty"]["attribution"])
+
 if __name__ == "__main__":
     unittest.main()
