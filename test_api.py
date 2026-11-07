@@ -1,4 +1,5 @@
 import io
+import base64
 import unittest
 import numpy as np
 import cv2
@@ -119,6 +120,32 @@ class TestAPIEndpoints(unittest.TestCase):
         res_corp = self.client.get("/corporate")
         self.assertEqual(res_corp.status_code, 200)
         self.assertIn("Corporate White Label", res_corp.text)
+
+        res_tt = self.client.get("/tiktok")
+        self.assertEqual(res_tt.status_code, 200)
+        self.assertIn("TikTok", res_tt.text)
+        self.assertIn("TikTok Safe-Zone", res_tt.text)
+
+    def test_tiktok_render_gif_endpoint(self):
+        """Test POST /api/tiktok/render-gif returns looping GIF bytes."""
+        # Create small test data URL
+        img = np.full((100, 100, 3), 255, dtype=np.uint8)
+        cv2.circle(img, (50, 50), 30, (0, 0, 0), 2)
+        _, buf = cv2.imencode(".png", img)
+        b64 = base64.b64encode(buf.tobytes()).decode("utf-8")
+        data_url = f"data:image/png;base64,{b64}"
+
+        payload = {
+            "image_data_url": data_url,
+            "preset": "zoom_punch",
+            "duration_sec": 1.0,
+            "hook_text": "Wait for the end... 🤯",
+            "bg_style": "aurora"
+        }
+        res = self.client.post("/api/tiktok/render-gif", json=payload)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.headers["content-type"], "image/gif")
+        self.assertGreater(len(res.content), 1000)
 
     def test_creator_wallpaper_publishing_gold_gate(self):
         """Test Creator Wallpaper publishing Gold Precision (95%+) quality gating and royalty computation."""

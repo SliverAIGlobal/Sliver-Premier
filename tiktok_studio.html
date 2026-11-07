@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Viral Animation Studio — Color World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --tiktok-cyan: #00f2fe;
+      --tiktok-pink: #fe2c55;
+      --primary: #6366f1;
+      --accent: #ec4899;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-tiktok {
+      background: linear-gradient(135deg, #00f2fe 0%, #fe2c55 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(254, 44, 85, 0.35);
+    }
+    .btn-tiktok:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(254, 44, 85, 0.5);
+    }
+
+    .main-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 360px 1fr 380px;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+      max-width: 1720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Video Canvas & Safe Zone Container */
+    .viewport-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .phone-stage {
+      position: relative;
+      width: 360px;
+      height: 640px;
+      border-radius: 40px;
+      background: #000;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 10px #1e293b, 0 0 0 12px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #animCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #0f172a;
+    }
+
+    /* TikTok Live Safe-Zone Overlay */
+    .safe-zone-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 16px 20px 16px;
+      background: rgba(0, 0, 0, 0.15);
+      border: 2px dashed rgba(0, 242, 254, 0.4);
+      z-index: 20;
+    }
+
+    .safe-zone-overlay.active {
+      display: flex;
+    }
+
+    .tt-top-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.6);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+    .tt-top-bar span.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 2px;
+    }
+
+    .tt-right-actions {
+      position: absolute;
+      right: 12px;
+      bottom: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .tt-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .tt-action-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .tt-sound-disc {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: conic-gradient(#fe2c55, #00f2fe, #fe2c55);
+      animation: spin 3s linear infinite;
+      box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .tt-bottom-info {
+      position: absolute;
+      left: 14px;
+      right: 70px;
+      bottom: 24px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .tt-author {
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .tt-caption {
+      font-size: 0.75rem;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 6px;
+    }
+
+    .tt-sound-tag {
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .preset-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .preset-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .preset-card.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.25);
+    }
+
+    .preset-name {
+      font-size: 0.825rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .preset-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    input, select, textarea {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.6rem;
+      font-size: 0.825rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--tiktok-cyan);
+    }
+
+    .switch-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.6rem;
+      border: 1px solid var(--card-border);
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag-chip {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .tag-chip:hover {
+      background: rgba(0, 242, 254, 0.2);
+      color: var(--tiktok-cyan);
+    }
+
+    .dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 0.75rem;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .dropzone:hover {
+      border-color: var(--tiktok-cyan);
+      background: rgba(0, 242, 254, 0.05);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Modal for TikTok Share & Export */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #111827;
+      border: 1px solid var(--card-border);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <span>🎨</span>
+      <span>ColorWorld <span class="brand-badge">TikTok Studio</span></span>
+    </div>
+
+    <div class="nav-links">
+      <a href="/" class="btn btn-secondary">← Back to Coloring Studio</a>
+      <button class="btn btn-secondary" id="toggleSafeZoneBtn">🛡️ TikTok Safe-Zone: <span id="safeZoneStateText">OFF</span></button>
+      <button class="btn btn-tiktok" id="openExportModalBtn">🚀 Export & Share to TikTok</button>
+    </div>
+  </header>
+
+  <main class="main-layout">
+    <!-- Left Column: Controls & Presets -->
+    <div class="panel">
+      <div class="panel-title">⚡ Animation Engine Presets</div>
+
+      <div class="preset-grid" id="presetContainer">
+        <div class="preset-card active" data-preset="zoom_punch">
+          <div class="preset-name">💥 Zoom Punch</div>
+          <div class="preset-desc">Dynamic punch-in beat loop with high thumb-stop rate.</div>
+        </div>
+
+        <div class="preset-card" data-preset="3d_parallax">
+          <div class="preset-name">🪐 3D Parallax Tilt</div>
+          <div class="preset-desc">Simulated 3D gyroscopic tilt and orbital floating.</div>
+        </div>
+
+        <div class="preset-card" data-preset="floating_jelly">
+          <div class="preset-name">🫧 Floating Jelly</div>
+          <div class="preset-desc">Hypnotic squish and float with zero seam pause.</div>
+        </div>
+
+        <div class="preset-card" data-preset="beat_pulse">
+          <div class="preset-name">🎵 Beat Pulse</div>
+          <div class="preset-desc">Subwoofer sync double-bounce for trending audio.</div>
+        </div>
+
+        <div class="preset-card" data-preset="elastic_bounce">
+          <div class="preset-name">🎾 Elastic Bounce</div>
+          <div class="preset-desc">High-energy elastic rebound physics loop.</div>
+        </div>
+
+        <div class="preset-card" data-preset="reveal_glitch">
+          <div class="preset-name">⚡ Cyber Glitch</div>
+          <div class="preset-desc">Micro-displacement flash bursts for cyber aesthetic.</div>
+        </div>
+      </div>
+
+      <div class="panel-title">🖼️ Artwork & Chroma Keying</div>
+      <div class="dropzone" id="imageDropzone">
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📥</div>
+        <div style="font-size: 0.85rem; font-weight: 700;">Upload Coloring Art / PNG</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Transparent PNG or white BG line art auto-keyed</div>
+      </div>
+
+      <div class="switch-toggle">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700;">Auto-Isolate White Background</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Remove paper white background</div>
+        </div>
+        <input type="checkbox" id="isolateChromaToggle" checked>
+      </div>
+
+      <div class="form-group">
+        <label>Loop Duration & Speed</label>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <input type="range" id="durationSlider" min="2" max="10" step="0.5" value="3" style="flex: 1;">
+          <span id="durationVal" style="font-size: 0.8rem; font-weight: 700; min-width: 45px;">3.0s</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Dynamic Background Gradient</label>
+        <select id="bgStyleSelect">
+          <option value="aurora">🌌 Aurora Cosmic (Violet & Pink)</option>
+          <option value="neon_cyber">⚡ Cyber Glow (Cyan & Purple)</option>
+          <option value="sunset">🌅 Sunset Glow (Rose & Amber)</option>
+          <option value="minimal_dark">🖤 Minimal OLED Black</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Center Column: 9:16 Video Phone Preview -->
+    <div class="viewport-container">
+      <div class="phone-stage">
+        <canvas id="animCanvas" width="720" height="1280"></canvas>
+
+        <!-- Live TikTok Safe-Zone Overlay -->
+        <div class="safe-zone-overlay" id="safeZoneOverlay">
+          <div class="tt-top-bar">
+            <span>Following</span>
+            <span class="active">For You</span>
+          </div>
+
+          <div class="tt-right-actions">
+            <div class="tt-action-btn">
+              <div class="tt-action-icon">❤️</div>
+              <span>248.5K</span>
+            </div>
+            <div class="tt-action-btn">
+              <div class="tt-action-icon">💬</div>
+              <span>3,842</span>
+            </div>
+            <div class="tt-action-btn">
+              <div class="tt-action-icon">🔖</div>
+              <span>42.1K</span>
+            </div>
+            <div class="tt-action-btn">
+              <div class="tt-action-icon">↗️</div>
+              <span>Share</span>
+            </div>
+            <div class="tt-sound-disc"></div>
+          </div>
+
+          <div class="tt-bottom-info">
+            <div class="tt-author">@colorworld.official</div>
+            <div class="tt-caption" id="safeZoneCaptionPreview">Wait for the end... 🤯 Therapeutic line art loop #arttok #satisfying #fyp</div>
+            <div class="tt-sound-tag">🎵 Original Sound - Trending Chill Lofi</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center;">
+        <span class="status-badge" id="loopStatusBadge">● Perfect Seamless Loop Active</span>
+        <button class="btn btn-secondary" id="playPauseBtn">⏸️ Pause</button>
+        <button class="btn btn-secondary" id="restartBtn">🔄 Rewind</button>
+      </div>
+    </div>
+
+    <!-- Right Column: Viral Retention & TikTok Optimization -->
+    <div class="panel">
+      <div class="panel-title">🔥 Viral Retention Hooks</div>
+
+      <div class="form-group">
+        <label>Top Hook Banner Text</label>
+        <input type="text" id="hookTextInput" value="Wait for the end... 🤯">
+      </div>
+
+      <div class="form-group">
+        <label>Trending Hook Presets (Click to apply)</label>
+        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+          <button class="btn btn-secondary hook-quick-btn" style="text-align: left; justify-content: flex-start; font-size: 0.75rem;">Wait for the end... 🤯</button>
+          <button class="btn btn-secondary hook-quick-btn" style="text-align: left; justify-content: flex-start; font-size: 0.75rem;">Coloring therapy you didn't know you needed ✨</button>
+          <button class="btn btn-secondary hook-quick-btn" style="text-align: left; justify-content: flex-start; font-size: 0.75rem;">Satisfying ink flow in 4K 🎨</button>
+          <button class="btn btn-secondary hook-quick-btn" style="text-align: left; justify-content: flex-start; font-size: 0.75rem;">Drop a ❤️ if you love this vibe!</button>
+        </div>
+      </div>
+
+      <div class="panel-title">🏷️ TikTok Hashtags & SEO</div>
+      <div class="form-group">
+        <div class="tag-cloud" id="tagCloud">
+          <span class="tag-chip">#fyp</span>
+          <span class="tag-chip">#arttok</span>
+          <span class="tag-chip">#satisfying</span>
+          <span class="tag-chip">#coloring</span>
+          <span class="tag-chip">#asmr</span>
+          <span class="tag-chip">#oddlysatisfying</span>
+          <span class="tag-chip">#aesthetic</span>
+          <span class="tag-chip">#relaxing</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Export TikTok Caption & Tags</label>
+        <textarea id="captionBox" rows="3" style="resize: none;">Wait for the end... 🤯 Therapeutic line art loop #arttok #satisfying #fyp #coloring #relaxing</textarea>
+        <button class="btn btn-secondary" id="copyCaptionBtn" style="font-size: 0.75rem; justify-content: center;">📋 Copy Caption & Hashtags</button>
+      </div>
+
+      <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 0.75rem; padding: 0.75rem; font-size: 0.75rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.4rem;">
+        <div style="font-weight: 700; color: #fff;">💡 TikTok Algorithm Optimization Checklist:</div>
+        <div>✅ 9:16 vertical standard resolution (720x1280)</div>
+        <div>✅ High-contrast hook banner outside top system bar</div>
+        <div>✅ Subject centered clear of right UI icons & captions</div>
+        <div>✅ Zero-seam loop stimulates repeat view loops</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Export & Share Modal -->
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.25rem; font-weight: 800;">🚀 Export & TikTok Direct Share</h3>
+        <button id="closeModalBtn" style="background: none; border: none; color: #fff; font-size: 1.25rem; cursor: pointer;">✕</button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+        Your high-retention video loop is ready. Choose your export format or launch TikTok Web Share directly to publish!
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <button class="btn btn-tiktok" id="recordWebmBtn" style="justify-content: center; padding: 0.85rem;">
+          🎬 Record & Download Video (WebM / MP4)
+        </button>
+
+        <button class="btn btn-secondary" id="exportGifBtn" style="justify-content: center; padding: 0.85rem;">
+          🎞️ Export Looping Animated GIF / Stickers
+        </button>
+
+        <button class="btn btn-secondary" id="tiktokNativeShareBtn" style="justify-content: center; padding: 0.85rem; border-color: rgba(0, 242, 254, 0.4);">
+          📱 Open in TikTok App (Deep Link / Web Share)
+        </button>
+      </div>
+
+      <div id="exportStatusMsg" style="font-size: 0.8rem; text-align: center; color: var(--tiktok-cyan); display: none;">
+        ⏳ Recording loop frames... Please wait
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- State & Canvas Setup ---
+    const canvas = document.getElementById('animCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let isPlaying = true;
+    let currentPreset = 'zoom_punch';
+    let durationSec = 3.0;
+    let bgStyle = 'aurora';
+    let hookText = 'Wait for the end... 🤯';
+    let isolateChroma = true;
+
+    let startTime = performance.now();
+    let sampleImg = new Image();
+    let imgLoaded = false;
+
+    // Generate starter sample artwork (Coloring Unicorn)
+    function generateStarterArt() {
+      const offscreen = document.createElement('canvas');
+      offscreen.width = 500;
+      offscreen.height = 500;
+      const oCtx = offscreen.getContext('2d');
+
+      // Draw cute unicorn line art
+      oCtx.fillStyle = '#ffffff';
+      oCtx.fillRect(0, 0, 500, 500);
+
+      oCtx.lineWidth = 10;
+      oCtx.strokeStyle = '#111827';
+      oCtx.lineCap = 'round';
+      oCtx.lineJoin = 'round';
+
+      // Head
+      oCtx.beginPath();
+      oCtx.arc(250, 260, 140, 0, Math.PI * 2);
+      oCtx.stroke();
+
+      // Horn
+      oCtx.beginPath();
+      oCtx.moveTo(250, 120);
+      oCtx.lineTo(215, 20);
+      oCtx.lineTo(285, 120);
+      oCtx.closePath();
+      oCtx.stroke();
+
+      // Ears
+      oCtx.beginPath();
+      oCtx.moveTo(170, 160);
+      oCtx.lineTo(130, 80);
+      oCtx.lineTo(200, 140);
+      oCtx.stroke();
+
+      oCtx.beginPath();
+      oCtx.moveTo(330, 160);
+      oCtx.lineTo(370, 80);
+      oCtx.lineTo(300, 140);
+      oCtx.stroke();
+
+      // Eyes
+      oCtx.fillStyle = '#111827';
+      oCtx.beginPath();
+      oCtx.arc(200, 250, 16, 0, Math.PI * 2);
+      oCtx.arc(300, 250, 16, 0, Math.PI * 2);
+      oCtx.fill();
+
+      // Cute cheeks
+      oCtx.fillStyle = '#f472b6';
+      oCtx.beginPath();
+      oCtx.arc(170, 290, 18, 0, Math.PI * 2);
+      oCtx.arc(330, 290, 18, 0, Math.PI * 2);
+      oCtx.fill();
+
+      sampleImg.src = offscreen.toDataURL();
+      sampleImg.onload = () => { imgLoaded = true; };
+    }
+    generateStarterArt();
+
+    // Background Gradient definitions
+    const BG_STYLES = {
+      aurora: { c1: '#0f172a', c2: 'rgba(99, 102, 241, 0.4)', c3: 'rgba(236, 72, 153, 0.35)' },
+      neon_cyber: { c1: '#0a0a14', c2: 'rgba(168, 85, 247, 0.45)', c3: 'rgba(6, 182, 212, 0.35)' },
+      sunset: { c1: '#1e0a1e', c2: 'rgba(244, 63, 94, 0.4)', c3: 'rgba(251, 146, 60, 0.35)' },
+      minimal_dark: { c1: '#121218', c2: 'rgba(30, 30, 42, 0.3)', c3: 'rgba(40, 40, 56, 0.25)' }
+    };
+
+    // Render loop
+    function render(now) {
+      if (!isPlaying) {
+        requestAnimationFrame(render);
+        return;
+      }
+
+      const elapsed = ((now - startTime) / 1000) % durationSec;
+      const progress = elapsed / durationSec;
+      const phase = progress * 2 * Math.PI;
+
+      // 1. Draw animated background
+      const palette = BG_STYLES[bgStyle] || BG_STYLES.aurora;
+      ctx.fillStyle = palette.c1;
+      ctx.fillRect(0, 0, W, H);
+
+      // Atmospheric glowing orbs
+      const orb1Y = H * 0.45 + Math.sin(phase) * 50;
+      const grad1 = ctx.createRadialGradient(W / 2, orb1Y, 10, W / 2, orb1Y, W * 0.55);
+      grad1.addColorStop(0, palette.c2);
+      grad1.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad1;
+      ctx.beginPath();
+      ctx.arc(W / 2, orb1Y, W * 0.55, 0, Math.PI * 2);
+      ctx.fill();
+
+      const orb2Y = H * 0.65 - Math.cos(phase) * 60;
+      const grad2 = ctx.createRadialGradient(W / 2, orb2Y, 10, W / 2, orb2Y, W * 0.5);
+      grad2.addColorStop(0, palette.c3);
+      grad2.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad2;
+      ctx.beginPath();
+      ctx.arc(W / 2, orb2Y, W * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Compute motion dynamics based on preset
+      let scale = 1.0;
+      let dx = 0;
+      let dy = 0;
+      let angle = 0;
+
+      if (currentPreset === 'zoom_punch') {
+        scale = 1.0 + 0.16 * Math.pow(Math.sin(phase), 2);
+      } else if (currentPreset === '3d_parallax') {
+        dx = Math.sin(phase) * 35;
+        dy = Math.cos(phase) * 22;
+        angle = Math.sin(phase) * 0.05;
+      } else if (currentPreset === 'floating_jelly') {
+        const sx = 1.0 + 0.09 * Math.sin(phase);
+        const sy = 1.0 + 0.09 * Math.cos(phase);
+        dy = Math.sin(phase) * 28;
+        scale = (sx + sy) / 2;
+      } else if (currentPreset === 'beat_pulse') {
+        scale = 1.0 + Math.pow(Math.sin(phase * 2), 4) * 0.22;
+      } else if (currentPreset === 'elastic_bounce') {
+        dy = -Math.abs(Math.sin(phase)) * 65;
+        scale = 1.0 + 0.06 * Math.sin(phase);
+      } else if (currentPreset === 'reveal_glitch') {
+        scale = 1.0 + 0.05 * Math.sin(phase);
+        if (Math.sin(phase * 8) > 0.85) {
+          dx = (Math.random() - 0.5) * 20;
+        }
+      }
+
+      // 3. Draw Artwork Subject
+      if (imgLoaded) {
+        ctx.save();
+        ctx.translate(W / 2 + dx, H * 0.44 + dy);
+        ctx.rotate(angle);
+        ctx.scale(scale, scale);
+
+        const subW = W * 0.7;
+        const subH = (subW * sampleImg.height) / sampleImg.width;
+
+        // Shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.45)';
+        ctx.shadowBlur = 25;
+        ctx.shadowOffsetY = 15;
+
+        ctx.drawImage(sampleImg, -subW / 2, -subH / 2, subW, subH);
+        ctx.restore();
+      }
+
+      // 4. Draw Viral Hook Banner (Safe-zone compliant: sits above bottom captions and below status bar)
+      if (hookText.trim()) {
+        const bannerW = W * 0.82;
+        const bannerH = 70;
+        const bannerX = (W - bannerW) / 2;
+        const bannerY = H * 0.14;
+
+        ctx.save();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(bannerX, bannerY, bannerW, bannerH, 35);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(hookText, W / 2, bannerY + bannerH / 2);
+        ctx.restore();
+      }
+
+      // 5. Copyright Attribution Watermark
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('© 2026 Color World • sliverai.gumroad.com', W / 2, H * 0.88);
+      ctx.restore();
+
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    // --- Interactive Controls ---
+    // Presets
+    document.querySelectorAll('.preset-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        currentPreset = card.dataset.preset;
+      });
+    });
+
+    // Safe Zone toggle
+    const safeZoneOverlay = document.getElementById('safeZoneOverlay');
+    const toggleSafeZoneBtn = document.getElementById('toggleSafeZoneBtn');
+    const safeZoneStateText = document.getElementById('safeZoneStateText');
+
+    toggleSafeZoneBtn.addEventListener('click', () => {
+      safeZoneOverlay.classList.toggle('active');
+      const isActive = safeZoneOverlay.classList.contains('active');
+      safeZoneStateText.textContent = isActive ? 'ON' : 'OFF';
+      toggleSafeZoneBtn.style.borderColor = isActive ? 'var(--tiktok-cyan)' : '';
+    });
+
+    // Play / Pause / Rewind
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    playPauseBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playPauseBtn.textContent = isPlaying ? '⏸️ Pause' : '▶️ Play';
+    });
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      startTime = performance.now();
+    });
+
+    // Duration slider
+    const durationSlider = document.getElementById('durationSlider');
+    const durationVal = document.getElementById('durationVal');
+    durationSlider.addEventListener('input', (e) => {
+      durationSec = parseFloat(e.target.value);
+      durationVal.textContent = durationSec.toFixed(1) + 's';
+    });
+
+    // Background style
+    document.getElementById('bgStyleSelect').addEventListener('change', (e) => {
+      bgStyle = e.target.value;
+    });
+
+    // Hook Text & Caption sync
+    const hookTextInput = document.getElementById('hookTextInput');
+    const safeZoneCaptionPreview = document.getElementById('safeZoneCaptionPreview');
+    const captionBox = document.getElementById('captionBox');
+
+    hookTextInput.addEventListener('input', (e) => {
+      hookText = e.target.value;
+      safeZoneCaptionPreview.textContent = hookText + ' #arttok #satisfying #fyp';
+      captionBox.value = hookText + ' #arttok #satisfying #fyp #coloring #relaxing';
+    });
+
+    document.querySelectorAll('.hook-quick-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        hookTextInput.value = btn.textContent;
+        hookText = btn.textContent;
+        safeZoneCaptionPreview.textContent = hookText + ' #arttok #satisfying #fyp';
+        captionBox.value = hookText + ' #arttok #satisfying #fyp #coloring #relaxing';
+      });
+    });
+
+    // Image Upload & Keying
+    const dropzone = document.getElementById('imageDropzone');
+    const fileInput = document.getElementById('fileInput');
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const userImg = new Image();
+          userImg.onload = () => {
+            if (document.getElementById('isolateChromaToggle').checked) {
+              // Chroma key isolate white background
+              const tempCanvas = document.createElement('canvas');
+              tempCanvas.width = userImg.width;
+              tempCanvas.height = userImg.height;
+              const tCtx = tempCanvas.getContext('2d');
+              tCtx.drawImage(userImg, 0, 0);
+              const imgData = tCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+              const data = imgData.data;
+              for (let i = 0; i < data.length; i += 4) {
+                const r = data[i], g = data[i+1], b = data[i+2];
+                if (r > 235 && g > 235 && b > 235) {
+                  data[i+3] = 0; // Transparent
+                }
+              }
+              tCtx.putImageData(imgData, 0, 0);
+              sampleImg.src = tempCanvas.toDataURL();
+            } else {
+              sampleImg.src = evt.target.result;
+            }
+          };
+          userImg.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Copy caption
+    document.getElementById('copyCaptionBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(captionBox.value).then(() => {
+        const btn = document.getElementById('copyCaptionBtn');
+        btn.textContent = '✅ Copied to Clipboard!';
+        setTimeout(() => { btn.textContent = '📋 Copy Caption & Hashtags'; }, 2000);
+      });
+    });
+
+    // Modal open/close
+    const exportModal = document.getElementById('exportModal');
+    document.getElementById('openExportModalBtn').addEventListener('click', () => {
+      exportModal.classList.add('open');
+    });
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      exportModal.classList.remove('open');
+    });
+
+    // WebM / MP4 Recording via MediaRecorder
+    document.getElementById('recordWebmBtn').addEventListener('click', () => {
+      const status = document.getElementById('exportStatusMsg');
+      status.style.display = 'block';
+      status.textContent = `🎬 Recording ${durationSec}s seamless video loop...`;
+
+      const stream = canvas.captureStream(30);
+      let options = { mimeType: 'video/webm; codecs=vp9' };
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options = { mimeType: 'video/webm' };
+      }
+
+      const recorder = new MediaRecorder(stream, options);
+      const chunks = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ColorWorld_TikTok_Loop_${currentPreset}.webm`;
+        a.click();
+        status.textContent = '✅ Video exported successfully!';
+        setTimeout(() => { status.style.display = 'none'; }, 3000);
+      };
+
+      startTime = performance.now();
+      recorder.start();
+      setTimeout(() => {
+        recorder.stop();
+      }, durationSec * 1000);
+    });
+
+    // GIF Export via Backend Endpoint
+    document.getElementById('exportGifBtn').addEventListener('click', async () => {
+      const status = document.getElementById('exportStatusMsg');
+      status.style.display = 'block';
+      status.textContent = '⏳ Rendering looping GIF on engine...';
+
+      try {
+        const res = await fetch('/api/tiktok/render-gif', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image_data_url: sampleImg.src,
+            preset: currentPreset,
+            duration_sec: durationSec,
+            hook_text: hookText,
+            bg_style: bgStyle
+          })
+        });
+
+        if (res.ok) {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `ColorWorld_TikTok_${currentPreset}.gif`;
+          a.click();
+          status.textContent = '✅ Looping GIF exported!';
+        } else {
+          status.textContent = '❌ Server render error. Try WebM recording!';
+        }
+      } catch (err) {
+        status.textContent = '❌ Error exporting GIF.';
+      }
+      setTimeout(() => { status.style.display = 'none'; }, 3000);
+    });
+
+    // Native TikTok Share & Deep link
+    document.getElementById('tiktokNativeShareBtn').addEventListener('click', async () => {
+      const caption = captionBox.value;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Color World TikTok Art',
+            text: caption,
+            url: window.location.href
+          });
+        } catch (e) {
+          window.location.href = 'tiktok://';
+        }
+      } else {
+        // Fallback copy & open web TikTok
+        navigator.clipboard.writeText(caption);
+        window.open('https://www.tiktok.com/upload', '_blank');
+      }
+    });
+  </script>
+</body>
+</html>

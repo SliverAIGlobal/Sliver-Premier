@@ -21,6 +21,8 @@ from engine import (
 from gumroad_client import GumroadPublisher
 from outreach_engine import ViralOutreachEngine
 from blog_generator import BlogGenerator
+from tiktok_engine import TikTokAnimationEngine
+from fastapi.responses import Response
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ColorWorldFastAPI")
@@ -295,3 +297,39 @@ async def get_corporate_dashboard():
     with open("corporate_white_label.html", "r", encoding="utf-8") as f:
         content = f.read()
     return HTMLResponse(content=content)
+
+@app.get("/tiktok", response_class=HTMLResponse)
+async def get_tiktok_studio():
+    """Serves the TikTok Viral Animation Studio frontend."""
+    with open("tiktok_studio.html", "r", encoding="utf-8") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+class TikTokGifRequest(BaseModel):
+    image_data_url: str
+    preset: str = "zoom_punch"
+    duration_sec: float = 3.0
+    hook_text: str = "Wait for the end... 🤯"
+    bg_style: str = "aurora"
+
+@app.post("/api/tiktok/render-gif")
+async def render_tiktok_gif_endpoint(req: TikTokGifRequest):
+    """Renders a seamless looping animated GIF for TikTok stickers/stories."""
+    try:
+        header, encoded = req.image_data_url.split(",", 1) if "," in req.image_data_url else ("", req.image_data_url)
+        img_bytes = base64.b64decode(encoded)
+
+        frames = TikTokAnimationEngine.render_loop_frames(
+            image_bytes=img_bytes,
+            preset=req.preset,
+            duration_sec=min(5.0, max(1.0, req.duration_sec)),
+            fps=12,
+            output_dim=(360, 640),
+            hook_text=req.hook_text,
+            bg_style=req.bg_style
+        )
+        gif_bytes = TikTokAnimationEngine.export_animated_gif(frames, duration_ms=80)
+        return Response(content=gif_bytes, media_type="image/gif")
+    except Exception as e:
+        logger.exception("Failed to render TikTok looping GIF")
+        raise HTTPException(status_code=500, detail=str(e))
