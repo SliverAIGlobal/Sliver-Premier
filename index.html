@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COLORWORKS MASTERS STUDIO — Consolidated Fine-Art Studio</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7c3aed">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- p5.js for canvas rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <!-- Tone.js for audio synthesis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              900: '#4c1d95',
+            },
+            darkBg: '#09090d',
+            panelBg: '#12121c',
+            cardBg: '#1a1a2a',
+            borderColor: '#2a2a42'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Cinzel', 'serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #09090d; }
+    ::-webkit-scrollbar-thumb { background: #2a2a42; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #2a2a42;
+      height: 6px;
+      border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    .vignette-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle, transparent 52%, rgba(0,0,0,0.65) 78%, rgba(0,0,0,0.96) 100%);
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="bg-darkBg text-gray-200 font-sans h-screen flex flex-col overflow-hidden select-none">
+
+  <!-- TOP HEADER NAV -->
+  <header class="h-16 border-b border-borderColor bg-panelBg/90 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-20">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-700 via-brand-500 to-indigo-400 flex items-center justify-center shadow-lg shadow-brand-500/30">
+        <i class="fa-solid fa-pen-nib text-white text-base"></i>
+      </div>
+      <div>
+        <h1 data-i18n="appTitle" class="font-display font-bold text-base md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-violet-300 to-indigo-100 tracking-wider">
+          COLORWORKS MASTERS STUDIO
+        </h1>
+        <p data-i18n="appSubtitle" class="text-[11px] text-gray-400 hidden sm:block">
+          Pro Ink-Bleed Art Journey Generator · Motion & Fidelity Engine v2.5
+        </p>
+      </div>
+    </div>
+
+    <!-- Mode Toggle Segmented Control (Part 4) -->
+    <div class="flex items-center bg-cardBg border border-borderColor rounded-xl p-1 gap-1">
+      <button id="modeColoringBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white transition flex items-center gap-1.5" aria-label="Coloring Studio Mode">
+        <i class="fa-solid fa-palette"></i>
+        <span data-i18n="modeColoring">Coloring Studio</span>
+      </button>
+      <button id="modeJourneyBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition flex items-center gap-1.5" aria-label="Journey Masterpieces Mode">
+        <i class="fa-solid fa-feather-pointed"></i>
+        <span data-i18n="modeJourney">Journey Masterpieces</span>
+      </button>
+    </div>
+
+    <!-- Quick Utilities & Language & A11y -->
+    <div class="flex items-center gap-2 md:gap-4 text-xs">
+      <!-- EN | ES | FR Language Pill Switcher -->
+      <div class="flex items-center bg-cardBg border border-borderColor rounded-lg p-0.5">
+        <button id="langEN" class="px-2 py-1 rounded text-[11px] font-bold bg-brand-600 text-white" aria-label="English">EN</button>
+        <button id="langES" class="px-2 py-1 rounded text-[11px] text-gray-400 hover:text-white" aria-label="Spanish">ES</button>
+        <button id="langFR" class="px-2 py-1 rounded text-[11px] text-gray-400 hover:text-white" aria-label="French">FR</button>
+      </div>
+
+      <!-- Focus Ambience (528 Hz + 3 Hz binaural beat) -->
+      <button id="focusAmbienceBtn" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-cardBg border border-borderColor hover:border-brand-500 text-gray-300 transition" aria-label="Focus Ambience">
+        <i class="fa-solid fa-headphones text-purple-400"></i>
+        <span data-i18n="focusAmbience" class="hidden lg:inline">Focus Ambience</span>
+      </button>
+
+      <!-- Persistent Read Aloud (speechSynthesis) -->
+      <button id="readAloudBtn" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-brand-900/40 border border-brand-500/40 text-brand-300 hover:bg-brand-900/60 transition" aria-label="Read Aloud Status">
+        <i class="fa-solid fa-volume-high"></i>
+        <span data-i18n="readAloudBtn" class="hidden lg:inline">Read Aloud</span>
+      </button>
+
+      <!-- Dev / Diagnostics Button -->
+      <button id="diagBtn" class="px-2.5 py-1.5 rounded-lg bg-cardBg border border-borderColor hover:border-brand-500 text-gray-400 hover:text-white transition" title="Run Diagnostics">
+        <i class="fa-solid fa-stethoscope text-emerald-400"></i>
+      </button>
+
+      <!-- Settings / Publishing Drawer Button -->
+      <button id="settingsBtn" class="px-2.5 py-1.5 rounded-lg bg-cardBg border border-borderColor hover:border-brand-500 text-gray-400 hover:text-white transition" title="Creator Publishing">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="flex-1 flex overflow-hidden relative">
+
+    <!-- LEFT PANEL: SOURCE (Coloring Mode) OR MASTERPIECE GALLERY (Journey Mode) -->
+    <aside id="leftPanel" class="w-80 border-r border-borderColor bg-panelBg flex flex-col shrink-0 z-10 overflow-y-auto">
+
+      <!-- MODE 1: SOURCE VIEW -->
+      <div id="sourceSection" class="p-4 space-y-4">
+        <div class="border-b border-borderColor pb-3">
+          <h2 data-i18n="sourceTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400">1 · Source Artwork</h2>
+          <p class="text-[11px] text-gray-500">Local Sobel edge detector & progressive Edge AI</p>
+        </div>
+
+        <div class="space-y-2">
+          <input type="file" id="imgUpload" accept="image/*" class="hidden">
+          <button id="uploadBtn" class="w-full py-2.5 px-3 rounded-xl bg-cardBg border border-borderColor hover:border-brand-500 text-xs font-semibold text-gray-200 flex items-center justify-center gap-2 transition" aria-label="Upload Photo">
+            <i class="fa-solid fa-camera text-brand-400"></i>
+            <span data-i18n="uploadBtn">📷 Upload Photo / Diagram</span>
+          </button>
+
+          <div class="space-y-1 pt-2">
+            <div class="flex gap-1.5">
+              <input type="text" id="promptInput" placeholder="e.g. haunted forest gateway" data-i18n="promptPlaceholder" class="flex-1 bg-cardBg border border-borderColor rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-brand-500">
+              <button id="genPromptBtn" class="px-3 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition flex items-center gap-1 shrink-0" aria-label="Generate from Prompt">
+                <i class="fa-solid fa-sparkles"></i>
+                <span data-i18n="generateBtn">✨ AI</span>
+              </button>
+            </div>
+            <div id="aiTierBadge" class="text-[10px] font-mono text-purple-400 text-right">Tier 2B (Procedural Fallback)</div>
+          </div>
+        </div>
+
+        <!-- Sobel Controls -->
+        <div class="border-t border-borderColor pt-3 space-y-3">
+          <h3 data-i18n="sobelTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center justify-between">
+            <span>Sobel De-Colorer</span>
+            <span class="text-[10px] text-emerald-400 font-mono">100% Offline</span>
+          </h3>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs text-gray-300">
+              <label data-i18n="edgeSensitivity">Edge Sensitivity</label>
+              <span id="threshVal" class="font-mono text-brand-300">60</span>
+            </div>
+            <input type="range" id="threshSlider" min="20" max="160" value="60" class="w-full">
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs text-gray-300">
+              <label data-i18n="lineThickness">Line Thickness</label>
+              <span id="thickVal" class="font-mono text-brand-300">1.0x</span>
+            </div>
+            <input type="range" id="thickSlider" min="1.0" max="4.0" step="0.5" value="1.0" class="w-full">
+          </div>
+
+          <button id="convertBtn" class="w-full py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition shadow-md shadow-brand-600/20" aria-label="Convert to Line Art">
+            <span data-i18n="convertBtn">Convert to Line Art</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MODE 2: JOURNEY MASTERPIECES VIEW -->
+      <div id="journeySection" class="p-4 space-y-4 hidden">
+        <div class="border-b border-borderColor pb-3 flex items-center justify-between">
+          <div>
+            <h2 data-i18n="galleryTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400">Masterpiece Gallery</h2>
+            <p class="text-[11px] text-gray-500">10 Vector ink compositions</p>
+          </div>
+          <span class="text-[10px] bg-brand-900/60 text-brand-300 px-2 py-0.5 rounded-full border border-brand-500/30 font-mono">10 PIECES</span>
+        </div>
+
+        <div class="space-y-2" id="pieceList">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Ink Theme Palettes -->
+        <div class="border-t border-borderColor pt-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-palette text-brand-500"></i> Ink Palette
+          </h3>
+          <div class="grid grid-cols-4 gap-2" id="journeyPaletteGrid">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER CANVAS WORKSPACE -->
+    <div class="flex-1 flex flex-col items-center justify-center bg-darkBg relative overflow-hidden p-4 md:p-6">
+
+      <!-- Top Overlay Controls (Zoom, Pan Reset, Paper Texture - BUG-7 fixed) -->
+      <div class="absolute top-6 right-6 z-10 flex items-center gap-1.5 bg-panelBg/90 border border-borderColor p-1.5 rounded-xl backdrop-blur-md shadow-2xl">
+        <button id="zoomInBtn" class="w-8 h-8 rounded-lg hover:bg-cardBg flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Zoom In">
+          <i class="fa-solid fa-plus text-xs"></i>
+        </button>
+        <button id="zoomResetBtn" class="px-2 h-8 rounded-lg hover:bg-cardBg flex items-center justify-center text-xs font-mono text-gray-400 hover:text-white transition" aria-label="Reset Zoom">
+          <span id="zoomLabel">100%</span>
+        </button>
+        <button id="zoomOutBtn" class="w-8 h-8 rounded-lg hover:bg-cardBg flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Zoom Out">
+          <i class="fa-solid fa-minus text-xs"></i>
+        </button>
+        <div class="h-4 w-px bg-borderColor mx-1"></div>
+        <!-- BUG-7 Fix: id="paperLabel" without space -->
+        <button id="paperToggleBtn" class="px-3 h-8 rounded-lg bg-cardBg border border-borderColor text-xs text-gray-300 hover:text-white flex items-center gap-2 transition" aria-label="Toggle Canvas Texture">
+          <i class="fa-solid fa-layer-group text-brand-500"></i>
+          <span id="paperLabel" class="font-mono">Paper: Warm White</span>
+        </button>
+      </div>
+
+      <!-- CANVAS STAGE WRAPPER -->
+      <div id="canvasContainer" class="relative rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.85)] border border-borderColor transition-transform duration-100 flex items-center justify-center bg-white" style="width: 580px; height: 580px;">
+        <canvas id="mainCanvas" width="820" height="820" class="w-full h-full object-contain cursor-crosshair"></canvas>
+        <canvas id="kaleidoCanvas" width="820" height="820" class="absolute inset-0 w-full h-full object-contain hidden pointer-events-none"></canvas>
+        <div id="vignetteOverlay" class="vignette-overlay hidden"></div>
+      </div>
+
+      <!-- BOTTOM CONTROL BAR OVERLAY (Journey Reveal or Quick Status) -->
+      <div class="mt-4 flex items-center gap-4 bg-panelBg/90 border border-borderColor px-6 py-2.5 rounded-2xl backdrop-blur-md shadow-2xl z-10 max-w-xl w-full">
+        <div class="flex-1 flex flex-col gap-1">
+          <div class="flex justify-between text-xs font-medium">
+            <span id="revealStatusLabel" class="text-gray-400">Reveal Progress</span>
+            <span id="timeDisplay" class="font-mono text-brand-300">0.0s / 4.5s</span>
+          </div>
+          <div class="w-full bg-darkBg h-2 rounded-full overflow-hidden border border-borderColor/60 relative">
+            <div id="progressBar" class="bg-gradient-to-r from-brand-600 to-indigo-400 h-full w-0 transition-all duration-75"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: TOOLS / AUDIO / PRECISION GATE / EXPORTS -->
+    <aside class="w-80 border-l border-borderColor bg-panelBg flex flex-col shrink-0 z-10 overflow-y-auto">
+
+      <!-- COLORING TOOLS (visible in Coloring Studio) -->
+      <div id="coloringToolsSection" class="p-4 space-y-4">
+        <div class="border-b border-borderColor pb-3">
+          <h2 data-i18n="toolsTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400">2 · Create</h2>
+          <p class="text-[11px] text-gray-500">Multi-media brushes & somatic smoothing</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2" id="toolBox">
+          <button data-tool="brush" class="tool-btn active py-2 px-3 rounded-xl border border-brand-500 bg-brand-600/40 text-xs text-white font-semibold flex items-center gap-2" aria-label="Brush tool">
+            <span data-i18n="brush">🖌 Brush</span>
+          </button>
+          <button data-tool="marker" class="tool-btn py-2 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center gap-2" aria-label="Marker tool">
+            <span data-i18n="marker">🖊 Marker</span>
+          </button>
+          <button data-tool="pencil" class="tool-btn py-2 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center gap-2" aria-label="Pencil tool">
+            <span data-i18n="pencil">✏ Pencil</span>
+          </button>
+          <button data-tool="spray" class="tool-btn py-2 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center gap-2" aria-label="Spray tool">
+            <span data-i18n="spray">💨 Spray</span>
+          </button>
+          <button data-tool="fill" class="tool-btn py-2 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center gap-2" aria-label="Ink Bleed Fill tool">
+            <span data-i18n="floodFill">🪣 Fill</span>
+          </button>
+          <button data-tool="eraser" class="tool-btn py-2 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center gap-2" aria-label="Eraser tool">
+            <span data-i18n="eraser">🧽 Eraser</span>
+          </button>
+        </div>
+
+        <!-- Emoji Stamp Input -->
+        <div class="flex items-center gap-2">
+          <input type="text" id="stampInput" placeholder="🌸" value="🌸" class="w-12 h-9 text-center bg-cardBg border border-borderColor rounded-xl text-base focus:outline-none focus:border-brand-500">
+          <button id="stampToolBtn" class="flex-1 h-9 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 font-semibold flex items-center justify-center gap-1.5" aria-label="Stamp Tool">
+            <i class="fa-solid fa-stamp text-brand-400"></i>
+            <span>Stamp Tool</span>
+          </button>
+          <button id="undoBtn" class="h-9 px-3 rounded-xl border border-borderColor bg-cardBg hover:border-brand-500/50 text-xs text-gray-300 hover:text-white transition" aria-label="Undo">
+            <span data-i18n="undoBtn">↩</span>
+          </button>
+        </div>
+
+        <!-- Sliders: Size & Opacity -->
+        <div class="space-y-3">
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs text-gray-300">
+              <label data-i18n="sizeLabel">Size</label>
+              <span id="sizeVal" class="font-mono text-brand-300">12</span>
+            </div>
+            <input type="range" id="sizeSlider" min="2" max="60" value="12" class="w-full">
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs text-gray-300">
+              <label data-i18n="opacityLabel">Opacity</label>
+              <span id="opacityVal" class="font-mono text-brand-300">100%</span>
+            </div>
+            <input type="range" id="opacitySlider" min="10" max="100" value="100" class="w-full">
+          </div>
+        </div>
+
+        <!-- 12-Color Palette Grid -->
+        <div class="space-y-1.5">
+          <h3 data-i18n="paletteTitle" class="text-[11px] font-bold uppercase tracking-wider text-gray-400">Color Palette</h3>
+          <div class="grid grid-cols-6 gap-1.5" id="colorPalette">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Biochemical Pigments Group (Part 4) -->
+        <div class="space-y-1.5">
+          <h3 data-i18n="bioPigmentsTitle" class="text-[11px] font-bold uppercase tracking-wider text-gray-400">Biochemical Pigments</h3>
+          <div class="grid grid-cols-4 gap-1.5" id="bioPalette">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- JOURNEY ENGINE CONTROLS (visible in Journey Mode) -->
+      <div id="journeyControlsSection" class="p-4 space-y-4 hidden">
+        <div class="border-b border-borderColor pb-3">
+          <h2 data-i18n="engineControls" class="text-xs font-bold uppercase tracking-wider text-gray-400">Engine Controls</h2>
+          <p class="text-[11px] text-gray-500">Configure stroke physics and video timing</p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-xs text-gray-300">
+            <label data-i18n="durationLabel">Export Duration</label>
+            <span id="durLabel" class="font-mono px-2 py-0.5 rounded bg-brand-900/50 text-brand-300 font-bold border border-brand-500/30">4.5s</span>
+          </div>
+          <input type="range" id="durationSlider" min="3.0" max="6.0" step="0.5" value="4.5" class="w-full">
+          <div class="flex justify-between text-[10px] text-gray-500 font-mono">
+            <span>3.0s</span>
+            <span>4.5s</span>
+            <span>6.0s</span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-xs text-gray-300">
+            <label data-i18n="bleedLabel">Ink Bleed Diffusion</label>
+            <span id="bleedLabel" class="font-mono text-gray-400">1.4x</span>
+          </div>
+          <input type="range" id="bleedSlider" min="0.5" max="3.0" step="0.1" value="1.4" class="w-full">
+        </div>
+
+        <!-- Stroke Fidelity Card -->
+        <div class="bg-cardBg rounded-xl p-3 border border-borderColor space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span data-i18n="fidelityMetric" class="font-bold text-gray-400">Fidelity Metric</span>
+            <span id="fidVal" class="text-base font-mono font-bold text-amber-400">0%</span>
+          </div>
+          <div class="w-full bg-darkBg h-2 rounded-full overflow-hidden border border-borderColor">
+            <div id="fidBar" class="bg-gradient-to-r from-amber-500 to-emerald-400 h-full w-0 transition-all duration-200"></div>
+          </div>
+          <div class="text-[10px] text-gray-400 flex justify-between">
+            <span>Target: ≥85%</span>
+            <span id="fidVerdict" class="font-semibold text-gray-500">Awaiting Run</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <button id="replayBtn" class="w-full py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition" aria-label="Replay Journey">
+            <i class="fa-solid fa-play"></i>
+            <span data-i18n="replayJourneyBtn">Replay Journey</span>
+          </button>
+          <button id="recJourneyBtn" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 transition" aria-label="Record Video">
+            <i class="fa-solid fa-circle"></i>
+            <span data-i18n="recordVideoBtn">Record & Export Video</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SHARED MUSIC SECTION (User songs only) -->
+      <div class="p-4 border-t border-borderColor space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 data-i18n="musicTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400">🎵 Your Music</h3>
+          <input type="file" id="songUpload" accept="audio/*" multiple class="hidden">
+          <button id="addSongsBtn" class="text-[11px] text-brand-400 hover:text-brand-300 font-semibold" aria-label="Add Songs">＋ Add</button>
+        </div>
+        <div id="playlistContainer" class="bg-cardBg rounded-xl p-2 border border-borderColor text-xs text-gray-400 max-h-20 overflow-y-auto space-y-1">
+          <div id="noSongsText" data-i18n="noSongs">No songs loaded.</div>
+        </div>
+        <button id="playSongBtn" class="w-full py-1.5 rounded-lg bg-cardBg border border-borderColor hover:border-brand-500 text-xs text-gray-300 font-semibold flex items-center justify-center gap-2 transition" aria-label="Play song">
+          <span data-i18n="playBtn">▶ Play Track</span>
+        </button>
+      </div>
+
+      <!-- PRECISION SCORE & MARKETPLACE GATE (Part 5 & Part 6) -->
+      <div class="p-4 border-t border-borderColor space-y-3">
+        <div class="bg-cardBg rounded-xl p-3 border border-borderColor space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <span data-i18n="precisionTitle" class="font-bold text-gray-300">Precision Score</span>
+            <span id="precVal" class="font-mono font-bold text-amber-400 text-sm">—</span>
+          </div>
+          <div class="w-full bg-darkBg h-2 rounded-full overflow-hidden border border-borderColor">
+            <div id="precBar" class="bg-brand-600 h-full w-0 transition-all duration-200"></div>
+          </div>
+          <div id="gateStatusText" class="text-[11px] font-semibold text-gray-400">
+            🔒 Gate: Reach ≥85% Precision
+          </div>
+        </div>
+
+        <!-- EXPORT BUTTONS -->
+        <div class="space-y-2">
+          <button id="sellWallpaperBtn" disabled class="w-full py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-md shadow-brand-600/20" aria-label="Sell Animated Wallpaper">
+            <i class="fa-solid fa-film"></i>
+            <span data-i18n="sellWallpaperBtn">🎬 Sell Animated Wallpaper</span>
+          </button>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button id="timelapseBtn" class="py-2 px-2.5 rounded-xl bg-cardBg border border-borderColor hover:border-brand-500 text-xs text-gray-300 font-semibold flex items-center justify-center gap-1.5 transition" aria-label="Export Time Lapse">
+              <i class="fa-solid fa-stopwatch text-purple-400"></i>
+              <span data-i18n="timelapseBtn">⏱ Timelapse</span>
+            </button>
+            <button id="mirrorFinaleBtn" class="py-2 px-2.5 rounded-xl bg-cardBg border border-borderColor hover:border-brand-500 text-xs text-gray-300 font-semibold flex items-center justify-center gap-1.5 transition" aria-label="Mirror Finale">
+              <i class="fa-solid fa-shapes text-brand-400"></i>
+              <span data-i18n="mirrorFinaleBtn">🪞 Mirror</span>
+            </button>
+          </div>
+
+          <button id="printBtn" class="w-full py-1.5 rounded-xl bg-cardBg border border-borderColor hover:border-brand-500 text-xs text-gray-300 font-semibold flex items-center justify-center gap-2 transition" aria-label="Print 2x PNG">
+            <i class="fa-solid fa-print text-gray-400"></i>
+            <span data-i18n="printBtn">🖨 Print 2x PNG</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STATUS LOG BOX -->
+      <div class="p-4 border-t border-borderColor mt-auto bg-darkBg/90 text-xs font-mono text-gray-400 space-y-1">
+        <div class="text-[10px] uppercase text-gray-500 font-bold flex items-center gap-1">
+          <i class="fa-solid fa-terminal text-brand-400"></i> Engine Status
+        </div>
+        <div id="statusLog" class="text-gray-300 leading-snug min-h-[32px] break-words">
+          Ready. Select an art piece or draw to begin.
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FLOATING KALEIDOSCOPE GLASSMORPHISM PANEL (Part 4) -->
+  <div id="kaleidoFloatingPanel" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-panelBg/95 backdrop-blur-xl border border-borderColor rounded-2xl p-3.5 flex items-center gap-5 shadow-2xl z-30 hidden">
+    <div class="flex items-center gap-2 text-xs">
+      <i class="fa-solid fa-shapes text-brand-400"></i>
+      <label class="font-bold text-gray-300">Facets:</label>
+      <select id="kaleidoFacetsSelect" class="bg-cardBg border border-borderColor text-white text-xs rounded-lg px-2 py-1">
+        <option value="6">6 Facets</option>
+        <option value="8" selected>8 Facets</option>
+        <option value="12">12 Facets</option>
+      </select>
+    </div>
+
+    <div class="flex items-center gap-2 text-xs">
+      <input type="checkbox" id="kaleidoAutoSpinCheck" checked class="accent-brand-500">
+      <label for="kaleidoAutoSpinCheck" class="text-gray-300">Auto Spin</label>
+    </div>
+
+    <button id="closeKaleidoBtn" class="px-2.5 py-1 rounded-lg bg-cardBg border border-borderColor hover:bg-brand-600 text-xs text-gray-200 transition" aria-label="Close Kaleidoscope">
+      Close
+    </button>
+  </div>
+
+  <!-- CREATOR PUBLISHING MODAL DRAWER (Part 10) -->
+  <div id="publishingDrawer" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-panelBg border border-borderColor rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-borderColor pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up text-brand-400 text-lg"></i>
+          <h2 class="text-base font-bold text-white">Creator Publishing (Gumroad)</h2>
+        </div>
+        <button id="closePublishingDrawerBtn" class="text-gray-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs text-gray-300">
+        <div class="flex items-center justify-between">
+          <label class="font-semibold">Enable Publishing Flow</label>
+          <input type="checkbox" id="optInPublishCheck" class="accent-brand-500 w-4 h-4">
+        </div>
+
+        <div class="space-y-1">
+          <label class="font-semibold">Gumroad Access Token (optional if using mock mode):</label>
+          <input type="password" id="gumroadTokenInput" placeholder="Paste personal access token" class="w-full bg-cardBg border border-borderColor rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div class="space-y-1">
+          <label class="font-semibold">Creative Commons License:</label>
+          <select id="ccLicenseSelect" class="w-full bg-cardBg border border-borderColor text-white text-xs rounded-xl px-3 py-2">
+            <option value="CC BY-NC-SA 4.0" selected>CC BY-NC-SA 4.0 (Recommended)</option>
+            <option value="CC BY 4.0">CC BY 4.0</option>
+            <option value="CC BY-NC 4.0">CC BY-NC 4.0</option>
+            <option value="CC BY-SA 4.0">CC BY-SA 4.0</option>
+            <option value="CC0">CC0 (Public Domain)</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="instantPublishCheck" class="accent-brand-500">
+          <label for="instantPublishCheck">Instant Publish (default creates draft)</label>
+        </div>
+
+        <!-- Creator Attestation (Part 10.5) -->
+        <div class="bg-cardBg border border-borderColor rounded-xl p-3 space-y-2">
+          <div class="flex items-start gap-2">
+            <input type="checkbox" id="creatorAttestationCheck" class="accent-brand-500 mt-1">
+            <label for="creatorAttestationCheck" class="text-[11px] text-gray-300 leading-snug">
+              I confirm this artwork and any included audio are my original work or lawfully licensed, contain no third-party copyrighted material, and I select the Creative Commons license applied to my listing.
+            </label>
+          </div>
+        </div>
+
+        <button id="savePublishSettingsBtn" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs transition">
+          Save Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGNOSTICS RESULTS DRAWER (Part 8) -->
+  <div id="diagDrawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-panelBg border border-borderColor rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 m-4 max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-borderColor pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-stethoscope text-emerald-400 text-lg"></i>
+          <h2 class="text-base font-bold text-white">System Diagnostics Harness</h2>
+        </div>
+        <button id="closeDiagDrawerBtn" class="text-gray-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="flex items-center justify-between text-xs">
+        <span id="diagStatusText" class="text-gray-300">Ready to execute harness</span>
+        <button id="runDiagnosticsBtn" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+          Run Diagnostics Now
+        </button>
+      </div>
+
+      <div id="diagTableContainer" class="flex-1 overflow-y-auto bg-darkBg border border-borderColor rounded-xl p-3 text-xs font-mono space-y-2">
+        <p class="text-gray-500">Click "Run Diagnostics Now" to verify the 10 system test points.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SCRIPT INITIALIZATION -->
+  <script src="edge-engine.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const {
+        state,
+        PAPERS,
+        BASIC_PALETTE,
+        BIOCHEMICAL_PIGMENTS,
+        JOURNEY_PALETTES,
+        SourceEngine,
+        ToolsEngine,
+        PrecisionEngine,
+        JourneyEngine,
+        KaleidoscopeEngine,
+        AudioEngine,
+        ExportEngine,
+        EdgeEngine,
+        I18N,
+        GumroadPublisher,
+        Diagnostics
+      } = window.Colorworld;
+
+      // Canvas setup
+      const cv = document.getElementById('mainCanvas');
+      const ctx = cv.getContext('2d', { willReadFrequently: true });
+      state.canvas = cv;
+      state.ctx = ctx;
+
+      const kcv = document.getElementById('kaleidoCanvas');
+      const kctx = kcv.getContext('2d');
+
+      // Initialize canvas with paper texture
+      function setPaper(mode) {
+        state.paperMode = mode;
+        const paper = PAPERS[mode];
+        ctx.fillStyle = paper.hex;
+        ctx.fillRect(0, 0, cv.width, cv.height);
+        document.getElementById('paperLabel').textContent = `Paper: ${paper.name}`;
+        logStatus(`Canvas backdrop set to ${paper.name}`);
+      }
+      setPaper(0);
+
+      function logStatus(msg) {
+        document.getElementById('statusLog').textContent = msg;
+      }
+
+      // Palette rendering
+      const colorPalEl = document.getElementById('colorPalette');
+      BASIC_PALETTE.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'h-7 rounded-md border-2 ' + (c === state.color ? 'border-brand-500 scale-105' : 'border-transparent');
+        btn.style.backgroundColor = c;
+        btn.title = c;
+        btn.onclick = () => {
+          state.color = c;
+          document.querySelectorAll('#colorPalette button').forEach(b => b.classList.replace('border-brand-500', 'border-transparent'));
+          btn.classList.replace('border-transparent', 'border-brand-500');
+        };
+        colorPalEl.appendChild(btn);
+      });
+
+      const bioPalEl = document.getElementById('bioPalette');
+      BIOCHEMICAL_PIGMENTS.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'h-6 rounded-md border border-white/20';
+        btn.style.backgroundColor = p.hex;
+        btn.title = p.name;
+        btn.onclick = () => {
+          state.color = p.hex;
+          logStatus(`Selected biochemical pigment: ${p.name}`);
+        };
+        bioPalEl.appendChild(btn);
+      });
+
+      // Journey Pieces list rendering
+      const pieceListEl = document.getElementById('pieceList');
+      function renderPieceList() {
+        pieceListEl.innerHTML = '';
+        Object.keys(JourneyEngine.PIECES).forEach(key => {
+          const item = JourneyEngine.PIECES[key];
+          const isActive = key === state.curPieceKey;
+          const btn = document.createElement('button');
+          btn.className = `w-full text-left p-2.5 rounded-xl border transition flex items-center justify-between ${
+            isActive ? 'bg-brand-900/40 border-brand-500 text-white' : 'bg-cardBg border-borderColor text-gray-300 hover:text-white'
+          }`;
+          btn.innerHTML = `
+            <div>
+              <div class="font-bold text-xs ${isActive ? 'text-brand-300' : ''}">${item.name}</div>
+              <div class="text-[10px] text-gray-500 font-mono">${item.tag}</div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs ${isActive ? 'text-brand-400' : 'text-gray-600'}"></i>
+          `;
+          btn.onclick = () => {
+            state.curPieceKey = key;
+            loadPieceToCanvas(key);
+            renderPieceList();
+          };
+          pieceListEl.appendChild(btn);
+        });
+      }
+
+      function loadPieceToCanvas(key) {
+        const pal = JOURNEY_PALETTES[state.journeySelectedPalette];
+        const res = JourneyEngine.buildPiece(key, pal);
+        state.journeyStrokes = res.strokes;
+        state.journeyAnimFn = res.animFn;
+
+        // Render completed line art onto shared canvas immediately (Part 4)
+        const paper = PAPERS[state.paperMode];
+        ctx.fillStyle = paper.hex;
+        ctx.fillRect(0, 0, cv.width, cv.height);
+
+        res.strokes.forEach(s => {
+          ctx.save();
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.lineWidth = s.w;
+          ctx.strokeStyle = s.col;
+          s.fn(ctx, 1.0);
+          ctx.restore();
+        });
+
+        state.baseLine = ctx.getImageData(0, 0, cv.width, cv.height);
+        state.lineMask = new Uint8Array(cv.width * cv.height);
+        // Create line mask from baseLine dark pixels
+        const bData = state.baseLine.data;
+        for (let i = 0; i < state.lineMask.length; i++) {
+          const dark = bData[i * 4] < 128;
+          state.lineMask[i] = dark ? 1 : 0;
+        }
+
+        updatePrecisionMeter();
+        logStatus(`Loaded "${JourneyEngine.PIECES[key].name}" line art onto canvas.`);
+      }
+
+      // Journey Palettes grid
+      const jPalGrid = document.getElementById('journeyPaletteGrid');
+      JOURNEY_PALETTES.forEach((p, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `h-7 rounded-lg border-2 ${idx === state.journeySelectedPalette ? 'border-brand-500 scale-105' : 'border-transparent'}`;
+        btn.style.backgroundColor = p.main;
+        btn.title = p.name;
+        btn.onclick = () => {
+          state.journeySelectedPalette = idx;
+          document.querySelectorAll('#journeyPaletteGrid button').forEach(b => b.classList.replace('border-brand-500', 'border-transparent'));
+          btn.classList.replace('border-transparent', 'border-brand-500');
+          loadPieceToCanvas(state.curPieceKey);
+        };
+        jPalGrid.appendChild(btn);
+      });
+
+      renderPieceList();
+      loadPieceToCanvas('blooming_skull');
+
+      // Mode Switcher
+      const modeColoringBtn = document.getElementById('modeColoringBtn');
+      const modeJourneyBtn = document.getElementById('modeJourneyBtn');
+      const sourceSection = document.getElementById('sourceSection');
+      const journeySection = document.getElementById('journeySection');
+      const coloringToolsSection = document.getElementById('coloringToolsSection');
+      const journeyControlsSection = document.getElementById('journeyControlsSection');
+
+      modeColoringBtn.onclick = () => {
+        state.mode = 'coloring';
+        modeColoringBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white transition flex items-center gap-1.5';
+        modeJourneyBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition flex items-center gap-1.5';
+        sourceSection.classList.remove('hidden');
+        journeySection.classList.add('hidden');
+        coloringToolsSection.classList.remove('hidden');
+        journeyControlsSection.classList.add('hidden');
+        logStatus('Switched to Coloring Studio mode.');
+      };
+
+      modeJourneyBtn.onclick = () => {
+        state.mode = 'journey';
+        modeJourneyBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white transition flex items-center gap-1.5';
+        modeColoringBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition flex items-center gap-1.5';
+        journeySection.classList.remove('hidden');
+        sourceSection.classList.add('hidden');
+        journeyControlsSection.classList.remove('hidden');
+        coloringToolsSection.classList.add('hidden');
+        logStatus('Switched to Journey Masterpieces mode.');
+      };
+
+      // Tool Buttons
+      document.querySelectorAll('#toolBox button').forEach(b => {
+        b.onclick = () => {
+          state.tool = b.dataset.tool;
+          document.querySelectorAll('#toolBox button').forEach(x => {
+            x.classList.remove('active', 'bg-brand-600/40', 'border-brand-500', 'text-white');
+            x.classList.add('border-borderColor', 'bg-cardBg', 'text-gray-300');
+          });
+          b.classList.add('active', 'bg-brand-600/40', 'border-brand-500', 'text-white');
+        };
+      });
+
+      document.getElementById('stampToolBtn').onclick = () => {
+        state.tool = 'stamp';
+        document.querySelectorAll('#toolBox button').forEach(x => {
+          x.classList.remove('active', 'bg-brand-600/40', 'border-brand-500', 'text-white');
+          x.classList.add('border-borderColor', 'bg-cardBg', 'text-gray-300');
+        });
+        logStatus('Emoji stamp tool active.');
+      };
+
+      // Pointer event coordinates with canvas scaling and pan/zoom
+      function getCanvasPos(e) {
+        const rect = cv.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        return {
+          x: ((clientX - rect.left) * cv.width) / rect.width,
+          y: ((clientY - rect.top) * cv.height) / rect.height
+        };
+      }
+
+      // Drawing Interaction with Somatic Low-pass filter (Part 4)
+      cv.addEventListener('pointerdown', e => {
+        ToolsEngine.saveUndoSnapshot(ctx, cv.width, cv.height);
+        state.drawing = true;
+        const p = getCanvasPos(e);
+        state.lastPos = p;
+        state.smoothPos = p;
+
+        if (state.tool === 'fill') {
+          ToolsEngine.floodFill(ctx, cv.width, cv.height, Math.round(p.x), Math.round(p.y), state.color);
+          state.drawing = false;
+          updatePrecisionMeter();
+        } else if (state.tool === 'stamp') {
+          const em = document.getElementById('stampInput').value || '🌸';
+          ToolsEngine.stamp(ctx, p, em);
+          state.drawing = false;
+          updatePrecisionMeter();
+        }
+      });
+
+      cv.addEventListener('pointermove', e => {
+        if (!state.drawing) return;
+        const rawPt = getCanvasPos(e);
+        const smoothed = state.tremorFilterEnabled
+          ? ToolsEngine.filterPointer(rawPt, state.smoothPos, state.filterAlpha)
+          : rawPt;
+
+        ToolsEngine.paint(ctx, state.lastPos, smoothed, {
+          tool: state.tool,
+          color: state.color,
+          size: state.size,
+          opacity: state.opacity
+        });
+
+        state.lastPos = smoothed;
+        state.smoothPos = smoothed;
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (state.drawing) {
+          state.drawing = false;
+          updatePrecisionMeter();
+        }
+      });
+
+      // Undo button
+      document.getElementById('undoBtn').onclick = () => {
+        if (ToolsEngine.undo(ctx)) {
+          updatePrecisionMeter();
+          logStatus('Undo last stroke');
+        }
+      };
+
+      // Precision Meter update
+      function updatePrecisionMeter() {
+        const res = PrecisionEngine.computePrecision(ctx, state.baseLine, state.lineMask, cv.width, cv.height);
+        state.precisionScore = res.score;
+        state.gateUnlocked = res.passed;
+
+        const precValEl = document.getElementById('precVal');
+        const precBarEl = document.getElementById('precBar');
+        const gateTextEl = document.getElementById('gateStatusText');
+        const sellBtn = document.getElementById('sellWallpaperBtn');
+
+        precValEl.textContent = res.empty ? '—' : `${res.score}%`;
+        precBarEl.style.width = `${res.score}%`;
+
+        if (res.score >= 85) {
+          precValEl.className = 'font-mono font-bold text-emerald-400 text-sm';
+          precBarEl.className = 'bg-gradient-to-r from-emerald-500 to-teal-300 h-full w-0 transition-all duration-200';
+          gateTextEl.textContent = '🔓 ' + I18N.t('gateUnlockedText');
+          gateTextEl.className = 'text-[11px] font-semibold text-emerald-400';
+          sellBtn.disabled = false;
+          logStatus(I18N.t('gatePassedStatus'));
+        } else {
+          precValEl.className = res.score >= 50 ? 'font-mono font-bold text-amber-400 text-sm' : 'font-mono font-bold text-rose-400 text-sm';
+          precBarEl.className = 'bg-brand-600 h-full w-0 transition-all duration-200';
+          gateTextEl.textContent = '🔒 ' + I18N.t('gateLockedText');
+          gateTextEl.className = 'text-[11px] font-semibold text-gray-400';
+          sellBtn.disabled = true;
+        }
+      }
+
+      // Sliders event bindings
+      document.getElementById('sizeSlider').oninput = e => {
+        state.size = parseInt(e.target.value, 10);
+        document.getElementById('sizeVal').textContent = state.size;
+      };
+      document.getElementById('opacitySlider').oninput = e => {
+        state.opacity = parseInt(e.target.value, 10);
+        document.getElementById('opacityVal').textContent = state.opacity + '%';
+      };
+      document.getElementById('threshSlider').oninput = e => {
+        document.getElementById('threshVal').textContent = e.target.value;
+      };
+      document.getElementById('thickSlider').oninput = e => {
+        document.getElementById('thickVal').textContent = parseFloat(e.target.value).toFixed(1) + 'x';
+      };
+      document.getElementById('durationSlider').oninput = e => {
+        state.journeyDur = parseFloat(e.target.value);
+        document.getElementById('durLabel').textContent = state.journeyDur.toFixed(1) + 's';
+      };
+      document.getElementById('bleedSlider').oninput = e => {
+        state.journeyBleed = parseFloat(e.target.value);
+        document.getElementById('bleedLabel').textContent = state.journeyBleed.toFixed(1) + 'x';
+      };
+
+      // Paper toggle button
+      document.getElementById('paperToggleBtn').onclick = () => {
+        const next = (state.paperMode + 1) % PAPERS.length;
+        setPaper(next);
+      };
+
+      // Zoom buttons
+      const containerEl = document.getElementById('canvasContainer');
+      document.getElementById('zoomInBtn').onclick = () => {
+        state.zoom = Math.min(2.0, state.zoom + 0.15);
+        document.getElementById('zoomLabel').textContent = Math.round(state.zoom * 100) + '%';
+        containerEl.style.transform = `scale(${state.zoom})`;
+      };
+      document.getElementById('zoomOutBtn').onclick = () => {
+        state.zoom = Math.max(0.6, state.zoom - 0.15);
+        document.getElementById('zoomLabel').textContent = Math.round(state.zoom * 100) + '%';
+        containerEl.style.transform = `scale(${state.zoom})`;
+      };
+      document.getElementById('zoomResetBtn').onclick = () => {
+        state.zoom = 1.0;
+        document.getElementById('zoomLabel').textContent = '100%';
+        containerEl.style.transform = 'scale(1)';
+      };
+
+      // Sobel Convert
+      document.getElementById('convertBtn').onclick = () => {
+        const th = parseFloat(document.getElementById('threshSlider').value);
+        const tk = parseFloat(document.getElementById('thickSlider').value);
+        const res = SourceEngine.sobelConvert(ctx, cv.width, cv.height, th, tk);
+        ctx.putImageData(res.imageData, 0, 0);
+        state.baseLine = ctx.getImageData(0, 0, cv.width, cv.height);
+        state.lineMask = res.lineMask;
+        state.ops = [];
+        updatePrecisionMeter();
+        logStatus(I18N.t('convertedStatus'));
+      };
+
+      // Photo Upload
+      const imgUpload = document.getElementById('imgUpload');
+      document.getElementById('uploadBtn').onclick = () => imgUpload.click();
+      imgUpload.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const img = new Image();
+        img.onload = () => {
+          const s = Math.min(cv.width / img.width, cv.height / img.height);
+          const w = img.width * s, h = img.height * s;
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, cv.width, cv.height);
+          ctx.drawImage(img, (cv.width - w) / 2, (cv.height - h) / 2, w, h);
+          logStatus('Photo loaded. Click "Convert to Line Art" to apply Sobel.');
+        };
+        img.src = URL.createObjectURL(file);
+      };
+
+      // AI Prompt Generation (Part 6)
+      document.getElementById('genPromptBtn').onclick = async () => {
+        const p = document.getElementById('promptInput').value || 'mandala';
+        logStatus('Edge AI analyzing prompt…');
+        const res = await EdgeEngine.generateLineArt(p, cv, logStatus);
+        state.baseLine = ctx.getImageData(0, 0, cv.width, cv.height);
+        state.lineMask = new Uint8Array(cv.width * cv.height);
+        const d = state.baseLine.data;
+        for (let i = 0; i < state.lineMask.length; i++) {
+          state.lineMask[i] = d[i * 4] < 128 ? 1 : 0;
+        }
+        document.getElementById('aiTierBadge').textContent = state.aiTier;
+        updatePrecisionMeter();
+      };
+
+      // Focus Ambience
+      document.getElementById('focusAmbienceBtn').onclick = () => {
+        const active = AudioEngine.toggleFocusAmbience();
+        const btn = document.getElementById('focusAmbienceBtn');
+        if (active) {
+          btn.classList.add('bg-brand-600', 'text-white');
+          logStatus('Focus Ambience active (528 Hz + 3 Hz binaural beat).');
+        } else {
+          btn.classList.remove('bg-brand-600', 'text-white');
+          logStatus('Focus Ambience muted.');
+        }
+      };
+
+      // Music playlist handling
+      const songUpload = document.getElementById('songUpload');
+      document.getElementById('addSongsBtn').onclick = () => songUpload.click();
+      songUpload.onchange = e => {
+        state.playlist = [...e.target.files];
+        state.trackIdx = state.playlist.length ? 0 : -1;
+        renderPlaylist();
+      };
+
+      function renderPlaylist() {
+        const cont = document.getElementById('playlistContainer');
+        cont.innerHTML = '';
+        if (!state.playlist.length) {
+          cont.innerHTML = `<div id="noSongsText">${I18N.t('noSongs')}</div>`;
+          return;
+        }
+        state.playlist.forEach((f, idx) => {
+          const row = document.createElement('div');
+          row.className = `p-1 rounded cursor-pointer ${idx === state.trackIdx ? 'bg-brand-600 text-white' : 'hover:bg-white/5'}`;
+          row.textContent = (idx === state.trackIdx ? '▶ ' : '') + f.name;
+          row.onclick = () => loadTrack(idx);
+          cont.appendChild(row);
+        });
+      }
+
+      function loadTrack(idx) {
+        state.trackIdx = idx;
+        AudioEngine.ensureAudioGraph();
+        state.audioElement.src = URL.createObjectURL(state.playlist[idx]);
+        state.audioElement.play();
+        document.getElementById('playSongBtn').textContent = '⏸ ' + I18N.t('pauseBtn');
+        renderPlaylist();
+      }
+
+      document.getElementById('playSongBtn').onclick = () => {
+        if (!state.playlist.length) return;
+        AudioEngine.ensureAudioGraph();
+        if (state.trackIdx < 0) loadTrack(0);
+        else if (state.audioElement.paused) {
+          state.audioElement.play();
+          document.getElementById('playSongBtn').textContent = '⏸ ' + I18N.t('pauseBtn');
+        } else {
+          state.audioElement.pause();
+          document.getElementById('playSongBtn').textContent = '▶ ' + I18N.t('playBtn');
+        }
+      };
+
+      // Read Aloud
+      document.getElementById('readAloudBtn').onclick = () => {
+        const currentText = document.getElementById('statusLog').textContent;
+        I18N.readAloud(currentText);
+      };
+
+      // Language Switcher
+      ['EN', 'ES', 'FR'].forEach(l => {
+        document.getElementById(`lang${l}`).onclick = () => {
+          const code = l.toLowerCase();
+          I18N.setLang(code);
+          ['EN', 'ES', 'FR'].forEach(k => {
+            const btn = document.getElementById(`lang${k}`);
+            if (k === l) {
+              btn.className = 'px-2 py-1 rounded text-[11px] font-bold bg-brand-600 text-white';
+            } else {
+              btn.className = 'px-2 py-1 rounded text-[11px] text-gray-400 hover:text-white';
+            }
+          });
+        };
+      });
+
+      // Interactive Kaleidoscope Finale View (Part 4)
+      const kaleidoFloatingPanel = document.getElementById('kaleidoFloatingPanel');
+      let kaleidoAnimId = null;
+
+      function startKaleidoscopeView() {
+        state.kaleidoActive = true;
+        kcv.classList.remove('hidden');
+        document.getElementById('vignetteOverlay').classList.remove('hidden');
+        kaleidoFloatingPanel.classList.remove('hidden');
+
+        function loop() {
+          if (!state.kaleidoActive) return;
+          if (state.kaleidoAutoSpin) {
+            state.kaleidoAngle += state.kaleidoSpeed;
+          }
+          KaleidoscopeEngine.renderKaleidoscope(kctx, cv, state.kaleidoFacets, state.kaleidoAngle, cv.width, cv.height);
+          kaleidoAnimId = requestAnimationFrame(loop);
+        }
+        loop();
+        logStatus('Interactive Kaleidoscope Finale active.');
+      }
+
+      function stopKaleidoscopeView() {
+        state.kaleidoActive = false;
+        kcv.classList.add('hidden');
+        document.getElementById('vignetteOverlay').classList.add('hidden');
+        kaleidoFloatingPanel.classList.add('hidden');
+        if (kaleidoAnimId) cancelAnimationFrame(kaleidoAnimId);
+        logStatus('Exited Kaleidoscope Finale.');
+      }
+
+      document.getElementById('mirrorFinaleBtn').onclick = () => {
+        if (state.kaleidoActive) stopKaleidoscopeView();
+        else startKaleidoscopeView();
+      };
+      document.getElementById('closeKaleidoBtn').onclick = stopKaleidoscopeView;
+
+      document.getElementById('kaleidoFacetsSelect').value = state.kaleidoFacets;
+      document.getElementById('kaleidoFacetsSelect').onchange = e => {
+        state.kaleidoFacets = parseInt(e.target.value, 10);
+        localStorage.setItem('prism_kaleido_facets', state.kaleidoFacets);
+      };
+      document.getElementById('kaleidoAutoSpinCheck').onchange = e => {
+        state.kaleidoAutoSpin = e.target.checked;
+      };
+
+      // Journey Animation Loop
+      let journeyAnimId = null;
+      function playJourney(onComplete) {
+        state.journeyPlaying = true;
+        state.journeyPlayT = 0;
+        state.journeyStrokes.forEach(s => { s.done = 0; });
+        const paper = PAPERS[state.paperMode];
+        const startTimestamp = performance.now();
+
+        function frame(now) {
+          const elapsed = (now - startTimestamp) / 1000;
+          state.journeyPlayT = elapsed;
+
+          JourneyEngine.renderFrame(
+            ctx,
+            state.journeyStrokes,
+            state.journeyPlayT,
+            state.journeyDur,
+            state.journeyBleed,
+            paper,
+            state.journeyAnimFn
+          );
+
+          const progress = Math.min(1.0, state.journeyPlayT / state.journeyDur);
+          document.getElementById('timeDisplay').textContent = `${state.journeyPlayT.toFixed(1)}s / ${state.journeyDur.toFixed(1)}s`;
+          document.getElementById('progressBar').style.width = `${progress * 100}%`;
+
+          if (state.journeyPlayT < state.journeyDur) {
+            journeyAnimId = requestAnimationFrame(frame);
+          } else {
+            state.journeyPlaying = false;
+            // BUG-3: Compute accurate final fidelity
+            state.journeyFidelity = JourneyEngine.computeFinalFidelity(state.journeyStrokes);
+            document.getElementById('fidVal').textContent = `${state.journeyFidelity}%`;
+            document.getElementById('fidBar').style.width = `${state.journeyFidelity}%`;
+            document.getElementById('fidVerdict').textContent = state.journeyFidelity >= 85 ? '✓ Ready (≥85%)' : '⚠ Below Target';
+            logStatus(`Journey finished with ${state.journeyFidelity}% stroke fidelity.`);
+            if (onComplete) onComplete();
+          }
+        }
+        journeyAnimId = requestAnimationFrame(frame);
+      }
+
+      document.getElementById('replayBtn').onclick = () => {
+        logStatus('Replaying ink-bleed journey…');
+        playJourney();
+      };
+
+      // EXPORTS (Part 7)
+      // 1. Ken Burns Animated Wallpaper (5s, user-supplied audio baked in)
+      document.getElementById('sellWallpaperBtn').onclick = () => {
+        if (!state.gateUnlocked) {
+          alert('Precision score must be ≥85% to export sellable wallpaper.');
+          return;
+        }
+        logStatus('Exporting Ken Burns Animated Wallpaper with audio…');
+        AudioEngine.ensureAudioGraph();
+
+        const animCanvas = document.createElement('canvas');
+        animCanvas.width = cv.width;
+        animCanvas.height = cv.height;
+        const ac = animCanvas.getContext('2d');
+
+        let t = 0;
+        const iv = setInterval(() => {
+          const z = 1.0 + 0.08 * Math.sin(t / 25);
+          ac.save();
+          ac.translate(cv.width / 2, cv.height / 2);
+          ac.scale(z, z);
+          ac.drawImage(cv, -cv.width / 2, -cv.height / 2);
+          ac.restore();
+          t++;
+        }, 16);
+
+        const rec = ExportEngine.recordCanvasStream(animCanvas, 5.0, true, (blob, ext) => {
+          clearInterval(iv);
+          const filename = `colorworld_${state.curPieceKey}_5s.${ext}`;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+          logStatus(`Successfully exported Wallpaper: ${filename}`);
+
+          // Also generate local listing JSON audit record (Part 5 & 10.4)
+          const listing = PrecisionEngine.generateMarketplacePayload({
+            title: `${JourneyEngine.PIECES[state.curPieceKey].name} — COLORWORKS Journey`,
+            score: state.precisionScore,
+            license: state.gumroadLicense,
+            exportFiles: [filename]
+          });
+          console.log('Generated Marketplace Payload:', listing);
+        });
+      };
+
+      // 2. Stroke Time-Lapse (5s, BUG-1 & BUG-4 safe)
+      document.getElementById('timelapseBtn').onclick = () => {
+        if (!state.ops.length) {
+          logStatus('No stroke operations recorded to replay yet.');
+          return;
+        }
+        logStatus('Exporting stroke time-lapse…');
+        const snap = ctx.getImageData(0, 0, cv.width, cv.height);
+
+        // BUG-1 fix: guard if (baseLine)
+        if (state.baseLine) {
+          ctx.putImageData(state.baseLine, 0, 0);
+        } else {
+          setPaper(state.paperMode);
+        }
+
+        // BUG-4 fix: snapshot ops and set replaying flag
+        const replay = [...state.ops];
+        state.replaying = true;
+
+        const n = replay.length;
+        const perOp = 5000 / Math.max(1, n);
+        let i = 0;
+
+        const iv = setInterval(() => {
+          const o = replay[i++];
+          if (o.t === 'paint') {
+            ToolsEngine.paint(ctx, { x: o.a[0], y: o.a[1] }, { x: o.b[0], y: o.b[1] }, {
+              tool: o.tool,
+              color: o.c,
+              size: o.w,
+              opacity: o.alpha * 100
+            }, true);
+          } else if (o.t === 'fill') {
+            ToolsEngine.floodFill(ctx, cv.width, cv.height, o.x, o.y, o.c, true);
+          } else if (o.t === 'stamp') {
+            ToolsEngine.stamp(ctx, { x: o.x, y: o.y }, o.e, true);
+          }
+          if (i >= n) {
+            clearInterval(iv);
+            state.replaying = false;
+            setTimeout(() => ctx.putImageData(snap, 0, 0), 400);
+          }
+        }, Math.max(8, perOp));
+
+        ExportEngine.recordCanvasStream(cv, 5.0, false, (blob, ext) => {
+          const filename = `colorworld_timelapse_5s.${ext}`;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = filename;
+          a.click();
+          logStatus(`Exported Time-Lapse: ${filename}`);
+        });
+      };
+
+      // 3. Journey + Kaleidoscope Composite Export
+      document.getElementById('recJourneyBtn').onclick = () => {
+        logStatus(`Recording ${state.journeyDur}s journey + finale composite…`);
+        AudioEngine.ensureAudioGraph();
+
+        const rec = ExportEngine.recordCanvasStream(cv, state.journeyDur, true, (blob, ext) => {
+          const filename = `colorworld_${state.curPieceKey}_${state.journeyDur}s.${ext}`;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = filename;
+          a.click();
+          logStatus(`Exported journey video: ${filename}`);
+        });
+
+        // Stagger: Reveal runs for (dur - 1.5s), then 1.5s kaleidoscope finale
+        playJourney(() => {
+          KaleidoscopeEngine.renderKaleidoscope(ctx, cv, state.kaleidoFacets, 0.2, cv.width, cv.height);
+        });
+      };
+
+      // 4. Print 2x PNG
+      document.getElementById('printBtn').onclick = () => {
+        const dataUrl = ExportEngine.export2xPNG(cv);
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = `colorworld_${state.curPieceKey}_2x.png`;
+        a.click();
+        logStatus('Exported 2x high-resolution PNG for printing.');
+      };
+
+      // Modals: Publishing & Diagnostics
+      const publishingDrawer = document.getElementById('publishingDrawer');
+      document.getElementById('settingsBtn').onclick = () => publishingDrawer.classList.remove('hidden');
+      document.getElementById('closePublishingDrawerBtn').onclick = () => publishingDrawer.classList.add('hidden');
+
+      document.getElementById('savePublishSettingsBtn').onclick = () => {
+        state.gumroadEnabled = document.getElementById('optInPublishCheck').checked;
+        state.gumroadToken = document.getElementById('gumroadTokenInput').value;
+        state.gumroadLicense = document.getElementById('ccLicenseSelect').value;
+        state.gumroadInstantPublish = document.getElementById('instantPublishCheck').checked;
+        state.gumroadAttestationChecked = document.getElementById('creatorAttestationCheck').checked;
+        if (state.gumroadAttestationChecked) {
+          state.gumroadAttestationTimestamp = new Date().toISOString();
+        }
+        publishingDrawer.classList.add('hidden');
+        logStatus('Creator Publishing settings saved.');
+      };
+
+      const diagDrawer = document.getElementById('diagDrawer');
+      document.getElementById('diagBtn').onclick = () => diagDrawer.classList.remove('hidden');
+      document.getElementById('closeDiagDrawerBtn').onclick = () => diagDrawer.classList.add('hidden');
+
+      document.getElementById('runDiagnosticsBtn').onclick = async () => {
+        document.getElementById('diagStatusText').textContent = 'Running diagnostics…';
+        const fails = await Diagnostics.runDiagnostics();
+        const cont = document.getElementById('diagTableContainer');
+        cont.innerHTML = '';
+
+        window.addEventListener('diagnostics:complete', e => {
+          const { results, failures } = e.detail;
+          results.forEach(r => {
+            const div = document.createElement('div');
+            div.className = `p-2 rounded flex justify-between items-center ${r.status === 'PASS' ? 'bg-emerald-950/40 text-emerald-300' : 'bg-rose-950/40 text-rose-300'}`;
+            div.innerHTML = `<span>[${r.status}] ${r.check}</span> <span class="text-[10px] text-gray-400">${r.details}</span>`;
+            cont.appendChild(div);
+          });
+          document.getElementById('diagStatusText').textContent = `Diagnostics Complete: ${failures} Failures`;
+        }, { once: true });
+      };
+
+      // Service Worker registration for offline PWA
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.warn('SW registration failed:', err);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

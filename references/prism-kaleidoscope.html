@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRISM Kaleidoscope Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #07070d; color: #e2e8f0; font-family: sans-serif; overflow: hidden; margin: 0; }
+    .vignette-eyepiece {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle, transparent 55%, rgba(0,0,0,0.65) 80%, rgba(0,0,0,0.95) 100%);
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.85);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="flex flex-col h-screen">
+  <header class="h-14 border-b border-white/10 bg-black/40 px-6 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <i class="fa-solid fa-shapes text-purple-400 text-lg"></i>
+      <h1 class="font-bold text-sm tracking-widest text-purple-200">PRISM KALEIDOSCOPE MIRROR ENGINE</h1>
+    </div>
+    <div class="flex items-center gap-4 text-xs">
+      <div class="flex items-center gap-1 bg-white/5 rounded-lg p-1 border border-white/10">
+        <button id="langEN" class="px-2 py-0.5 rounded bg-purple-600 text-white font-bold">EN</button>
+        <button id="langES" class="px-2 py-0.5 rounded text-gray-400 hover:text-white">ES</button>
+        <button id="langFR" class="px-2 py-0.5 rounded text-gray-400 hover:text-white">FR</button>
+      </div>
+      <button id="readAloudBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-950/60 border border-purple-500/40 text-purple-300">
+        <i class="fa-solid fa-volume-high"></i>
+        <span id="readAloudLabel">Read Aloud</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center relative p-4">
+    <div id="kaleidoContainer" class="relative w-[600px] h-[600px] rounded-full overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(140,90,255,0.25)]">
+      <div id="kaleidoStage"></div>
+      <div class="vignette-eyepiece"></div>
+    </div>
+
+    <!-- Controls Floating Panel -->
+    <div class="absolute bottom-8 bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex items-center gap-6 shadow-2xl">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-gray-400">Facets:</label>
+        <select id="facetSelect" class="bg-white/10 border border-white/20 text-white text-xs rounded-lg px-2 py-1">
+          <option value="6">6 Facets</option>
+          <option value="8" selected>8 Facets</option>
+          <option value="12">12 Facets</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="autoSpinCheck" checked class="accent-purple-500">
+        <label for="autoSpinCheck" class="text-xs text-gray-300">Auto Spin</label>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const I18N = {
+      en: { title: "Kaleidoscope Active", read: "Read Aloud", desc: "Interactive reflective kaleidoscope mirror lens." },
+      es: { title: "Caleidoscopio Activo", read: "Leer en voz alta", desc: "Lente de espejo de caleidoscopio interactivo reflectante." },
+      fr: { title: "Kaléidoscope Actif", read: "Lecture à voix haute", desc: "Lentille miroir de kaléidoscope interactif réfléchissant." }
+    };
+    let currentLang = 'en';
+
+    let facets = parseInt(localStorage.getItem('prism_kaleido_facets') || '8');
+    document.getElementById('facetSelect').value = facets;
+    document.getElementById('facetSelect').addEventListener('change', e => {
+      facets = parseInt(e.target.value);
+      localStorage.setItem('prism_kaleido_facets', facets);
+    });
+
+    let autoSpin = true;
+    document.getElementById('autoSpinCheck').addEventListener('change', e => {
+      autoSpin = e.target.checked;
+    });
+
+    let angle = 0;
+    let pg = null;
+
+    function setup() {
+      const cnv = createCanvas(600, 600);
+      cnv.parent('kaleidoStage');
+      angleMode(RADIANS);
+
+      pg = createGraphics(300, 300);
+      pg.background(15, 12, 28);
+      pg.noFill();
+      pg.stroke(180, 100, 255);
+      pg.strokeWeight(3);
+      for (let r = 20; r < 200; r += 25) {
+        pg.ellipse(150, 150, r, r);
+      }
+      pg.stroke(255, 120, 80);
+      pg.line(20, 20, 280, 280);
+      pg.line(280, 20, 20, 280);
+    }
+
+    function draw() {
+      background(8, 8, 14);
+      if (autoSpin) angle += 0.008;
+
+      translate(width / 2, height / 2);
+      const step = TWO_PI / facets;
+      for (let i = 0; i < facets; i++) {
+        push();
+        rotate(i * step + angle);
+        if (i % 2 === 1) scale(1, -1);
+        image(pg, 0, 0, width / 2, height / 2);
+        pop();
+      }
+    }
+
+    document.getElementById('readAloudBtn').addEventListener('click', () => {
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(I18N[currentLang].desc);
+        u.lang = currentLang === 'es' ? 'es-ES' : currentLang === 'fr' ? 'fr-FR' : 'en-US';
+        speechSynthesis.speak(u);
+      }
+    });
+  </script>
+</body>
+</html>
