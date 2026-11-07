@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COLORWORLD Masters Studio</title>
+<style>
+ body{margin:0;background:#0a0a12;color:#eee;font-family:'Inter',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+ header{padding:12px 18px;background:#12121f;border-bottom:1px solid #2a2a45;display:flex;justify-content:space-between;align-items:center}
+ header h1{margin:0;font-size:20px;letter-spacing:3px;color:#b8a1ff}
+ main{flex:1;display:flex;gap:12px;padding:12px;min-height:0}
+ .panel{background:#141422;border:1px solid #2a2a45;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+ .left{width:250px}.right{width:280px}
+ .center{flex:1;display:flex;align-items:center;justify-content:center;background:#0d0d16;border-radius:12px;position:relative;min-width:0}
+ canvas{background:#fff;border-radius:8px;max-width:100%;max-height:100%}
+ h3{margin:0;font-size:11px;text-transform:uppercase;color:#999;letter-spacing:2px}
+ button,input[type=text],select{background:#26263d;color:#fff;border:1px solid #3d3d63;border-radius:8px;padding:8px;cursor:pointer;font-size:12px;font-family:inherit}
+ input[type=text]{cursor:text}
+ button:hover{background:#33335a}button.primary{background:#6d4aff;border-color:#8a6bff}
+ button:disabled{opacity:.4;cursor:not-allowed}
+ .tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+ .tools button.active,.pal button.active{background:#6d4aff;border-color:#8a6bff}
+ .pal{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+ .pal button{height:26px;padding:0;border-radius:6px}
+ .sliders label{font-size:11px;color:#aaa;display:flex;justify-content:space-between}
+ input[type=range]{width:100%}
+ .meter{background:#0d0d18;border:1px solid #2a2a45;border-radius:8px;padding:10px;font-size:12px}
+ .bar{height:8px;background:#222;border-radius:4px;margin-top:6px;overflow:hidden}
+ .bar>div{height:100%;background:#6d4aff;width:0%;transition:width .2s}
+ .good{color:#5dd39e}.warn{color:#e0b34d}.bad{color:#e05545}
+ #playlist{font-size:11px;color:#bbb;max-height:90px;overflow-y:auto}
+ #playlist div{padding:4px 6px;border-radius:6px;cursor:pointer}#playlist div.active{background:#6d4aff}
+ .status{font-size:11px;color:#aaa;min-height:28px}
+ audio{display:none}
+ @media(max-width:900px){main{flex-direction:column}.left,.right{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <h1>COLORWORLD MASTERS STUDIO</h1>
+  <div style="display:flex;gap:10px;align-items:center">
+    <span style="font-size:11px;color:#888">100% offline image processing</span>
+    <button id="miniBtn" style="font-size:11px">🪟 Mini Mode</button>
+  </div>
+</header>
+<main>
+  <!-- LEFT: source -->
+  <div class="panel left">
+    <h3>1 · Source Artwork</h3>
+    <input type="file" id="imgUpload" accept="image/*" hidden><button onclick="imgUpload.click()">📷 Upload Photo / Diagram</button>
+    <button id="genBtn">✨ Generate from Prompt (AI)</button>
+    <input type="text" id="promptInput" placeholder="e.g. haunted forest gateway">
+    <h3>Sobel De-Colorer</h3>
+    <div class="sliders"><label>Edge Threshold <span id="thVal">60</span></label><input type="range" id="thresh" min="20" max="160" value="60"></div>
+    <div class="sliders"><label>Line Thickness <span id="tkVal">1.0x</span></label><input type="range" id="thickness" min="1" max="4" step="0.5" value="1"></div>
+    <button class="primary" id="convertBtn" disabled>Convert to Line Art</button>
+    <div class="status" id="convStatus">Upload an image or generate art to begin.</div>
+  </div>
+
+  <!-- CENTER: canvas -->
+  <div class="center"><canvas id="cv" width="820" height="820"></canvas></div>
+
+  <!-- RIGHT: tools / music / export -->
+  <div class="panel right">
+    <h3>2 · Create</h3>
+    <div class="tools" id="toolBox">
+      <button data-tool="brush" class="active">🖌 Brush</button>
+      <button data-tool="marker">🖊 Marker</button>
+      <button data-tool="pencil">✏ Pencil</button>
+      <button data-tool="spray">💨 Spray</button>
+      <button data-tool="fill">🪣 Ink Bleed Fill</button>
+      <button data-tool="eraser">🧽 Eraser</button>
+    </div>
+    <input type="text" id="stampInput" placeholder="Emoji stamp e.g. 🌸" style="font-size:16px">
+    <div class="pal" id="palette"></div>
+    <div class="sliders"><label>Size <span id="szVal">12</span></label><input type="range" id="size" min="2" max="60" value="12"></div>
+    <div class="sliders"><label>Opacity <span id="opVal">100%</span></label><input type="range" id="opacity" min="10" max="100" value="100"></div>
+    <button id="undoBtn">↩ Undo</button>
+
+    <h3>🎵 Your Music</h3>
+    <input type="file" id="songUpload" accept="audio/*" multiple hidden><button onclick="songUpload.click()">＋ Add Songs</button>
+    <div id="playlist">No songs loaded.</div>
+    <button id="playSongBtn">▶ Play</button>
+
+    <div class="meter">
+      <div>Precision <span id="precVal" class="warn">—</span></div>
+      <div class="bar"><div id="precBar"></div></div>
+      <div style="margin-top:6px">Gate: ≥ 85% unlocks Marketplace <span id="gate"></span></div>
+    </div>
+    <button class="primary" id="wallBtn" disabled>🎬 Sell Animated Wallpaper</button>
+    <button id="tlBtn" disabled>⏱ Export Time-Lapse (5s)</button>
+    <div class="status" id="status"></div>
+  </div>
+</main>
+<audio id="player"></audio>
+
+<script>
+/* ===================== CORE STATE ===================== */
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d',{willReadFrequently:true});
+let tool='brush',color='#6d4aff',drawing=false,last=null;
+let ops=[],undoStack=[],baseLine=null,lineMask=null,prompts=[];
+const $=id=>document.getElementById(id);
+
+/* ===================== SOBEL DE-COLORER (offline) ===================== */
+function sobelConvert(){
+  const src=ctx.getImageData(0,0,cv.width,cv.height),d=src.data;
+  const gray=new Float32Array(cv.width*cv.height);
+  for(let i=0;i<gray.length;i++){gray[i]=0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2];}
+  const th=+$('thresh').value,tk=+$('thickness').value,out=ctx.createImageData(cv.width,cv.height);
+  const mag=new Float32Array(gray.length);const W=cv.width,H=cv.height;
+  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){
+    const i=y*W+x;
+    const gx=-gray[i-W-1]-2*gray[i-1]-gray[i+W-1]+gray[i-W+1]+2*gray[i+1]+gray[i+W+1];
+    const gy=-gray[i-W-1]-2*gray[i-W]-gray[i-W+1]+gray[i+W-1]+2*gray[i+W]+gray[i+W+1];
+    mag[i]=Math.sqrt(gx*gx+gy*gy);}
+  lineMask=new Uint8Array(gray.length);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;
+    const edge=mag[i]>th;
+    lineMask[i]=edge?1:0;
+    const v=edge?20:255,o=i*4;
+    out.data[o]=out.data[o+1]=out.data[o+2]=v;out.data[o+3]=255;}
+  if(tk>1){ // dilate for thicker lines
+    const m2=new Uint8Array(lineMask),r=Math.round(tk/2);
+    for(let y=r;y<H-r;y++)for(let x=r;x<W-r;x++){let s=0;
+      for(let dy=-r;dy<=r&&!s;dy++)for(let dx=-r;dx<=r;dx++)if(lineMask[(y+dy)*W+x+dx]){s=1;break;}
+      m2[y*W+x]=Math.max(m2[y*W+x],s);}
+    lineMask=m2;
+    for(let i=0;i<lineMask.length;i++){const o=i*4;const v=lineMask[i]?20:255;
+      out.data[o]=out.data[o+1]=out.data[o+2]=v;}
+  }
+  ctx.putImageData(out,0,0);
+  baseLine=ctx.getImageData(0,0,cv.width,cv.height);
+  ops=[];computePrecision(true);
+  $('convStatus').textContent=`De-colored locally ✓ (${W}×${H})`;
+}
+
+/* ===================== IMAGE UPLOAD ===================== */
+$('imgUpload').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const img=new Image();img.onload=()=>{
+    const s=Math.min(cv.width/img.width,cv.height/img.height);
+    const w=img.width*s,h=img.height*s;
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.drawImage(img,(cv.width-w)/2,(cv.height-h)/2,w,h);
+    $('convertBtn').disabled=false;
+    $('convStatus').textContent='Loaded — adjust sliders, then Convert.';
+  };img.src=URL.createObjectURL(f);
+});
+
+/* ===================== AI PROMPT (hook + fallback) ===================== */
+$('genBtn').addEventListener('click',async()=>{
+  const p=$('promptInput').value||'mandala';
+  try{
+    const r=await fetch('/api/generate-lineart',{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p})});
+    if(r.ok){const j=await r.json();
+      if(j.image){const img=new Image();img.onload=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,820,820);
+        ctx.drawImage(img,0,0,820,820);baseLine=null;$('convertBtn').disabled=false;
+        $('convStatus').textContent='AI line art loaded ✓';};img.src=j.image;return;}}
+  }catch(e){}
+  proceduralArt(p);$('convertBtn').disabled=false;
+  $('convStatus').textContent='Generated procedurally (connect backend for Gemini).';
+});
+function proceduralArt(seed){
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,820,820);ctx.strokeStyle='#111';
+  let s=0;for(const c of seed)s+=c.charCodeAt(0);
+  ctx.lineWidth=3;const n=8+(s%6);
+  for(let ring=0;ring<5;ring++){const r=70+ring*72;
+    ctx.beginPath();
+    for(let a=0;a<=360;a+=4){const rad=r+(ring%2?Math.sin(a*n)*18:Math.cos(a*n)*14);
+      const x=410+rad*Math.cos(a*Math.PI/180),y=410+rad*Math.sin(a*Math.PI/180);
+      a===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();}
+}
+
+/* ===================== PALETTE ===================== */
+const COLORS=['#111','#fff','#e63946','#f4a261','#e9c46a','#2a9d8f','#264653','#6d4aff','#b8a1ff','#ff7ab6','#00d4c8','#3a86ff'];
+COLORS.forEach(c=>{const b=document.createElement('button');b.style.background=c;
+  b.onclick=()=>{color=c;document.querySelectorAll('.pal button').forEach(x=>x.classList.remove('active'));b.classList.add('active');};
+  if(c==='#6d4aff')b.classList.add('active');
+  $('palette').appendChild(b);});
+
+/* ===================== TOOLS ===================== */
+document.querySelectorAll('#toolBox button').forEach(b=>b.onclick=()=>{
+  tool=b.dataset.tool;
+  document.querySelectorAll('#toolBox button').forEach(x=>x.classList.remove('active'));b.classList.add('active');});
+$('size').oninput=e=>$('szVal').textContent=e.target.value;
+$('opacity').oninput=e=>$('opVal').textContent=e.target.value+'%';
+$('thresh').oninput=e=>$('thVal').textContent=e.target.value;
+$('thickness').oninput=e=>$('tkVal').textContent=e.target.value+'x';
+function pos(e){const r=cv.getBoundingClientRect();
+  return{x:(e.clientX-r.left)*cv.width/r.width,y:(e.clientY-r.top)*cv.height/r.height};}
+cv.addEventListener('pointerdown',e=>{snapshot();drawing=true;
+  const p=pos(e);last=p;
+  if(tool==='fill'){floodFill(Math.round(p.x),Math.round(p.y),color);ops.push({t:'fill',x:p.x,y:p.y,c:color});drawing=false;computePrecision();}
+  else if(tool==='stamp'){const em=$('stampInput').value||'🌸';
+    ctx.font='48px serif';ctx.fillText(em,p.x,p.y);
+    ops.push({t:'stamp',e:em,x:p.x,y:p.y});drawing=false;computePrecision();}
+});
+cv.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);paint(last,p);last=p;});
+addEventListener('pointerup',()=>{if(drawing){drawing=false;computePrecision();}});
+function paint(a,b){
+  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+  const alpha=(+$('opacity').value)/100*(tool==='marker'?0.45:1);
+  ctx.globalAlpha=alpha;
+  if(tool==='eraser'){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='#fff';}
+  else ctx.strokeStyle=color;
+  ctx.lineWidth=tool==='pencil'?$('size').value/3:tool==='spray'?$('size').value:$('size').value;
+  if(tool==='spray'){ctx.fillStyle=color;
+    for(let i=0;i<12;i++){const ang=Math.random()*7,rr=Math.random()*$('size').value;
+      ctx.fillRect(b.x+Math.cos(ang)*rr,b.y+Math.sin(ang)*rr,1.6,1.6);}}
+  else{ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  ctx.restore();
+  ops.push({t:'paint',a:[a.x,a.y],b:[b.x,b.y],c:tool==='eraser'?'erase':color,
+    w:ctx.lineWidth,alpha,tool});
+}
+function snapshot(){undoStack.push(ctx.getImageData(0,0,cv.width,cv.height));if(undoStack.length>12)undoStack.shift();}
+$('undoBtn').onclick=()=>{const s=undoStack.pop();if(s){ctx.putImageData(s,0,0);computePrecision();}};
+
+/* flood fill with ink-bleed tolerance */
+function floodFill(sx,sy,hex){
+  const img=ctx.getImageData(0,0,cv.width,cv.height),d=img.data,W=cv.width,H=cv.height;
+  const idx=(x,y)=>(y*W+x)*4;
+  const tc=hexToRgb(hex),si=idx(sx,sy),sr=d[si],sg=d[si+1],sb=d[si+2];
+  if(sr===tc.r&&sg===tc.g&&sb===tc.b)return;
+  const tol=40,stack=[[sx,sy]],seen=new Uint8Array(W*H);
+  while(stack.length){const[x,y]=stack.pop();
+    if(x<0||y<0||x>=W||y>=H)continue;const i=y*W+x;if(seen[i])continue;seen[i]=1;
+    const o=i*4;
+    if(Math.abs(d[o]-sr)>tol||Math.abs(d[o+1]-sg)>tol||Math.abs(d[o+2]-sb)>tol)continue;
+    d[o]=tc.r;d[o+1]=tc.g;d[o+2]=tc.b;d[o+3]=255;
+    stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);}
+  ctx.putImageData(img,0,0);
+}
+const hexToRgb=h=>({r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16),b:parseInt(h.slice(5,7),16)});
+
+/* ===================== PRECISION ENGINE (85% gate) ===================== */
+function computePrecision(silent){
+  if(!baseLine){updatePrecUI(0,false);return;}
+  const cur=ctx.getImageData(0,0,cv.width,cv.height).data,base=baseLine.data;
+  let colorable=0,colored=0,insideColored=0,outside=0;
+  for(let i=0;i<base.length;i+=16){
+    const diff=Math.abs(cur[i]-base[i])+Math.abs(cur[i+1]-base[i+1])+Math.abs(cur[i+2]-base[i+2]);
+    const isLine=lineMask&&lineMask[i/4];
+    if(diff>36){
+      colored++;
+      if(isLine)outside++;else insideColored++;}
+    if(!isLine)colorable++;
+  }
+  if(colored<40){updatePrecUI(0,false,true);return;}
+  const stay=insideColored/Math.max(1,insideColored+outside);
+  const coverage=Math.min(1,colored/Math.max(1,colorable*0.55));
+  const score=Math.round(100*coverage*(0.45+0.55*stay));
+  updatePrecUI(score,score>=85);
+  if(!silent)$('status').textContent=score>=85?'✓ Precision gate passed — marketplace unlocked!':'Keep coloring: coverage '+Math.round(coverage*100)+'%, accuracy '+Math.round(stay*100)+'%.';
+}
+function updatePrecUI(v,passed,empty){
+  $('precBar').style.width=v+'%';const el=$('precVal');
+  el.textContent=empty?'—':v+'%';el.className=v>=85?'good':v>=50?'warn':'bad';
+  $('wallBtn').disabled=!passed;$('gate').textContent=passed?'🔓':'🔒';
+  if(passed)$('status').textContent='✓ Precision gate passed — marketplace unlocked!';
+}
+
+/* ===================== MUSIC PLAYER (user songs only) ===================== */
+let playlist=[],trackIdx=-1,audioCtx,audioDest,srcNode;
+$('songUpload').addEventListener('change',e=>{
+  playlist=[...e.target.files];trackIdx=playlist.length?0:-1;renderPlaylist();
+  $('playlist').textContent='';if(trackIdx>=0)loadTrack(0);
+});
+function renderPlaylist(){
+  const el=$('playlist');el.innerHTML='';
+  if(!playlist.length){el.textContent='No songs loaded.';return;}
+  playlist.forEach((f,i)=>{const d=document.createElement('div');
+    d.textContent=(i===trackIdx?'▶ ':'')+f.name;
+    d.onclick=()=>loadTrack(i);el.appendChild(d);});
+}
+function ensureAudioGraph(){
+  if(audioCtx)return;
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  srcNode=audioCtx.createMediaElementSource($('player'));
+  audioDest=audioCtx.createMediaStreamDestination();
+  srcNode.connect(audioCtx.destination);srcNode.connect(audioDest);
+}
+function loadTrack(i){trackIdx=i;ensureAudioGraph();
+  $('player').src=URL.createObjectURL(playlist[i]);$('player').play();
+  $('playSongBtn').textContent='⏸ Pause';renderPlaylist();}
+$('playSongBtn').onclick=()=>{
+  if(!playlist.length)return;
+  if(trackIdx<0)loadTrack(0);
+  else if($('player').paused){$('player').play();$('playSongBtn').textContent='⏸ Pause';}
+  else{$('player').pause();$('playSongBtn').textContent='▶ Play';}};
+$('player').addEventListener('ended',()=>{if(trackIdx<playlist.length-1)loadTrack(trackIdx+1);});
+
+/* ===================== EXPORTS ===================== */
+function pickMime(){return['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm']
+  .find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));}
+function recordCanvas(canvas,seconds,withAudio,filename){
+  const mime=pickMime();if(!mime){$('status').textContent='Recording unsupported here.';return;}
+  const stream=canvas.captureStream(60);
+  if(withAudio&&audioDest&&$('player').paused&&!$('player').ended){stream.addTrack(audioDest.stream.getAudioTracks()[0]);}
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:10_000_000});
+  const chunks=[];rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+  rec.onstop=()=>{const ext=mime.includes('mp4')?'mp4':'webm';
+    const url=URL.createObjectURL(new Blob(chunks,{type:mime}));
+    const a=document.createElement('a');a.href=url;a.download=filename+'.'+ext;a.click();
+    $('status').textContent='Exported '+a.download;};
+  rec.start();setTimeout(()=>rec.stop(),seconds*1000);
+}
+$('wallBtn').onclick=()=>{
+  ensureAudioGraph();if(trackIdx>=0&&!$('player').paused)$('player').play();
+  const anim=document.createElement('canvas');anim.width=anim.height=820;
+  const ac=anim.getContext('2d');const shot=cv;
+  let t=0;const iv=setInterval(()=>{
+    const z=1+0.08*Math.sin(t/28);ac.save();ac.translate(410,410);ac.scale(z,z);
+    ac.drawImage(shot,-410,-410);ac.restore();t++;},33);
+  $('status').textContent='Recording animated wallpaper'+(trackIdx>=0?' with "'+playlist[trackIdx].name+'"':' (add a song for sound)')+'…';
+  setTimeout(()=>clearInterval(iv),5200);
+  recordCanvas(anim,5,trackIdx>=0,'colorworld_wallpaper_'+Date.now());
+};
+$('tlBtn').onclick=()=>{
+  if(!ops.length){$('status').textContent='Nothing to replay yet — color something!';return;}
+  const snap=ctx.getImageData(0,0,cv.width,cv.height);
+  ctx.putImageData(baseLine,0,0);
+  const n=ops.length,perOp=5000/n;let i=0;
+  const iv=setInterval(()=>{
+    const o=ops[i++];
+    if(o.t==='paint')paint({x:o.a[0],y:o.a[1]},{x:o.b[0],y:o.b[1]});
+    else if(o.t==='fill')floodFill(o.x,o.y,o.c);
+    else if(o.t==='stamp'){ctx.font='48px serif';ctx.fillText(o.e,o.x,o.y);}
+    if(i>=n){clearInterval(iv);setTimeout(()=>ctx.putImageData(snap,0,0),400);}
+  },Math.max(8,perOp));
+  recordCanvas(cv,5.5,false,'colorworld_timelapse_'+Date.now());
+};
+
+/* ===================== MINI MODE ===================== */
+$('miniBtn').onclick=()=>{
+  document.body.style.transform=document.body.style.transform?'':'scale(.85)';
+  document.body.style.transformOrigin='top left';
+};
+</script>
+</body>
+</html>
